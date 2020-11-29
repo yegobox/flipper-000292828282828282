@@ -53,6 +53,7 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
     await this.user.user();
     if (this.user.currentUser && this.user.currentUser.active == true) {
       await this.user.defaultBusiness(this.user.currentUser.id);
+      console.log('buinsess',this.user.currentBusiness);
 
       if (this.user.currentBusiness && this.user.currentBusiness.active==true) {
         return true;

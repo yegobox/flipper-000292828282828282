@@ -85,7 +85,7 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
    
    public async defaultBusiness(userId) {
 
-   
+   await this.getBusiness();
         await this.database.activeBusiness(userId).then(res=>{
 
             if(res.docs && res.docs.length > 0){
@@ -100,6 +100,20 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
             }
         });
      
+  }
+
+  public  getBusiness() {
+    return this.database.query(['table'], {
+      table: { $eq: 'businesses' }
+  }).then(res => {
+    console.log('all business',res);
+      if (res.docs && res.docs.length > 0) {
+        
+      } else {
+          return [];
+      }
+
+  });
   }
 
 
