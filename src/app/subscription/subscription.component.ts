@@ -399,7 +399,7 @@ export class SubscriptionComponent implements OnInit {
         }
 
     window.localStorage.setItem('channel',this.database.uid());
-
-    return window.location.href='/login';
+      this.currentUser.redirectUri='login';
+      return  this.router.navigate(['/login']);
   }
 }
