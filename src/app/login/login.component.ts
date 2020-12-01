@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { CurrentUser } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
+import { AnyEvent, CurrentBusinessEvent, fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
 import { environment } from '../../environments/environment';
@@ -31,6 +31,10 @@ export class LoginComponent implements OnInit {
     private eventBus: FlipperEventBusService, private database: PouchDBService,
     public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
     this.database.connect(PouchConfig.bucket);
+
+    this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
+      .subscribe(res =>
+        this.currentUser.currentBusiness = res.business);
   }
   ngOnInit() {
     this.qrcode = Date.now();
@@ -42,7 +46,7 @@ export class LoginComponent implements OnInit {
       this.database.sync([localStorage.getItem('userId')]);
     }
     this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
-      console.log('here',event);
+      console.log('here', event);
       this.ngZone.run(async () => {
         if (arg && arg.length > 0) {
           const user = {
@@ -55,19 +59,18 @@ export class LoginComponent implements OnInit {
             updatedAt: new Date().toISOString(),
             id: arg[4].replace('%20', ' '),
             userId: arg[4].replace('%20', ' '),
-            table:'users',
-          channels:[],
-            expiresAt:1606521600000  //Date.parse(arg[6]) as number
+            table: 'users',
+            channels: [],
+            expiresAt: 1606521600000  //Date.parse(arg[6]) as number
           };
-          user.channels=[user.id];
+          user.channels = [user.id];
           window.localStorage.setItem('channel', arg[4].replace('%20', ' '));
-          window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          PouchConfig.Tables.user = 'user_'+ window.localStorage.getItem('channel');
+          PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
           PouchConfig.channel = window.localStorage.getItem('channel');
-          PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          await this.database.put(PouchConfig.Tables.user , this.currentUser.currentUser);
+          await this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
+
           return window.location.href = '/admin';
-          
+
         }
       });
     });
@@ -83,7 +86,6 @@ export class LoginComponent implements OnInit {
     this.loginApproved.bind('event-login-flipper.' + this.qrcode, async (event) => {
 
       if (event) {
-    
         const user = {
           _id: '',
           name: event.name,
@@ -92,20 +94,47 @@ export class LoginComponent implements OnInit {
           active: true,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          id:  event.id.toString(),
+          id: event.id.toString(),
           userId: event.id.toString(),
-          table:'users',
-          channels:[],
-          expiresAt:1606521600000 //event.expiresAt as number
+          table: 'users',
+          channels: [],
+          expiresAt: 1606521600000 //FIXME: this should come from API event.expiresAt as number
         };
 
-        window.localStorage.setItem('channel', event.id.toString()); 
+        window.localStorage.setItem('channel', event.id.toString());
+
         PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
         PouchConfig.channel = window.localStorage.getItem('channel');
-        user.channels=[user.id.toString()];
-       
+        localStorage.setItem('userId', user.id.toString());
+        user.channels = [user.id];
+
+        //TODO: IF BUSINESS IS NULL , DO SYNC THEN REDIRECT OTHERWISE DO REDIRECT WITHOUT SYNING
+        let async: any = this.database.sync([user.id]);
+        this.eventBus.publish(new UserLoggedEvent(user));
         await this.database.put(PouchConfig.Tables.user, user);
-        return window.location.href = '/admin';
+        await this.currentUser.defaultBusiness(user.id);
+
+        if (!this.currentUser.currentBusiness) {
+
+          async.on('change', (info: any) => {
+
+            return window.location.href = '/admin';
+
+          }).on('paused', (err: any) => {
+            console.log("sync paused", err)
+          }).on('active', () => {
+            console.log("sync active")
+          }).on('denied', (err: any) => {
+            console.log('denied', err);
+          }).on('complete', (info: any) => {
+            console.log("sync complete")
+          }).on('error', (err) => {
+            console.log("sync error", err)
+          });
+        } else {
+          return window.location.href = '/admin';
+        }
+
       }
     });
     // end of deal here

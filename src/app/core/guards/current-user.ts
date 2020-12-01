@@ -89,7 +89,7 @@ export class CurrentUser {
 
 
     await this.database.activeBusiness(userId).then((res: { docs: string | any[]; }) => {
-
+      console.log(res);
       if (res.docs && res.docs.length > 0) {
         this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
       }

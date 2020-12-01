@@ -135,7 +135,7 @@ export class SubscriptionComponent implements OnInit {
         this.currentUser.currentUser = res.user);
 
     if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
+      this.database.sync([PouchConfig.syncUrl]);
     }
 
     this.getFlipperPlan().valueChanges().subscribe(res => {

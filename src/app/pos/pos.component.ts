@@ -49,7 +49,7 @@ export class PosComponent implements OnInit {
       this.database.connect(PouchConfig.bucket,localStorage.getItem('channel'));
       // if (PouchConfig.canSync) {
         // NOTE: set to sync always atleast for now.
-        this.database.sync(PouchConfig.syncUrl);
+        this.database.sync([PouchConfig.syncUrl]);
       // }
       this.init();
   }

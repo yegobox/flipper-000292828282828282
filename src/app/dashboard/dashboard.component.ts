@@ -62,7 +62,6 @@ export class DashboardComponent implements OnInit {
    ngOnInit() {
 
      this.init();
-     console.log(this.stocks);
   }
 async theStocks(){
  this.stocks=await this.allStocks();
