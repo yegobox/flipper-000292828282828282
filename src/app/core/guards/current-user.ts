@@ -24,15 +24,9 @@ export class CurrentUser {
   currentBranch: Branch = null;
   currentSubscription: Subscription = null;
 
-<<<<<<< HEAD
-constructor(private eventBus: FlipperEventBusService,private model: ModelService,
-              private database: PouchDBService) {
-    this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
-=======
   constructor(private eventBus: FlipperEventBusService, private model: ModelService,
     private database: PouchDBService) {
     this.database.connect(PouchConfig.bucket, window.localStorage.getItem('channel'));
->>>>>>> 2340941a6b7e83cca6a3d411b969825d69105da2
 
 
     // this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
@@ -93,17 +87,11 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
 
   public async defaultBusiness(userId) {
 
-<<<<<<< HEAD
-   await this.getBusiness();
-        await this.database.activeBusiness(userId).then(res=>{
-=======
->>>>>>> 2340941a6b7e83cca6a3d411b969825d69105da2
 
     await this.database.activeBusiness(userId).then((res: { docs: string | any[]; }) => {
 
       if (res.docs && res.docs.length > 0) {
         this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
-        this.defaultBranch();
       }
 
     }, (error: { error: any; status: string | number; }) => {
@@ -113,16 +101,6 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
       }
     });
 
-<<<<<<< HEAD
-        },error=> {
-          
-            if(error.error && error.status==='404' ||  error.status===404) {
-              this.eventBus.publish(new CurrentBusinessEvent(null));
-            }
-        });
-     
-=======
->>>>>>> 2340941a6b7e83cca6a3d411b969825d69105da2
   }
 
   public  getBusiness() {
