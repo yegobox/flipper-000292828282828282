@@ -33,14 +33,13 @@ export class LoginComponent implements OnInit {
     this.database.connect(PouchConfig.bucket);
   }
   ngOnInit() {
-    // this.qrcode = 'code23';
     this.qrcode = Date.now();
     this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
         this.currentUser.currentUser = res.user);
     if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
+      this.database.sync([localStorage.getItem('userId')]);
     }
     this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
       console.log('here',event);
@@ -54,7 +53,7 @@ export class LoginComponent implements OnInit {
             active: true,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-            id: this.database.uid(),
+            id: arg[4].replace('%20', ' '),
             userId: arg[4].replace('%20', ' '),
             table:'users',
           channels:[],

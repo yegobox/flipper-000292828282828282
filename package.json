@@ -116,7 +116,7 @@
     "@angular/localize": "^10.0.3",
     "@angular/material": "~9.2.4",
     "@enexus/flipper-color": "0.0.3",
-    "@enexus/flipper-components": "1.6.23",
+    "@enexus/flipper-components": "1.6.24",
     "@enexus/flipper-dashboard": "0.0.6",
     "@enexus/flipper-dialog": "1.0.3",
     "@enexus/flipper-event": "1.0.4",

@@ -34,13 +34,17 @@ export class DashboardComponent implements OnInit {
   public lowStockItem = [];
   public defaultBusiness$: Business = null;
   public defaultBranch: Branch = null;
+<<<<<<< HEAD
   stocks: Stock[]=[];
+=======
+>>>>>>> 2340941a6b7e83cca6a3d411b969825d69105da2
   // public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
   constructor(private totalPipe: CalculateTotalClassPipe,
     private currentUser: CurrentUser,
     private radomNumberPipe: RoundNumberPipe,
     private query: ModelService,
     private database: PouchDBService) {
+<<<<<<< HEAD
 
     // FIXME: 
     this.branch = null;
@@ -52,6 +56,18 @@ export class DashboardComponent implements OnInit {
     this.lowStockItem = [];// this.getLowStocks();
 
   }
+=======
+
+    console.log(this.currentUser.currentBusiness);
+    // FIXME: 
+    this.branch = null;
+    this.totalStore = 0.00; //this.getStockValue();
+    this.netProfit = 0.00;//this.getNetProfit();
+    this.totalRevenue = 0.00;// this.getTotalRevenues();
+    this.grossProfits = 0.00;//this.getGrossProfit();
+    this.topSoldItem = [];// this.topSoldItems();
+    this.lowStockItem = [];// this.getLowStocks();
+>>>>>>> 2340941a6b7e83cca6a3d411b969825d69105da2
 
   async init() {
     await this.allStocks();
@@ -59,6 +75,7 @@ export class DashboardComponent implements OnInit {
     
   }
 
+<<<<<<< HEAD
    ngOnInit() {
 
      this.init();
@@ -111,6 +128,29 @@ async theStocks(){
         return [];
       }
   });
+=======
+  async init() {
+    await this.currentBusiness();
+    await this.currentBranches();
+  }
+
+  async ngOnInit() {
+
+    await this.init();
+  }
+
+
+  public currentBusiness() {
+    return this.database.currentBusiness().then(business => {
+
+      this.defaultBusiness$ = business;
+    });
+  }
+  currentBranches() {
+    return this.database.listBusinessBranches().then(branches => {
+      this.defaultBranch = branches.length > 0 ? branches[0] : 0;
+    });
+>>>>>>> 2340941a6b7e83cca6a3d411b969825d69105da2
   }
 
   topSoldItems() {

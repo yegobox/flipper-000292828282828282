@@ -60,5 +60,11 @@ export class AppModule {
 
 
   
+<<<<<<< HEAD
   constructor() { }
+=======
+  constructor() {
+    
+   }
+>>>>>>> 2340941a6b7e83cca6a3d411b969825d69105da2
 }

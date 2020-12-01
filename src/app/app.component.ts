@@ -21,15 +21,15 @@ export class AppComponent implements OnInit {
     private database: PouchDBService) {
     this.translate.setDefaultLang('en');
     this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
-      .subscribe(res => {
-        if(!res.business)return;
+      .subscribe(() => {
+        // if(!res.business)return;
         //console.log("userId",res.business.userId);
-        this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
+        this.database.connect(PouchConfig.bucket,localStorage.getItem('channel'));
         
-        if (PouchConfig.canSync) {
-          this.database.sync(PouchConfig.syncUrl);
-        }
-        this.database.getChangeListener().subscribe(data => {
+        // if (PouchConfig.canSync) {
+          this.database.sync([localStorage.getItem('userId')]);
+        // }
+        this.database.getChangeListener().subscribe(() => {
           // console.log(data);
         });
       });
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  updateActiveMenu(route: string = 'admin/analytics') {
+  updateActiveMenu() {
     let activemenu = null;
     // activemenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.route === route);
     // activemenu.active = true;
