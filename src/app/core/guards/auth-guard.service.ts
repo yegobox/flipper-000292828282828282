@@ -3,7 +3,7 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanAc
 import { CurrentUser } from './current-user';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
-import { UserLoggedEvent, PouchDBService, CurrentBusinessEvent, CurrentBranchEvent } from '@enexus/flipper-components';
+import { UserLoggedEvent} from '@enexus/flipper-components';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     await this.currentUser.user();
     
-console.log(this.currentUser.currentUser);
     if (this.currentUser.currentUser && this.currentUser.currentUser.id && this.currentUser.currentUser.active==true) {
        this.currentUser.defaultBusiness(this.currentUser.currentUser.id);
       return true;

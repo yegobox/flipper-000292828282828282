@@ -106,7 +106,6 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
     return this.database.query(['table'], {
       table: { $eq: 'businesses' }
   }).then(res => {
-    console.log('all business',res);
       if (res.docs && res.docs.length > 0) {
         
       } else {

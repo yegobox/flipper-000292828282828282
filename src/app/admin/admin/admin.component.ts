@@ -42,6 +42,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         if (this.currentUser.currentUser ) {
          
           this.currentUser.currentUser.active=false;
+          console.log(this.currentUser.currentUser);
           await this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
         }
     window.localStorage.setItem('channel',this.database.uid());

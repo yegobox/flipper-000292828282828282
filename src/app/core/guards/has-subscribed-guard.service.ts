@@ -12,7 +12,7 @@ import { CurrentUser } from './current-user';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
 import { UserSubscriptionEvent } from '@enexus/flipper-components';
-import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,10 @@ export class HasSubscribedGuard implements CanActivate, CanActivateChild, CanLoa
   }
 
   private async handle(url: string) {
+
+    if(!environment.production){
+      return true;
+    }
     const today= this.today.getFullYear() + '-'
      + ('0' + (this.today.getMonth() + 1)).slice(-2)
      + '-' + ('0' + this.today.getDate()).slice(-2);

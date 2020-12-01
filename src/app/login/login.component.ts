@@ -101,12 +101,10 @@ export class LoginComponent implements OnInit {
         };
 
         window.localStorage.setItem('channel', event.id.toString()); 
-        window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
         PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
         PouchConfig.channel = window.localStorage.getItem('channel');
-        PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
         user.channels=[user.id.toString()];
-        console.log(event);
+       
         await this.database.put(PouchConfig.Tables.user, user);
         return window.location.href = '/admin';
       }

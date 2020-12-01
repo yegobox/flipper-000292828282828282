@@ -7,6 +7,7 @@ import {
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { ModelService } from '@enexus/flipper-offline-database';
 import { CurrentUser } from '../core/guards/current-user';
+import { StockService } from '@enexus/flipper-inventory';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,6 +34,7 @@ export class DashboardComponent implements OnInit {
   public lowStockItem = [];
   public defaultBusiness$: Business = null;
   public defaultBranch: Branch = null;
+  stocks: Stock[]=[];
   // public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
   constructor(private totalPipe: CalculateTotalClassPipe,
     private currentUser: CurrentUser,
@@ -40,7 +42,6 @@ export class DashboardComponent implements OnInit {
     private query: ModelService,
     private database: PouchDBService) {
 
-    console.log(this.currentUser.currentBusiness);
     // FIXME: 
     this.branch = null;
     this.totalStore = 0.00; //this.getStockValue();
@@ -53,15 +54,36 @@ export class DashboardComponent implements OnInit {
   }
 
   async init() {
-    await this.currentBusiness();
-    await this.currentBranches();
+    await this.allStocks();
+    
+    
   }
 
-  async ngOnInit() {
+   ngOnInit() {
 
-    await this.init();
+     this.init();
+     console.log(this.stocks);
   }
-
+async theStocks(){
+ this.stocks=await this.allStocks();
+}
+  allStocks(){
+    if(this.currentUser.currentBranch){
+      console.log('hhh');
+      return this.database.query(['table'], {
+        table: { $eq: 'stocks' }
+        // branchId: { $eq: this.currentUser.currentBranch.id }
+      }).then(res => {
+        console.log(res);
+              if (res.docs && res.docs.length > 0) {
+               return res.docs;
+              } else {
+                return [];
+              }
+      });
+    }
+  
+  }
 
   public currentBusiness() {
     return this.database.currentBusiness().then(business => {
@@ -69,10 +91,26 @@ export class DashboardComponent implements OnInit {
       this.defaultBusiness$ = business;
     });
   }
-  currentBranches() {
-    return this.database.listBusinessBranches().then(branches => {
-      this.defaultBranch = branches.length > 0 ? branches[0] : 0;
-    });
+  async currentBranches() {
+    if(this.defaultBusiness$){
+      console.log('imbeba');
+       this.defaultBranch=await this.getBranch();
+    }
+  }
+
+
+  getBranch(){
+    return this.database.query(['table', 'businessId'], {
+      table: { $eq: 'branches' },
+      businessId: { $eq: this.defaultBusiness$.id }
+  }).then(res => {
+    
+      if (res.docs && res.docs.length > 0) {
+          return res.docs;
+      } else {
+        return [];
+      }
+  });
   }
 
   topSoldItems() {
@@ -102,7 +140,7 @@ export class DashboardComponent implements OnInit {
     return this.radomNumberPipe.transform(this.stockValue());
   }
   stockValue() {
-    const stocks: Stock[] = this.stocks();
+    const stocks: Stock[] = [];
     const results = [{ retailPrice: 0 }];
 
     if (stocks.length > 0) {
@@ -138,9 +176,7 @@ export class DashboardComponent implements OnInit {
     return this.radomNumberPipe.transform(this.totalRevenues());
   }
 
-  stocks() {
-    return this.query.queries<Stock>(Tables.stocks, ` branchId="${this.branch.id}" AND currentStock > 0 AND canTrackingStock=true`);
-  }
+ 
 
   sales() {
     return this.query.queries<Order>(Tables.order, ` branchId="${this.branch.id}" AND orderType='sales' AND status='complete'`);
