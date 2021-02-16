@@ -1,0 +1,201 @@
+name: flipper
+
+description: A business application
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none'
+# commit
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 99.99.99+99
+
+environment:
+  sdk: ">=2.10.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^0.18.0
+  # firebase_performance: 0.4.0+2
+  geolocator: ^5.3.0
+  permission_handler: ^5.0.1+1
+  
+  redux: ^4.0.0
+  flutter_redux: ^0.6.0
+  flutter_masked_text: ^0.8.0
+  built_value: ^7.1.0
+  image_picker: ^0.6.4
+  built_collection: ^4.3.2
+  # flutter_date_pickers: ^0.0.6
+  # flutter_material_color_picker: ^0.0.5
+  flutter_image_compress: ^0.6.5+1
+  tabbar: ^0.1.1
+  intl: ^0.16.1
+  jiffy: ^3.0.1
+  expandable: ^4.1.4
+  syncfusion_flutter_charts: ^18.3.44
+  
+  uuid: 2.2.2
+  
+  timezone: ^0.5.6
+  # this will deprecate soon do not use them
+  flutter_barcode_scanner: 
+  cupertino_icons: ^0.1.3
+  #local package
+  google_fonts:  ^1.1.0
+  customappbar: 
+    path:
+      './packages/custom_appbar'
+      
+  flipper_ui: ^1.0.0
+  
+  rubber: ^0.4.0
+  shared_preferences: 0.5.2
+  country_picker: ^1.1.3
+  # background_fetch: 0.6.0
+  # social sign in
+  firebase_auth: "^0.20.0"
+  # end social signin
+  firebase_core: "^0.7.0"
+  cloud_firestore: "^0.16.0"
+  firebase_messaging: "^8.0.0-dev.13"
+  pusher_beams: "^0.5.3+3"
+  firebase_analytics: "^7.0.1"
+  camera: 0.5.8+11
+  
+  flutter_uploader:
+  flipper_login:
+    path:
+      './packages/flipper_login'
+  rxdart: ^0.24.1
+  loading: ^1.0.2
+  firebase_crashlytics: "^0.4.0"
+  logger: ^0.6.0
+  async: ^2.4.1
+  # filledstacks | state management
+  stacked: ^1.7.1
+  stacked_hooks: 0.1.1+3
+  stacked_services: ^0.5.4+2
+   # get it
+  get_it: 
+  injectable:
+  flutter_calendar_carousel: ^1.5.1
+  syncfusion_flutter_datepicker: ^18.3.48-beta
+  slider_button: ^0.6.0
+  sliding_switch: ^0.0.3
+
+  
+ 
+  # provider
+  provider: ^4.1.3
+  cached_network_image: ^2.2.0+1
+  flutter_dotenv: ^3.1.0
+  mailer: ^3.2.1
+  contacts_service: ^0.4.6
+  # flutter_reactive_ble: ^2.5.3
+  flutter_text_drawable: ^0.3.1
+  connectivity: ^2.0.2
+  # background_fetch: '^0.5.1'
+  flutter_icons: ^1.1.0
+  couchbase_lite_dart: ^0.3.1
+  bluetooth_thermal_printer: ^0.0.4
+  esc_pos_utils: ^0.4.9
+  awesome_notifications: ^0.0.5+4
+  pusher: ^1.0.0
+
+  # yegobox pubs
+  pos: 
+    path:
+      './packages/pos'
+  flipper_services:
+    path:
+      './packages/flipper_services'
+  flipper_models:
+    path:
+      './packages/flipper_models'
+  font_awesome_flutter: ^8.11.0
+  firebase_dynamic_links: ^0.5.0+11
+  share: ^0.6.4+3
+  in_app_review: ^1.0.4 #implement this. https://github.com/britannio/in_app_review
+  flipper_chat:
+    path: './packages/flipper_chat'
+  flipper_contacts:
+    path: './packages/flipper_contacts'
+  cron: ^0.2.4
+dev_dependencies:
+  # test: ^1.5.3
+  test_coverage: ^0.4.2
+  build_runner: 
+  analyzer:
+  built_value_generator:
+  auto_route_generator: 0.3.2
+  injectable_generator:
+  mockito:
+  flutter_test:
+    sdk: flutter
+
+  
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - .env
+    - assets/images/
+    - assets/
+    - assets/graphics/
+    - assets/card_provider/
+    - assets/graphics/drawer/
+
+
+  fonts:
+    - family: TwitterIcon
+      fonts:
+        - asset: assets/fonts/icons.ttf
+    - family: HelveticaNeue
+      fonts:
+        - asset: assets/fonts/HelveticaNeue.ttf
+        - asset: assets/fonts/HelveticaNeue400.ttf
+          weight: 400
+        - asset: assets/fonts/HelveticaNeue500.ttf
+          weight: 500
+        - asset: assets/fonts/HelveticaNeue600.ttf
+          weight: 600
+        - asset: assets/fonts/HelveticaNeue700.ttf
+          weight: 700
+        - asset: assets/fonts/HelveticaNeue800.ttf
+          weight: 800
+        - asset: assets/fonts/HelveticaNeue900.ttf
+          weight: 900
+        - asset: assets/fonts/HelveticaNeueIt.ttf
+          style: italic
+flutter_intl:
+  enabled: true
+  
+# 1.5.33
+#  flutter packages pub run build_runner watch --delete-conflicting-outputs  --enable-experiment=non-nullable
+#  rw.flipper
+# app bundle
+# flutter build appbundle --build-name=1.5.212  --build-number=15212 --no-tree-shake-icons
+# app apk
+# flutter build apk --build-name=1.5.131  --build-number=15131
+# Db on device for debugging purpose: This PC\Pixel\Internal shared storage\Android\data\rw.flipper\files\database-development
+
+# icon
+# fixing issue when building release app is not working. reference:https://issuetracker.google.com/issues/158753935
+# flutter pub run flutter_launcher_icons:main
+# flutter run --debug
+# flutter run --profile
+# flutter run --release
+# debug key
+# keytool -list -v  -alias androiddebugkey -keystore %USERPROFILE%\.android\debug.keystore
+# dynamic link to work on ios
+# https://medium.com/dev-genius/firebase-flutter-dynamic-links-step-by-step-guide-630402ee729b

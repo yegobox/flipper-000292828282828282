@@ -1,3 +1,4 @@
-[submodule "projects"]
-	path = projects
-	url = https://github.com/yegobox/flipper-plugins.git
+[submodule ".flutter"]
+	path = .flutter
+	url = https://github.com/flutter/flutter.git
+	branch = beta
