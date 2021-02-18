@@ -20,7 +20,7 @@ class KeyPad extends StatelessWidget {
             Display(
               model: model,
             ),
-            Expanded(child: Keyboard(model: model))
+            Keyboard(model: model)
           ],
         ),
       ),
@@ -36,11 +36,11 @@ class Display extends StatelessWidget {
   Widget build(BuildContext context) {
     final views = <Widget>[
       Padding(
-        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         child: PayableView(model: model),
       ),
       Padding(
-        padding: const EdgeInsets.only(right: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -79,10 +79,17 @@ class Keyboard extends StatelessWidget {
   final PosViewModel model;
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width * 0.3;
+    final double height = (MediaQuery.of(context).size.height - 168) * 0.3;
+    print(MediaQuery.of(context).size.height);
     return GridView.count(
+      primary: true,
+      shrinkWrap: true,
       crossAxisCount: 3,
-      padding: const EdgeInsets.all(2.0),
-      crossAxisSpacing: 1.0,
+      crossAxisSpacing: 0,
+      mainAxisSpacing: 0,
+      childAspectRatio: height / width,
+      physics: const NeverScrollableScrollPhysics(),
       children: <String>[
         // @formatter:off
         '1', '2', '3',
@@ -106,31 +113,23 @@ class KeyboardKey extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: SizedBox(
-          width: 130.99,
-          height: 127.2,
-          child: InkWell(
-            enableFeedback: false,
-            onTap: () => {model.addKey(_keyValue)},
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.0,
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  _keyValue,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      .copyWith(fontSize: 40, fontWeight: FontWeight.normal),
-                ),
-              ),
-            ),
+    return InkWell(
+      enableFeedback: false,
+      onTap: () => {model.addKey(_keyValue)},
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromRGBO(0, 0, 0, 0.1),
+            width: 0.0,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            _keyValue,
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                .copyWith(fontSize: 40, fontWeight: FontWeight.normal),
           ),
         ),
       ),
