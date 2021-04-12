@@ -127,15 +127,15 @@ class LoginView extends StatelessWidget {
 
                   //In this section you can add the footer section
                   Container(
-                    color: Colors.grey[400],
+                      color: Colors.grey[400],
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Container(
-                          child: Center(
-                              child: Text("Footer Image Section"))),
-                    ],
-                  ))
+                        children: [
+                          Container(
+                              child:
+                                  Center(child: Text("Footer Image Section"))),
+                        ],
+                      ))
                 ],
               ),
             ),
@@ -194,14 +194,13 @@ class LoginView extends StatelessWidget {
                         "Create Account",
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => LoginPopupView(),
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => LoginPopupView(),
-                      );
-                    },
                   ),
                   SizedBox(
                     height: 15,

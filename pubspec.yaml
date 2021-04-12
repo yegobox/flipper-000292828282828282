@@ -64,9 +64,7 @@ dependencies:
   cupertino_icons:
   get_storage:
   country_picker:
-  # pusher_beams: not available for null safe
-  # firebase_analytics: 
-  # flutter_uploader: not available
+ 
   rxdart:
   # loading: not available
   firebase_crashlytics: 
@@ -79,12 +77,8 @@ dependencies:
   cached_network_image: 3.0.0-nullsafety
   flutter_dotenv: 4.0.0-nullsafety.0
   mailer:
-  # contacts_service: not available
   connectivity:
-  # bluetooth_thermal_printer: not available
-  # firebase_remote_config: not available
-  # esc_pos_utils: not available
-  # pusher: not available
+ 
   get: 4.0.0-nullsafety.2
   flutter_slidable: 
   in_app_review:
@@ -92,6 +86,14 @@ dependencies:
   cron:
   number_display: ^3.0.0
   # firebase_dynamic_links: not available
+  # bluetooth_thermal_printer: not available
+  # firebase_remote_config: not available
+  # esc_pos_utils: not available
+  # pusher: not available
+  contacts_service:
+  # pusher_beams: not available for null safe
+  # firebase_analytics: 
+  # flutter_uploader: not available
   
   bitsdojo_window: 
   observable_ish:
