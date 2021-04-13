@@ -98,7 +98,7 @@ class LoginView extends StatelessWidget {
                         Column(
                           children: [
                             Image.asset(
-                              "assets/qrcode.png",
+                              'assets/qrcode.png',
                               height: 200,
                               width: 200,
                             ),
