@@ -1,4 +1,4 @@
-library flipper_button;
+library flipper_login;
 
 import 'package:flutter/material.dart';
 

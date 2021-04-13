@@ -1,11 +1,16 @@
 library flipper_login_popup;
 
-import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 import './button_view.dart';
+import 'login_popup_view.form.dart';
 
-class LoginPopupView extends StatelessWidget {
+@FormView(fields: [
+  FormTextField(name: 'phone'),
+])
+class LoginPopupView extends StatelessWidget with $LoginPopupView {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,6 +82,7 @@ class LoginPopupView extends StatelessWidget {
                       Expanded(
                         child: TextFormField(
                           keyboardType: TextInputType.phone,
+                          controller: phoneController,
                           decoration: const InputDecoration(
                             hintText: '789078834',
                             border: InputBorder.none,

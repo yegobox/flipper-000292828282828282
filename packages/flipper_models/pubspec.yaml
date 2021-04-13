@@ -16,7 +16,7 @@ dependencies:
   firebase_core: ^1.0.2
   firebase_auth: ^1.0.1
   # Stacked State Management
-  stacked: ^2.0.0
+  stacked: ^2.0.4
   stacked_services: ^0.8.0-nullsafety.1
   # custom packages
   flipper_services:
