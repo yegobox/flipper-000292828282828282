@@ -4,20 +4,13 @@ import 'package:flipper_services/proxy.dart';
 import 'package:stacked_firebase_auth/src/firebase_authentication_service.dart';
 
 import 'authentication_viewmodel.dart';
-// import 'login_view.form.dart';
+import 'package:flipper_login/phone_number_view.form.dart';
 
 class LoginViewModel extends AuthenticationViewModel {
   final _firebaseAuthenticationService =
       locator<FlipperFirebaseAuthenticationService>();
-
-  LoginViewModel() : super(successRoute: 'startupView');
-
-  // @override
-  // Future<void> runPhoneAuthentication() =>
-  //  _firebaseAuthenticationService.createAccountWithPhone(
-  //       phone: phoneValue!,
-  //       callback:(){}
-  //     );
+  final Function callback;
+  LoginViewModel(this.callback) : super(successRoute: 'startupView');
 
   void navigateBack() => ProxyService.nav.back();
 
@@ -28,8 +21,6 @@ class LoginViewModel extends AuthenticationViewModel {
   }
 
   @override
-  Future<void> runPhoneAuthentication() {
-    // TODO: implement runPhoneAuthentication
-    throw UnimplementedError();
-  }
+  Future<void> runPhoneAuthentication() => _firebaseAuthenticationService
+      .createAccountWithPhone(phone: phoneValue!, callback: callback);
 }

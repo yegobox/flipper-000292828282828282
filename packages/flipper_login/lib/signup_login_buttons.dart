@@ -1,6 +1,5 @@
+import 'package:flipper_login/phone_number_view.dart';
 import 'package:flutter/material.dart';
-
-import 'login_popup_view.dart';
 
 class SignUpLoginButton extends StatelessWidget {
   const SignUpLoginButton({Key? key, this.portrait = false}) : super(key: key);
@@ -10,7 +9,7 @@ class SignUpLoginButton extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (BuildContext context) => LoginPopupView(),
+      builder: (BuildContext context) => PhoneNumberView(),
     );
   }
 

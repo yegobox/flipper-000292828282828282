@@ -4,13 +4,13 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 
-import './button_view.dart';
-import 'login_popup_view.form.dart';
+import 'button_view.dart';
+import 'otp_view.form.dart';
 
 @FormView(fields: [
-  FormTextField(name: 'phone'),
+  FormTextField(name: 'otp'),
 ])
-class LoginPopupView extends StatelessWidget with $LoginPopupView {
+class OtpView extends StatelessWidget with $OtpView {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,7 +82,7 @@ class LoginPopupView extends StatelessWidget with $LoginPopupView {
                       Expanded(
                         child: TextFormField(
                           keyboardType: TextInputType.phone,
-                          controller: phoneController,
+                          controller: otpController,
                           decoration: const InputDecoration(
                             hintText: '788360058',
                             border: InputBorder.none,
@@ -96,7 +96,7 @@ class LoginPopupView extends StatelessWidget with $LoginPopupView {
             ),
             Container(
               child: const Text(
-                'After entering your phone number click verify to authenticate yourself! then wait up to 20seconds to get the OTP and proceed',
+                'Otp',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey),
               ),
@@ -105,8 +105,7 @@ class LoginPopupView extends StatelessWidget with $LoginPopupView {
               child: ButtonView(
                 'Verify',
                 () {
-                  Navigator.of(context).pop();
-                  // ProxyService.api.webDesktopLogin(number: '78347');
+                  // model.saveData();
                 },
                 Colors.white,
                 Colors.blue,

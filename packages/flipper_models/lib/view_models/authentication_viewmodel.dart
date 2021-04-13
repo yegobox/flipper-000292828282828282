@@ -22,20 +22,13 @@ abstract class AuthenticationViewModel extends FormViewModel {
   Future<void> runPhoneAuthentication();
 
   Future saveData() async {
-    // FirebaseAuthenticationResult? result =
-    //     await runBusyFuture(runAuthentication());
-    // _handleAuthenticationResponse(result);
+    await runBusyFuture(runPhoneAuthentication());
   }
 
   Future<void> useGoogleAuthentication() async {
     final result = await firebaseAuthenticationService.signInWithGoogle();
     _handleAuthenticationResponse(authResult: result);
   }
-
-  // final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
-  //     store.dispatch(OtpCode(otpcode: verId));
-  //     _showModalBottomSheet(context, number);
-  //   };
 
   Future<void> usePhoneAuthentication() async {}
 

@@ -21,6 +21,8 @@ dependencies:
   stacked: ^2.0.4
   stacked_services: ^0.8.0-nullsafety.1
   google_fonts:
+  flipper_models:
+    path: '../flipper_models'
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FlipperFirebaseAuthenticationService
     extends FirebaseAuthenticationService {
   verifyOtp({required String otpCode}) {}
+
   Future<void> createAccountWithPhone(
       {required String phone, required Function callback}) async {
     try {

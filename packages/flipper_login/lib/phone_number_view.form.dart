@@ -11,7 +11,7 @@ import 'package:stacked/stacked.dart';
 
 const String PhoneValueKey = 'phone';
 
-mixin $LoginPopupView on StatelessWidget {
+mixin $PhoneNumberView on StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final FocusNode phoneFocusNode = FocusNode();
 

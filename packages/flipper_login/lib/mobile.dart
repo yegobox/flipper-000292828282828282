@@ -1,8 +1,8 @@
+library flipper_login;
+
 import 'package:flipper_login/colors.dart';
 import 'package:flipper_login/signup_login_buttons.dart';
 import 'package:flutter/material.dart';
-
-import 'login_popup_view.dart';
 
 class MobileLogin extends StatelessWidget {
   @override
