@@ -1,6 +1,5 @@
 library flipper_login_popup;
 
-import 'package:flipper/proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 
@@ -69,6 +68,7 @@ class LoginPopupView extends StatelessWidget {
                       CountryCodePicker(
                         onChanged: null,
                         initialSelection: 'RW',
+                        // ignore: prefer_const_literals_to_create_immutables
                         favorite: ['+250', 'RW'],
                         showCountryOnly: false,
                         showOnlyCountryWhenClosed: false,
@@ -77,7 +77,7 @@ class LoginPopupView extends StatelessWidget {
                       Expanded(
                         child: TextFormField(
                           keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '789078834',
                             border: InputBorder.none,
                           ),

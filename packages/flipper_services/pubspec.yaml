@@ -1,32 +1,25 @@
-name: flipper_models
+name: flipper_services
 description: A new Flutter package project.
 version: 0.0.1
 author:
 homepage:
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  # flutter: ">=1.17.0"
+  sdk: '>=2.12.0 <3.0.0'
+  flutter: '>=1.17.0 <2.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  built_value:
-  stacked_firebase_auth: ^0.2.2+1
-  firebase_core: ^1.0.2
-  firebase_auth: ^1.0.1
-  # Stacked State Management
-  stacked: ^2.0.0
-  stacked_services: ^0.8.0-nullsafety.1
-  # custom packages
-  flipper_services:
-    path: '../flipper_services'
+  injectable: ^1.2.0
+  get_it: ^6.0.0
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
-  built_value_generator:
-  stacked_generator: ^0.3.1-nullsafety.3
+  injectable_generator:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
