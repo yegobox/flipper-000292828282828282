@@ -25,3 +25,4 @@ class AppSetup {
 // //  firebase deploy --only hosting
 // // ./flutterw build web
 // NOTE:TODO: when rebuilding login_popup_view remember to add library flipper_login; in generated file
+// firebase install https://firebase.flutter.dev/docs/installation/android/

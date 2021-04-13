@@ -6,8 +6,10 @@ import 'package:flipper_services/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+// cd android && ./gradlew signingReport
+main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   setupLocator();
 
   runZonedGuarded<Future<void>>(() async {
