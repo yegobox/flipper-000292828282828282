@@ -95,6 +95,7 @@ dependencies:
   
   bitsdojo_window: 
   observable_ish:
+  qr_flutter: ^4.0.0
   
 # custom packages locally built
   flipper_login:

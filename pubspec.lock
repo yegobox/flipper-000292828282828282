@@ -484,6 +484,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  flipper_models:
+    dependency: transitive
+    description:
+      path: "packages/flipper_models"
+      relative: true
+    source: path
+    version: "0.0.1"
   flipper_services:
     dependency: "direct main"
     description:
@@ -961,6 +968,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  qr_flutter:
+    dependency: "direct main"
+    description:
+      name: qr_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   quiver:
     dependency: transitive
     description:

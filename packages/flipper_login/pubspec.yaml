@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   universal_platform: 1.0.0-nullsafety
   country_code_picker: ^2.0.1
+  qr_flutter: ^4.0.0
   # flipper_services:
   #   path: '../flipper_services'
   flipper:

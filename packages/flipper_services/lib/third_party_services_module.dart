@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import 'abstractions/api.dart';
 import 'fake_api.dart';
+import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
 
 enum ApiProvider {
@@ -29,4 +30,7 @@ abstract class ThirdPartyServicesModule {
     }
     return apiService;
   }
+
+  @lazySingleton
+  FlipperFirebaseAuthenticationService get flipperFire;
 }
