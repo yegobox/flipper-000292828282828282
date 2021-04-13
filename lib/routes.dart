@@ -1,20 +1,26 @@
-import 'package:auto_route/annotations.dart';
-// import 'package:flipper_chat/screens/welcome/welcome_screen.dart';
-import 'package:flipper_login/login_view.dart';
 import 'package:flipper_dashboard/flipper_dashboard.dart';
+import 'package:flipper_dashboard/startup_view.dart';
+import 'package:flipper_login/login_view.dart';
+import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:flipper_services/flipper_firebase_auth.dart';
 
-// im
-@MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
-  routes: <AutoRoute>[
-    AutoRoute(page: LoginView, initial: true),
-    // AutoRoute(page: WelcomeScreen, initial: true),
-    AutoRoute(page: DashboardView),
+@StackedApp(
+  routes: [
+    MaterialRoute(page: StartUpView),
+    CupertinoRoute(page: DashboardView),
+    CupertinoRoute(page: LoginView, initial: true),
+  ],
+  dependencies: [
+    LazySingleton(classType: NavigationService),
+    Singleton(classType: FlipperFirebaseAuthenticationService),
   ],
 )
-class $AppRouter {}
+class AppSetup {
+  /** Serves no purpose besides having an annotation attached to it */
+}
 
-// ./flutterw packages pub run build_runner build --delete-conflicting-outputs
-// flutter packages pub run build_runner build --delete-conflicting-outputs
-//  firebase deploy --only hosting
-// ./flutterw build web
+// // ./flutterw packages pub run build_runner build --delete-conflicting-outputs
+// // flutter packages pub run build_runner build --delete-conflicting-outputs
+// //  firebase deploy --only hosting
+// // ./flutterw build web

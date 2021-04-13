@@ -13,6 +13,9 @@ dependencies:
     sdk: flutter
   injectable: ^1.2.0
   get_it: ^6.0.0
+  stacked_firebase_auth: ^0.2.2+1
+  stacked: ^2.0.4
+  stacked_services: ^0.8.0-nullsafety.1
   
 
 dev_dependencies:

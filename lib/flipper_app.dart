@@ -1,12 +1,11 @@
-import 'package:flipper/routes.gr.dart';
+import 'package:flipper/routes.router.dart';
 import 'package:flipper_login/flipper_theme_data.dart';
 import 'package:flutter/material.dart';
 
 class FlipperApp extends StatelessWidget {
-  final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       themeMode: ThemeMode.system,
       theme: FlipperThemeData.lightThemeData
           .copyWith(platform: TargetPlatform.android),
@@ -14,8 +13,7 @@ class FlipperApp extends StatelessWidget {
           .copyWith(platform: TargetPlatform.android),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      routerDelegate: _appRouter.delegate(),
-      routeInformationParser: _appRouter.defaultRouteParser(),
+      onGenerateRoute: StackedRouter().onGenerateRoute,
     );
   }
 }

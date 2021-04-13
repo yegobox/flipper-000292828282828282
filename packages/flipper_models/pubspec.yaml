@@ -21,6 +21,10 @@ dependencies:
   # custom packages
   flipper_services:
     path: '../flipper_services'
+  flipper_login:
+    path: '../flipper_login'
+  flipper:
+    path: '../..'
 dev_dependencies:
   flutter_test:
     sdk: flutter

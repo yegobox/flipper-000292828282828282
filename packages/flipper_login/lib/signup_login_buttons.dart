@@ -31,7 +31,7 @@ class SignUpLoginButton extends StatelessWidget {
                 height: 60,
                 child: FlatButton(
                   onPressed: () {
-                    // _showModalBottomSheet(context);
+                    _showModalBottomSheet(context);
                   },
                   color: Colors.blue,
                   child: Text(

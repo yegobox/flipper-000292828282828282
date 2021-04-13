@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flipper_services/flipper_firebase_auth.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
@@ -9,7 +10,7 @@ abstract class AuthenticationViewModel extends FormViewModel {
   final navigationService = locator<NavigationService>();
 
   final firebaseAuthenticationService =
-      locator<FirebaseAuthenticationService>();
+      locator<FlipperFirebaseAuthenticationService>();
 
   final String successRoute;
   AuthenticationViewModel({required this.successRoute});
@@ -18,6 +19,7 @@ abstract class AuthenticationViewModel extends FormViewModel {
   void setFormStatus() {}
 
   Future<FirebaseAuthenticationResult> runAuthentication();
+  Future<void> runPhoneAuthentication();
 
   Future saveData() async {
     // FirebaseAuthenticationResult? result =
@@ -35,20 +37,7 @@ abstract class AuthenticationViewModel extends FormViewModel {
   //     _showModalBottomSheet(context, number);
   //   };
 
-  Future<void> usePhoneAuthentication() async {
-    final smsOTPSent = (verificationId, resendToken) {};
-    await firebaseAuthenticationService.firebaseAuth.verifyPhoneNumber(
-        phoneNumber: 'number',
-        codeSent: (verificationId, resendToken) async {},
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: (phoneAuthCredential) {
-          print(phoneAuthCredential.toString() + 'lets make this work');
-        },
-        verificationFailed: (exceptio) {
-          print('${exceptio.message} + something is wrong');
-        },
-        codeAutoRetrievalTimeout: (verificationId) {});
-  }
+  Future<void> usePhoneAuthentication() async {}
 
   Future<void> useAppleAuthentication() async {
     final result = await firebaseAuthenticationService.signInWithApple(
@@ -66,7 +55,7 @@ abstract class AuthenticationViewModel extends FormViewModel {
     if (type == 'phone') {
       // navigationService.pop();
       //now show another model for otp
-      ProxyService.nav.pop();
+      ProxyService.nav.back();
       return;
     }
     if (!authResult!.hasError) {

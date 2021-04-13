@@ -1,4 +1,4 @@
-library flipper_login_popup;
+library flipper_login;
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class LoginPopupView extends StatelessWidget with $LoginPopupView {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400.0,
+      height: 410.0,
       color: Colors.transparent,
       child: Container(
         padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
@@ -84,7 +84,7 @@ class LoginPopupView extends StatelessWidget with $LoginPopupView {
                           keyboardType: TextInputType.phone,
                           controller: phoneController,
                           decoration: const InputDecoration(
-                            hintText: '789078834',
+                            hintText: '788360058',
                             border: InputBorder.none,
                           ),
                         ),
