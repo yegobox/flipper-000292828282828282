@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code.dart';
 import 'package:flipper_services/flipper_firebase_auth.dart';
 import 'package:flipper_services/locator.dart';
 import 'package:flipper_services/proxy.dart';
@@ -21,6 +22,11 @@ class LoginViewModel extends AuthenticationViewModel {
   }
 
   @override
-  Future<void> runPhoneAuthentication() => _firebaseAuthenticationService
-      .createAccountWithPhone(phone: phoneValue!, callback: callback);
+  Future<void> runPhoneAuthentication() =>
+      _firebaseAuthenticationService.createAccountWithPhone(
+          phone: dialCode + phoneValue!, callback: callback);
+  String dialCode = '+250';
+  void setCountryIso({CountryCode? iso}) {
+    dialCode = (iso != null ? iso.dialCode : '+250')!;
+  }
 }

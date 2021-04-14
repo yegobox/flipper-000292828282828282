@@ -18,11 +18,12 @@ class LoginView extends StatelessWidget {
             : Future.wait([storage]),
         builder: (context, snapshot) {
           return Scaffold(
+            resizeToAvoidBottomInset: true,
             body: UniversalPlatform.isWeb ||
                     UniversalPlatform.isWindows ||
                     UniversalPlatform.isMacOS
                 ? const WeLogin()
-                : MobileLogin(),
+                : SingleChildScrollView(child: MobileLogin()),
           );
         });
   }

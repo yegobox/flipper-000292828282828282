@@ -1,4 +1,6 @@
+import 'package:flipper_services/flipper_navigation_service.dart';
 import 'package:injectable/injectable.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'abstractions/api.dart';
 import 'fake_api.dart';
@@ -33,4 +35,8 @@ abstract class ThirdPartyServicesModule {
 
   @lazySingleton
   FlipperFirebaseAuthenticationService get flipperFire;
+  // @lazySingleton
+  // FlipperNavigationService get nav;
+  @lazySingleton
+  NavigationService get nav;
 }

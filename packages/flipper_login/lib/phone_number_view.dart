@@ -1,10 +1,10 @@
 library flipper_login;
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flipper_login/otp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked/stacked.dart';
-import './button_view.dart';
 import 'package:flipper_models/view_models/login_viewmodel.dart';
 
 import 'phone_number_view.form.dart';
@@ -13,92 +13,101 @@ import 'phone_number_view.form.dart';
   FormTextField(name: 'phone'),
 ])
 class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
+  // final _formKey = GlobalKey<FormState>();
+  static GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  // final TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
-        onModelReady: (model) => listenToFormUpdated(model),
+        // onModelReady: (model) => listenToFormUpdated(model),
         viewModelBuilder: () => LoginViewModel(() {
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                builder: (BuildContext context) => PhoneNumberView(),
+                builder: (BuildContext context) => OtpView(),
               );
             }),
         builder: (context, model, child) {
-          return Container(
-            height: 410.0,
-            color: Colors.transparent,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
-              ),
+          return SingleChildScrollView(
+            child: Form(
+              key: _formKey,
               child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
-                            child: const Text(
-                              'Welcome to',
-                              style: TextStyle(fontWeight: FontWeight.w900),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
-                            child: const Text(
-                              'Flipper',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w900),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
-                            child: const Text(
-                              'app',
-                              style: TextStyle(fontWeight: FontWeight.w900),
-                            ),
-                          ),
-                        ]),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                    child: Form(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    RichText(
+                        text: TextSpan(children: [
+                      const TextSpan(text: 'Welcome To'),
+                      TextSpan(
+                          text: ' FLIPPER',
+                          style: TextStyle(color: Colors.blue.shade900)),
+                      const TextSpan(text: ''),
+                    ], style: const TextStyle(color: Colors.black))),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 12,
+                        right: 12,
+                        bottom: 12,
+                      ),
                       child: Container(
-                        width: double.infinity,
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.blue, width: 0.2),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  offset: const Offset(2, 1),
+                                  blurRadius: 2)
+                            ]),
                         child: Row(
-                          children: <Widget>[
+                          children: [
                             CountryCodePicker(
-                              onChanged: null,
                               initialSelection: 'RW',
                               // ignore: prefer_const_literals_to_create_immutables
-                              favorite: ['+250', 'RW'],
-                              showCountryOnly: false,
+                              favorite: ['+250', 'RWF'],
+                              showFlagDialog: true,
+                              onChanged: (code) {
+                                model.setCountryIso(iso: code);
+                              },
                               showOnlyCountryWhenClosed: false,
-                              alignLeft: false,
+                              comparator: (a, b) => b.name!.compareTo(a.name!),
+                              onInit: (code) {
+                                model.setCountryIso(iso: code);
+                              },
                             ),
                             Expanded(
-                              child: TextFormField(
-                                keyboardType: TextInputType.phone,
-                                controller: phoneController,
-                                decoration: const InputDecoration(
-                                  hintText: '788360058',
-                                  border: InputBorder.none,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Phone number is required';
+                                    }
+                                    return null;
+                                  },
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.phone,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(
+                                        color: Colors.black,
+                                      ),
+                                  controller: phoneController,
+                                  decoration: const InputDecoration(
+                                    focusColor: Colors.black,
+                                    border: InputBorder.none,
+                                    hintText: '788 3600 58',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontFamily: 'Sen',
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -106,26 +115,47 @@ class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    child: const Text(
-                      'After entering your phone number click verify to authenticate yourself! then wait up to 20seconds to get the OTP and proceed',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey),
+                    const SizedBox(height: 5),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'After entering your phone number, click on verify to authenticate yourself! Then wait up to 20 seconds to get th OTP and procede',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: ButtonView(
-                      'Verify',
-                      () {
-                        model.saveData();
-                      },
-                      Colors.white,
-                      Colors.blue,
+                    const SizedBox(height: 10),
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 60,
+                            child: RaisedButton(
+                              color: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  side: const BorderSide(
+                                    color: Colors.blue,
+                                  )),
+                              padding: const EdgeInsets.all(0.0),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  model.saveData();
+                                }
+                              },
+                              child: const Text(
+                                'Verify',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                ],
-              ),
+                  ]),
             ),
           );
         });
