@@ -12,8 +12,9 @@ class FlipperFirebaseAuthenticationService
       {required String phone, required Function callback}) async {
     try {
       log?.d('phone:$phone');
+      print('phone:$phone');
       await firebaseAuth.verifyPhoneNumber(
-          phoneNumber: 'number',
+          phoneNumber: phone,
           codeSent: (verificationId, resendToken) async {
             //call nop and show another view with otp option
             ProxyService.nav.back();

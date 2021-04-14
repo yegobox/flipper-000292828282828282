@@ -35,14 +35,14 @@ class OtpView extends StatelessWidget with $OtpView {
                     Container(
                       margin: const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
                       child: const Text(
-                        'Welcome to',
+                        'Enter',
                         style: TextStyle(fontWeight: FontWeight.w900),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
                       child: const Text(
-                        'Flipper',
+                        'Otp Received',
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.w900),
                       ),
@@ -50,7 +50,7 @@ class OtpView extends StatelessWidget with $OtpView {
                     Container(
                       margin: const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
                       child: const Text(
-                        'app',
+                        '',
                         style: TextStyle(fontWeight: FontWeight.w900),
                       ),
                     ),
@@ -70,21 +70,12 @@ class OtpView extends StatelessWidget with $OtpView {
                   ),
                   child: Row(
                     children: <Widget>[
-                      CountryCodePicker(
-                        onChanged: null,
-                        initialSelection: 'RW',
-                        // ignore: prefer_const_literals_to_create_immutables
-                        favorite: ['+250', 'RW'],
-                        showCountryOnly: false,
-                        showOnlyCountryWhenClosed: false,
-                        alignLeft: false,
-                      ),
                       Expanded(
                         child: TextFormField(
                           keyboardType: TextInputType.phone,
                           controller: otpController,
                           decoration: const InputDecoration(
-                            hintText: '788360058',
+                            hintText: 'Otp Received by SMS',
                             border: InputBorder.none,
                           ),
                         ),

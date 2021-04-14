@@ -24,7 +24,16 @@ class LoginViewModel extends AuthenticationViewModel {
   @override
   Future<void> runPhoneAuthentication() =>
       _firebaseAuthenticationService.createAccountWithPhone(
-          phone: dialCode + phoneValue!, callback: callback);
+          phone: dialCode + phoneNumber!, callback: callback);
+  void test() {
+    print(phoneValue!);
+  }
+
+  String? phoneNumber;
+  void setPhoneNumber({required String phone}) {
+    phoneNumber = phone;
+  }
+
   String dialCode = '+250';
   void setCountryIso({CountryCode? iso}) {
     dialCode = (iso != null ? iso.dialCode : '+250')!;
