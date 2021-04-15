@@ -1,6 +1,5 @@
 library flipper_login;
 
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -85,13 +84,13 @@ class OtpView extends StatelessWidget with $OtpView {
                 ),
               ),
             ),
-            Container(
-              child: const Text(
-                'Otp',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey),
-              ),
-            ),
+            // Container(
+            //   child: const Text(
+            //     'Otp',
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(color: Colors.grey),
+            //   ),
+            // ),
             Container(
               child: ButtonView(
                 'Verify',

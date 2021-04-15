@@ -1,9 +1,36 @@
+import 'package:flipper_login/otp_view.dart';
 import 'package:flipper_login/phone_number_view.dart';
+import 'package:flipper_models/view_models/login_viewmodel.dart';
+import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 
 class SignUpLoginButton extends StatelessWidget {
   const SignUpLoginButton({Key? key, this.portrait = false}) : super(key: key);
   final bool portrait;
+
+  void _otp(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 0),
+          child: Container(
+            child: OtpView(),
+            height: 400,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -30,59 +57,74 @@ class SignUpLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 50),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(20.0)),
-              child: SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: FlatButton(
-                  onPressed: () {
-                    _showModalBottomSheet(context);
-                  },
-                  color: Colors.blue,
-                  child: Text(
-                    'Create Account',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(color: Colors.white),
+    return ViewModelBuilder<LoginViewModel>.reactive(
+        onModelReady: (model) {
+          model.lg.login.listen((v) {
+            // ProxyService.nav
+            //     .back(); //pop any previous page to show another or otp
+            if (v.isNotEmpty) {
+              _otp(context);
+            }
+          });
+        },
+        viewModelBuilder: () => LoginViewModel(),
+        builder: (context, model, child) {
+          return Container(
+            margin: const EdgeInsets.only(top: 50),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 18.0, right: 18.0, top: 0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: FlatButton(
+                        onPressed: () {
+                          _showModalBottomSheet(context);
+                        },
+                        color: Colors.blue,
+                        child: Text(
+                          'Create Account',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
-            child: SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: OutlineButton(
-                color: Colors.blue,
-                child: Text(
-                  'Sign in',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(color: Colors.blue),
+                Container(
+                  padding:
+                      const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 60,
+                    child: OutlineButton(
+                      color: Colors.blue,
+                      child: Text(
+                        'Sign in',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: Colors.blue),
+                      ),
+                      onPressed: () {
+                        _showModalBottomSheet(context);
+                      },
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  _showModalBottomSheet(context);
-                },
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

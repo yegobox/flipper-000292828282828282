@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_services/flipper_firebase_auth.dart';
+import 'package:flipper_services/login_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
@@ -8,15 +9,13 @@ import 'package:flipper_services/locator.dart';
 
 abstract class AuthenticationViewModel extends FormViewModel {
   final navigationService = locator<NavigationService>();
+  final LoginService login = locator<LoginService>();
 
   final firebaseAuthenticationService =
       locator<FlipperFirebaseAuthenticationService>();
 
   final String successRoute;
   AuthenticationViewModel({required this.successRoute});
-
-  @override
-  void setFormStatus() {}
 
   Future<FirebaseAuthenticationResult> runAuthentication();
   Future<void> runPhoneAuthentication();
@@ -55,8 +54,11 @@ abstract class AuthenticationViewModel extends FormViewModel {
       // navigate to success route
       navigationService.replaceWith(successRoute);
     } else {
-      setValidationMessage(authResult.errorMessage);
+      // setValidationMessage(authResult.errorMessage);
       notifyListeners();
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [login];
 }

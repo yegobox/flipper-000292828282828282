@@ -1,7 +1,6 @@
 library flipper_login;
 
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:flipper_login/otp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked/stacked.dart';
@@ -19,13 +18,7 @@ class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
       onModelReady: (model) => listenToFormUpdated(model),
-      viewModelBuilder: () => LoginViewModel(() {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (BuildContext context) => OtpView(),
-        );
-      }),
+      viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) {
         return SingleChildScrollView(
           child: Form(
@@ -138,11 +131,12 @@ class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
                         padding: const EdgeInsets.all(0.0),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            //TODO: more phone validation to come!
+                            //TODO(richard): more phone validation to come!
                             model.setPhoneNumber(
                                 phone: phoneController.value
                                     .text); //Can not use stacked to get value with phoneValue on Login_viewmodel
-                            model.saveData();
+                            // model.saveData();
+                            model.login(context: context);
                           }
                         },
                         child: const Text(

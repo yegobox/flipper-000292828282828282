@@ -23,7 +23,7 @@ class AppSetup {
 // // ./flutterw packages pub run build_runner build --delete-conflicting-outputs
 // // flutter packages pub run build_runner build --delete-conflicting-outputs
 // //  firebase deploy --only hosting
-// // ./flutterw build web
+// // flutter build web
 // NOTE:TODO: when rebuilding login_popup_view remember to add library flipper_login; in generated file
 // firebase install https://firebase.flutter.dev/docs/installation/android/
 // flutter create --template=package hello

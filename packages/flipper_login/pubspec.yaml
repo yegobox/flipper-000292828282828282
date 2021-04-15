@@ -25,6 +25,8 @@ dependencies:
   google_fonts:
   flipper_models:
     path: '../flipper_models'
+  flipper_services:
+    path: '../flipper_services'
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -13,7 +13,7 @@ class WeLogin extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Scan to log in'),
+            Text('Scan to log in v2'),
             QrImage(
               data: "1234567890",
               version: QrVersions.auto,

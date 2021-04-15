@@ -8,23 +8,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'mobile.dart';
 
 class LoginView extends StatelessWidget {
-  final Future<bool> storage = GetStorage.init();
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: (UniversalPlatform.isAndroid)
-            ? Future.wait([Firebase.initializeApp(), storage])
-            : Future.wait([storage]),
-        builder: (context, snapshot) {
-          return Scaffold(
-            resizeToAvoidBottomInset: true,
-            body: UniversalPlatform.isWeb ||
-                    UniversalPlatform.isWindows ||
-                    UniversalPlatform.isMacOS
-                ? const WeLogin()
-                : SingleChildScrollView(child: MobileLogin()),
-          );
-        });
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: UniversalPlatform.isWeb ||
+              UniversalPlatform.isWindows ||
+              UniversalPlatform.isMacOS
+          ? SingleChildScrollView(child: MobileLogin())
+          : SingleChildScrollView(child: MobileLogin()),
+    );
   }
 }

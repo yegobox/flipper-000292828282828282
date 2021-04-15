@@ -6,6 +6,7 @@ import 'abstractions/api.dart';
 import 'fake_api.dart';
 import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
+import 'login_service.dart';
 
 enum ApiProvider {
   Fake,
@@ -35,8 +36,8 @@ abstract class ThirdPartyServicesModule {
 
   @lazySingleton
   FlipperFirebaseAuthenticationService get flipperFire;
-  // @lazySingleton
-  // FlipperNavigationService get nav;
   @lazySingleton
   NavigationService get nav;
+  @lazySingleton
+  LoginService get login;
 }

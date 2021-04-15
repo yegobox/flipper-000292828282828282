@@ -1,24 +1,23 @@
 library flipper_services;
 
-import 'package:flipper_services/proxy.dart';
+// import 'package:flipper_services/proxy.dart';
+import 'package:flipper_services/locator.dart';
+import 'package:flipper_services/login_service.dart';
 import 'package:stacked_firebase_auth/src/firebase_authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FlipperFirebaseAuthenticationService
     extends FirebaseAuthenticationService {
   verifyOtp({required String otpCode}) {}
+  final lg = locator<LoginService>();
 
-  Future<void> createAccountWithPhone(
-      {required String phone, required Function callback}) async {
+  Future<void> createAccountWithPhone({required String phone}) async {
     try {
-      log?.d('phone:$phone');
-      print('phone:$phone');
       await firebaseAuth.verifyPhoneNumber(
           phoneNumber: phone,
           codeSent: (verificationId, resendToken) async {
-            //call nop and show another view with otp option
-            ProxyService.nav.back();
-            callback;
+            lg.setLogin(
+                l: {verificationId: verificationId, resendToken: resendToken});
           },
           timeout: const Duration(seconds: 60),
           verificationCompleted: (phoneAuthCredential) {
