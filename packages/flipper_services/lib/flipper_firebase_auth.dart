@@ -5,6 +5,7 @@ import 'package:flipper_services/locator.dart';
 import 'package:flipper_services/login_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:stacked_firebase_auth/src/firebase_authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_login/otp_view.dart';
@@ -15,6 +16,7 @@ class FlipperFirebaseAuthenticationService extends FirebaseAuthenticationService
     implements Platform {
   verifyOtp({required String otpCode}) {}
   final lg = locator<LoginService>();
+  final box = GetStorage();
 
   @override
   Future<void> createAccountWithPhone(
@@ -24,9 +26,9 @@ class FlipperFirebaseAuthenticationService extends FirebaseAuthenticationService
           phoneNumber: phone,
           codeSent: (verificationId, resendToken) async {
             ProxyService.nav.back();
-            // here
-            lg.setLogin(
-                l: {verificationId: verificationId, resendToken: resendToken});
+            box.write('verificationId', verificationId);
+            box.write('resendToken', resendToken);
+
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,

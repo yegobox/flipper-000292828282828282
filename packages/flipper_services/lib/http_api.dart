@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/sync.dart';
@@ -9,16 +11,20 @@ import 'package:http/http.dart' as http;
 
 class ExtendedClient extends http.BaseClient {
   final http.Client _inner;
-
+  final box = GetStorage();
   // ignore: sort_constructors_first
   ExtendedClient(this._inner);
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    const String customValue = '';
+    String? token = box.read('bearerToken');
+    String? userId = box.read('userId');
     // you may want to pickup the value from tshared preferences, like:
     // customValue = await LocalStorage.getStringItem('token');
-    // request.headers['custom-header-here'] = customValue;
+    request.headers['Authorization'] = token == null ? '' : token;
+    request.headers['userId'] = userId == null ? '' : userId;
+    print(userId);
+    print(token);
     return _inner.send(request);
   }
 }
@@ -26,7 +32,8 @@ class ExtendedClient extends http.BaseClient {
 @lazySingleton
 class HttpApi implements Api {
   ExtendedClient client = ExtendedClient(http.Client());
-  String baseUri = "https://flipper.yegobox.com";
+  String flipperApi = "https://flipper.yegobox.com";
+  String apihub = "https://apihub.yegobox.com";
   @override
   void cleanKeyPad() {
     // TODO: implement cleanKeyPad
@@ -55,20 +62,19 @@ class HttpApi implements Api {
 
   @override
   Future<Login> login({required String phone}) async {
-    final response = await client.post(
-        Uri.parse("https://flipper.yegobox.com/open-login"),
-        body: {'phone': phone});
+    final response = await client
+        .post(Uri.parse("$flipperApi/open-login"), body: {'phone': phone});
     return loginFromJson(response.body);
   }
 
   @override
-  Future<Sync> sync({required String userId}) async {
-    final response = await client.post(
-        Uri.parse("https://apihub.yegobox.com/auth"),
-        body: {'userId': userId},
+  Future<Sync> authenticateWithOfflineDb({required String userId}) async {
+    final response = await client.post(Uri.parse("$apihub/auth"),
+        body: jsonEncode({'userId': userId}),
         headers: {'Content-Type': 'application/json'});
     //save the token in local storage.
     final box = GetStorage();
+    print(syncFromJson(response.body));
     box.write('bearerToken', syncFromJson(response.body).token);
     box.write('userId', syncFromJson(response.body).userId);
     return syncFromJson(response.body);
@@ -76,7 +82,8 @@ class HttpApi implements Api {
 
   @override
   Future<List<Business>> canStart() async {
-    final response = await client.get(Uri.parse("$baseUri/api/businesses"));
+    final response = await client.get(Uri.parse("$apihub/api/businesses"));
+
     return businessFromJson(response.body);
   }
 }

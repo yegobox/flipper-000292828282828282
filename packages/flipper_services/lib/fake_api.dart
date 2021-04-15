@@ -38,7 +38,7 @@ class FakeApi implements Api {
   }
 
   @override
-  Future<Sync> sync({required String userId}) {
+  Future<Sync> authenticateWithOfflineDb({required String userId}) {
     // TODO: implement sync
     throw UnimplementedError();
   }

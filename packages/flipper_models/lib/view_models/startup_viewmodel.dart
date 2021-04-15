@@ -9,9 +9,10 @@ class StartUpViewModel extends BaseViewModel {
   Future<bool> didWeSync() async {
     if (isLoggedIn()) {
       List<Business> response = await ProxyService.api.canStart();
-      return response.isEmpty ? false : true;
+      didSync = response.isEmpty ? false : true;
+      return didSync;
     } else {
-      return false;
+      return didSync = false;
     }
   }
 
