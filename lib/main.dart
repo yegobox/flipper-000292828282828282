@@ -7,11 +7,13 @@ import 'package:flipper_services/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:universal_platform/universal_platform.dart';
 
+final isWindows = UniversalPlatform.isWindows;
 // cd android && ./gradlew signingReport
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); //comment it for windows
+  (!isWindows) ? await Firebase.initializeApp() : ''; //comment it for windows
   await GetStorage.init();
   // done init in mobile.
   setupLocator();

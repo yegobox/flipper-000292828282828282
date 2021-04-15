@@ -9,11 +9,14 @@ import 'package:stacked_firebase_auth/src/firebase_authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_login/otp_view.dart';
 
-class FlipperFirebaseAuthenticationService
-    extends FirebaseAuthenticationService {
+import 'abstractions/platform.dart';
+
+class FlipperFirebaseAuthenticationService extends FirebaseAuthenticationService
+    implements Platform {
   verifyOtp({required String otpCode}) {}
   final lg = locator<LoginService>();
 
+  @override
   Future<void> createAccountWithPhone(
       {required String phone, required BuildContext context}) async {
     try {

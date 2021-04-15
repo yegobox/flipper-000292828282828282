@@ -27,7 +27,7 @@ class StartUpView extends StatelessWidget {
           LoaderView();
         }
         if (!model.isLoggedIn()) {
-          // ProxyService.nav.navigateTo(Routes.loginView);
+          //
           return LoginView();
         }
         if (!model.didSync) {

@@ -1,5 +1,5 @@
 // import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flipper_services/flipper_firebase_auth.dart';
+import 'package:flipper_services/abstractions/platform.dart';
 import 'package:flipper_services/login_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:stacked/stacked.dart';
@@ -11,8 +11,7 @@ abstract class AuthenticationViewModel extends FormViewModel {
   final navigationService = locator<NavigationService>();
   final LoginService login = locator<LoginService>();
 
-  final firebaseAuthenticationService =
-      locator<FlipperFirebaseAuthenticationService>();
+  final firebaseAuthenticationService = locator<Platform>();
 
   final String successRoute;
   AuthenticationViewModel({required this.successRoute});

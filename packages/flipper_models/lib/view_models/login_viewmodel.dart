@@ -8,10 +8,11 @@ import 'package:flipper_services/login_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:flipper_services/abstractions/platform.dart';
 
 class LoginViewModel extends FormViewModel {
   LoginViewModel();
-  final fb = locator<FlipperFirebaseAuthenticationService>();
+  final fb = locator<Platform>();
   final lg = locator<LoginService>();
   void login({required BuildContext context}) {
     fb.createAccountWithPhone(phone: dialCode + phoneNumber!, context: context);

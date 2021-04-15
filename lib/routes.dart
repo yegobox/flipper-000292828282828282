@@ -5,7 +5,6 @@ import 'package:flipper_login/signup_form_view.dart';
 import 'package:flipper_dashboard/business_home_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:flipper_services/flipper_firebase_auth.dart';
 
 @StackedApp(
   routes: [
@@ -15,10 +14,7 @@ import 'package:flipper_services/flipper_firebase_auth.dart';
     MaterialRoute(page: BusinessHomeView),
     MaterialRoute(page: LoginView),
   ],
-  dependencies: [
-    LazySingleton(classType: NavigationService),
-    Singleton(classType: FlipperFirebaseAuthenticationService),
-  ],
+  dependencies: [LazySingleton(classType: NavigationService)],
 )
 class AppSetup {
   /** Serves no purpose besides having an annotation attached to it */
