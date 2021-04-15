@@ -8,6 +8,7 @@ class LoginService with ReactiveServiceMixin {
   final RxValue<Map> login = RxValue<Map>({});
 
   void setLogin({required Map l}) {
+    login.value = {};
     login.value = l;
   }
 }

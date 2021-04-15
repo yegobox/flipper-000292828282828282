@@ -36,17 +36,7 @@ class AppColors {
 
   static Color lightGrey = const Color(0xffe2e8ea);
 
-  static Color profileDialogBgColor = const Color(0xff73bfb8);
-  static Color profileDialogIconColor = const Color(0xff8ac9c3);
-
-  static Color chatDetailScaffoldBgColor = const Color(0xffe7e2db);
-
   static Color iconColor = const Color(0xff858b90);
-  static Color textFieldHintColor = const Color(0xffcdcdcd);
-
-  static Color messageBubbleColor = const Color(0xffe1ffc7);
-  static Color blueCheckColor = const Color(0xff3fbbec);
-  static Color textWhiteColor = const Color(0xffe7e2db);
 
   static Color statusThumbnailBorderColor = const Color(0xff21bfa6);
 
@@ -57,7 +47,7 @@ class AppColors {
   static MaterialColor gray = AppColors.factoryColor(0xffA9A9A9);
   static MaterialColor darkGray = AppColors.factoryColor(0xff78797B);
   static MaterialColor green = AppColors.factoryColor(0xff7EC518);
-  static MaterialColor flipperGreen = AppColors.factoryColor(0xffffffff);
+  static MaterialColor flipperMainColor = AppColors.factoryColor(0xffffffff);
   static MaterialColor houseGreen = AppColors.factoryColor(0xFF1e3932);
   static MaterialColor warmNeutral = AppColors.factoryColor(0xfff2f0eb);
   static MaterialColor lightGreen = AppColors.factoryColor(0xffd4e9e2);

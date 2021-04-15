@@ -15,6 +15,7 @@ dependencies:
   stacked_firebase_auth: ^0.2.2+1
   firebase_core: ^1.0.2
   firebase_auth: ^1.0.1
+  get_storage:
   # Stacked State Management
   stacked: ^2.0.4
   stacked_services: ^0.8.0-nullsafety.1

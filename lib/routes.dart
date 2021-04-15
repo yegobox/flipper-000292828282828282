@@ -1,15 +1,19 @@
 import 'package:flipper_dashboard/flipper_dashboard.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_login/login_view.dart';
+import 'package:flipper_login/signup_form_view.dart';
+import 'package:flipper_dashboard/business_home_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flipper_services/flipper_firebase_auth.dart';
 
 @StackedApp(
   routes: [
-    MaterialRoute(page: StartUpView),
-    CupertinoRoute(page: DashboardView),
-    CupertinoRoute(page: LoginView, initial: true),
+    MaterialRoute(page: StartUpView, initial: true),
+    MaterialRoute(page: DashboardView),
+    MaterialRoute(page: SignUpFormView),
+    MaterialRoute(page: BusinessHomeView),
+    MaterialRoute(page: LoginView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

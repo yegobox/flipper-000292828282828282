@@ -1,6 +1,7 @@
 library flipper_login;
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked/stacked.dart';
@@ -20,6 +21,7 @@ class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
       onModelReady: (model) => listenToFormUpdated(model),
       viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) {
+        
         return SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -77,6 +79,9 @@ class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Phone number is required';
+                              }
+                              if (value.length < 9 || value.length > 9) {
+                                return 'Phone number is invalid';
                               }
                               return null;
                             },

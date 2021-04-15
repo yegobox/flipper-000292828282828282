@@ -1,14 +1,43 @@
 library flipper_dashboard;
 
+import 'package:flipper/routes.router.dart';
+import 'package:flipper_dashboard/loader.dart';
+import 'package:flipper_login/signup_form_view.dart';
+import 'package:flipper_models/view_models/startup_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+import 'package:flipper_services/proxy.dart';
+import 'package:flipper_login/login_view.dart';
+
+import 'business_home_view.dart';
 
 class StartUpView extends StatelessWidget {
   const StartUpView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(" I am a startup"),
+    return ViewModelBuilder<StartUpViewModel>.reactive(
+      fireOnModelReadyOnce: true,
+      onModelReady: (model) {
+        model.didWeSync();
+      },
+      viewModelBuilder: () => StartUpViewModel(),
+      builder: (context, model, child) {
+        if (model.isBusy) {
+          LoaderView();
+        }
+        if (!model.isLoggedIn()) {
+          // ProxyService.nav.navigateTo(Routes.loginView);
+          return LoginView();
+        }
+        if (!model.didSync) {
+          //go signupform
+          return SignUpFormView();
+        } else {
+          //go to home.
+          return BusinessHomeView();
+        }
+      },
     );
   }
 }

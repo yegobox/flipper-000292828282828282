@@ -1,3 +1,7 @@
+import 'package:flipper_models/models/business.dart';
+import 'package:flipper_models/models/login.dart';
+import 'package:flipper_models/models/sync.dart';
+
 abstract class Api {
   Future payroll();
   // List<Order> currentOrders();
@@ -9,6 +13,10 @@ abstract class Api {
   void listenColor();
   void listenCategory();
   void cleanKeyPad();
+  Future<Login> login({required String phone});
+  Future<Sync> sync({required String userId});
+  Future<List<Business>>
+      canStart(); //do we have business,branch sure then start
   // Future<List<Product>> products();
   // Future<List<Variation>> variations();
   // Future<List<Unit>> units();

@@ -37,7 +37,7 @@ class MobileLogin extends StatelessWidget {
                   'Flipper',
                   textAlign: TextAlign.center,
                   style:
-                      TextStyle(fontSize: 26, color: AppColors.textWhiteColor),
+                      TextStyle(fontSize: 26, color: Colors.white),
                 ),
                 const SizedBox(
                   height: 10,
@@ -46,7 +46,7 @@ class MobileLogin extends StatelessWidget {
                   'Interact and grow your bussiness',
                   textAlign: TextAlign.center,
                   style:
-                      TextStyle(fontSize: 18, color: AppColors.textWhiteColor),
+                      TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ],
             ),

@@ -17,6 +17,11 @@ dependencies:
   stacked: ^2.0.4
   stacked_services: ^0.8.0-nullsafety.1
   observable_ish:
+  flipper_models:
+    path: '../flipper_models'
+  flipper_login:
+    path: '../flipper_login'
+  get_storage:
   
 
 dev_dependencies:

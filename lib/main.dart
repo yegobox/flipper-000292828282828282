@@ -20,7 +20,7 @@ main() async {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.black,
-        systemNavigationBarColor: AppColors.flipperGreen,
+        systemNavigationBarColor: AppColors.flipperMainColor,
         statusBarIconBrightness: Brightness.light,
       ),
     );

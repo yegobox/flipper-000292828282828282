@@ -9,28 +9,7 @@ class SignUpLoginButton extends StatelessWidget {
   const SignUpLoginButton({Key? key, this.portrait = false}) : super(key: key);
   final bool portrait;
 
-  void _otp(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: 0),
-          child: Container(
-            child: OtpView(),
-            height: 400,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
+  void _otp(BuildContext context) {}
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -58,15 +37,7 @@ class SignUpLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
-        onModelReady: (model) {
-          model.lg.login.listen((v) {
-            // ProxyService.nav
-            //     .back(); //pop any previous page to show another or otp
-            if (v.isNotEmpty) {
-              _otp(context);
-            }
-          });
-        },
+        onModelReady: (model) {},
         viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, child) {
           return Container(
