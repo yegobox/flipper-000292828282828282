@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/abstractions/platform.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class LoginViewModel extends FormViewModel {
   LoginViewModel();
@@ -42,18 +43,23 @@ class LoginViewModel extends FormViewModel {
   Future<void> verifyWithOtp() async {
     String phone = box.read('userPhone');
     String otp = box.read('otp');
-    String verificationId = box.read('verificationId');
 
-    final credential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: otp,
-    );
-    final FirebaseAuth auth = FirebaseAuth.instance;
     try {
-      await auth.signInWithCredential(credential);
+      if (UniversalPlatform.isWeb) {
+        fb.confirmOtpForWeb(otp: otp);
+      } else {
+        String verificationId = box.read('verificationId');
+        final credential = PhoneAuthProvider.credential(
+          verificationId: verificationId,
+          smsCode: otp,
+        );
+        final FirebaseAuth auth = FirebaseAuth.instance;
+        await auth.signInWithCredential(credential);
+      }
     } catch (e) {}
     FirebaseAuth.instance.authStateChanges().listen((event) async {
       if (event != null) {
+        print('got the user with web');
         Login login = await ProxyService.api.login(phone: phone);
 
         ///call api to sync! start by syncing

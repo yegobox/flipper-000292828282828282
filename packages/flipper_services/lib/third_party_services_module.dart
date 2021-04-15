@@ -11,7 +11,7 @@ import 'login_service.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 final isWindows = UniversalPlatform.isWindows;
-
+// UniversalPlatform.platform;
 enum ApiProvider {
   Fake,
   Rest,
@@ -77,6 +77,12 @@ class WindowsFirebaseAuthenticationImplementation implements Platform {
   @override
   signInWithGoogle() {
     // TODO: implement signInWithGoogle
+    throw UnimplementedError();
+  }
+
+  @override
+  confirmOtpForWeb({required String otp}) {
+    // TODO: implement confirmOtpForWeb
     throw UnimplementedError();
   }
 }

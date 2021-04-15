@@ -7,4 +7,5 @@ abstract class Platform {
   signInWithGoogle();
   signInWithApple(
       {required String appleClientId, required String appleRedirectUri});
+  confirmOtpForWeb({required String otp});
 }

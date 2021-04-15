@@ -26,6 +26,7 @@ dependencies:
     path: '../flipper_login'
   flipper:
     path: '../..'
+  universal_platform: 1.0.0-nullsafety
 dev_dependencies:
   flutter_test:
     sdk: flutter
