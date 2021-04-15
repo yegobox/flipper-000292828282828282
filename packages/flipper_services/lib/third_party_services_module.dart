@@ -1,4 +1,3 @@
-import 'package:flipper_services/flipper_navigation_service.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -12,9 +11,6 @@ import 'login_service.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 final isWindows = UniversalPlatform.isWindows;
-// import 'stub.dart'
-//     if (dart.library.io) 'io.dart'
-//     if (dart.library.html) 'html.dart';
 
 enum ApiProvider {
   Fake,
