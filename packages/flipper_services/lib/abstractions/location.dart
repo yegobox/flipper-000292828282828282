@@ -1,3 +1,3 @@
-abstract class Location {
-  Map<String, String> location(); //map<longitude,latitude>
+abstract class FlipperLocation {
+  Future<Map<String, String>> getLocation(); //map<longitude,latitude>
 }

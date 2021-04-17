@@ -59,8 +59,8 @@ abstract class ThirdPartyServicesModule {
   }
 
   @lazySingleton
-  Location get location {
-    Location location;
+  FlipperLocation get location {
+    FlipperLocation location;
     switch (platform) {
       case "windows":
         location = WindowsLocationService();
@@ -77,9 +77,9 @@ abstract class ThirdPartyServicesModule {
   LoginService get login;
 }
 
-class WindowsLocationService implements Location {
+class WindowsLocationService implements FlipperLocation {
   @override
-  Map<String, String> location() {
+  Future<Map<String, String>> getLocation() async {
     return {
       "longitude": "11",
       "latitude": "11"
