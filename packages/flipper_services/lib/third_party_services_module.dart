@@ -3,13 +3,14 @@ import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'abstractions/api.dart';
+import 'abstractions/location.dart';
 import 'abstractions/platform.dart';
 import 'fake_api.dart';
 import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
+import 'location_service.dart';
 import 'login_service.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:flipper_models/view_models/login_viewmodel.dart';
 
 final isWindows = UniversalPlatform.isWindows;
 // UniversalPlatform.platform;
@@ -58,9 +59,32 @@ abstract class ThirdPartyServicesModule {
   }
 
   @lazySingleton
+  Location get location {
+    Location location;
+    switch (platform) {
+      case "windows":
+        location = WindowsLocationService();
+        break;
+      default:
+        location = LocationService();
+    }
+    return location;
+  }
+
+  @lazySingleton
   NavigationService get nav;
   @lazySingleton
   LoginService get login;
+}
+
+class WindowsLocationService implements Location {
+  @override
+  Map<String, String> location() {
+    return {
+      "longitude": "11",
+      "latitude": "11"
+    }; //for windows it is not supported then please use the default
+  }
 }
 
 class WindowsFirebaseAuthenticationImplementation implements Platform {

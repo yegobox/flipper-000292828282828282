@@ -51,7 +51,8 @@ dependencies:
   camera: ^0.8.0
   auto_route:
   awesome_notifications:
-  geolocator:
+  # geolocator:
+  location:
   permission_handler:
   built_value:
   image_picker:

@@ -62,7 +62,7 @@ class FlipperFirebaseAuthenticationService extends FirebaseAuthenticationService
             },
             codeAutoRetrievalTimeout: (verificationId) {});
       } else {
-        print('we are using web thing22::' + phone);
+        // print('we are using web thing22::' + phone);
         confirmationResult = await firebaseAuth.signInWithPhoneNumber(phone);
         ProxyService.nav.back();
         showModalBottomSheet(
