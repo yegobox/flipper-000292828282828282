@@ -16,6 +16,8 @@ class StartUpViewModel extends BaseViewModel {
       didSync = false;
     }
     setBusy(false);
+    didSync =
+        false; //FIXME: delete this after testing if the app can redirect to signup form should be tested by uni testing
     notifyListeners();
     return didSync;
   }
