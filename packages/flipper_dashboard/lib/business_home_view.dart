@@ -3,6 +3,8 @@ library flipper_dashboard;
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'home_app_bar.dart';
+
 class BusinessHomeView extends StatefulWidget {
   const BusinessHomeView({Key? key}) : super(key: key);
 
@@ -46,8 +48,9 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
       onWillPop: _onWillPop,
       child: Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: const Text(''),
+        appBar: HomeAppBar(
+          scaffoldKey: _scaffoldKey,
+          sideOpenController: _sideOpenController,
         ),
         body: FadeTransition(
           opacity: _fadeAnimation,
@@ -71,12 +74,8 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
-              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                const Icon(Icons.add,
-                    size: 20,
-                    // These colors are not defined in the Material Design spec.
-                    color: Colors.white),
+                const Icon(Icons.add, size: 20, color: Colors.white),
                 const Text(
                   ' Add Product',
                   textAlign: TextAlign.center,
@@ -86,6 +85,7 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
             ),
           ),
         ),
+        drawer: Text('I am Side drawer'),
       ),
     );
   }
