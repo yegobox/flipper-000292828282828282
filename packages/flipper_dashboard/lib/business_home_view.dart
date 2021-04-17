@@ -52,15 +52,17 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
         appBar: HomeAppBar(
           scaffoldKey: _scaffoldKey,
           sideOpenController: _sideOpenController,
+          child: Text('I am appBar custom'),
         ),
         body: FadeTransition(
           opacity: _fadeAnimation,
           child: SlideOutScreen(
-              sideOpenController: _sideOpenController,
-              side: const Text('Side'),
-              main: Column(
-                children: [Text('I am home#2')],
-              )),
+            sideOpenController: _sideOpenController,
+            side: const Text('Side'),
+            main: Column(
+              children: [Text('I am home#2')],
+            ),
+          ),
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,

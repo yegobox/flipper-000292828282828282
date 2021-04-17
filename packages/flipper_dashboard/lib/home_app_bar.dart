@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar(
-      {Key? key, required this.scaffoldKey, required this.sideOpenController})
+      {Key? key,
+      required this.scaffoldKey,
+      required this.sideOpenController,
+      this.child})
       : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey;
   final ValueNotifier<bool> sideOpenController;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +18,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
         leading: _hamburger(),
+        title: child == null ? SizedBox.shrink() : child,
       ),
     );
   }
