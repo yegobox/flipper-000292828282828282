@@ -1,7 +1,14 @@
+import 'abstractions/db.dart';
+// import 'abstractions/db.dart';
+
 import 'package:flipper_models/models/business.dart';
-import 'package:flipper_models/models/login.dart';
-import 'package:flipper_models/models/sync.dart';
 
-import 'abstractions/api.dart';
+import 'package:stacked/stacked.dart';
 
-class LiteApi {}
+class LiteApi with ReactiveServiceMixin implements DB {
+  @override
+  List<Business> get() {
+    // TODO: implement get
+    throw UnimplementedError();
+  }
+}

@@ -1,6 +1,5 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_services/abstractions/platform.dart';
-import 'package:flipper_services/login_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
@@ -9,7 +8,6 @@ import 'package:flipper_services/locator.dart';
 
 abstract class AuthenticationViewModel extends FormViewModel {
   final navigationService = locator<NavigationService>();
-  final LoginService login = locator<LoginService>();
 
   final firebaseAuthenticationService = locator<Platform>();
 
@@ -57,7 +55,4 @@ abstract class AuthenticationViewModel extends FormViewModel {
       notifyListeners();
     }
   }
-
-  @override
-  List<ReactiveServiceMixin> get reactiveServices => [login];
 }

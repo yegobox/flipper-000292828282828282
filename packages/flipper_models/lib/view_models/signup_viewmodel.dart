@@ -58,6 +58,7 @@ class SignupViewModel extends FormViewModel {
       'name': nameValue,
       'latitude': latitude,
       'longitude': longitude,
+      'currency': 'RW',
       'type': businessType,
       //TODO: right now I am not sure locale!.countryCode can be reliable as sometime it need to test it on real-device
       'country': 'RW'

@@ -32,6 +32,7 @@ class ExtendedClient extends http.BaseClient {
 @lazySingleton
 class HttpApi implements Api {
   ExtendedClient client = ExtendedClient(http.Client());
+  // HttpApi();
   String flipperApi = "https://flipper.yegobox.com";
   String apihub = "https://apihub.yegobox.com";
   @override

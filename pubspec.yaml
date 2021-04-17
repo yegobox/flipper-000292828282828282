@@ -62,7 +62,7 @@ dependencies:
   expandable:
   timezone: 0.7.0-nullsafety.0
   cupertino_icons:
-  get_storage:
+  get_storage: ^2.0.2
   country_picker:
  
   rxdart:
@@ -79,7 +79,7 @@ dependencies:
   mailer:
   connectivity:
  
-  get: 4.0.0-nullsafety.2
+  get: 
   flutter_slidable: 
   in_app_review:
   timeago:

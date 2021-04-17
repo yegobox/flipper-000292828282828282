@@ -8,8 +8,8 @@ import 'abstractions/platform.dart';
 import 'fake_api.dart';
 import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
+import 'local_storage.dart';
 import 'location_service.dart';
-import 'login_service.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 final isWindows = UniversalPlatform.isWindows;
@@ -74,7 +74,7 @@ abstract class ThirdPartyServicesModule {
   @lazySingleton
   NavigationService get nav;
   @lazySingleton
-  LoginService get login;
+  LocalStorageImpl get box;
 }
 
 class WindowsLocationService implements FlipperLocation {

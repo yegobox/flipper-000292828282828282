@@ -2,7 +2,6 @@ library flipper_services;
 
 // import 'package:flipper_services/proxy.dart';
 import 'package:flipper_services/locator.dart';
-import 'package:flipper_services/login_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,7 +15,6 @@ import 'abstractions/platform.dart';
 class FlipperFirebaseAuthenticationService extends FirebaseAuthenticationService
     implements Platform {
   verifyOtp({required String otpCode}) {}
-  final lg = locator<LoginService>();
   final box = GetStorage();
   ConfirmationResult? confirmationResult;
 
