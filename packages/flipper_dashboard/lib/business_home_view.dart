@@ -3,6 +3,7 @@ library flipper_dashboard;
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'bottom_menu_bar.dart';
 import 'home_app_bar.dart';
 
 class BusinessHomeView extends StatefulWidget {
@@ -84,6 +85,10 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: BottomMenubar(
+          tab: 0,
+          switchTab: () {},
         ),
         drawer: Text('I am Side drawer'),
       ),
