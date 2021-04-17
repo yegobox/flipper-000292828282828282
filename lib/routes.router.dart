@@ -55,8 +55,11 @@ class StackedRouter extends RouterBase {
       );
     },
     SignUpFormView: (data) {
+      var args = data.getArgs<SignUpFormViewArguments>(
+        orElse: () => SignUpFormViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const SignUpFormView(),
+        builder: (context) => SignUpFormView(key: args.key),
         settings: data,
       );
     },
@@ -73,4 +76,14 @@ class StackedRouter extends RouterBase {
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// SignUpFormView arguments holder class
+class SignUpFormViewArguments {
+  final Key? key;
+  SignUpFormViewArguments({this.key});
 }
