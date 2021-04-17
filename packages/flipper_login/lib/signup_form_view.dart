@@ -1,15 +1,21 @@
 import 'package:flipper_models/view_models/signup_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked_annotations.dart';
+import 'signup_form_view.form.dart';
 
-class SignUpFormView extends StatelessWidget {
+@FormView(fields: [
+  FormTextField(name: 'name'),
+  FormTextField(name: 'type'),
+])
+class SignUpFormView extends StatelessWidget with $SignUpFormView {
   SignUpFormView({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignupViewModel>.reactive(
       onModelReady: (model) {
-        model.useStyle = 'Business';
+        listenToFormUpdated(model);
         model.registerLocation();
       },
       viewModelBuilder: () => SignupViewModel(),
@@ -25,6 +31,7 @@ class SignUpFormView extends StatelessWidget {
                   padding: const EdgeInsets.all(48.0),
                   child: TextFormField(
                     decoration: InputDecoration(hintText: 'Name'),
+                    controller: nameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Name is required';
@@ -35,7 +42,7 @@ class SignUpFormView extends StatelessWidget {
                 ),
                 Text('How do you want to use flipper?'),
                 DropdownButton<String>(
-                  value: model.flipperUseStyle,
+                  value: model.businessType,
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
                   elevation: 16,
@@ -45,9 +52,9 @@ class SignUpFormView extends StatelessWidget {
                     color: Colors.deepPurpleAccent,
                   ),
                   onChanged: (String? style) {
-                    model.useStyle = style!;
+                    model.setBuinessType(type: style!);
                   },
-                  items: <String>['Business', 'Social']
+                  items: <String>['business', 'social']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -61,6 +68,7 @@ class SignUpFormView extends StatelessWidget {
                     onPressed: () {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
+                        Locale locale = Localizations.localeOf(context);
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -73,7 +81,7 @@ class SignUpFormView extends StatelessWidget {
                             ),
                           ),
                         );
-                        model.signup();
+                        model.signup(locale: locale);
                       }
                     },
                     child: Text('Register'),

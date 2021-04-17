@@ -1,13 +1,10 @@
 library flipper_login;
 
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_models/view_models/login_viewmodel.dart';
-import 'package:flipper_login/phone_number_view.form.dart';
-
 import 'phone_number_view.form.dart';
 
 @FormView(fields: [
@@ -21,7 +18,6 @@ class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
       onModelReady: (model) => listenToFormUpdated(model),
       viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) {
-        
         return SingleChildScrollView(
           child: Form(
             key: _formKey,

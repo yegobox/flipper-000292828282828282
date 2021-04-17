@@ -74,7 +74,7 @@ class HttpApi implements Api {
         headers: {'Content-Type': 'application/json'});
     //save the token in local storage.
     final box = GetStorage();
-    print(syncFromJson(response.body));
+
     box.write('bearerToken', syncFromJson(response.body).token);
     box.write('userId', syncFromJson(response.body).userId);
     return syncFromJson(response.body);
@@ -85,5 +85,14 @@ class HttpApi implements Api {
     final response = await client.get(Uri.parse("$apihub/api/businesses"));
 
     return businessFromJson(response.body);
+  }
+
+  @override
+  Future<int> signup({required Map business}) async {
+    final http.Response response = await client.post(
+        Uri.parse("$apihub/api/business"),
+        body: jsonEncode(business),
+        headers: {'Content-Type': 'application/json'});
+    return response.statusCode;
   }
 }

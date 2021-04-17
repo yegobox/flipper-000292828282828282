@@ -6,6 +6,18 @@ import 'abstractions/api.dart';
 
 class FakeApi implements Api {
   @override
+  Future<Sync> authenticateWithOfflineDb({required String userId}) {
+    // TODO: implement authenticateWithOfflineDb
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Business>> canStart() {
+    // TODO: implement canStart
+    throw UnimplementedError();
+  }
+
+  @override
   void cleanKeyPad() {
     // TODO: implement cleanKeyPad
   }
@@ -26,26 +38,20 @@ class FakeApi implements Api {
   }
 
   @override
-  Future payroll() {
-    // TODO: implement payroll
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Login> login({required String phone}) {
     // TODO: implement login
     throw UnimplementedError();
   }
 
   @override
-  Future<Sync> authenticateWithOfflineDb({required String userId}) {
-    // TODO: implement sync
+  Future payroll() {
+    // TODO: implement payroll
     throw UnimplementedError();
   }
 
   @override
-  Future<List<Business>> canStart() {
-    // TODO: implement canStart
+  Future<int> signup({required Map business}) {
+    // TODO: implement signup
     throw UnimplementedError();
   }
 }
