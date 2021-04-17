@@ -85,6 +85,11 @@ class WindowsLocationService implements FlipperLocation {
       "latitude": "11"
     }; //for windows it is not supported then please use the default
   }
+
+  @override
+  Future<bool> doWeHaveLocationPermission() async {
+    return false; //so we can return default.
+  }
 }
 
 class WindowsFirebaseAuthenticationImplementation implements Platform {
