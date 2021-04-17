@@ -14,38 +14,38 @@ class Business {
   Business({
     required this.id,
     required this.name,
-    required this.currency,
+    this.currency,
     this.categoryId,
-    this.latitude,
-    this.longitude,
-    required this.userId,
+    required this.latitude,
+    required this.longitude,
+    this.userId,
     this.typeId,
     this.timeZone,
-    this.channels,
-    this.table,
-    this.country,
+    required this.channels,
+    required this.table,
+    required this.country,
     this.businessUrl,
     this.hexColor,
     this.image,
-    this.type,
+    required this.type,
   });
 
   String id;
   String name;
-  String currency;
+  dynamic currency;
   dynamic categoryId;
-  dynamic latitude;
-  dynamic longitude;
-  String userId;
+  String latitude;
+  String longitude;
+  dynamic userId;
   dynamic typeId;
   dynamic timeZone;
-  dynamic channels;
-  dynamic table;
-  dynamic country;
+  List<String> channels;
+  String table;
+  String country;
   dynamic businessUrl;
   dynamic hexColor;
   dynamic image;
-  dynamic type;
+  String type;
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
         id: json["id"],
@@ -57,7 +57,7 @@ class Business {
         userId: json["userId"],
         typeId: json["typeId"],
         timeZone: json["timeZone"],
-        channels: json["channels"],
+        channels: List<String>.from(json["channels"].map((x) => x)),
         table: json["table"],
         country: json["country"],
         businessUrl: json["businessUrl"],
@@ -76,7 +76,7 @@ class Business {
         "userId": userId,
         "typeId": typeId,
         "timeZone": timeZone,
-        "channels": channels,
+        "channels": List<dynamic>.from(channels.map((x) => x)),
         "table": table,
         "country": country,
         "businessUrl": businessUrl,

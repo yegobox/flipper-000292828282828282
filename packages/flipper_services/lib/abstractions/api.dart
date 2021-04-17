@@ -14,6 +14,7 @@ abstract class Api {
   void listenCategory();
   void cleanKeyPad();
   Future<Login> login({required String phone});
+  
   Future<Sync> authenticateWithOfflineDb({required String userId});
   Future<List<Business>>
       canStart(); //do we have business,branch sure then start

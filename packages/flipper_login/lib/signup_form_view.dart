@@ -10,6 +10,7 @@ class SignUpFormView extends StatelessWidget {
     return ViewModelBuilder<SignupViewModel>.reactive(
       onModelReady: (model) {
         model.useStyle = 'Business';
+        model.registerLocation();
       },
       viewModelBuilder: () => SignupViewModel(),
       builder: (context, model, child) {
@@ -24,10 +25,9 @@ class SignUpFormView extends StatelessWidget {
                   padding: const EdgeInsets.all(48.0),
                   child: TextFormField(
                     decoration: InputDecoration(hintText: 'Name'),
-                    // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
+                        return 'Name is required';
                       }
                       return null;
                     },
@@ -44,10 +44,8 @@ class SignUpFormView extends StatelessWidget {
                     height: 2,
                     color: Colors.deepPurpleAccent,
                   ),
-                  onChanged: (String? newValue) {
-                    // setState(() {
-                    //   dropdownValue = newValue!;
-                    // });
+                  onChanged: (String? style) {
+                    model.useStyle = style!;
                   },
                   items: <String>['Business', 'Social']
                       .map<DropdownMenuItem<String>>((String value) {
@@ -65,9 +63,17 @@ class SignUpFormView extends StatelessWidget {
                       if (_formKey.currentState!.validate()) {
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Processing Data',
-                                style: TextStyle(color: Colors.black))));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Processing Data',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                        model.signup();
                       }
                     },
                     child: Text('Register'),
