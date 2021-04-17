@@ -9,6 +9,7 @@ import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
 import 'login_service.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:flipper_models/view_models/login_viewmodel.dart';
 
 final isWindows = UniversalPlatform.isWindows;
 // UniversalPlatform.platform;
@@ -38,6 +39,9 @@ abstract class ThirdPartyServicesModule {
     }
     return apiService;
   }
+
+  // @lazySingleton
+  // LoginViewModel get lView;
 
   @lazySingleton
   Platform get flipperFire {

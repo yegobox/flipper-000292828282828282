@@ -7,13 +7,17 @@ class StartUpViewModel extends BaseViewModel {
   final box = GetStorage();
   bool didSync = false;
   Future<bool> didWeSync() async {
+    setBusy(true);
     if (isLoggedIn()) {
       List<Business> response = await ProxyService.api.canStart();
       didSync = response.isEmpty ? false : true;
-      return didSync;
+      didSync;
     } else {
-      return didSync = false;
+      didSync = false;
     }
+    setBusy(false);
+    notifyListeners();
+    return didSync;
   }
 
   bool isLoggedIn() {

@@ -102,6 +102,8 @@ dependencies:
 # custom packages locally built
   flipper_login:
     path: 'packages/flipper_login'
+  flipper_models:
+    path: 'packages/flipper_models'
   flipper_services:
     path: 'packages/flipper_services'
   google_fonts:

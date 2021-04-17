@@ -5,8 +5,14 @@ class SignUpFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('This is signup form'),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Text('This is signup form'),
+          ],
+        ),
+      ),
     );
   }
 }

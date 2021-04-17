@@ -18,13 +18,13 @@ class StartUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<StartUpViewModel>.reactive(
       fireOnModelReadyOnce: true,
-      onModelReady: (model) {
-        model.didWeSync();
+      onModelReady: (model) async {
+        await model.didWeSync();
       },
       viewModelBuilder: () => StartUpViewModel(),
       builder: (context, model, child) {
         if (model.isBusy) {
-          LoaderView();
+          return LoaderView();
         }
         if (!model.isLoggedIn()) {
           //

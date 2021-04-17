@@ -1,6 +1,7 @@
 import 'package:flipper_login/otp_view.dart';
 import 'package:flipper_login/phone_number_view.dart';
 import 'package:flipper_models/view_models/login_viewmodel.dart';
+import 'package:flipper_services/locator.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -37,8 +38,7 @@ class SignUpLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
-        onModelReady: (model) {},
-        viewModelBuilder: () => LoginViewModel(),
+        viewModelBuilder: () => locator.get<LoginViewModel>(),
         builder: (context, model, child) {
           return Container(
             margin: const EdgeInsets.only(top: 50),

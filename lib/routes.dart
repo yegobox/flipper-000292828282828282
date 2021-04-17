@@ -5,6 +5,7 @@ import 'package:flipper_login/signup_form_view.dart';
 import 'package:flipper_dashboard/business_home_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+// import 'package:flipper_models/view_models/login_viewmodel.dart';
 
 @StackedApp(
   routes: [
@@ -14,7 +15,10 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: BusinessHomeView),
     MaterialRoute(page: LoginView),
   ],
-  dependencies: [LazySingleton(classType: NavigationService)],
+  dependencies: [
+    LazySingleton(classType: NavigationService),
+    // LazySingleton(classType: LoginViewModel)
+  ],
 )
 class AppSetup {
   /** Serves no purpose besides having an annotation attached to it */
@@ -27,3 +31,5 @@ class AppSetup {
 // NOTE:TODO: when rebuilding login_popup_view remember to add library flipper_login; in generated file
 // firebase install https://firebase.flutter.dev/docs/installation/android/
 // flutter create --template=package hello
+// flutter run -d chrome --release
+

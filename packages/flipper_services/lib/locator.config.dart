@@ -4,16 +4,17 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:flipper_models/view_models/login_viewmodel.dart' as _i6;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:stacked_services/stacked_services.dart' as _i6;
+import 'package:stacked_services/stacked_services.dart' as _i7;
 
 import 'abstractions/api.dart' as _i3;
-import 'abstractions/platform.dart' as _i7;
+import 'abstractions/platform.dart' as _i8;
 import 'http_api.dart' as _i4;
 import 'login_service.dart' as _i5;
 import 'third_party_services_module.dart'
-    as _i8; // ignore_for_file: unnecessary_lambdas
+    as _i9; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -24,14 +25,17 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i3.Api>(() => thirdPartyServicesModule.apiService);
   gh.lazySingleton<_i4.HttpApi>(() => _i4.HttpApi());
   gh.lazySingleton<_i5.LoginService>(() => thirdPartyServicesModule.login);
-  gh.lazySingleton<_i6.NavigationService>(() => thirdPartyServicesModule.nav);
-  gh.lazySingleton<_i7.Platform>(() => thirdPartyServicesModule.flipperFire);
+  gh.lazySingleton<_i6.LoginViewModel>(() => thirdPartyServicesModule.lView);
+  gh.lazySingleton<_i7.NavigationService>(() => thirdPartyServicesModule.nav);
+  gh.lazySingleton<_i8.Platform>(() => thirdPartyServicesModule.flipperFire);
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i8.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i9.ThirdPartyServicesModule {
   @override
   _i5.LoginService get login => _i5.LoginService();
   @override
-  _i6.NavigationService get nav => _i6.NavigationService();
+  _i6.LoginViewModel get lView => _i6.LoginViewModel();
+  @override
+  _i7.NavigationService get nav => _i7.NavigationService();
 }

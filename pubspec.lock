@@ -471,7 +471,7 @@ packages:
     source: path
     version: "0.0.1"
   flipper_models:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "packages/flipper_models"
       relative: true
