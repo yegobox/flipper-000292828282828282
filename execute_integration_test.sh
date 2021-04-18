@@ -8,5 +8,5 @@ echo "$LINE_BREAK"
 
 # App
 flutter drive \
-  --driver=test_driver/main_test.dart \
+  --driver=test_driver/integration_test.dart \
   --target=integration_test/app_test.dart
