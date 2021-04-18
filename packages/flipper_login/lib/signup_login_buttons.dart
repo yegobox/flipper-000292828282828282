@@ -38,7 +38,7 @@ class SignUpLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
-        viewModelBuilder: () => locator.get<LoginViewModel>(),
+        viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, child) {
           return Container(
             margin: const EdgeInsets.only(top: 50),

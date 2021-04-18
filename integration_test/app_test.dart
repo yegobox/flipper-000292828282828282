@@ -17,16 +17,11 @@ void main() {
 // flutter drive \
 //   --driver=test_driver/integration_test.dart \
 //   --target=integration_test/app_test.dart
-      // Finds the floating action button to tap on.
-      // final Finder fab = find.byTooltip('Increment');
 
-      // // Emulate a tap on the floating action button.
-      // await tester.tap(fab);
+//  should start by showing a loading screen before moving to other screen
+      final loaderView = find.byKey(Key('loaderView'));
 
-      // await tester.pumpAndSettle();
-      // find.byKey(Key('phone')); //add key on everything I am finding lile Key('key')
-
-      expect(2, 2); //for now fake testing.
+      expect(loaderView, findsOneWidget); //for now fake testing.
     });
   });
 }

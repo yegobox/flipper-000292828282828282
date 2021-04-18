@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'abstractions/api.dart';
 import 'abstractions/location.dart';
 import 'abstractions/platform.dart';
+import 'abstractions/storage.dart';
 import 'fake_api.dart';
 import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
@@ -74,7 +75,17 @@ abstract class ThirdPartyServicesModule {
   @lazySingleton
   NavigationService get nav;
   @lazySingleton
-  LocalStorageImpl get box;
+  LocalStorage get box {
+    LocalStorage box;
+    switch (platform) {
+      case "windows":
+        box = LocalStorageImpl();
+        break;
+      default:
+        box = LocalStorageImpl();
+    }
+    return box;
+  }
 }
 
 class WindowsLocationService implements FlipperLocation {

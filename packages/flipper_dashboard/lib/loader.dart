@@ -7,6 +7,7 @@ class LoaderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
+      key: Key('loaderView'),
       child: Text('hello loader'),
     ));
   }
