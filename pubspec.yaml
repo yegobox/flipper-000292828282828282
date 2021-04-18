@@ -108,6 +108,7 @@ dependencies:
   flipper_services:
     path: 'packages/flipper_services'
   google_fonts:
+  font_awesome_flutter: ^9.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

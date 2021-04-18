@@ -1,6 +1,7 @@
 library flipper_dashboard;
 
 import 'package:flipper_dashboard/payable_view.dart';
+import 'package:flipper_dashboard/sale_indicator.dart';
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +68,12 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
             appBar: HomeAppBar(
               scaffoldKey: _scaffoldKey,
               sideOpenController: _sideOpenController,
-              child: Text('I am appBar custom'),
+              child: SaleIndicator(
+                totalAmount: 300,
+                counts: 30,
+                onClick: () {},
+                onLogout: () {},
+              ),
             ),
             body: FadeTransition(
               opacity: _fadeAnimation,
@@ -76,17 +82,19 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                 side: const Text('Side'),
                 main: Column(
                   children: [
-                    KeyPadHead(
-                      payable: PayableView(
-                        onClick: () {},
-                        tickets: 0,
-                        orders: 0,
-                        duePay: 0.0,
-                      ),
-                      onClick: () {},
-                      controller: controller,
-                      amount: 800,
-                    ),
+                    tab == 0
+                        ? KeyPadHead(
+                            payable: PayableView(
+                              onClick: () {},
+                              tickets: 0,
+                              orders: 0,
+                              duePay: 0,
+                            ),
+                            onClick: () {},
+                            controller: controller,
+                            amount: 800,
+                          )
+                        : SizedBox.shrink(),
                     tab == 0 ? KeyPadView(model: model) : Text('AAA'),
                   ],
                 ),
