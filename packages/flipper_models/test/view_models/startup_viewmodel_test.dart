@@ -39,14 +39,13 @@ void main() {
     test('Given users does not have business should update didSync ==false..',
         () async {
       List<Business> c = [];
-      c.add(businessMockData);
       when(client.canStart()).thenAnswer((_) async => c);
       when(box.read(key: 'userId')).thenAnswer((_) => false);
 
       model.isLoggedIn();
 
       model.notifyListeners();
-      expect(await model.didWeSync(), true);
+      expect(await model.didWeSync(), false);
     });
   });
 }
