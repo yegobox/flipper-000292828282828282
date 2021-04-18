@@ -8,9 +8,8 @@ const double ICON_ON = 0;
 const double ALPHA_ON = 1;
 
 class BottomMenubar extends StatefulWidget {
-  const BottomMenubar({Key? key, this.tab = 0, required this.switchTab})
-      : super(key: key);
-  final int tab;
+  BottomMenubar({Key? key, required this.switchTab}) : super(key: key);
+  int tab = 0;
   final Function switchTab;
   @override
   _BottomMenubarState createState() => _BottomMenubarState();
@@ -104,6 +103,9 @@ class _BottomMenubarState extends State<BottomMenubar> {
                               : Theme.of(context).textTheme.caption!.color,
                         ),
               onPressed: () {
+                setState(() {
+                  widget.tab = index;
+                });
                 widget.switchTab(index);
               },
             ),

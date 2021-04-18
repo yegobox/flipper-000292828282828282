@@ -89,8 +89,9 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
           ),
         ),
         bottomNavigationBar: BottomMenubar(
-          tab: 0,
-          switchTab: () {},
+          switchTab: (index) {
+            print('here$index');
+          },
         ),
         drawer: Text('I am Side drawer'),
       ),
