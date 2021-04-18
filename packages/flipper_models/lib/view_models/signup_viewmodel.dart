@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flipper/routes.router.dart';
-import 'package:flipper_models/models/business.dart';
 import 'package:stacked/stacked.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flipper_services/proxy.dart';
@@ -59,6 +58,7 @@ class SignupViewModel extends FormViewModel {
       'latitude': latitude,
       'longitude': longitude,
       'currency': 'RW',
+      'userId': ProxyService.box.read(key: 'userId'),
       'type': businessType,
       //TODO: right now I am not sure locale!.countryCode can be reliable as sometime it need to test it on real-device
       'country': 'RW'
