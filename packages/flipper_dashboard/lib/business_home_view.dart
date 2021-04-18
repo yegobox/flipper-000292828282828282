@@ -42,6 +42,7 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
   void dispose() {
     super.dispose();
     _sideOpenController.dispose();
+    _fadeController.dispose();
   }
 
   Future<bool> _onWillPop() async {
@@ -51,63 +52,64 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<BusinessHomeViewModel>.reactive(
-        viewModelBuilder: () => BusinessHomeViewModel(),
-        builder: (context, model, child) {
-          return WillPopScope(
-            onWillPop: _onWillPop,
-            child: Scaffold(
-              key: _scaffoldKey,
-              appBar: HomeAppBar(
-                scaffoldKey: _scaffoldKey,
-                sideOpenController: _sideOpenController,
-                child: Text('I am appBar custom'),
-              ),
-              body: FadeTransition(
-                opacity: _fadeAnimation,
-                child: SlideOutScreen(
-                  sideOpenController: _sideOpenController,
-                  side: const Text('Side'),
-                  main: Column(
-                    children: [
-                      tab == 0 ? KeyPadView(model: model) : Text('AAA'),
-                    ],
-                  ),
-                ),
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.miniCenterDocked,
-              floatingActionButton: GestureDetector(
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.add, size: 20, color: Colors.white),
-                      const Text(
-                        ' Add Product',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              bottomNavigationBar: BottomMenubar(
-                switchTab: (index) {
-                  setState(() {
-                    tab = index;
-                  });
-                },
-              ),
-              drawer: Text('I am Side drawer'),
+      viewModelBuilder: () => BusinessHomeViewModel(),
+      builder: (context, model, child) {
+        return WillPopScope(
+          onWillPop: _onWillPop,
+          child: Scaffold(
+            key: _scaffoldKey,
+            appBar: HomeAppBar(
+              scaffoldKey: _scaffoldKey,
+              sideOpenController: _sideOpenController,
+              child: Text('I am appBar custom'),
             ),
-          );
-        });
+            body: FadeTransition(
+              opacity: _fadeAnimation,
+              child: SlideOutScreen(
+                sideOpenController: _sideOpenController,
+                side: const Text('Side'),
+                main: Column(
+                  children: [
+                    tab == 0 ? KeyPadView(model: model) : Text('AAA'),
+                  ],
+                ),
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniCenterDocked,
+            floatingActionButton: GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.add, size: 20, color: Colors.white),
+                    const Text(
+                      ' Add Product',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: BottomMenubar(
+              switchTab: (index) {
+                setState(() {
+                  tab = index;
+                });
+              },
+            ),
+            drawer: Text('I am Side drawer'),
+          ),
+        );
+      },
+    );
   }
 }
