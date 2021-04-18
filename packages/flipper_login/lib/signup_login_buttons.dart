@@ -55,6 +55,7 @@ class SignUpLoginButton extends StatelessWidget {
                       width: double.infinity,
                       height: 60,
                       child: FlatButton(
+                        key: Key('createAccountButton'),
                         onPressed: () {
                           _showModalBottomSheet(context);
                         },

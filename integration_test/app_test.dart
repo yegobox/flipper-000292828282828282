@@ -8,7 +8,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('end-to-end test', () {
-    testWidgets('tap on the floating action button; verify counter',
+    testWidgets('Should load the app and act as real user!',
         (WidgetTester tester) async {
       // IntegrationTestWidgetsFlutterBinding.ensureInitialized();
       app.main();
@@ -19,9 +19,11 @@ void main() {
 //   --target=integration_test/app_test.dart
 
 //  should start by showing a loading screen before moving to other screen
-      final loaderView = find.byKey(Key('loaderView'));
-
-      expect(loaderView, findsOneWidget); //for now fake testing.
+      final loaderView = find.byKey(Key('createAccountButton'));
+      // await tester.pumpAndSettle();
+      // tester.close();
+      expect(
+          find.text('Create Account'), findsOneWidget); //for now fake testing.
     });
   });
 }
