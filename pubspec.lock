@@ -1056,7 +1056,7 @@ packages:
       name: stacked
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.1.0"
   stacked_firebase_auth:
     dependency: "direct main"
     description:
@@ -1084,7 +1084,7 @@ packages:
       name: stacked_services
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.0-nullsafety.1"
+    version: "0.8.3"
   stream_channel:
     dependency: transitive
     description:

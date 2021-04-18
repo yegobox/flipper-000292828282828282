@@ -13,33 +13,30 @@ class AlwaysDisabledFocusNode extends FocusNode {
 class KeyPadView extends StatelessWidget {
   const KeyPadView({Key? key, required this.model}) : super(key: key);
   final BusinessHomeViewModel model;
-
   @override
   Widget build(BuildContext context) {
-    return Text('here');
-    // return Scaffold(
-    //   body: SafeArea(
-    //     child: Column(
-    //       children: [Display(), Expanded(child: Keyboard(model: model))],
-    //     ),
-    //   ),
-    // );
+    return Expanded(
+      child: SafeArea(
+        child: Column(
+          children: [Display(model: model), Keyboard(model: model)],
+        ),
+      ),
+    );
   }
 }
 
 class Display extends StatefulWidget {
-  const Display({Key? key, this.model}) : super(key: key);
-  final BusinessHomeViewModel? model;
+  const Display({Key? key, required this.model}) : super(key: key);
+  final BusinessHomeViewModel model;
 
   @override
-  _onCreate createState() => _onCreate(model!);
+  _onCreate createState() => _onCreate(model);
 }
 
-// ignore: camel_case_types
 class _onCreate extends State<Display> {
   _onCreate(this.model);
 
-  BusinessHomeViewModel? model;
+  BusinessHomeViewModel model;
   TextEditingController? etAddNote;
   String? addNote;
 
@@ -68,7 +65,7 @@ class _onCreate extends State<Display> {
                   child: _addNoteTextField(model: model),
                 )),
                 Expanded(
-                  child: callText(model!),
+                  child: callText(model),
                 ),
               ],
             ),
@@ -78,7 +75,7 @@ class _onCreate extends State<Display> {
     ]);
   }
 
-  Widget _addNoteTextField({BusinessHomeViewModel? model}) {
+  Widget _addNoteTextField({required BusinessHomeViewModel model}) {
     return Container(
       padding: const EdgeInsets.only(right: 10),
       child: TextField(
@@ -93,7 +90,8 @@ class _onCreate extends State<Display> {
           fontSize: 15,
         ),
         decoration: InputDecoration(
-          hintText: model!.keyPad.note.value ?? 'Add a note',
+          // hintText: model.keyPad.note.value ?? 'Add a note',
+          hintText: 'Add a note',
           border: InputBorder.none,
           hintStyle: const TextStyle(
             color: Colors.black26,
@@ -108,27 +106,29 @@ class _onCreate extends State<Display> {
   }
 
   Text callText(BusinessHomeViewModel model) {
-    if (model.keypadValue == '0.0') {
-      return const Text(
-        'FRw0.0',
-        textAlign: TextAlign.right,
-        softWrap: true,
-        style: TextStyle(
-          fontSize: 25.0,
-          color: Color(0xffc2c7cc),
-        ),
-      );
-    } else {
-      return Text(
-        'FRw' + model.keypadValue,
-        textAlign: TextAlign.right,
-        softWrap: true,
-        style: const TextStyle(
-          fontSize: 25.0,
-          color: Color(0xffc2c7cc),
-        ),
-      );
-    }
+    //TODO: fix this
+    // if (model.keypadValue == '0.0') {
+    //   return const Text(
+    //     'FRw0.0',
+    //     textAlign: TextAlign.right,
+    //     softWrap: true,
+    //     style: TextStyle(
+    //       fontSize: 25.0,
+    //       color: Color(0xffc2c7cc),
+    //     ),
+    //   );
+    // } else {
+    return Text(
+      // 'FRw' + model.keypadValue,
+      'FRw' + '400',
+      textAlign: TextAlign.right,
+      softWrap: true,
+      style: const TextStyle(
+        fontSize: 25.0,
+        color: Color(0xffc2c7cc),
+      ),
+    );
+    // }
   }
 }
 
@@ -138,13 +138,12 @@ class Keyboard extends StatelessWidget {
   final BusinessHomeViewModel model;
   var myDynamicAspectRatio = 1000 / 1;
   OverlayEntry? sticky;
-  List<BusinessHomeViewModel> myGridList = [];
   double maxHeight = 0;
   double maxWidth = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Expanded(
       child: Column(
         children: [
           Expanded(

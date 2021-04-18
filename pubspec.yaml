@@ -72,7 +72,7 @@ dependencies:
   async:
   stacked: ^2.0.4
   stacked_hooks:
-  stacked_services: 0.8.0-nullsafety.1
+  stacked_services: 
   provider:
   cached_network_image: 3.0.0-nullsafety
   flutter_dotenv: 4.0.0-nullsafety.0

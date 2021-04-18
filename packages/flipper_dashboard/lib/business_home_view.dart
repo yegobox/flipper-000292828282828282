@@ -58,6 +58,7 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
           onWillPop: _onWillPop,
           child: Scaffold(
             key: _scaffoldKey,
+            extendBody: true,
             appBar: HomeAppBar(
               scaffoldKey: _scaffoldKey,
               sideOpenController: _sideOpenController,
