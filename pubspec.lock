@@ -518,7 +518,7 @@ packages:
     source: hosted
     version: "4.0.0-nullsafety.0"
   flutter_driver:
-    dependency: "direct dev"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
