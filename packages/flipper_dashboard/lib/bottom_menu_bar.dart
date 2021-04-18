@@ -9,13 +9,14 @@ const double ALPHA_ON = 1;
 
 class BottomMenubar extends StatefulWidget {
   BottomMenubar({Key? key, required this.switchTab}) : super(key: key);
-  int tab = 0;
+
   final Function switchTab;
   @override
   _BottomMenubarState createState() => _BottomMenubarState();
 }
 
 class _BottomMenubarState extends State<BottomMenubar> {
+  int tab = 0;
   Widget _iconRow() {
     return Container(
         height: 65,
@@ -28,8 +29,8 @@ class _BottomMenubarState extends State<BottomMenubar> {
         child: Row(
           children: <Widget>[
             Container(
-              child: _icon(null, widget.tab == 0 ? true : false, 0,
-                  icon: widget.tab == 0
+              child: _icon(null, tab == 0 ? true : false, 0,
+                  icon: tab == 0
                       ? const Image(
                           width: 28,
                           height: 25,
@@ -43,8 +44,8 @@ class _BottomMenubarState extends State<BottomMenubar> {
             ),
             Container(
               // alignment: Alignment.centerRight,
-              child: _icon(null, widget.tab == 1 ? true : false, 1,
-                  icon: widget.tab == 1
+              child: _icon(null, tab == 1 ? true : false, 1,
+                  icon: tab == 1
                       ? const Image(
                           width: 28,
                           height: 25,
@@ -104,7 +105,7 @@ class _BottomMenubarState extends State<BottomMenubar> {
                         ),
               onPressed: () {
                 setState(() {
-                  widget.tab = index;
+                  tab = index;
                 });
                 widget.switchTab(index);
               },

@@ -1,5 +1,6 @@
 import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/login.dart';
+import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/sync.dart';
 
 abstract class Api {
@@ -14,6 +15,7 @@ abstract class Api {
   void listenCategory();
   void cleanKeyPad();
   Future<Login> login({required String phone});
+  Future<List<Product>> products();
   Future<int> signup({required Map business});
   Future<Sync> authenticateWithOfflineDb({required String userId});
   Future<List<Business>>

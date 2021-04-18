@@ -1,5 +1,6 @@
 import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/login.dart';
+import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/sync.dart';
 
 import 'abstractions/api.dart';
@@ -52,6 +53,12 @@ class FakeApi implements Api {
   @override
   Future<int> signup({required Map business}) {
     // TODO: implement signup
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Product>> products() {
+    // TODO: implement products
     throw UnimplementedError();
   }
 }

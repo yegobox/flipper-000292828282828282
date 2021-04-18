@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/login.dart';
+import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/sync.dart';
 import 'package:injectable/injectable.dart';
 import 'package:get_storage/get_storage.dart';
@@ -95,5 +96,11 @@ class HttpApi implements Api {
         body: jsonEncode(business),
         headers: {'Content-Type': 'application/json'});
     return response.statusCode;
+  }
+
+  @override
+  Future<List<Product>> products() async {
+    final response = await client.get(Uri.parse("$apihub/api/products"));
+    return productFromJson(response.body);
   }
 }
