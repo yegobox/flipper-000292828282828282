@@ -1,5 +1,6 @@
 library flipper_dashboard;
 
+import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +9,11 @@ import 'home_app_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_models/view_models/business_home_viewmodel.dart';
 
+import 'package:stacked/stacked_annotations.dart';
+import 'keypad_head_view.dart';
 import 'keypad_view.dart';
 
+@FormView(fields: [FormTextField(name: 'note')])
 class BusinessHomeView extends StatefulWidget {
   const BusinessHomeView({Key? key}) : super(key: key);
 
@@ -23,6 +27,7 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late Animation<double> _fadeAnimation;
   late AnimationController _fadeController;
+  TextEditingController controller = TextEditingController();
   int tab = 0;
   @override
   void initState() {
@@ -71,6 +76,17 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                 side: const Text('Side'),
                 main: Column(
                   children: [
+                    KeyPadHead(
+                      payable: PayableView(
+                        onClick: () {},
+                        tickets: 0,
+                        orders: 0,
+                        duePay: 0.0,
+                      ),
+                      onClick: () {},
+                      controller: controller,
+                      amount: 800,
+                    ),
                     tab == 0 ? KeyPadView(model: model) : Text('AAA'),
                   ],
                 ),

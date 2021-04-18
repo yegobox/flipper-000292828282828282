@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flipper_models/view_models/business_home_viewmodel.dart';
 
+import 'keypad_head_view.dart';
+
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
@@ -13,122 +15,16 @@ class AlwaysDisabledFocusNode extends FocusNode {
 class KeyPadView extends StatelessWidget {
   const KeyPadView({Key? key, required this.model}) : super(key: key);
   final BusinessHomeViewModel model;
+  // final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: SafeArea(
         child: Column(
-          children: [Display(model: model), Keyboard(model: model)],
+          children: [Keyboard(model: model)],
         ),
       ),
     );
-  }
-}
-
-class Display extends StatefulWidget {
-  const Display({Key? key, required this.model}) : super(key: key);
-  final BusinessHomeViewModel model;
-
-  @override
-  _onCreate createState() => _onCreate(model);
-}
-
-class _onCreate extends State<Display> {
-  _onCreate(this.model);
-
-  BusinessHomeViewModel model;
-  TextEditingController? etAddNote;
-  String? addNote;
-
-  @override
-  Widget build(BuildContext context) {
-    etAddNote = TextEditingController(text: addNote);
-    return Column(children: <Widget>[
-      const Padding(
-          padding: EdgeInsets.only(left: 5.0, right: 5.0),
-          // child: PayableView(),
-          child: Text('payable')),
-      InkWell(
-        onTap: () {
-          // ProxyService.inAppNav.navigateToPath({'path': 'add_note'});
-        },
-        child: IgnorePointer(
-          child: Container(
-            padding: const EdgeInsets.only(
-                right: 20.0, top: 15.0, left: 20.0, bottom: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                    child: Container(
-                  alignment: Alignment.center,
-                  child: _addNoteTextField(model: model),
-                )),
-                Expanded(
-                  child: callText(model),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ]);
-  }
-
-  Widget _addNoteTextField({required BusinessHomeViewModel model}) {
-    return Container(
-      padding: const EdgeInsets.only(right: 10),
-      child: TextField(
-        keyboardType: TextInputType.text,
-        cursorColor: Colors.black26,
-        enableInteractiveSelection: false, // will disable paste operation
-        focusNode: AlwaysDisabledFocusNode(),
-        controller: etAddNote,
-        onChanged: (value) => addNote = value,
-        style: const TextStyle(
-          color: Color(0xff3d454c),
-          fontSize: 15,
-        ),
-        decoration: InputDecoration(
-          // hintText: model.keyPad.note.value ?? 'Add a note',
-          hintText: 'Add a note',
-          border: InputBorder.none,
-          hintStyle: const TextStyle(
-            color: Colors.black26,
-            fontSize: 15,
-            fontFeatures: [
-              FontFeature.enable('sups'),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Text callText(BusinessHomeViewModel model) {
-    //TODO: fix this
-    // if (model.keypadValue == '0.0') {
-    //   return const Text(
-    //     'FRw0.0',
-    //     textAlign: TextAlign.right,
-    //     softWrap: true,
-    //     style: TextStyle(
-    //       fontSize: 25.0,
-    //       color: Color(0xffc2c7cc),
-    //     ),
-    //   );
-    // } else {
-    return Text(
-      // 'FRw' + model.keypadValue,
-      'FRw' + '400',
-      textAlign: TextAlign.right,
-      softWrap: true,
-      style: const TextStyle(
-        fontSize: 25.0,
-        color: Color(0xffc2c7cc),
-      ),
-    );
-    // }
   }
 }
 
