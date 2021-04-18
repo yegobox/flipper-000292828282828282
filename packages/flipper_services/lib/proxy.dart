@@ -14,7 +14,7 @@ final isWindows = UniversalPlatform.isWindows;
 
 final Api _apiService = locator<Api>();
 final NavigationService _nav = locator<NavigationService>();
-final Platform _auth = locator<Platform>();
+final LoginStandard _auth = locator<LoginStandard>();
 final FlipperLocation _location = locator<FlipperLocation>();
 final DB<Business> _db = locator<DB<Business>>();
 final LocalStorage _box = locator<LocalStorage>();
@@ -24,5 +24,5 @@ abstract class ProxyService {
   static NavigationService get nav => _nav;
   static FlipperLocation get location => _location;
   static LocalStorage get box => _box;
-  static Platform get auth => _auth;
+  static LoginStandard get auth => _auth;
 }

@@ -6,6 +6,11 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_models/view_models/login_viewmodel.dart';
 import 'phone_number_view.form.dart';
+import 'package:flipper_services/proxy.dart';
+import 'package:flipper_login/otp_view.dart';
+import 'package:universal_platform/universal_platform.dart';
+
+final isWindows = UniversalPlatform.isWindows;
 
 @FormView(fields: [
   FormTextField(name: 'phone'),
@@ -130,14 +135,38 @@ class PhoneNumberView extends StatelessWidget with $PhoneNumberView {
                               color: Colors.blue,
                             )),
                         padding: const EdgeInsets.all(0.0),
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             //TODO(richard): more phone validation to come!
                             model.setPhoneNumber(
                                 phone: phoneController.value
                                     .text); //Can not use stacked to get value with phoneValue on Login_viewmodel
                             // model.saveData();
-                            model.login(context: context);
+                            final phoneAuth =
+                                await model.login(context: context);
+                            if (isWindows && phoneAuth) {
+                              ProxyService.nav.back();
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (BuildContext context) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(bottom: 0),
+                                    child: Container(
+                                      child: OtpView(),
+                                      height: 400,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
                           }
                         },
                         child: const Text(

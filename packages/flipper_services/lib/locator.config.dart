@@ -6,11 +6,11 @@
 
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:stacked_services/stacked_services.dart' as _i7;
+import 'package:stacked_services/stacked_services.dart' as _i8;
 
 import 'abstractions/api.dart' as _i3;
 import 'abstractions/location.dart' as _i4;
-import 'abstractions/platform.dart' as _i8;
+import 'abstractions/platform.dart' as _i7;
 import 'abstractions/storage.dart' as _i6;
 import 'http_api.dart' as _i5;
 import 'third_party_services_module.dart'
@@ -27,12 +27,13 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => thirdPartyServicesModule.location);
   gh.lazySingleton<_i5.HttpApi>(() => _i5.HttpApi());
   gh.lazySingleton<_i6.LocalStorage>(() => thirdPartyServicesModule.box);
-  gh.lazySingleton<_i7.NavigationService>(() => thirdPartyServicesModule.nav);
-  gh.lazySingleton<_i8.Platform>(() => thirdPartyServicesModule.flipperFire);
+  gh.lazySingleton<_i7.LoginStandard>(
+      () => thirdPartyServicesModule.flipperFire);
+  gh.lazySingleton<_i8.NavigationService>(() => thirdPartyServicesModule.nav);
   return get;
 }
 
 class _$ThirdPartyServicesModule extends _i9.ThirdPartyServicesModule {
   @override
-  _i7.NavigationService get nav => _i7.NavigationService();
+  _i8.NavigationService get nav => _i8.NavigationService();
 }

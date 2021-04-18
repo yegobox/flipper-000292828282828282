@@ -1,7 +1,10 @@
+import 'package:flipper_services/proxy.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
-
+import 'package:flipper_models/models/login.dart';
+import 'package:flipper/routes.router.dart';
 import 'abstractions/api.dart';
 import 'abstractions/location.dart';
 import 'abstractions/platform.dart';
@@ -46,8 +49,8 @@ abstract class ThirdPartyServicesModule {
   // LoginViewModel get lView;
 
   @lazySingleton
-  Platform get flipperFire {
-    Platform service;
+  LoginStandard get flipperFire {
+    LoginStandard service;
     switch (platform) {
       case "windows":
         service = WindowsFirebaseAuthenticationImplementation();
@@ -103,19 +106,20 @@ class WindowsLocationService implements FlipperLocation {
   }
 }
 
-class WindowsFirebaseAuthenticationImplementation implements Platform {
+class WindowsFirebaseAuthenticationImplementation implements LoginStandard {
   @override
-  Future<void> createAccountWithPhone(
-      {required String phone, required BuildContext context}) {
-    // TODO: implement createAccountWithPhone
-    throw UnimplementedError();
+  Future<bool> createAccountWithPhone(
+      {required String phone, required BuildContext context}) async {
+    // implement custom SMS provider to send OTP
+    //  ProxyService.box.write(key: 'verificationId', value: 'mock');
+    ProxyService.box.write(key: 'userPhone', value: phone);
+    return true; //fake login
   }
 
   @override
   signInWithApple(
       {required String appleClientId, required String appleRedirectUri}) {
-    // TODO: implement signInWithApple
-    throw UnimplementedError();
+    //fake the login for now
   }
 
   @override
@@ -128,5 +132,22 @@ class WindowsFirebaseAuthenticationImplementation implements Platform {
   confirmOtpForWeb({required String otp}) {
     // TODO: implement confirmOtpForWeb
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> verifyWithOtp() async {
+    String phone = ProxyService.box.read(key: 'userPhone');
+    // String otp = ProxyService.box.read(key: 'otp');
+    Login login = await ProxyService.api.login(phone: phone);
+
+    ///call api to sync! start by syncing
+    ///so that we cover the case when a user synced and deleted app
+    ///and come again in this case the API will have sync!
+    await ProxyService.api
+        .authenticateWithOfflineDb(userId: login.id.toString());
+
+    //then go startup logic
+    ProxyService.nav.navigateTo(Routes.startUpView);
+    ProxyService.box.write(key: 'userId', value: login.id.toString());
   }
 }

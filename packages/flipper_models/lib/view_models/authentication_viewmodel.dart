@@ -9,7 +9,7 @@ import 'package:flipper_services/locator.dart';
 abstract class AuthenticationViewModel extends FormViewModel {
   final navigationService = locator<NavigationService>();
 
-  final firebaseAuthenticationService = locator<Platform>();
+  final firebaseAuthenticationService = locator<LoginStandard>();
 
   final String successRoute;
   AuthenticationViewModel({required this.successRoute});
