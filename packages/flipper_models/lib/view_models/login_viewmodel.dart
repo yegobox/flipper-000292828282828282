@@ -35,8 +35,4 @@ class LoginViewModel extends FormViewModel {
 
   @override
   void setFormStatus() {}
-
-  Future<void> verifyWithOtp() async {
-    fb.verifyWithOtp();
-  }
 }

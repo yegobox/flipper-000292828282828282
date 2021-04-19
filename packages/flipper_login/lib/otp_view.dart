@@ -111,7 +111,7 @@ class OtpView extends StatelessWidget with $OtpView {
                         () {
                           if (_formKey.currentState!.validate()) {
                             model.setOtp(ot: otpController.value.text);
-                            model.verifyWithOtp();
+                            model.fb.verifyWithOtp();
                           }
                         },
                         Colors.white,
