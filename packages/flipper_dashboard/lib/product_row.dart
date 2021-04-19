@@ -1,6 +1,7 @@
 import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_text_drawable/flutter_text_drawable.dart';
 
 class ProductRow extends StatelessWidget {
   const ProductRow({
@@ -43,9 +44,12 @@ class ProductRow extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               width: 58,
               child: !hasImage
-                  ? Container(
-                      color: HexColor(color),
-                      child: Text(name),
+                  ? TextDrawable(
+                      backgroundColor: HexColor(color),
+                      text: name,
+                      isTappable: true,
+                      onTap: null,
+                      boxShape: BoxShape.rectangle,
                     )
                   : Image.network(
                       imageUrl ?? '',

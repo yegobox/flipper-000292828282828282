@@ -550,6 +550,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_text_drawable:
+    dependency: transitive
+    description:
+      path: "../flutter_text_drawable"
+      relative: true
+    source: path
+    version: "1.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

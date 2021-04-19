@@ -107,6 +107,8 @@ dependencies:
     path: 'packages/flipper_models'
   flipper_services:
     path: 'packages/flipper_services'
+  flutter_text_drawable:
+    path: 'packages/flutter_text_drawable'
   google_fonts:
   font_awesome_flutter: ^9.0.0
 dev_dependencies:
