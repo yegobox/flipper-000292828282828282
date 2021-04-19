@@ -11,26 +11,26 @@ String productToJson(List<Product> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Product {
-  Product({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.channels,
-    required this.active,
-    required this.taxId,
-    required this.hasPicture,
-    required this.table,
-    required this.color,
-    required this.businessId,
-    required this.supplierId,
-    required this.categoryId,
-    required this.createdAt,
-    required this.unit,
-    required this.allVariants,
-    required this.draft,
-    required this.imageLocal,
-    required this.currentUpdate,
-  });
+  Product(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.channels,
+      required this.active,
+      required this.taxId,
+      required this.hasPicture,
+      required this.table,
+      required this.color,
+      required this.businessId,
+      required this.supplierId,
+      required this.categoryId,
+      required this.createdAt,
+      required this.unit,
+      required this.allVariants,
+      required this.draft,
+      required this.imageLocal,
+      required this.currentUpdate,
+      this.imageUrl});
 
   String id;
   String name;
@@ -50,6 +50,7 @@ class Product {
   bool draft;
   bool imageLocal;
   bool currentUpdate;
+  String? imageUrl;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -71,6 +72,7 @@ class Product {
         draft: json["draft"],
         imageLocal: json["imageLocal"],
         currentUpdate: json["currentUpdate"],
+        imageUrl: json["imageUrl"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -92,6 +94,7 @@ class Product {
         "draft": draft,
         "imageLocal": imageLocal,
         "currentUpdate": currentUpdate,
+        "imageUrl": imageUrl,
       };
 }
 
@@ -120,9 +123,9 @@ class AllVariant {
   String table;
   List<String> channels;
   dynamic productName;
-  int currentStock;
-  int supplyPrice;
-  int retailPrice;
+  double currentStock;
+  double supplyPrice;
+  double retailPrice;
   bool canTrackingStock;
   String stockId;
 

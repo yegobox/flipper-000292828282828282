@@ -1,6 +1,7 @@
 library flipper_dashboard;
 
 import 'package:flipper_dashboard/payable_view.dart';
+import 'package:flipper_dashboard/product_view.dart';
 import 'package:flipper_dashboard/sale_indicator.dart';
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,10 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                             amount: 800,
                           )
                         : SizedBox.shrink(),
-                    tab == 0 ? KeyPadView(model: model) : Text('AAA'),
+                    tab == 0
+                        ? KeyPadView(model: model)
+                        // show a list of products and on click handle different scenarios
+                        : ProductView(userId: '1', items: true),
                   ],
                 ),
               ),

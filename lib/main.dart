@@ -13,7 +13,7 @@ final isWindows = UniversalPlatform.isWindows;
 // cd android && ./gradlew signingReport
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  (!isWindows) ? await Firebase.initializeApp() : ''; //comment it for windows
+  (!isWindows) ? await Firebase.initializeApp() : '';
   await GetStorage.init();
   // done init in mobile.
   setupLocator();
