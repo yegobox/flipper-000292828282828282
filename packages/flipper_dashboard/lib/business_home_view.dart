@@ -124,12 +124,14 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                 ),
               ),
             ),
-            bottomNavigationBar: BottomMenubar(
-              switchTab: (index) {
-                setState(() {
-                  tab = index;
-                });
-              },
+            bottomNavigationBar: SafeArea(
+              child: BottomMenubar(
+                switchTab: (index) {
+                  setState(() {
+                    tab = index;
+                  });
+                },
+              ),
             ),
             drawer: Text('I am Side drawer'),
           ),

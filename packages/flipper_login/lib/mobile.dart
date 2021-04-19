@@ -5,8 +5,6 @@ import 'package:flipper_login/signup_login_buttons.dart';
 import 'package:flutter/material.dart';
 
 class MobileLogin extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   Future<bool> _onWillPop() async {
     return false;
   }

@@ -18,9 +18,8 @@ abstract class Api {
   Future<List<Product>> products();
   Future<int> signup({required Map business});
   Future<Sync> authenticateWithOfflineDb({required String userId});
-  Future<List<Business>>
-      canStart(); //do we have business,branch sure then start
-  // Future<List<Product>> products();
+  //do we have business,branch sure then start
+  Future<List<Business>> businesses();
   // Future<List<Variation>> variations();
   // Future<List<Unit>> units();
 }

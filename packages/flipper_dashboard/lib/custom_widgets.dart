@@ -106,16 +106,23 @@ Widget customBottomIcon(BuildContext context,
     padding: EdgeInsets.only(bottom: istwitterIcon ? paddingIcon : 0),
     child: Column(
       children: [
-        Container(
-          child: icon,
-          // size: size,
-          // color: isEnable ? Theme.of(context).primaryColor : iconColor,
+        Flexible(
+          flex: 1,
+          fit: FlexFit.loose,
+          child: Container(
+            child: icon,
+          ),
         ),
-        Container(
-          padding: EdgeInsetsDirectional.only(top: 5),
-          child: Text(
-            text,
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+        Flexible(
+          flex: 1,
+          fit: FlexFit.loose,
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsetsDirectional.only(top: 5),
+            child: Text(
+              text,
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            ),
           ),
         ),
       ],
@@ -330,7 +337,7 @@ Widget customAlert(BuildContext context,
 
 void customSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String msg,
     {double height = 30, Color backgroundColor = Colors.black}) {
-  if (_scaffoldKey == null || _scaffoldKey.currentState == null) {
+  if (_scaffoldKey.currentState == null) {
     return;
   }
   _scaffoldKey.currentState!.hideCurrentSnackBar();

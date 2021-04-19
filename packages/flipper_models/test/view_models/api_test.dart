@@ -1,7 +1,5 @@
 import 'package:flipper_models/models/business.dart';
-import 'package:flipper_models/view_models/startup_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -27,8 +25,8 @@ void main() {
     final client = MockApi();
     List<Business> c = [];
     c.add(businessMockData);
-    when(client.canStart()).thenAnswer((_) async => c);
+    when(client.businesses()).thenAnswer((_) async => c);
 
-    expect(await client.canStart(), c);
+    expect(await client.businesses(), c);
   });
 }

@@ -28,7 +28,7 @@ void main() {
     test('Given users have business should update didSync ==true..', () async {
       List<Business> c = [];
       c.add(businessMockData);
-      when(client.canStart()).thenAnswer((_) async => c);
+      when(client.businesses()).thenAnswer((_) async => c);
       when(box.read(key: 'userId')).thenAnswer((_) => true);
 
       model.isLoggedIn();
@@ -39,7 +39,7 @@ void main() {
     test('Given users does not have business should update didSync ==false..',
         () async {
       List<Business> c = [];
-      when(client.canStart()).thenAnswer((_) async => c);
+      when(client.businesses()).thenAnswer((_) async => c);
       when(box.read(key: 'userId')).thenAnswer((_) => false);
 
       model.isLoggedIn();

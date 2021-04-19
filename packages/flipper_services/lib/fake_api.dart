@@ -13,7 +13,7 @@ class FakeApi implements Api {
   }
 
   @override
-  Future<List<Business>> canStart() {
+  Future<List<Business>> businesses() {
     // TODO: implement canStart
     throw UnimplementedError();
   }

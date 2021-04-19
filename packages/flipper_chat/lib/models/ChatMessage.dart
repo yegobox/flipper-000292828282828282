@@ -1,7 +1,5 @@
 library flipper_chat;
 
-import 'package:flutter/material.dart';
-
 enum ChatMessageType { text, audio, image, video }
 enum MessageStatus { not_sent, not_view, viewed }
 

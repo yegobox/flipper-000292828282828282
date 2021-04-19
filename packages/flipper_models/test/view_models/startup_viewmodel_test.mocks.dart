@@ -59,7 +59,7 @@ class MockApi extends _i1.Mock implements _i4.Api {
           returnValue:
               Future<_i3.Sync>.value(_FakeSync())) as _i5.Future<_i3.Sync>);
   @override
-  _i5.Future<List<_i6.Business>> canStart() =>
+  _i5.Future<List<_i6.Business>> businesses() =>
       (super.noSuchMethod(Invocation.method(#canStart, []),
               returnValue: Future<List<_i6.Business>>.value(<_i6.Business>[]))
           as _i5.Future<List<_i6.Business>>);
