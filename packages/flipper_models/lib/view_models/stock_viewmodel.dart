@@ -8,5 +8,6 @@ class StockViewModel extends BaseViewModel {
 
   loadStockByProductId({required String productId}) async {
     _stocks = await ProxyService.api.stocks(productId: productId);
+    notifyListeners();
   }
 }

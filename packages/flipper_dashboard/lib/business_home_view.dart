@@ -1,12 +1,15 @@
 library flipper_dashboard;
 
 import 'package:flipper_dashboard/payable_view.dart';
+import 'package:flipper_dashboard/popup_modal.dart';
 import 'package:flipper_dashboard/product_view.dart';
 import 'package:flipper_dashboard/sale_indicator.dart';
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'bottom_menu_bar.dart';
+import 'custom_rect_tween.dart';
+import 'hero_dialog_route.dart';
 import 'home_app_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_models/view_models/business_home_viewmodel.dart';
@@ -107,24 +110,47 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.miniCenterDocked,
             floatingActionButton: GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.add, size: 20, color: Colors.white),
-                    const Text(
-                      ' Add Product',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ],
+              onTap: () {
+                Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                  return const AddTodoPopupCard();
+                }));
+              },
+              child: Hero(
+                tag: addProductHero,
+                createRectTween: (begin, end) {
+                  return CustomRectTween(begin: begin, end: end);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: const Icon(
+                          Icons.add,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: const Text(
+                          ' Add Product',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

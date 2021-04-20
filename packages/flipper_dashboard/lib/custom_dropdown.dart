@@ -244,7 +244,6 @@ class _DropdownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
       }
       return true;
     }());
-    assert(textDirection != null);
     double left;
     switch (textDirection) {
       case TextDirection.rtl:
