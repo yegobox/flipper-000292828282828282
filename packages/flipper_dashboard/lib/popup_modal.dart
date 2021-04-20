@@ -2,15 +2,15 @@ import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flipper_services/proxy.dart';
 import 'custom_rect_tween.dart';
+import 'package:flipper/routes.router.dart';
 
 const String addProductHero = 'addProductHero';
 
-/// {@template addProductModal}
 /// Popup card to add a new [Todo]. Should be used in conjuction with
 /// [HeroDialogRoute] to achieve the popup effect.
 ///
 /// Uses a [Hero] with tag [OptionModal].
-/// {@endtemplate}
+
 class OptionModal extends StatelessWidget {
   const OptionModal({Key? key}) : super(key: key);
 
@@ -48,7 +48,8 @@ class OptionModal extends StatelessWidget {
                                   .copyWith(canvasColor: HexColor('#0097e6'))
                                   .canvasColor,
                               onPressed: () async {
-                                // model.navigateAddProduct();
+                                ProxyService.nav
+                                    .navigateTo(Routes.addProductView);
                               },
                               child: Text(
                                 'Add Product',

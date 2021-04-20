@@ -1,3 +1,4 @@
+import 'package:flipper_dashboard/add_product_view.dart';
 import 'package:flipper_dashboard/flipper_dashboard.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_login/login_view.dart';
@@ -14,6 +15,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SignUpFormView),
     MaterialRoute(page: BusinessHomeView),
     MaterialRoute(page: LoginView),
+    MaterialRoute(page: AddProductView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

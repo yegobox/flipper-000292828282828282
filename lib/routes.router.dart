@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:flipper_dashboard/add_product_view.dart';
 import 'package:flipper_dashboard/business_home_view.dart';
 import 'package:flipper_dashboard/flipper_dashboard.dart';
 import 'package:flipper_dashboard/startup_view.dart';
@@ -20,12 +21,14 @@ class Routes {
   static const String signUpFormView = '/sign-up-form-view';
   static const String businessHomeView = '/business-home-view';
   static const String loginView = '/login-view';
+  static const String addProductView = '/add-product-view';
   static const all = <String>{
     startUpView,
     dashboardView,
     signUpFormView,
     businessHomeView,
     loginView,
+    addProductView,
   };
 }
 
@@ -38,6 +41,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.signUpFormView, page: SignUpFormView),
     RouteDef(Routes.businessHomeView, page: BusinessHomeView),
     RouteDef(Routes.loginView, page: LoginView),
+    RouteDef(Routes.addProductView, page: AddProductView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -72,6 +76,12 @@ class StackedRouter extends RouterBase {
     LoginView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => LoginView(),
+        settings: data,
+      );
+    },
+    AddProductView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const AddProductView(),
         settings: data,
       );
     },
