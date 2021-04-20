@@ -10,6 +10,11 @@ class ProductViewModel extends BaseViewModel {
   bool _isLocked = false;
   get isLocked => _isLocked;
 
+  Product? _product;
+  get product => _product;
+
+  get color => null;
+
   Future<List<Product>> loadProducts() async {
     _products = await ProxyService.api.products();
 
@@ -18,4 +23,8 @@ class ProductViewModel extends BaseViewModel {
   }
 
   void createTemporalProduct() {}
+
+  void setName({String? name}) {}
+
+  void lock() {}
 }

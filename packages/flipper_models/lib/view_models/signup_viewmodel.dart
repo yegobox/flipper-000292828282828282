@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flipper/routes.router.dart';
+import 'package:flipper_models/models/business.dart';
+import 'package:flipper_models/models/branch.dart';
+import 'package:flipper_models/models/category.dart';
 import 'package:stacked/stacked.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flipper_services/proxy.dart';
@@ -60,10 +63,24 @@ class SignupViewModel extends FormViewModel {
       'currency': 'RW',
       'userId': ProxyService.box.read(key: 'userId'),
       'type': businessType,
+      // ignore: todo
       //TODO: right now I am not sure locale!.countryCode can be reliable as sometime it need to test it on real-device
       'country': 'RW'
     });
     if (okStatus == 200) {
+      //get businesses's id then look for related branch [0] create the default category
+      List<Business> businesses = await ProxyService.api.businesses();
+      List<Branch> branches =
+          await ProxyService.api.branches(businessId: businesses[0].id);
+      final String userId = ProxyService.box.read(key: 'userId');
+      final Category category = new Category(
+        active: true,
+        focused: true,
+        name: 'NONE',
+        channels: [userId],
+        branchId: branches[0].id,
+      );
+      await ProxyService.api.create<Category>(data: category);
       ProxyService.nav.navigateTo(Routes.businessHomeView);
     }
   }

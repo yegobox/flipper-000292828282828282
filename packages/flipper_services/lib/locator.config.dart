@@ -22,7 +22,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
     {String? environment, _i2.EnvironmentFilter? environmentFilter}) {
   final gh = _i2.GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
-  gh.lazySingleton<_i3.Api>(() => thirdPartyServicesModule.apiService);
+  gh.lazySingleton<_i3.Api<dynamic>>(() => thirdPartyServicesModule.apiService);
   gh.lazySingleton<_i4.FlipperLocation>(
       () => thirdPartyServicesModule.location);
   gh.lazySingleton<_i5.HttpApi>(() => _i5.HttpApi());

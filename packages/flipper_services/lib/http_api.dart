@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
+import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/sync.dart';
 import 'package:injectable/injectable.dart';
 import 'package:get_storage/get_storage.dart';
@@ -32,7 +34,7 @@ class ExtendedClient extends http.BaseClient {
 }
 
 @lazySingleton
-class HttpApi implements Api {
+class HttpApi<T> implements Api {
   ExtendedClient client = ExtendedClient(http.Client());
   // HttpApi();
   String flipperApi = "https://flipper.yegobox.com";
@@ -111,5 +113,22 @@ class HttpApi implements Api {
         .get(Uri.parse("$apihub/api/stocks-byProductId/$productId"));
 
     return stockFromJson(response.body);
+  }
+
+  @override
+  Future<List<Branch>> branches({required String businessId}) async {
+    final response = await client
+        .get(Uri.parse("$apihub/api/stocks-byProductId/$businessId"));
+
+    return branchFromJson(response.body);
+  }
+
+  @override
+  Future<void> create<T>({T? data}) async {
+    if (T == Category) {
+      await client.post(Uri.parse("$apihub/api/category"),
+          body: jsonEncode(data),
+          headers: {'Content-Type': 'application/json'});
+    }
   }
 }

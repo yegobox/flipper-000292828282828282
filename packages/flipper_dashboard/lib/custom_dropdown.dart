@@ -293,7 +293,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     required this.barrierLabel,
   });
 
-  final List<DropdownMenuItem<T>>? items;
+  List<DropdownMenuItem<T>>? items = [];
   final EdgeInsetsGeometry padding;
   final Rect buttonRect;
   final int selectedIndex;
@@ -461,12 +461,12 @@ class _DropdownButtonState<T> extends State<CustomDropdownButton<T>>
   void initState() {
     super.initState();
     _updateSelectedIndex();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     _removeDropdownRoute();
     super.dispose();
   }
@@ -479,7 +479,7 @@ class _DropdownButtonState<T> extends State<CustomDropdownButton<T>>
   }
 
   void _removeDropdownRoute() {
-    _dropdownRoute!._dismiss();
+    _dropdownRoute?._dismiss();
     // _dropdownRoute = null;
   }
 

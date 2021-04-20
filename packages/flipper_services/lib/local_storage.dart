@@ -13,4 +13,9 @@ class LocalStorageImpl implements LocalStorage {
     box.write(key, value);
     return true;
   }
+
+  @override
+  remove({required String key}) {
+    box.remove(key);
+  }
 }
