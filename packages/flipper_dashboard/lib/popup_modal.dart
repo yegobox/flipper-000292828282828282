@@ -1,8 +1,5 @@
-import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flipper_services/proxy.dart';
 import 'custom_rect_tween.dart';
-import 'package:flipper/routes.router.dart';
 
 const String addProductHero = 'addProductHero';
 
