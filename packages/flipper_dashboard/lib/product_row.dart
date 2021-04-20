@@ -2,6 +2,8 @@ import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_text_drawable/flutter_text_drawable.dart';
+import 'package:flipper_models/view_models/stock_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
 class ProductRow extends StatelessWidget {
   const ProductRow({
@@ -73,30 +75,30 @@ class ProductRow extends StatelessWidget {
               style: const TextStyle(color: Colors.black),
             ),
             // FIXME: this model need to be worked on
-            // trailing: ViewModelBuilder<StockViewModel>.reactive(
-            //   viewModelBuilder: () => StockViewModel(),
-            //   onModelReady: (StockViewModel stockModel) =>
-            //       stockModel.loadStockByProductId(productId: productId),
-            //   builder: (context, stockModel, child) {
-            //     return stockModel.stock.isEmpty
-            //         ? const Text(
-            //             ' Prices',
-            //             style: TextStyle(color: Colors.black),
-            //           )
-            //         : stockModel.stock.length > 1
-            //             ? const Text(
-            //                 ' Prices',
-            //                 style: TextStyle(color: Colors.black),
-            //               )
-            //             : Text(
-            //                 'RWF ' +
-            //                     stockModel.stock[0].retailPrice
-            //                         .toInt()
-            //                         .toString(),
-            //                 style: const TextStyle(color: Colors.black),
-            //               );
-            //   },
-            // ),
+            trailing: ViewModelBuilder<StockViewModel>.reactive(
+              viewModelBuilder: () => StockViewModel(),
+              onModelReady: (StockViewModel stockModel) =>
+                  stockModel.loadStockByProductId(productId: productId),
+              builder: (context, stockModel, child) {
+                return stockModel.stocks.isEmpty
+                    ? const Text(
+                        ' Prices',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    : stockModel.stocks.length > 1
+                        ? const Text(
+                            ' Prices',
+                            style: TextStyle(color: Colors.black),
+                          )
+                        : Text(
+                            'RWF ' +
+                                stockModel.stocks[0].retailPrice
+                                    .toInt()
+                                    .toString(),
+                            style: const TextStyle(color: Colors.black),
+                          );
+              },
+            ),
           ),
           Container(
             height: 0.5,

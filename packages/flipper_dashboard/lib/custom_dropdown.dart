@@ -456,7 +456,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
 class _DropdownButtonState<T> extends State<CustomDropdownButton<T>>
     with WidgetsBindingObserver {
   late int? _selectedIndex;
-  late _DropdownRoute<T> _dropdownRoute;
+  _DropdownRoute<T>? _dropdownRoute;
 
   @override
   void initState() {
@@ -480,7 +480,7 @@ class _DropdownButtonState<T> extends State<CustomDropdownButton<T>>
   }
 
   void _removeDropdownRoute() {
-    _dropdownRoute._dismiss();
+    _dropdownRoute!._dismiss();
     // _dropdownRoute = null;
   }
 
@@ -530,7 +530,7 @@ class _DropdownButtonState<T> extends State<CustomDropdownButton<T>>
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
 
-    Navigator.push(context, _dropdownRoute)
+    Navigator.push(context, _dropdownRoute!)
         .then<void>((_DropdownRouteResult<T>? newValue) {
       // _dropdownRoute = null;
       if (!mounted || newValue == null) return;

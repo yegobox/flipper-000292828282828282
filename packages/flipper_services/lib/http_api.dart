@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
+import 'package:flipper_models/models/stock.dart';
 import 'package:flipper_models/models/sync.dart';
 import 'package:injectable/injectable.dart';
 import 'package:get_storage/get_storage.dart';
@@ -102,5 +103,13 @@ class HttpApi implements Api {
   Future<List<Product>> products() async {
     final response = await client.get(Uri.parse("$apihub/api/products"));
     return productFromJson(response.body);
+  }
+
+  @override
+  Future<List<Stock>> stocks({required String productId}) async {
+    final response = await client
+        .get(Uri.parse("$apihub/api/stocks-byProductId/$productId"));
+
+    return stockFromJson(response.body);
   }
 }
