@@ -7,6 +7,7 @@ import 'package:flipper_dashboard/sale_indicator.dart';
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'add_product_buttons.dart';
 import 'bottom_menu_bar.dart';
 import 'custom_rect_tween.dart';
 import 'hero_dialog_route.dart';
@@ -111,9 +112,15 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                 FloatingActionButtonLocation.miniCenterDocked,
             floatingActionButton: GestureDetector(
               onTap: () {
-                Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                  return const OptionModal();
-                }));
+                Navigator.of(context).push(
+                  HeroDialogRoute(
+                    builder: (context) {
+                      return const OptionModal(
+                        child: AddProductButtons(),
+                      );
+                    },
+                  ),
+                );
               },
               child: Hero(
                 tag: addProductHero,
