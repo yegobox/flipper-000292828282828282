@@ -1,18 +1,18 @@
+import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flipper_services/proxy.dart';
 import 'custom_rect_tween.dart';
 
 const String addProductHero = 'addProductHero';
 
-/// {@template add_todo_popup_card}
+/// {@template addProductModal}
 /// Popup card to add a new [Todo]. Should be used in conjuction with
 /// [HeroDialogRoute] to achieve the popup effect.
 ///
-/// Uses a [Hero] with tag [addProductHero].
+/// Uses a [Hero] with tag [OptionModal].
 /// {@endtemplate}
-class AddTodoPopupCard extends StatelessWidget {
-  /// {@macro add_todo_popup_card}
-  const AddTodoPopupCard({Key? key}) : super(key: key);
+class OptionModal extends StatelessWidget {
+  const OptionModal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,44 +25,69 @@ class AddTodoPopupCard extends StatelessWidget {
             return CustomRectTween(begin: begin, end: end);
           },
           child: Material(
-            color: Color(0xFFef8354),
             elevation: 2,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'New todo',
-                        border: InputBorder.none,
-                      ),
-                      cursorColor: Colors.white,
+                padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 200,
+                  child: Form(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Container(
+                          width: double.infinity,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FlatButton(
+                              color: Theme.of(context)
+                                  .copyWith(canvasColor: HexColor('#0097e6'))
+                                  .canvasColor,
+                              onPressed: () async {
+                                // model.navigateAddProduct();
+                              },
+                              child: Text(
+                                'Add Product',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      color: Colors.white,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: Colors.white70,
+                            width: double.infinity,
+                            child: OutlineButton(
+                              onPressed: () {},
+                              child: const Text('Create Discount'),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FlatButton(
+                              child: const Text('Dismiss'),
+                              onPressed: () {
+                                ProxyService.nav.back();
+                              },
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    const Divider(
-                      color: Colors.white,
-                      thickness: 0.2,
-                    ),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Write a note',
-                        border: InputBorder.none,
-                      ),
-                      cursorColor: Colors.white,
-                      maxLines: 6,
-                    ),
-                    const Divider(
-                      color: Colors.white,
-                      thickness: 0.2,
-                    ),
-                    FlatButton(
-                      onPressed: () {},
-                      child: const Text('Add'),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

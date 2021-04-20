@@ -112,7 +112,7 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
             floatingActionButton: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                  return const AddTodoPopupCard();
+                  return const OptionModal();
                 }));
               },
               child: Hero(
