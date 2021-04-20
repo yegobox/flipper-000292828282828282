@@ -32,6 +32,9 @@ class SignUpFormView extends StatelessWidget with $SignUpFormView {
                   child: TextFormField(
                     decoration: InputDecoration(hintText: 'Name'),
                     controller: nameController,
+                    onChanged: (name) {
+                      model.setName(name: name);
+                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Name is required';

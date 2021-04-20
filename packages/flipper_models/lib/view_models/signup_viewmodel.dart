@@ -56,8 +56,9 @@ class SignupViewModel extends FormViewModel {
   }
 
   void signup({Locale? locale}) async {
+    print(nameValue);
     int okStatus = await ProxyService.api.signup(business: {
-      'name': nameValue,
+      'name': _name,
       'latitude': latitude,
       'longitude': longitude,
       'currency': 'RW',
@@ -70,6 +71,7 @@ class SignupViewModel extends FormViewModel {
     if (okStatus == 200) {
       //get businesses's id then look for related branch [0] create the default category
       List<Business> businesses = await ProxyService.api.businesses();
+
       List<Branch> branches =
           await ProxyService.api.branches(businessId: businesses[0].id);
       final String userId = ProxyService.box.read(key: 'userId');
@@ -80,7 +82,8 @@ class SignupViewModel extends FormViewModel {
         channels: [userId],
         branchId: branches[0].id,
       );
-      await ProxyService.api.create<Category>(data: category);
+      await ProxyService.api
+          .create<Category>(data: category, endPoint: 'category');
       ProxyService.nav.navigateTo(Routes.businessHomeView);
     }
   }

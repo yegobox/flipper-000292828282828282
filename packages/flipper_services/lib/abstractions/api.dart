@@ -27,7 +27,7 @@ abstract class Api<T> {
   Future<List<Stock>> stocks({required String productId});
   // Future<List<Variation>> variations();
   // Future<List<Unit>> units();
-  Future<void> create<T>({T data});
+  Future<int> create<T>({T data, required String endPoint});
   // Future<T> delete(T data);
   // Future<T> update(T data);
 }

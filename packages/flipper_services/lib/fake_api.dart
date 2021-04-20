@@ -77,7 +77,7 @@ class FakeApi implements Api {
   }
 
   @override
-  Future<void> create<T>({T? data}) {
+  Future<int> create<T>({T? data, required String endPoint}) {
     // TODO: implement create
     throw UnimplementedError();
   }

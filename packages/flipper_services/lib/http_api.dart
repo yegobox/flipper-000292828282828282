@@ -117,18 +117,18 @@ class HttpApi<T> implements Api {
 
   @override
   Future<List<Branch>> branches({required String businessId}) async {
-    final response = await client
-        .get(Uri.parse("$apihub/api/stocks-byProductId/$businessId"));
+    final response =
+        await client.get(Uri.parse("$apihub/api/branches/$businessId"));
 
     return branchFromJson(response.body);
   }
 
   @override
-  Future<void> create<T>({T? data}) async {
-    if (T == Category) {
-      await client.post(Uri.parse("$apihub/api/category"),
-          body: jsonEncode(data),
-          headers: {'Content-Type': 'application/json'});
-    }
+  Future<int> create<T>({T? data, required String endPoint}) async {
+    final http.Response response = await client.post(
+        Uri.parse("$apihub/api/$endPoint"),
+        body: jsonEncode(data),
+        headers: {'Content-Type': 'application/json'});
+    return response.statusCode;
   }
 }
