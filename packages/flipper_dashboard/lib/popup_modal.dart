@@ -67,6 +67,7 @@ class OptionModal extends StatelessWidget {
                           child: Container(
                             color: Colors.white70,
                             width: double.infinity,
+                            height: 60,
                             child: OutlineButton(
                               onPressed: () {},
                               child: const Text('Create Discount'),
@@ -75,6 +76,7 @@ class OptionModal extends StatelessWidget {
                         ),
                         Container(
                           width: double.infinity,
+                          height: 60,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FlatButton(
