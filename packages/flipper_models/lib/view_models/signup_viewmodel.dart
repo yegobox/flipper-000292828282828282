@@ -4,6 +4,7 @@ import 'package:flipper/routes.router.dart';
 import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_models/models/category.dart';
+import 'package:flipper_models/models/color.dart';
 import 'package:stacked/stacked.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flipper_services/proxy.dart';
@@ -84,6 +85,24 @@ class SignupViewModel extends FormViewModel {
       );
       await ProxyService.api
           .create<Category>(data: category, endPoint: 'category');
+      //get default colors for this branch
+      final List<String> colors = [
+        '#d63031',
+        '#0984e3',
+        '#e84393',
+        '#2d3436',
+        '#6c5ce7',
+        '#74b9ff',
+        '#ff7675',
+        '#a29bfe'
+      ];
+      final PColor color = new PColor(
+        colors: colors,
+        channels: [userId],
+        active: false,
+        branchId: branches[0].id,
+      );
+      await ProxyService.api.create<PColor>(data: color, endPoint: 'color');
       ProxyService.nav.navigateTo(Routes.businessHomeView);
     }
   }
