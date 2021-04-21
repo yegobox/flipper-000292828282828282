@@ -28,6 +28,7 @@ abstract class Api<T> {
   // Future<List<Variation>> variations();
   // Future<List<Unit>> units();
   Future<int> create<T>({T data, required String endPoint});
+  Future<bool> logOut();
   // Future<T> delete(T data);
   // Future<T> update(T data);
 }

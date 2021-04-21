@@ -81,4 +81,10 @@ class FakeApi implements Api {
     // TODO: implement create
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> logOut() {
+    // TODO: implement logOut
+    throw UnimplementedError();
+  }
 }

@@ -6,6 +6,7 @@ import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
 import 'package:flipper_models/models/category.dart';
+import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/models/sync.dart';
 import 'package:injectable/injectable.dart';
 import 'package:get_storage/get_storage.dart';
@@ -130,5 +131,12 @@ class HttpApi<T> implements Api {
         body: jsonEncode(data),
         headers: {'Content-Type': 'application/json'});
     return response.statusCode;
+  }
+
+  @override
+  Future<bool> logOut() async {
+    ProxyService.box.remove(key: 'userId');
+    ProxyService.box.remove(key: 'bearerToken');
+    return true;
   }
 }

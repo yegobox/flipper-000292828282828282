@@ -1,12 +1,13 @@
 library flipper_dashboard;
 
+import 'package:flipper/routes.router.dart';
 import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flipper_dashboard/popup_modal.dart';
 import 'package:flipper_dashboard/product_view.dart';
 import 'package:flipper_dashboard/sale_indicator.dart';
 import 'package:flipper_dashboard/slide_out_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flipper_services/proxy.dart';
 import 'add_product_buttons.dart';
 import 'bottom_menu_bar.dart';
 import 'custom_rect_tween.dart';
@@ -77,7 +78,10 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                 totalAmount: 300,
                 counts: 30,
                 onClick: () {},
-                onLogout: () {},
+                onLogout: () async {
+                  await ProxyService.api.logOut();
+                  ProxyService.nav.navigateTo(Routes.startUpView);
+                },
               ),
             ),
             body: FadeTransition(
