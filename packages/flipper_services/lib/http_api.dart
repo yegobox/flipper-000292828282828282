@@ -127,4 +127,12 @@ class HttpApi<T> implements Api {
 
     return pColorFromJson(response.body);
   }
+
+  @override
+  Future<List<Category>> categories({required String branchId}) async {
+    final response =
+        await client.get(Uri.parse("$apihub/api/categories/$branchId"));
+
+    return categoryFromJson(response.body);
+  }
 }

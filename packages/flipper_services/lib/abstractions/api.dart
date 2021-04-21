@@ -4,6 +4,7 @@ import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_models/models/stock.dart';
 import 'package:flipper_models/models/color.dart';
+import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/sync.dart';
 
 abstract class Api<T> {
@@ -16,6 +17,7 @@ abstract class Api<T> {
   Future<List<Branch>> branches({required String businessId});
   Future<List<Stock>> stocks({required String productId});
   Future<List<PColor>> colors({required String branchId});
+  Future<List<Category>> categories({required String branchId});
   Future<int> create<T>({T data, required String endPoint});
   Future<bool> logOut();
 }

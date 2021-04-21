@@ -1,5 +1,6 @@
 import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_models/models/business.dart';
+import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/color.dart';
 import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
@@ -77,6 +78,12 @@ class FakeApi implements Api {
   @override
   Future<List<PColor>> colors({required String branchId}) {
     // TODO: implement colors
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Category>> categories({required String branchId}) {
+    // TODO: implement categories
     throw UnimplementedError();
   }
 }
