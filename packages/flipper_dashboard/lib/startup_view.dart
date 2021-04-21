@@ -2,7 +2,6 @@ library flipper_dashboard;
 
 import 'package:flipper_dashboard/loader.dart';
 import 'package:flipper_login/signup_form_view.dart';
-import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/view_models/startup_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -19,6 +18,7 @@ class StartUpView extends StatelessWidget {
       fireOnModelReadyOnce: true,
       onModelReady: (model) async {
         await model.didWeSync();
+        await model.appInit();
       },
       viewModelBuilder: () => StartUpViewModel(),
       builder: (context, model, child) {

@@ -112,6 +112,7 @@ class SignupViewModel extends FormViewModel {
         channels: [userId],
       );
       await ProxyService.api.create<Unit>(data: units, endPoint: 'unit');
+
       ProxyService.nav.navigateTo(Routes.businessHomeView);
     }
   }

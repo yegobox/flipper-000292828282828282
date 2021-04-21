@@ -1,4 +1,5 @@
 import 'package:flipper_models/models/business.dart';
+import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:stacked/stacked.dart';
 // import 'package:get_storage/get_storage.dart';
@@ -27,5 +28,16 @@ class StartUpViewModel extends BaseViewModel {
 
   bool isLoggedIn() {
     return ProxyService.box.read(key: 'userId') == null ? false : true;
+  }
+
+  /// get IDS to use along the way in the app
+  appInit() async {
+    if (isLoggedIn()) {
+      List<Business> businesses = await ProxyService.api.businesses();
+      List<Branch> branches =
+          await ProxyService.api.branches(businessId: businesses[0].id);
+      ProxyService.box.write(key: 'branchId', value: branches[0].id);
+      ProxyService.box.write(key: 'businessId', value: businesses[0].id);
+    }
   }
 }
