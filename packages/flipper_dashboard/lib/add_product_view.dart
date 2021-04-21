@@ -4,6 +4,13 @@ import 'package:flipper_models/view_models/product_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/proxy.dart';
 import 'create/build_image_holder.dart';
+import 'create/category_view.dart';
+import 'create/divider.dart';
+import 'create/list_divider.dart';
+import 'create/retail_price.dart';
+import 'create/section_select_unit.dart';
+import 'create/sku_view.dart';
+import 'create/supply_price_widget.dart';
 import 'customappbar.dart';
 
 class AddProductView extends StatelessWidget {
@@ -21,6 +28,7 @@ class AddProductView extends StatelessWidget {
         model.createTemporalProduct();
         model.loadCategories();
         model.loadColors();
+        model.loadUnits();
       },
       viewModelBuilder: () => ProductViewModel(),
       builder: (context, model, child) {
@@ -79,7 +87,62 @@ class AddProductView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // CategoryView(), //TODO:continue when power comeback.
+                  CategoryView(categories: model.categories),
+                  const CenterDivider(
+                    width: 300,
+                  ),
+                  const ListDivider(
+                    height: 24,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18, right: 18),
+                    child: Container(
+                      width: double.infinity,
+                      child: const Text(
+                        'PRICE AND INVENTORY',
+                      ),
+                    ),
+                  ),
+                  const CenterDivider(
+                    width: double.infinity,
+                  ),
+                  SectionSelectUnit(units: model.units),
+                  const CenterDivider(
+                    width: double.infinity,
+                  ),
+                  RetailPrice(onModelUpdate: (value) {}),
+                  const CenterDivider(
+                    width: double.infinity,
+                  ),
+                  SupplyPrice(onModelUpdate: (value) {}),
+                  GestureDetector(
+                    onTap: () {
+                      // ProxyService.nav.navigateTo(
+                      //   Routing.receiveStock,
+                      //   arguments: ReceiveStockScreenArguments(
+                      //     id: model.state.variation.id,
+                      //   ),
+                      // ); //passing a regular variantId to update
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 18, right: 18),
+                      child: ListTile(
+                        leading: Text('Stock'),
+                        trailing: Text('Add Stock',
+                            style: TextStyle(color: Colors.blue)),
+                      ),
+                    ),
+                  ),
+                  SkuView(
+                    onModelUpdate: (value) {},
+                  ),
+                  const ListDivider(
+                    height: 10,
+                  ),
+                  const ListDivider(
+                    height: 10,
+                  ),
+                  // const VariationList(),//TODO: continue here.!
                 ])
               ],
             ),

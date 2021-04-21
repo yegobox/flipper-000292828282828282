@@ -2,6 +2,7 @@ library flipper_models;
 
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/color.dart';
+import 'package:flipper_models/models/unit.dart';
 import 'package:flipper_models/models/category.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/proxy.dart';
@@ -14,6 +15,9 @@ class ProductViewModel extends BaseViewModel {
 
   List<PColor> _colors = [];
   get colors => _colors;
+
+  List<Unit> _units = [];
+  get units => _units;
 
   List<Category> _categories = [];
   get categories => _categories;
@@ -47,6 +51,13 @@ class ProductViewModel extends BaseViewModel {
     String branchId = ProxyService.box.read(key: 'branchId');
 
     _colors = await ProxyService.api.colors(branchId: branchId);
+    notifyListeners();
+  }
+
+  Future<void> loadUnits() async {
+    String branchId = ProxyService.box.read(key: 'branchId');
+
+    _units = await ProxyService.api.units(branchId: branchId);
     notifyListeners();
   }
 }

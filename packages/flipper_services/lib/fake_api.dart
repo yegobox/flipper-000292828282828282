@@ -6,6 +6,7 @@ import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
 import 'package:flipper_models/models/sync.dart';
+import 'package:flipper_models/models/unit.dart';
 
 import 'abstractions/api.dart';
 
@@ -84,6 +85,12 @@ class FakeApi implements Api {
   @override
   Future<List<Category>> categories({required String branchId}) {
     // TODO: implement categories
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Unit>> units({required String branchId}) {
+    // TODO: implement units
     throw UnimplementedError();
   }
 }

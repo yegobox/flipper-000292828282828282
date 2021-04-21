@@ -7,6 +7,7 @@ import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
 import 'package:flipper_models/models/category.dart';
+import 'package:flipper_models/models/unit.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/models/sync.dart';
 import 'package:injectable/injectable.dart';
@@ -134,5 +135,12 @@ class HttpApi<T> implements Api {
         await client.get(Uri.parse("$apihub/api/categories/$branchId"));
 
     return categoryFromJson(response.body);
+  }
+
+  @override
+  Future<List<Unit>> units({required String branchId}) async {
+    final response = await client.get(Uri.parse("$apihub/api/units/$branchId"));
+
+    return unitFromJson(response.body);
   }
 }
