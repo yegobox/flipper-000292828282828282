@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_models/models/business.dart';
+import 'package:flipper_models/models/color.dart';
 import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
@@ -43,27 +44,6 @@ class HttpApi<T> implements Api {
   @override
   void cleanKeyPad() {
     // TODO: implement cleanKeyPad
-  }
-
-  @override
-  void listenCategory() {
-    // TODO: implement listenCategory
-  }
-
-  @override
-  void listenColor() {
-    // TODO: implement listenColor
-  }
-
-  @override
-  void listenOrder() {
-    // TODO: implement listenOrder
-  }
-
-  @override
-  Future payroll() {
-    // TODO: implement payroll
-    throw UnimplementedError();
   }
 
   @override
@@ -138,5 +118,13 @@ class HttpApi<T> implements Api {
     ProxyService.box.remove(key: 'userId');
     ProxyService.box.remove(key: 'bearerToken');
     return true;
+  }
+
+  @override
+  Future<List<PColor>> colors({required String branchId}) async {
+    final response =
+        await client.get(Uri.parse("$apihub/api/colors/$branchId"));
+
+    return pColorFromJson(response.body);
   }
 }

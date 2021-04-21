@@ -19,6 +19,8 @@ class AddProductView extends StatelessWidget {
     return ViewModelBuilder<ProductViewModel>.reactive(
       onModelReady: (model) {
         model.createTemporalProduct();
+        model.loadCategories();
+        model.loadColors();
       },
       viewModelBuilder: () => ProductViewModel(),
       builder: (context, model, child) {

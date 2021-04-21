@@ -1,5 +1,6 @@
 import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_models/models/business.dart';
+import 'package:flipper_models/models/color.dart';
 import 'package:flipper_models/models/login.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
@@ -23,21 +24,6 @@ class FakeApi implements Api {
   @override
   void cleanKeyPad() {
     // TODO: implement cleanKeyPad
-  }
-
-  @override
-  void listenCategory() {
-    // TODO: implement listenCategory
-  }
-
-  @override
-  void listenColor() {
-    // TODO: implement listenColor
-  }
-
-  @override
-  void listenOrder() {
-    // TODO: implement listenOrder
   }
 
   @override
@@ -85,6 +71,12 @@ class FakeApi implements Api {
   @override
   Future<bool> logOut() {
     // TODO: implement logOut
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<PColor>> colors({required String branchId}) {
+    // TODO: implement colors
     throw UnimplementedError();
   }
 }

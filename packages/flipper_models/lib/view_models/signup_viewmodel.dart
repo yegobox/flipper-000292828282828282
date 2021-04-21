@@ -5,6 +5,8 @@ import 'package:flipper_models/models/business.dart';
 import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/color.dart';
+import 'package:flipper_models/models/unit.dart';
+import 'package:flipper_models/models/unit_mock.dart';
 import 'package:stacked/stacked.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flipper_services/proxy.dart';
@@ -103,6 +105,13 @@ class SignupViewModel extends FormViewModel {
         branchId: branches[0].id,
       );
       await ProxyService.api.create<PColor>(data: color, endPoint: 'color');
+      //now create default units for this branch
+      final units = new Unit(
+        units: mockUnits,
+        branchId: branches[0].id,
+        channels: [userId],
+      );
+      await ProxyService.api.create<Unit>(data: units, endPoint: 'unit');
       ProxyService.nav.navigateTo(Routes.businessHomeView);
     }
   }

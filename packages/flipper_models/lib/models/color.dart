@@ -15,7 +15,7 @@ class PColor {
     this.id,
     this.name,
     required this.channels,
-    required this.colors,
+    this.colors,
     this.table,
     required this.branchId,
     required this.active,
@@ -24,7 +24,7 @@ class PColor {
   String? id;
   String? name;
   List<String> channels;
-  List<String> colors;
+  List<String>? colors;
   String? table;
   String branchId;
   bool active;
@@ -43,7 +43,7 @@ class PColor {
         "id": id,
         "name": name,
         "channels": List<dynamic>.from(channels.map((x) => x)),
-        "colors": List<dynamic>.from(colors.map((x) => x)),
+        "colors": List<dynamic>.from(colors!.map((x) => x)),
         "table": table,
         "branchId": branchId,
         "active": active,
