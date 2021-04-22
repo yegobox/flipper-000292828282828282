@@ -35,7 +35,9 @@ class Unit {
         table: json["table"],
         focused: json["focused"],
         channels: List<String>.from(json["channels"].map((x) => x)),
-        units: List<Map<String, dynamic>>.from(json["units"].map((x) => x)),
+        units: json["units"] == null
+            ? []
+            : List<Map<String, dynamic>>.from(json["units"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +47,6 @@ class Unit {
         "table": table,
         "focused": focused,
         "channels": List<dynamic>.from(channels.map((x) => x)),
-        "units": List<dynamic>.from(units!.map((x) => x)),
+        "units": units == null ? [] : List<dynamic>.from(units!.map((x) => x)),
       };
 }

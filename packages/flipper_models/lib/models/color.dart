@@ -33,7 +33,9 @@ class PColor {
         id: json["id"],
         name: json["name"],
         channels: List<String>.from(json["channels"].map((x) => x)),
-        colors: List<String>.from(json["colors"].map((x) => x)),
+        colors: json["colors"] == null
+            ? []
+            : List<String>.from(json["colors"].map((x) => x)),
         table: json["table"],
         branchId: json["branchId"],
         active: json["active"],
@@ -43,7 +45,8 @@ class PColor {
         "id": id,
         "name": name,
         "channels": List<dynamic>.from(channels.map((x) => x)),
-        "colors": List<dynamic>.from(colors!.map((x) => x)),
+        "colors":
+            colors == null ? [] : List<dynamic>.from(colors!.map((x) => x)),
         "table": table,
         "branchId": branchId,
         "active": active,

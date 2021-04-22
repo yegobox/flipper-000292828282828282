@@ -44,6 +44,7 @@ class ProductViewModel extends BaseViewModel {
     String branchId = ProxyService.box.read(key: 'branchId');
 
     _categories = await ProxyService.api.categories(branchId: branchId);
+
     notifyListeners();
   }
 
@@ -51,6 +52,7 @@ class ProductViewModel extends BaseViewModel {
     String branchId = ProxyService.box.read(key: 'branchId');
 
     _colors = await ProxyService.api.colors(branchId: branchId);
+
     notifyListeners();
   }
 
@@ -58,6 +60,7 @@ class ProductViewModel extends BaseViewModel {
     String branchId = ProxyService.box.read(key: 'branchId');
 
     _units = await ProxyService.api.units(branchId: branchId);
+
     notifyListeners();
   }
 }
