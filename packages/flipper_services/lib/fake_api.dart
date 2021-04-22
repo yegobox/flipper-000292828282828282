@@ -7,6 +7,7 @@ import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
 import 'package:flipper_models/models/sync.dart';
 import 'package:flipper_models/models/unit.dart';
+import 'package:flipper_models/models/variant_stock.dart';
 
 import 'abstractions/api.dart';
 
@@ -91,6 +92,32 @@ class FakeApi implements Api {
   @override
   Future<List<Unit>> units({required String branchId}) {
     // TODO: implement units
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<VariantStock>> variantStock(
+      {required String branchId, required String variantId}) {
+    // TODO: implement variantStock
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Product> createProduct({required Product product}) {
+    // TODO: implement createProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Product>> isTempProductExist() {
+    // TODO: implement isTempProductExist
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<VariantStock>> variantProduct(
+      {required String branchId, required String productId}) {
+    // TODO: implement variantProduct
     throw UnimplementedError();
   }
 }

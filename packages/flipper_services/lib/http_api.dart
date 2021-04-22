@@ -8,6 +8,7 @@ import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/stock.dart';
 import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/unit.dart';
+import 'package:flipper_models/models/variant_stock.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/models/sync.dart';
 import 'package:injectable/injectable.dart';
@@ -142,5 +143,37 @@ class HttpApi<T> implements Api {
     final response = await client.get(Uri.parse("$apihub/api/units/$branchId"));
 
     return unitFromJson(response.body);
+  }
+
+  @override
+  Future<List<VariantStock>> variantStock(
+      {required String branchId, required String variantId}) async {
+    final response = await client
+        .get(Uri.parse("$apihub/api/stock-variant/$branchId/$variantId"));
+
+    return variantStockFromJson(response.body);
+  }
+
+  @override
+  Future<Product> createProduct({required Product product}) async {
+    final response = await client.post(Uri.parse("$flipperApi/product"),
+        body: jsonEncode(product));
+    return productFromJson(response.body)[0];
+  }
+
+  @override
+  Future<List<Product>> isTempProductExist() async {
+    final response = await client.get(Uri.parse("$apihub/api/Product/temp"));
+    return productFromJson(response.body);
+  }
+
+  @override
+  Future<List<VariantStock>> variantProduct(
+      {required String branchId, required String productId}) async {
+    final response = await client
+        .get(Uri.parse("$apihub/api/stock-product/$branchId/$productId"));
+
+    print(response.body);
+    return variantStockFromJson(response.body);
   }
 }

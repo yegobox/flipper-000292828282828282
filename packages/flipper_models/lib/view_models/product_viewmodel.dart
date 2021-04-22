@@ -3,7 +3,9 @@ library flipper_models;
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/color.dart';
 import 'package:flipper_models/models/unit.dart';
+import 'package:flipper_models/models/product_mock.dart';
 import 'package:flipper_models/models/category.dart';
+import 'package:flipper_models/models/variant_stock.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/proxy.dart';
 
@@ -22,6 +24,9 @@ class ProductViewModel extends BaseViewModel {
   List<Category> _categories = [];
   get categories => _categories;
 
+  List<VariantStock> _variantStock = [];
+  get variants => _variantStock;
+
   Product? _product;
   get product => _product;
 
@@ -34,7 +39,26 @@ class ProductViewModel extends BaseViewModel {
     return _products;
   }
 
-  void createTemporalProduct() {}
+  Future<String> createTemporalProduct() async {
+    final List<Product> isTemp = await ProxyService.api.isTempProductExist();
+    if (isTemp.isEmpty) {
+      Product product =
+          await ProxyService.api.createProduct(product: productMock);
+      variantsProduct(productId: product.id);
+      return product.id;
+    }
+    variantsProduct(productId: isTemp[0].id);
+    return isTemp[0].id;
+  }
+
+  Future<List<VariantStock>> variantsProduct(
+      {required String productId}) async {
+    final String branchId = ProxyService.box.read(key: 'branchId');
+    _variantStock = await ProxyService.api
+        .variantProduct(branchId: branchId, productId: productId);
+    notifyListeners();
+    return _variantStock;
+  }
 
   void setName({String? name}) {}
 

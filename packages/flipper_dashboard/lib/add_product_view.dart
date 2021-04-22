@@ -11,6 +11,7 @@ import 'create/retail_price.dart';
 import 'create/section_select_unit.dart';
 import 'create/sku_view.dart';
 import 'create/supply_price_widget.dart';
+import 'create/variation_list.dart';
 import 'customappbar.dart';
 
 class AddProductView extends StatelessWidget {
@@ -133,16 +134,18 @@ class AddProductView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SkuView(
-                    onModelUpdate: (value) {},
-                  ),
+                  // SkuView(
+                  //   onModelUpdate: (value) {},
+                  // ),
                   const ListDivider(
                     height: 10,
                   ),
                   const ListDivider(
                     height: 10,
                   ),
-                  // const VariationList(),//TODO: continue here.!
+                  VariationList(
+                    variations: model.variants,
+                  ),
                 ])
               ],
             ),

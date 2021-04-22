@@ -27,6 +27,7 @@ class Product {
       required this.createdAt,
       required this.unit,
       required this.allVariants,
+      this.variants,
       required this.draft,
       required this.imageLocal,
       required this.currentUpdate,
@@ -47,6 +48,7 @@ class Product {
   DateTime createdAt;
   String unit;
   List<AllVariant> allVariants;
+  List<AllVariant>? variants;
   bool draft;
   bool imageLocal;
   bool currentUpdate;
@@ -69,6 +71,10 @@ class Product {
         unit: json["unit"],
         allVariants: List<AllVariant>.from(
             json["allVariants"].map((x) => AllVariant.fromJson(x))),
+        variants: json["variants"] == null
+            ? []
+            : List<AllVariant>.from(
+                json["variants"].map((x) => AllVariant.fromJson(x))),
         draft: json["draft"],
         imageLocal: json["imageLocal"],
         currentUpdate: json["currentUpdate"],
@@ -91,6 +97,9 @@ class Product {
         "createdAt": createdAt.toIso8601String(),
         "unit": unit,
         "allVariants": List<dynamic>.from(allVariants.map((x) => x.toJson())),
+        "variants": variants == null
+            ? []
+            : List<dynamic>.from(variants!.map((x) => x.toJson())),
         "draft": draft,
         "imageLocal": imageLocal,
         "currentUpdate": currentUpdate,
