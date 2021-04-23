@@ -16,7 +16,7 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
   (!isWindows) ? await Firebase.initializeApp() : '';
   await GetStorage.init();
-  // done init in mobile.
+  // done init in mobile.//done separation.
   setupLocator();
 
   runZonedGuarded<Future<void>>(() async {
