@@ -18,7 +18,7 @@ main() async {
   (!isWindows) ? await Firebase.initializeApp() : '';
   (isWindows || isMacOs) ? Cbl.init() : '';
   await GetStorage.init();
-  // done init in mobile.
+  // done init in mobile.//done separation.
   setupLocator();
 
   runZonedGuarded<Future<void>>(() async {
