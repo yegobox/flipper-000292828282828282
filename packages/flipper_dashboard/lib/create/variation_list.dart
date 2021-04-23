@@ -1,6 +1,9 @@
+import 'package:flipper/routes.router.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flipper_models/models/variant_stock.dart';
+
+import 'package:flipper_services/proxy.dart';
 
 class VariationList extends StatelessWidget {
   const VariationList({Key? key, required this.variations}) : super(key: key);
@@ -16,7 +19,7 @@ class VariationList extends StatelessWidget {
           Center(
             child: SizedBox(
               height: 90,
-              width: 350,
+              width: double.infinity,
               child: ListView(children: <Widget>[
                 ListTile(
                   leading: const Icon(
@@ -35,12 +38,12 @@ class VariationList extends StatelessWidget {
                                 'in Stock',
                       ),
                       onPressed: () {
-                        // ProxyService.nav.navigateTo(
-                        //   Routing.receiveStock,
-                        //   arguments: ReceiveStockScreenArguments(
-                        //     id: variations[i].id,
-                        //   ),
-                        // );
+                        ProxyService.nav.navigateTo(
+                          Routes.receiveStock,
+                          arguments: ReceiveStockArguments(
+                            variantId: variations[i].id,
+                          ),
+                        );
                       },
                     ),
                   ]),

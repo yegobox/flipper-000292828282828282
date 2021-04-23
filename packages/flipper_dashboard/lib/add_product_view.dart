@@ -9,7 +9,6 @@ import 'create/divider.dart';
 import 'create/list_divider.dart';
 import 'create/retail_price.dart';
 import 'create/section_select_unit.dart';
-import 'create/sku_view.dart';
 import 'create/supply_price_widget.dart';
 import 'create/variation_list.dart';
 import 'customappbar.dart';
@@ -116,27 +115,25 @@ class AddProductView extends StatelessWidget {
                     width: double.infinity,
                   ),
                   SupplyPrice(onModelUpdate: (value) {}),
-                  GestureDetector(
-                    onTap: () {
-                      // ProxyService.nav.navigateTo(
-                      //   Routing.receiveStock,
-                      //   arguments: ReceiveStockScreenArguments(
-                      //     id: model.state.variation.id,
-                      //   ),
-                      // ); //passing a regular variantId to update
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 18, right: 18),
-                      child: ListTile(
-                        leading: Text('Stock'),
-                        trailing: Text('Add Stock',
-                            style: TextStyle(color: Colors.blue)),
-                      ),
-                    ),
-                  ),
-                  // SkuView(
-                  //   onModelUpdate: (value) {},
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     // ProxyService.nav.navigateTo(
+                  //     //   Routing.receiveStock,
+                  //     //   arguments: ReceiveStockScreenArguments(
+                  //     //     id: model.state.variation.id,
+                  //     //   ),
+                  //     // ); //passing a regular variantId to update
+                  //   },
+                  //   child: const Padding(
+                  //     padding: EdgeInsets.only(left: 18, right: 18),
+                  //     child: ListTile(
+                  //       leading: Text('Stock'),
+                  //       trailing: Text('Add Stock',
+                  //           style: TextStyle(color: Colors.blue)),
+                  //     ),
+                  //   ),
                   // ),
+
                   const ListDivider(
                     height: 10,
                   ),

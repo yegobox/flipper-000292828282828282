@@ -122,6 +122,7 @@ dev_dependencies:
   auto_route_generator:
   injectable_generator:
   stacked_generator: 
+  couchbase_lite_dart: ^0.5.0-nullsafety.2
   
 
 # For information on the generic Dart part of this file, see the
