@@ -16,8 +16,7 @@ final isMacOs = UniversalPlatform.isMacOS;
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   (!isWindows) ? await Firebase.initializeApp() : '';
-  (isWindows) ? Cbl.init() : '';
-  (isMacOs) ? Cbl.init() : '';
+  (isWindows || isMacOs) ? Cbl.init() : '';
   await GetStorage.init();
   // done init in mobile.
   setupLocator();
