@@ -27,7 +27,9 @@ class AddCategory extends StatelessWidget {
               child: TextFormField(
                 style: const TextStyle(color: Colors.black),
                 onChanged: (name) {
-                  model.setName(name: name);
+                  if (name != '') {
+                    model.setName(name: name);
+                  }
                 },
                 decoration: const InputDecoration(
                   hintText: 'Name',

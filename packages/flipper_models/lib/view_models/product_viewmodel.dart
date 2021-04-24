@@ -131,4 +131,16 @@ class ProductViewModel extends ReactiveViewModel {
     );
     _appService.loadUnits();
   }
+
+  void updateStock({required String variantId}) {
+    print(_stockValue);
+    print(variantId);
+  }
+
+  double? _stockValue;
+  double? get stockValue => _stockValue;
+  void setStockValue({required double value}) {
+    _stockValue = value;
+    notifyListeners();
+  }
 }
