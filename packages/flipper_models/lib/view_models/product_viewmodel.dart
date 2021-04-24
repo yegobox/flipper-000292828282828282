@@ -133,8 +133,11 @@ class ProductViewModel extends ReactiveViewModel {
   }
 
   void updateStock({required String variantId}) {
-    print(_stockValue);
-    print(variantId);
+    // TODO: will make validation to work with default value 0 in
+    if (_stockValue != null) {
+      print(_stockValue);
+      print(variantId);
+    }
   }
 
   double? _stockValue;
