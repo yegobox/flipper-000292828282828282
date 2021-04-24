@@ -19,23 +19,28 @@ import 'package:flipper_services/proxy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flipper_models/models/business.dart';
 import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
+import 'Queries.dart';
 import 'abstractions/api.dart';
 import 'constants.dart';
 import 'http_api.dart';
 import 'package:http/http.dart' as http;
 
 class LiteApi implements Api {
-  late Database db;
-  late Replicator replicator;
+  Database? db;
+  Replicator? replicator;
   ExtendedClient client = ExtendedClient(http.Client());
   String userId = ProxyService.box.read(key: 'userId');
   // HttpApi();
   String flipperApi = "https://flipper.yegobox.com";
   String apihub = "https://apihub.yegobox.com";
+  dynamic Q14;
+  registerQueries() {
+    Q14 = Query(db!, Queries.Q_14);
+  }
 
   LiteApi() {
-    print('we got here');
     init();
+    //pre-register queries
   }
   init() async {
     //start the database
@@ -43,8 +48,12 @@ class LiteApi implements Api {
     final String appDocPath = appDocDir.path;
     // ignore: prefer_single_quotes
     db = Database("main", directory: appDocPath);
-    if (!db.isOpen) {
-      db.open();
+    print(db);
+    if (db != null && !db!.isOpen) {
+      db!.open();
+    }
+    if (db != null) {
+      registerQueries();
     }
     // final FlipperConfig flipperConfig =
     //     await ProxyService.firestore.getConfigs();
@@ -59,7 +68,7 @@ class LiteApi implements Api {
     // assert(username != null);
     // assert(password != null);
     final gatewayUrl = "yegobox.com:4985";
-    replicator = Replicator(db,
+    replicator = Replicator(db!,
         endpointUrl: 'ws://$gatewayUrl/main/',
         username: 'admin',
         password: 'iloveaurore',
@@ -68,10 +77,10 @@ class LiteApi implements Api {
         replicatorType: ReplicatorType.push);
 
     // Set up a status listener
-    replicator.addChangeListener((status) {
+    replicator!.addChangeListener((status) {
       print('Replicator status: ' + status.activityLevel.toString());
     });
-    replicator.start();
+    replicator!.start();
   }
 
   @override
@@ -141,17 +150,14 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<List<Product>> products() {
-    final q = Query(db,
-        'SELECT id,name,active,currency,categoryId,latitude,longitude,userId,typeId,timeZone,createdAt,updatedAt,channels,country,businessUrl,hexColor,image,type,table WHERE table=\$VALUE AND userId=\$USERID');
-
-    q.parameters = {'VALUE': AppTables.business, 'USERID': userId};
-    final ResultSet business = q.execute();
-
+  Future<List<Product>> products() async {
+    Q14.parameters = {'VALUE': AppTables.business};
+    final ResultSet business = Q14.execute();
+    final List<Product> p = [];
     for (Map map in business.allResults) {
-      //done
+      p.add(sproductFromJson(map.toString()));
     }
-    throw UnimplementedError();
+    return p;
   }
 
   @override
