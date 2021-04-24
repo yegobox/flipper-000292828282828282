@@ -6,15 +6,14 @@ import 'package:flipper_models/view_models/product_viewmodel.dart';
 
 class AddCategory extends StatelessWidget {
   AddCategory({Key? key}) : super(key: key);
-  final TextEditingController _name = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProductViewModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
           appBar: CustomAppBar(
-            onPop: () {
-              // model.createCategory(name: _name.text);
+            onPop: () async {
+              model.createCategory();
               ProxyService.nav.back();
             },
             title: 'Create Category',
@@ -27,7 +26,6 @@ class AddCategory extends StatelessWidget {
             child: Container(
               child: TextFormField(
                 style: const TextStyle(color: Colors.black),
-                controller: _name,
                 onChanged: (name) {
                   model.setName(name: name);
                 },

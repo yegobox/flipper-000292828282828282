@@ -4,7 +4,8 @@ import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/models/category.dart';
-
+import 'package:stacked/stacked.dart';
+import 'package:flipper_models/view_models/product_viewmodel.dart';
 import 'divider.dart';
 
 class ListCategories extends StatelessWidget {
@@ -58,42 +59,45 @@ class ListCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        onPop: () {
-          ProxyService.nav.back();
-        },
-        showActionButton: false,
-        title: 'Category',
-        icon: Icons.close,
-        multi: 3,
-        bottomSpacer: 52,
-      ),
-      body: Wrap(
-        children: <Widget>[
-          Center(
-            child: CenterDivider(
-              width: double.infinity,
+    return ViewModelBuilder<ProductViewModel>.reactive(
+        viewModelBuilder: () => ProductViewModel(),
+        builder: (context, model, child) {
+          return Scaffold(
+            appBar: CustomAppBar(
+              onPop: () {
+                ProxyService.nav.back();
+              },
+              showActionButton: false,
+              title: 'Category',
+              icon: Icons.close,
+              multi: 3,
+              bottomSpacer: 52,
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              ProxyService.nav.navigateTo(Routes.addCategory);
-            },
-            child: ListTile(
-              title: const Text('Create Category ',
-                  style: TextStyle(color: Colors.black)),
-              trailing: Wrap(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: <Widget>[
-                  const Icon(Icons.arrow_forward_ios),
-                ],
-              ),
+            body: ListView(
+              children: <Widget>[
+                Center(
+                  child: CenterDivider(
+                    width: double.infinity,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    ProxyService.nav.navigateTo(Routes.addCategory);
+                  },
+                  child: ListTile(
+                    title: const Text('Create Category ',
+                        style: TextStyle(color: Colors.black)),
+                    trailing: Wrap(
+                      children: <Widget>[
+                        const Icon(Icons.arrow_forward_ios),
+                      ],
+                    ),
+                  ),
+                ),
+                CategoryList(categories: model.categories, context: context),
+              ],
             ),
-          ),
-          CategoryList(categories: categories, context: context),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

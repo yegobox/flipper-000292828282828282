@@ -1,5 +1,6 @@
 library flipper_models;
 
+import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/color.dart';
 import 'package:flipper_models/models/unit.dart';
@@ -80,5 +81,20 @@ class ProductViewModel extends ReactiveViewModel {
 
   void loadColors() {
     _appService.loadColors();
+  }
+
+  ///create a new category and refresh list of categories
+  Future<void> createCategory() async {
+    final String userId = ProxyService.box.read(key: 'userId');
+    final String branchId = ProxyService.box.read(key: 'branchId');
+    final Category category = new Category(
+      active: true,
+      focused: false,
+      name: name,
+      channels: [userId],
+      branchId: branchId,
+    );
+    await ProxyService.api.create(endPoint: 'category', data: category);
+    _appService.loadCategories();
   }
 }

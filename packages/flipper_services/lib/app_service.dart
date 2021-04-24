@@ -22,14 +22,16 @@ class AppService with ReactiveServiceMixin {
   final _units = ReactiveValue<List<Unit>>([]);
   List<Unit> get units => _units.value;
 
-   final _colors = ReactiveValue<List<PColor>>([]);
+  final _colors = ReactiveValue<List<PColor>>([]);
   List<PColor> get colors => _colors.value;
 
   void loadCategories() async {
     String branchId = ProxyService.box.read(key: 'branchId');
 
-    _categories.value = await ProxyService.api.categories(branchId: branchId);
+    final List<Category> result =
+        await ProxyService.api.categories(branchId: branchId);
 
+    _categories.value = result;
     notifyListeners();
   }
 
@@ -37,15 +39,12 @@ class AppService with ReactiveServiceMixin {
     String branchId = ProxyService.box.read(key: 'branchId');
 
     _units.value = await ProxyService.api.units(branchId: branchId);
-
-    notifyListeners();
   }
-   Future<void> loadColors() async {
+
+  Future<void> loadColors() async {
     String branchId = ProxyService.box.read(key: 'branchId');
 
     _colors.value = await ProxyService.api.colors(branchId: branchId);
-
-    notifyListeners();
   }
 
   AppService() {
