@@ -22,10 +22,15 @@ abstract class Api<T> {
   Future<List<Category>> categories({required String branchId});
   Future<List<Unit>> units({required String branchId});
   Future<int> create<T>({T data, required String endPoint});
+  Future<int> update<T>({T data, required String endPoint});
+
   Future<List<VariantStock>> variantStock(
       {required String branchId, required String variantId});
-  Future<List<VariantStock>> variantProduct(
-      {required String branchId, required String productId});
+  Future<List<VariantStock>> variantProduct({
+    required String branchId,
+    required String productId,
+  });
+  // Future
   //this function for now figure out what is the business id on backend side.
   Future<Product> createProduct({required Product product});
   Future<List<Product>> isTempProductExist();

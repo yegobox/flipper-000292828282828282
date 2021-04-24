@@ -173,4 +173,11 @@ class HttpApi<T> implements Api {
 
     return variantStockFromJson(response.body);
   }
+
+  @override
+  Future<int> update<T>({T? data, required String endPoint}) async {
+    final response = await client.patch(Uri.parse("$apihub/api/$endPoint"),
+        body: jsonEncode(data));
+    return response.statusCode;
+  }
 }

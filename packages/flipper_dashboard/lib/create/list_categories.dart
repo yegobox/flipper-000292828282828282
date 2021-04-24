@@ -11,10 +11,10 @@ import 'divider.dart';
 class ListCategories extends StatelessWidget {
   const ListCategories({Key? key, required this.categories}) : super(key: key);
   final List<Category> categories;
-  Wrap CategoryList({
-    required List<Category> categories,
-    required BuildContext context,
-  }) {
+  Wrap CategoryList(
+      {required List<Category> categories,
+      required BuildContext context,
+      required ProductViewModel model}) {
     final List<Widget> list = <Widget>[];
 
     for (int i = 0; i < categories.length; i++) {
@@ -22,7 +22,7 @@ class ListCategories extends StatelessWidget {
         list.add(
           GestureDetector(
             onTap: () {
-              // model.updateCategory(category: categories[i]);
+              model.updateCategory(category: categories[i]);
             },
             child: SingleChildScrollView(
               child: ListTile(
@@ -94,7 +94,10 @@ class ListCategories extends StatelessWidget {
                     ),
                   ),
                 ),
-                CategoryList(categories: model.categories, context: context),
+                CategoryList(
+                    categories: model.categories,
+                    context: context,
+                    model: model),
               ],
             ),
           );

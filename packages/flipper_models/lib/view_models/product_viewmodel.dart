@@ -97,4 +97,19 @@ class ProductViewModel extends ReactiveViewModel {
     await ProxyService.api.create(endPoint: 'category', data: category);
     _appService.loadCategories();
   }
+
+  void updateCategory({required Category category}) async {
+    Category cat = category;
+    print(category);
+    cat.focused = !cat.focused;
+    print(category);
+    print(category.toJson());
+    String branchId = ProxyService.box.read(key: 'branchId');
+
+    await ProxyService.api.update(
+      endPoint: 'category/$branchId',
+      data: category.toJson(),
+    );
+    _appService.loadCategories();
+  }
 }
