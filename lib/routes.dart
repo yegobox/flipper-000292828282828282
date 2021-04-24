@@ -1,7 +1,8 @@
 import 'package:flipper_dashboard/add_product_view.dart';
-import 'package:flipper_dashboard/create/categories_view.dart';
 import 'package:flipper_dashboard/create/color_tile.dart';
 import 'package:flipper_dashboard/create/receive_stock.dart';
+import 'package:flipper_dashboard/create/add_category.dart';
+import 'package:flipper_dashboard/create/list_categories.dart';
 import 'package:flipper_dashboard/flipper_dashboard.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_login/login_view.dart';
@@ -9,6 +10,7 @@ import 'package:flipper_login/signup_form_view.dart';
 import 'package:flipper_dashboard/business_home_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flipper_services/app_service.dart';
 // import 'package:flipper_models/view_models/login_viewmodel.dart';
 
 @StackedApp(
@@ -19,12 +21,14 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: BusinessHomeView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: AddProductView),
-    MaterialRoute(page: CategoriesView),
+    MaterialRoute(page: ListCategories),
     MaterialRoute(page: ColorTile),
     MaterialRoute(page: ReceiveStock),
+    MaterialRoute(page: AddCategory),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
+    // LazySingleton(classType: AppService),
     // LazySingleton(classType: LoginViewModel)
   ],
 )

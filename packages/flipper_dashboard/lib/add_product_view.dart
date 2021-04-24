@@ -4,7 +4,7 @@ import 'package:flipper_models/view_models/product_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/proxy.dart';
 import 'create/build_image_holder.dart';
-import 'create/category_view.dart';
+import 'create/category_selector.dart';
 import 'create/divider.dart';
 import 'create/list_divider.dart';
 import 'create/retail_price.dart';
@@ -87,9 +87,12 @@ class AddProductView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  CategoryView(categories: model.categories),
+                  //debug if we can update model instance from another screen.
+                  Text(model.name == null ? 'null' : model.name,
+                      style: TextStyle(color: Colors.black)),
+                  CategorySelector(categories: model.categories),
                   const CenterDivider(
-                    width: 300,
+                    width: double.infinity,
                   ),
                   const ListDivider(
                     height: 24,

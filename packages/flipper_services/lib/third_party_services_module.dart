@@ -9,6 +9,7 @@ import 'abstractions/api.dart';
 import 'abstractions/location.dart';
 import 'abstractions/platform.dart';
 import 'abstractions/storage.dart';
+import 'app_service.dart';
 import 'fake_api.dart';
 import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
@@ -89,6 +90,9 @@ abstract class ThirdPartyServicesModule {
     }
     return box;
   }
+
+  @lazySingleton
+  AppService get appService;
 }
 
 class WindowsLocationService implements FlipperLocation {

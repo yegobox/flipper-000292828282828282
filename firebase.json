@@ -13,10 +13,6 @@
         "destination": "/index.html"
       },
       {
-        "source": "**",
-        "destination": "https://flipper.yegobox.com/open-login"
-      },
-      {
         "source": "/open",
         "dynamicLinks": true
       }

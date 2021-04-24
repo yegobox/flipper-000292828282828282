@@ -303,7 +303,7 @@ packages:
     source: hosted
     version: "3.0.0"
   couchbase_lite_dart:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: couchbase_lite_dart
       url: "https://pub.dartlang.org"

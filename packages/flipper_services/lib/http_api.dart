@@ -31,8 +31,6 @@ class ExtendedClient extends http.BaseClient {
     // customValue = await LocalStorage.getStringItem('token');
     request.headers['Authorization'] = token == null ? '' : token;
     request.headers['userId'] = userId == null ? '' : userId;
-    print(userId);
-    print(token);
     return _inner.send(request);
   }
 }
@@ -173,7 +171,6 @@ class HttpApi<T> implements Api {
     final response = await client
         .get(Uri.parse("$apihub/api/stock-product/$branchId/$productId"));
 
-    print(response.body);
     return variantStockFromJson(response.body);
   }
 }

@@ -4,31 +4,32 @@ import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/color.dart';
 import 'package:flipper_models/models/unit.dart';
 import 'package:flipper_models/models/product_mock.dart';
-import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/variant_stock.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/proxy.dart';
+import 'package:flipper_services/locator.dart';
+import 'package:flipper_services/app_service.dart';
 
-class ProductViewModel extends BaseViewModel {
+class ProductViewModel extends ReactiveViewModel {
+  final AppService _appService = locator<AppService>();
   List<Product> _products = [];
   get products => _products;
   bool _isLocked = false;
   get isLocked => _isLocked;
 
-  List<PColor> _colors = [];
-  get colors => _colors;
+  List<PColor> get colors => _appService.colors;
 
-  List<Unit> _units = [];
-  get units => _units;
+  List<Unit> get units => _appService.units;
 
-  List<Category> _categories = [];
-  get categories => _categories;
+  get categories => _appService.categories;
 
   List<VariantStock> _variantStock = [];
   get variants => _variantStock;
 
   Product? _product;
   get product => _product;
+  String? _name;
+  get name => _name;
 
   get color => null;
 
@@ -60,31 +61,24 @@ class ProductViewModel extends BaseViewModel {
     return _variantStock;
   }
 
-  void setName({String? name}) {}
+  void setName({String? name}) {
+    _name = name;
+  }
 
   void lock() {}
 
-  void loadCategories() async {
-    String branchId = ProxyService.box.read(key: 'branchId');
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_appService];
 
-    _categories = await ProxyService.api.categories(branchId: branchId);
-
-    notifyListeners();
+  void loadCategories() {
+    _appService.loadCategories();
   }
 
-  Future<void> loadColors() async {
-    String branchId = ProxyService.box.read(key: 'branchId');
-
-    _colors = await ProxyService.api.colors(branchId: branchId);
-
-    notifyListeners();
+  void loadUnits() {
+    _appService.loadUnits();
   }
 
-  Future<void> loadUnits() async {
-    String branchId = ProxyService.box.read(key: 'branchId');
-
-    _units = await ProxyService.api.units(branchId: branchId);
-
-    notifyListeners();
+  void loadColors() {
+    _appService.loadColors();
   }
 }

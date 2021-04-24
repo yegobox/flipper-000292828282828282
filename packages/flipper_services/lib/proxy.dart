@@ -1,4 +1,5 @@
 import 'package:flipper_services/abstractions/platform.dart';
+import 'package:flipper_services/app_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'abstractions/api.dart';
@@ -14,6 +15,7 @@ final LoginStandard _auth = locator<LoginStandard>();
 final FlipperLocation _location = locator<FlipperLocation>();
 // final DB<Business> _db = locator<DB<Business>>();
 final LocalStorage _box = locator<LocalStorage>();
+final AppService _appService = locator<AppService>();
 
 abstract class ProxyService {
   static Api get api => _apiService;
@@ -21,4 +23,5 @@ abstract class ProxyService {
   static FlipperLocation get location => _location;
   static LocalStorage get box => _box;
   static LoginStandard get auth => _auth;
+  static AppService get appService => _appService;
 }

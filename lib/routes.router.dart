@@ -8,13 +8,15 @@
 
 import 'package:flipper_dashboard/add_product_view.dart';
 import 'package:flipper_dashboard/business_home_view.dart';
-import 'package:flipper_dashboard/create/categories_view.dart';
+import 'package:flipper_dashboard/create/add_category.dart';
 import 'package:flipper_dashboard/create/color_tile.dart';
+import 'package:flipper_dashboard/create/list_categories.dart';
 import 'package:flipper_dashboard/create/receive_stock.dart';
 import 'package:flipper_dashboard/flipper_dashboard.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_login/login_view.dart';
 import 'package:flipper_login/signup_form_view.dart';
+import 'package:flipper_models/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -25,9 +27,10 @@ class Routes {
   static const String businessHomeView = '/business-home-view';
   static const String loginView = '/login-view';
   static const String addProductView = '/add-product-view';
-  static const String categoriesView = '/categories-view';
+  static const String listCategories = '/list-categories';
   static const String colorTile = '/color-tile';
   static const String receiveStock = '/receive-stock';
+  static const String addCategory = '/add-category';
   static const all = <String>{
     startUpView,
     dashboardView,
@@ -35,9 +38,10 @@ class Routes {
     businessHomeView,
     loginView,
     addProductView,
-    categoriesView,
+    listCategories,
     colorTile,
     receiveStock,
+    addCategory,
   };
 }
 
@@ -51,9 +55,10 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.businessHomeView, page: BusinessHomeView),
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.addProductView, page: AddProductView),
-    RouteDef(Routes.categoriesView, page: CategoriesView),
+    RouteDef(Routes.listCategories, page: ListCategories),
     RouteDef(Routes.colorTile, page: ColorTile),
     RouteDef(Routes.receiveStock, page: ReceiveStock),
+    RouteDef(Routes.addCategory, page: AddCategory),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -97,9 +102,13 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    CategoriesView: (data) {
+    ListCategories: (data) {
+      var args = data.getArgs<ListCategoriesArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const CategoriesView(),
+        builder: (context) => ListCategories(
+          key: args.key,
+          categories: args.categories,
+        ),
         settings: data,
       );
     },
@@ -122,6 +131,15 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    AddCategory: (data) {
+      var args = data.getArgs<AddCategoryArguments>(
+        orElse: () => AddCategoryArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AddCategory(key: args.key),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -135,6 +153,13 @@ class SignUpFormViewArguments {
   SignUpFormViewArguments({this.key});
 }
 
+/// ListCategories arguments holder class
+class ListCategoriesArguments {
+  final Key? key;
+  final List<Category> categories;
+  ListCategoriesArguments({this.key, required this.categories});
+}
+
 /// ColorTile arguments holder class
 class ColorTileArguments {
   final Key? key;
@@ -146,4 +171,10 @@ class ReceiveStockArguments {
   final Key? key;
   final String variantId;
   ReceiveStockArguments({this.key, required this.variantId});
+}
+
+/// AddCategory arguments holder class
+class AddCategoryArguments {
+  final Key? key;
+  AddCategoryArguments({this.key});
 }
