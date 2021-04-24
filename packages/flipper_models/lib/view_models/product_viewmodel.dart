@@ -1,5 +1,7 @@
 library flipper_models;
 
+import 'dart:convert';
+
 import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/color.dart';
@@ -56,6 +58,7 @@ class ProductViewModel extends ReactiveViewModel {
   Future<List<VariantStock>> variantsProduct(
       {required String productId}) async {
     final String branchId = ProxyService.box.read(key: 'branchId');
+
     _variantStock = await ProxyService.api
         .variantProduct(branchId: branchId, productId: productId);
     notifyListeners();

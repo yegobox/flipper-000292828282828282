@@ -154,9 +154,11 @@ class HttpApi<T> implements Api {
 
   @override
   Future<Product> createProduct({required Product product}) async {
-    final response = await client.post(Uri.parse("$flipperApi/product"),
-        body: jsonEncode(product));
-    return productFromJson(response.body)[0];
+    final response = await client.post(Uri.parse("$apihub/api/product"),
+        body: jsonEncode(product),
+        headers: {'Content-Type': 'application/json'});
+    print(response.body);
+    return sproductFromJson(response.body);
   }
 
   @override
@@ -168,6 +170,7 @@ class HttpApi<T> implements Api {
   @override
   Future<List<VariantStock>> variantProduct(
       {required String branchId, required String productId}) async {
+    print("$branchId/$productId");
     final response = await client
         .get(Uri.parse("$apihub/api/stock-product/$branchId/$productId"));
 

@@ -21,8 +21,8 @@ abstract class Api<T> {
   Future<List<PColor>> colors({required String branchId});
   Future<List<Category>> categories({required String branchId});
   Future<List<Unit>> units({required String branchId});
-  Future<int> create<T>({T data, required String endPoint});
-  Future<int> update<T>({T data, required String endPoint});
+  Future<int> create<T>({T? data, required String endPoint});
+  Future<int> update<T>({T? data, required String endPoint});
 
   Future<List<VariantStock>> variantStock(
       {required String branchId, required String variantId});

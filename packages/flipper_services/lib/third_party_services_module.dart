@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flipper_models/models/login.dart';
 import 'package:flipper/routes.router.dart';
+import 'LiteApi.dart';
 import 'abstractions/api.dart';
 import 'abstractions/location.dart';
 import 'abstractions/platform.dart';
@@ -32,10 +33,10 @@ abstract class ThirdPartyServicesModule {
   Api get apiService {
     Api apiService;
     var choosenProvider =
-        ApiProvider.Rest; // change this to change the provider
+        ApiProvider.Lite; // change this to change the provider
     switch (choosenProvider) {
-      case ApiProvider.Fake:
-        apiService = FakeApi();
+      case ApiProvider.Lite:
+        apiService = LiteApi();
         break;
       case ApiProvider.Rest:
         apiService = HttpApi();

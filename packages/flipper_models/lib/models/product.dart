@@ -4,6 +4,10 @@
 
 import 'dart:convert';
 
+Product sproductFromJson(String str) => Product.fromJson(json.decode(str));
+
+String sproductToJson(Product data) => json.encode(data.toJson());
+
 List<Product> productFromJson(String str) =>
     List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
 
@@ -24,9 +28,9 @@ class Product {
       required this.businessId,
       required this.supplierId,
       required this.categoryId,
-      required this.createdAt,
+      this.createdAt,
       required this.unit,
-      required this.allVariants,
+      this.allVariants,
       this.variants,
       required this.draft,
       required this.imageLocal,
@@ -45,9 +49,9 @@ class Product {
   String businessId;
   dynamic supplierId;
   String categoryId;
-  DateTime createdAt;
+  DateTime? createdAt;
   String unit;
-  List<AllVariant> allVariants;
+  List<AllVariant>? allVariants;
   List<AllVariant>? variants;
   bool draft;
   bool imageLocal;
@@ -69,8 +73,10 @@ class Product {
         categoryId: json["categoryId"],
         createdAt: DateTime.parse(json["createdAt"]),
         unit: json["unit"],
-        allVariants: List<AllVariant>.from(
-            json["allVariants"].map((x) => AllVariant.fromJson(x))),
+        allVariants: json["allVariants"] == null
+            ? []
+            : List<AllVariant>.from(
+                json["allVariants"].map((x) => AllVariant.fromJson(x))),
         variants: json["variants"] == null
             ? []
             : List<AllVariant>.from(
@@ -94,9 +100,11 @@ class Product {
         "businessId": businessId,
         "supplierId": supplierId,
         "categoryId": categoryId,
-        "createdAt": createdAt.toIso8601String(),
+        "createdAt": createdAt == null ? '' : createdAt!.toIso8601String(),
         "unit": unit,
-        "allVariants": List<dynamic>.from(allVariants.map((x) => x.toJson())),
+        "allVariants": allVariants == null
+            ? []
+            : List<dynamic>.from(allVariants!.map((x) => x.toJson())),
         "variants": variants == null
             ? []
             : List<dynamic>.from(variants!.map((x) => x.toJson())),
@@ -108,65 +116,67 @@ class Product {
 }
 
 class AllVariant {
-  AllVariant({
-    required this.id,
-    required this.name,
-    required this.sku,
-    required this.productId,
-    required this.unit,
-    required this.table,
-    required this.channels,
-    required this.productName,
-    required this.currentStock,
-    required this.supplyPrice,
-    required this.retailPrice,
-    required this.canTrackingStock,
-    required this.stockId,
-  });
-
-  String id;
+  AllVariant(
+      {this.id,
+      required this.name,
+      required this.sku,
+      this.productId,
+      required this.unit,
+      required this.table,
+      required this.channels,
+      this.productName,
+      required this.currentStock,
+      required this.supplyPrice,
+      required this.retailPrice,
+      required this.canTrackingStock,
+      this.stockId,
+      this.branchId});
+  String? branchId;
+  String? id;
   String name;
   String sku;
-  String productId;
+  String? productId;
   String unit;
   String table;
   List<String> channels;
-  dynamic productName;
-  double currentStock;
-  double supplyPrice;
-  double retailPrice;
-  bool canTrackingStock;
-  String stockId;
+  String? productName;
+  dynamic currentStock;
+  dynamic supplyPrice;
+  dynamic retailPrice;
+  dynamic canTrackingStock;
+  String? stockId;
 
   factory AllVariant.fromJson(Map<String, dynamic> json) => AllVariant(
-        id: json["id"],
+        id: json["id"] == null ? '' : json["id"],
         name: json["name"],
         sku: json["sku"],
-        productId: json["productId"],
+        productId: json["productId"] == null ? '' : json["productId"],
         unit: json["unit"],
         table: json["table"],
         channels: List<String>.from(json["channels"].map((x) => x)),
-        productName: json["productName"],
+        productName: json["productName"] == null ? '' : json["productName"],
         currentStock: json["currentStock"],
         supplyPrice: json["supplyPrice"],
         retailPrice: json["retailPrice"],
         canTrackingStock: json["canTrackingStock"],
-        stockId: json["stockId"],
+        stockId: json["stockId"] == null ? '' : json["stockId"],
+        branchId: json["branchId"] == null ? '' : json["branchId"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id == null ? '' : id,
         "name": name,
         "sku": sku,
-        "productId": productId,
+        "productId": productId == null ? '' : productId,
         "unit": unit,
         "table": table,
         "channels": List<dynamic>.from(channels.map((x) => x)),
-        "productName": productName,
+        "productName": productName == null ? '' : productName,
         "currentStock": currentStock,
         "supplyPrice": supplyPrice,
         "retailPrice": retailPrice,
         "canTrackingStock": canTrackingStock,
-        "stockId": stockId,
+        "stockId": stockId == null ? '' : stockId,
+        "branchId": branchId == null ? '' : branchId
       };
 }
