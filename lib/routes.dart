@@ -4,6 +4,7 @@ import 'package:flipper_dashboard/create/receive_stock.dart';
 import 'package:flipper_dashboard/create/add_category.dart';
 import 'package:flipper_dashboard/create/list_categories.dart';
 import 'package:flipper_dashboard/flipper_dashboard.dart';
+import 'package:flipper_dashboard/create/list_units.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_login/login_view.dart';
 import 'package:flipper_login/signup_form_view.dart';
@@ -25,6 +26,7 @@ import 'package:flipper_services/app_service.dart';
     MaterialRoute(page: ColorTile),
     MaterialRoute(page: ReceiveStock),
     MaterialRoute(page: AddCategory),
+    MaterialRoute(page: ListUnits),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

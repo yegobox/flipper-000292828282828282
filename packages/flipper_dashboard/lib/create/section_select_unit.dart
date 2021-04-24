@@ -1,6 +1,6 @@
+import 'package:flipper/routes.router.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 import 'package:flipper_models/models/unit.dart';
 
 class SectionSelectUnit extends StatelessWidget {
@@ -24,9 +24,9 @@ class SectionSelectUnit extends StatelessWidget {
         width: double.infinity,
         child: GestureDetector(
           onTap: () {
-            // ProxyService.nav.navigateTo(
-            //   Routing.addUnitType,
-            // );
+            ProxyService.nav.navigateTo(
+              Routes.listUnits,
+            );
           },
           child: ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 0.4),

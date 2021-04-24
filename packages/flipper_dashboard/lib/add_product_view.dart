@@ -84,9 +84,6 @@ class AddProductView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  //debug if we can update model instance from another screen.
-                  Text(model.name == null ? 'null' : model.name,
-                      style: TextStyle(color: Colors.black)),
                   CategorySelector(categories: model.categories),
                   const CenterDivider(
                     width: double.infinity,

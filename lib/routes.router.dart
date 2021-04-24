@@ -11,6 +11,7 @@ import 'package:flipper_dashboard/business_home_view.dart';
 import 'package:flipper_dashboard/create/add_category.dart';
 import 'package:flipper_dashboard/create/color_tile.dart';
 import 'package:flipper_dashboard/create/list_categories.dart';
+import 'package:flipper_dashboard/create/list_units.dart';
 import 'package:flipper_dashboard/create/receive_stock.dart';
 import 'package:flipper_dashboard/flipper_dashboard.dart';
 import 'package:flipper_dashboard/startup_view.dart';
@@ -31,6 +32,7 @@ class Routes {
   static const String colorTile = '/color-tile';
   static const String receiveStock = '/receive-stock';
   static const String addCategory = '/add-category';
+  static const String listUnits = '/list-units';
   static const all = <String>{
     startUpView,
     dashboardView,
@@ -42,6 +44,7 @@ class Routes {
     colorTile,
     receiveStock,
     addCategory,
+    listUnits,
   };
 }
 
@@ -59,6 +62,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.colorTile, page: ColorTile),
     RouteDef(Routes.receiveStock, page: ReceiveStock),
     RouteDef(Routes.addCategory, page: AddCategory),
+    RouteDef(Routes.listUnits, page: ListUnits),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -137,6 +141,12 @@ class StackedRouter extends RouterBase {
       );
       return MaterialPageRoute<dynamic>(
         builder: (context) => AddCategory(key: args.key),
+        settings: data,
+      );
+    },
+    ListUnits: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ListUnits(),
         settings: data,
       );
     },

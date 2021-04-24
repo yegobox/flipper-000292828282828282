@@ -100,16 +100,35 @@ class ProductViewModel extends ReactiveViewModel {
 
   void updateCategory({required Category category}) async {
     Category cat = category;
-    print(category);
     cat.focused = !cat.focused;
-    print(category);
-    print(category.toJson());
-    String branchId = ProxyService.box.read(key: 'branchId');
 
+    String categoryId = category.id!;
     await ProxyService.api.update(
-      endPoint: 'category/$branchId',
+      endPoint: 'category/$categoryId',
       data: category.toJson(),
     );
     _appService.loadCategories();
+  }
+
+  /// change the focus on unit [TODO: the unit not changing now.]
+  void saveFocusedUnit({required Unit newUnit}) async {
+    for (Unit unit in units) {
+      if (unit.focused!) {
+        unit.focused = !unit.focused!;
+        String id = unit.id!;
+        await ProxyService.api.update(
+          endPoint: 'unit/$id',
+          data: unit.toJson(),
+        );
+      }
+    }
+    Unit unit = newUnit;
+    unit.focused = !unit.focused!;
+    String id = unit.id!;
+    await ProxyService.api.update(
+      endPoint: 'unit/$id',
+      data: unit.toJson(),
+    );
+    _appService.loadUnits();
   }
 }

@@ -37,8 +37,9 @@ class AppService with ReactiveServiceMixin {
 
   Future<void> loadUnits() async {
     String branchId = ProxyService.box.read(key: 'branchId');
+    final List<Unit> result = await ProxyService.api.units(branchId: branchId);
 
-    _units.value = await ProxyService.api.units(branchId: branchId);
+    _units.value = result;
   }
 
   Future<void> loadColors() async {
