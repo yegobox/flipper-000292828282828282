@@ -110,6 +110,7 @@ dependencies:
   google_fonts:
   font_awesome_flutter: ^9.0.0
   flutter_text_drawable: 
+  couchbase_lite_dart: ^0.5.0-nullsafety.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -121,6 +122,7 @@ dev_dependencies:
   auto_route_generator:
   injectable_generator:
   stacked_generator: 
+  
   
 
 # For information on the generic Dart part of this file, see the

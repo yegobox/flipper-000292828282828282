@@ -1,34 +1,36 @@
 library flipper_models;
 
+import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/product.dart';
 import 'package:flipper_models/models/color.dart';
 import 'package:flipper_models/models/unit.dart';
 import 'package:flipper_models/models/product_mock.dart';
-import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/variant_stock.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/proxy.dart';
+import 'package:flipper_services/locator.dart';
+import 'package:flipper_services/app_service.dart';
 
-class ProductViewModel extends BaseViewModel {
+class ProductViewModel extends ReactiveViewModel {
+  final AppService _appService = locator<AppService>();
   List<Product> _products = [];
   get products => _products;
   bool _isLocked = false;
   get isLocked => _isLocked;
 
-  List<PColor> _colors = [];
-  get colors => _colors;
+  List<PColor> get colors => _appService.colors;
 
-  List<Unit> _units = [];
-  get units => _units;
+  List<Unit> get units => _appService.units;
 
-  List<Category> _categories = [];
-  get categories => _categories;
+  get categories => _appService.categories;
 
   List<VariantStock> _variantStock = [];
   get variants => _variantStock;
 
   Product? _product;
   get product => _product;
+  String? _name;
+  get name => _name;
 
   get color => null;
 
@@ -60,31 +62,88 @@ class ProductViewModel extends BaseViewModel {
     return _variantStock;
   }
 
-  void setName({String? name}) {}
+  void setName({String? name}) {
+    _name = name;
+  }
 
   void lock() {}
 
-  void loadCategories() async {
-    String branchId = ProxyService.box.read(key: 'branchId');
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_appService];
 
-    _categories = await ProxyService.api.categories(branchId: branchId);
-
-    notifyListeners();
+  void loadCategories() {
+    _appService.loadCategories();
   }
 
-  Future<void> loadColors() async {
-    String branchId = ProxyService.box.read(key: 'branchId');
-
-    _colors = await ProxyService.api.colors(branchId: branchId);
-
-    notifyListeners();
+  void loadUnits() {
+    _appService.loadUnits();
   }
 
-  Future<void> loadUnits() async {
-    String branchId = ProxyService.box.read(key: 'branchId');
+  void loadColors() {
+    _appService.loadColors();
+  }
 
-    _units = await ProxyService.api.units(branchId: branchId);
+  ///create a new category and refresh list of categories
+  Future<void> createCategory() async {
+    final String userId = ProxyService.box.read(key: 'userId');
+    final String branchId = ProxyService.box.read(key: 'branchId');
+    final Category category = new Category(
+      active: true,
+      focused: false,
+      name: name,
+      channels: [userId],
+      branchId: branchId,
+    );
+    await ProxyService.api.create(endPoint: 'category', data: category);
+    _appService.loadCategories();
+  }
 
+  void updateCategory({required Category category}) async {
+    Category cat = category;
+    cat.focused = !cat.focused;
+
+    String categoryId = category.id!;
+    await ProxyService.api.update(
+      endPoint: 'category/$categoryId',
+      data: category.toJson(),
+    );
+    _appService.loadCategories();
+  }
+
+  /// change the focus on unit [TODO: the unit not changing now.]
+  void saveFocusedUnit({required Unit newUnit}) async {
+    for (Unit unit in units) {
+      if (unit.focused!) {
+        unit.focused = !unit.focused!;
+        String id = unit.id!;
+        await ProxyService.api.update(
+          endPoint: 'unit/$id',
+          data: unit.toJson(),
+        );
+      }
+    }
+    Unit unit = newUnit;
+    unit.focused = !unit.focused!;
+    String id = unit.id!;
+    await ProxyService.api.update(
+      endPoint: 'unit/$id',
+      data: unit.toJson(),
+    );
+    _appService.loadUnits();
+  }
+
+  void updateStock({required String variantId}) {
+    // TODO: will make validation to work with default value 0 in
+    if (_stockValue != null) {
+      print(_stockValue);
+      print(variantId);
+    }
+  }
+
+  double? _stockValue;
+  double? get stockValue => _stockValue;
+  void setStockValue({required double value}) {
+    _stockValue = value;
     notifyListeners();
   }
 }

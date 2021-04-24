@@ -120,4 +120,10 @@ class FakeApi implements Api {
     // TODO: implement variantProduct
     throw UnimplementedError();
   }
+
+  @override
+  Future<int> update<T>({T? data, required String endPoint}) {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }

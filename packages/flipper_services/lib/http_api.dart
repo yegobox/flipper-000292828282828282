@@ -31,8 +31,6 @@ class ExtendedClient extends http.BaseClient {
     // customValue = await LocalStorage.getStringItem('token');
     request.headers['Authorization'] = token == null ? '' : token;
     request.headers['userId'] = userId == null ? '' : userId;
-    print(userId);
-    print(token);
     return _inner.send(request);
   }
 }
@@ -173,7 +171,13 @@ class HttpApi<T> implements Api {
     final response = await client
         .get(Uri.parse("$apihub/api/stock-product/$branchId/$productId"));
 
-    print(response.body);
     return variantStockFromJson(response.body);
+  }
+
+  @override
+  Future<int> update<T>({T? data, required String endPoint}) async {
+    final response = await client.patch(Uri.parse("$apihub/api/$endPoint"),
+        body: jsonEncode(data));
+    return response.statusCode;
   }
 }
