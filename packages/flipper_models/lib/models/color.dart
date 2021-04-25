@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+PColor spColorFromJson(String str) => PColor.fromJson(json.decode(str));
+String spColorToJson(PColor data) => json.encode(data.toJson());
+
 List<PColor> pColorFromJson(String str) =>
     List<PColor>.from(json.decode(str).map((x) => PColor.fromJson(x)));
 

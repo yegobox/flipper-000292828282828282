@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+Unit sunitFromJson(String str) => Unit.fromJson(json.decode(str));
+String sunitToJson(Unit data) => json.encode(data.toJson());
+
 List<Unit> unitFromJson(String str) =>
     List<Unit>.from(json.decode(str).map((x) => Unit.fromJson(x)));
 

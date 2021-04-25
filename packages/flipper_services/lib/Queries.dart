@@ -30,13 +30,13 @@ class Queries {
       'SELECT name,id,focused,table,touched,active,branchId,channels WHERE table=\$VALUE AND branchId=\$BRANCHID';
   //table = unit
   static const String Q_10 =
-      'SELECT id, name,table,branchId,focused,channels WHERE table=\$T';
+      'SELECT id, name,table,branchId,focused,channels WHERE table=\$T AND branchId=\$BRANCHID';
   //table = customer
   static const String Q_11 =
       'SELECT id,name,email,totalPoints,totalVisit,firstVisit,totalSpent,phoneNumber,address,city,region,postalCode,countryCode,customerCode,note,createdAt,updatedAt,channels WHERE table=\$T';
   //table = color
   static const String Q_12 =
-      'SELECT id,name,table,isActive,channels WHERE table=\$T';
+      'SELECT id,branchId,name,channels,table,active,channels WHERE table=\$T AND branchId=\$BRANCHID';
 
   //table NONE
   static const String Q_13 =
@@ -44,4 +44,7 @@ class Queries {
   //table =business
   static const String Q_14 =
       'SELECT id,name,active,currency,categoryId,latitude,longitude,userId,typeId,timeZone,createdAt,updatedAt,channels,country,businessUrl,hexColor,image,type,table WHERE table=\$VALUE';
+  //table = branch
+  static const String Q_15 =
+      'SELECT id,businessId,createdAt,name,longitude,latitude,updatedAt,description,active,channels,channels,businessId,table WHERE table=\$T AND businessId=\$BUSINESSID';
 }

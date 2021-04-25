@@ -36,8 +36,16 @@ class LiteApi implements Api {
   String flipperApi = "https://flipper.yegobox.com";
   String apihub = "https://apihub.yegobox.com";
   dynamic Q14;
+  dynamic Q15;
+  dynamic Q9;
+  dynamic Q12;
+  dynamic Q10;
   registerQueries() {
     Q14 = Query(db, Queries.Q_14);
+    Q15 = Query(db, Queries.Q_15);
+    Q9 = Query(db, Queries.Q_9);
+    Q12 = Query(db, Queries.Q_12);
+    Q10 = Query(db, Queries.Q_10);
   }
 
   LiteApi() {
@@ -87,15 +95,27 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<Sync> authenticateWithOfflineDb({required String userId}) {
-    // TODO: implement authenticateWithOfflineDb
-    throw UnimplementedError();
+  Future<Sync> authenticateWithOfflineDb({required String userId}) async {
+    final response = await client.post(Uri.parse("$apihub/auth"),
+        body: jsonEncode({'userId': userId}),
+        headers: {'Content-Type': 'application/json'});
+
+    ProxyService.box
+        .write(key: 'bearerToken', value: syncFromJson(response.body).token);
+    ProxyService.box
+        .write(key: 'userId', value: syncFromJson(response.body).userId);
+    return syncFromJson(response.body);
   }
 
   @override
-  Future<List<Branch>> branches({required String businessId}) {
-    // TODO: implement branches
-    throw UnimplementedError();
+  Future<List<Branch>> branches({required String businessId}) async {
+    Q15.parameters = {'T': AppTables.branch, 'BUSINESSID': businessId};
+    final ResultSet result = Q15.execute();
+    final List<Branch> branches = [];
+    for (Map map in result.allResults) {
+      branches.add(sbranchFromJson(jsonEncode(map)));
+    }
+    return branches;
   }
 
   @override
@@ -110,9 +130,14 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<List<Category>> categories({required String branchId}) {
-    // TODO: implement categories
-    throw UnimplementedError();
+  Future<List<Category>> categories({required String branchId}) async {
+    Q14.parameters = {'VALUE': AppTables.category, 'BRANCHID': branchId};
+    final ResultSet business = Q14.execute();
+    final List<Category> categories = [];
+    for (Map map in business.allResults) {
+      categories.add(scategoryFromJson(jsonEncode(map)));
+    }
+    return categories;
   }
 
   @override
@@ -121,9 +146,14 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<List<PColor>> colors({required String branchId}) {
-    // TODO: implement colors
-    throw UnimplementedError();
+  Future<List<PColor>> colors({required String branchId}) async {
+    Q14.parameters = {'T': AppTables.color, 'BRANCHID': branchId};
+    final ResultSet business = Q14.execute();
+    final List<PColor> colors = [];
+    for (Map map in business.allResults) {
+      colors.add(spColorFromJson(jsonEncode(map)));
+    }
+    return colors;
   }
 
   @override
@@ -170,21 +200,32 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<int> signup({required Map business}) {
-    // TODO: implement signup
-    throw UnimplementedError();
+  Future<int> signup({required Map business}) async {
+    final http.Response response = await client.post(
+        Uri.parse("$apihub/api/business"),
+        body: jsonEncode(business),
+        headers: {'Content-Type': 'application/json'});
+    return response.statusCode;
   }
 
   @override
-  Future<List<Stock>> stocks({required String productId}) {
-    // TODO: implement stocks
-    throw UnimplementedError();
+  Future<List<Stock>> stocks({required String productId}) async {
+    // TODO: implement when internet is available to load from internet and when not load from local
+    final response = await client
+        .get(Uri.parse("$apihub/api/stocks-byProductId/$productId"));
+
+    return stockFromJson(response.body);
   }
 
   @override
-  Future<List<Unit>> units({required String branchId}) {
-    // TODO: implement units
-    throw UnimplementedError();
+  Future<List<Unit>> units({required String branchId}) async {
+    Q10.parameters = {'T': AppTables.unit, 'BRANCHID': branchId};
+    final ResultSet business = Q10.execute();
+    final List<Unit> units = [];
+    for (Map map in business.allResults) {
+      units.add(sunitFromJson(jsonEncode(map)));
+    }
+    return units;
   }
 
   @override

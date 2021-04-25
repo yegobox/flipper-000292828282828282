@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+Category scategoryFromJson(String str) => Category.fromJson(json.decode(str));
+String sbusinessToJson(Category data) => json.encode(data.toJson());
+
 List<Category> categoryFromJson(String str) =>
     List<Category>.from(json.decode(str).map((x) => Category.fromJson(x)));
 
