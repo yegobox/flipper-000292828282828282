@@ -32,9 +32,9 @@ class Product {
       required this.unit,
       this.allVariants,
       this.variants,
-      required this.draft,
-      required this.imageLocal,
-      required this.currentUpdate,
+      this.draft,
+      this.imageLocal,
+      this.currentUpdate,
       this.imageUrl});
 
   String id;
@@ -53,9 +53,9 @@ class Product {
   String unit;
   List<AllVariant>? allVariants;
   List<AllVariant>? variants;
-  bool draft;
-  bool imageLocal;
-  bool currentUpdate;
+  bool? draft;
+  bool? imageLocal;
+  bool? currentUpdate;
   String? imageUrl;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -81,9 +81,10 @@ class Product {
             ? []
             : List<AllVariant>.from(
                 json["variants"].map((x) => AllVariant.fromJson(x))),
-        draft: json["draft"],
-        imageLocal: json["imageLocal"],
-        currentUpdate: json["currentUpdate"],
+        draft: json["draft"] == null ? false : json["draft"],
+        imageLocal: json["imageLocal"] == null ? false : json["imageLocal"],
+        currentUpdate:
+            json["currentUpdate"] == null ? false : json["currentUpdate"],
         imageUrl: json["imageUrl"],
       );
 
@@ -108,9 +109,9 @@ class Product {
         "variants": variants == null
             ? []
             : List<dynamic>.from(variants!.map((x) => x.toJson())),
-        "draft": draft,
-        "imageLocal": imageLocal,
-        "currentUpdate": currentUpdate,
+        "draft": draft == null ? false : draft,
+        "imageLocal": imageLocal == null ? false : imageLocal,
+        "currentUpdate": currentUpdate == null ? false : currentUpdate,
         "imageUrl": imageUrl,
       };
 }

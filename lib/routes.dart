@@ -46,4 +46,5 @@ class AppSetup {
 // firebase install https://firebase.flutter.dev/docs/installation/android/
 // flutter create --template=package hello
 // flutter run -d chrome --release
+//  flutter pub add moor_flutter
 

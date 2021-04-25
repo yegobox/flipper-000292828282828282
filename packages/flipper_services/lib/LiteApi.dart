@@ -38,12 +38,14 @@ class LiteApi implements Api {
   dynamic Q9;
   dynamic Q12;
   dynamic Q10;
+  dynamic Q16;
   registerQueries() {
     Q14 = Query(db, Queries.Q_14);
     Q15 = Query(db, Queries.Q_15);
     Q9 = Query(db, Queries.Q_9);
     Q12 = Query(db, Queries.Q_12);
     Q10 = Query(db, Queries.Q_10);
+    Q16 = Query(db, Queries.Q_16);
   }
 
   LiteApi() {
@@ -187,12 +189,11 @@ class LiteApi implements Api {
 
   @override
   Future<List<Product>> products() async {
-    // TODO:query is wrong
-    Q14.parameters = {'VALUE': AppTables.product};
-    final ResultSet product = Q14.execute();
+    Q16.parameters = {'T': AppTables.product};
+    final ResultSet product = Q16.execute();
     final List<Product> p = [];
     for (Map map in product.allResults) {
-      p.add(sproductFromJson(map.toString()));
+      p.add(sproductFromJson(jsonEncode(map)));
     }
     return p;
   }

@@ -47,4 +47,7 @@ class Queries {
   //table = branch
   static const String Q_15 =
       'SELECT id,businessId,createdAt,name,longitude,latitude,updatedAt,description,active,channels,channels,businessId,table WHERE table=\$T AND businessId=\$BUSINESSID';
+  //static = product
+  static const String Q_16 =
+      'SELECT name,id,description,picture,taxId,active,hasPicture,isImageLocal,touched,table,isDraft,color,isCurrentUpdate,businessId,supplierId,categoryId,createdAt,unit,updatedAt,count,channels WHERE table=\$T';
 }
