@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flipper_models/models/variant_stock.dart';
-import 'dart:io';
 import 'package:flipper_models/models/unit.dart';
 
 import 'package:flipper_models/models/sync.dart';
@@ -18,7 +17,6 @@ import 'package:flipper_models/models/category.dart';
 
 import 'package:flipper_models/models/branch.dart';
 import 'package:flipper_services/proxy.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flipper_models/models/business.dart';
 import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
 import 'Queries.dart';
