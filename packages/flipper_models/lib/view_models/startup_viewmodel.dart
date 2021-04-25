@@ -10,6 +10,7 @@ class StartUpViewModel extends BaseViewModel {
     setBusy(true);
     if (isLoggedIn()) {
       List<Business> response = await ProxyService.api.businesses();
+      print(response);
       //TODO: save the response in local db for easy access in menu drawer.
       //use Moor that imprement DB interface.
       //Lite also implement DB interface which mainly do crud operations

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flipper_models/models/variant_stock.dart';
 import 'dart:io';
 import 'package:flipper_models/models/unit.dart';
@@ -25,17 +27,17 @@ import 'constants.dart';
 import 'http_api.dart';
 import 'package:http/http.dart' as http;
 
+final Database db = Database("main");
+
 class LiteApi implements Api {
-  Database? db;
   Replicator? replicator;
   ExtendedClient client = ExtendedClient(http.Client());
   String userId = ProxyService.box.read(key: 'userId');
-  // HttpApi();
   String flipperApi = "https://flipper.yegobox.com";
   String apihub = "https://apihub.yegobox.com";
   dynamic Q14;
   registerQueries() {
-    Q14 = Query(db!, Queries.Q_14);
+    Q14 = Query(db, Queries.Q_14);
   }
 
   LiteApi() {
@@ -44,17 +46,16 @@ class LiteApi implements Api {
   }
   init() async {
     //start the database
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final String appDocPath = appDocDir.path;
+    // final Directory appDocDir = await getApplicationDocumentsDirectory();
+    // final String appDocPath = appDocDir.path;
     // ignore: prefer_single_quotes
-    db = Database("main", directory: appDocPath);
+    // db = Database("main", directory: appDocPath);
     print(db);
-    if (db != null && !db!.isOpen) {
-      db!.open();
+    if (!db.isOpen) {
+      db.open();
     }
-    if (db != null) {
-      registerQueries();
-    }
+    registerQueries();
+
     // final FlipperConfig flipperConfig =
     //     await ProxyService.firestore.getConfigs();
     // if (flipperConfig == null) {
@@ -68,13 +69,15 @@ class LiteApi implements Api {
     // assert(username != null);
     // assert(password != null);
     final gatewayUrl = "yegobox.com:4985";
-    replicator = Replicator(db!,
-        endpointUrl: 'ws://$gatewayUrl/main/',
-        username: 'admin',
-        password: 'iloveaurore',
-        channels: ["300"],
-        continuous: true,
-        replicatorType: ReplicatorType.push);
+    replicator = Replicator(
+      db,
+      endpointUrl: 'ws://$gatewayUrl/main/',
+      username: 'admin',
+      password: 'iloveaurore',
+      channels: ["300"],
+      continuous: true,
+      replicatorType: ReplicatorType.push,
+    );
 
     // Set up a status listener
     replicator!.addChangeListener((status) {
@@ -96,9 +99,14 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<List<Business>> businesses() {
-    // TODO: implement businesses
-    throw UnimplementedError();
+  Future<List<Business>> businesses() async {
+    Q14.parameters = {'VALUE': AppTables.business};
+    final ResultSet business = Q14.execute();
+    final List<Business> businesses = [];
+    for (Map map in business.allResults) {
+      businesses.add(sbusinessFromJson(jsonEncode(map)));
+    }
+    return businesses;
   }
 
   @override
@@ -151,10 +159,11 @@ class LiteApi implements Api {
 
   @override
   Future<List<Product>> products() async {
-    Q14.parameters = {'VALUE': AppTables.business};
-    final ResultSet business = Q14.execute();
+    // TODO:query is wrong
+    Q14.parameters = {'VALUE': AppTables.product};
+    final ResultSet product = Q14.execute();
     final List<Product> p = [];
-    for (Map map in business.allResults) {
+    for (Map map in product.allResults) {
       p.add(sproductFromJson(map.toString()));
     }
     return p;
