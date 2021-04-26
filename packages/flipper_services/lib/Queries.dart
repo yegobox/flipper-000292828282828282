@@ -15,7 +15,7 @@ class Queries {
       'SELECT name,id,focused,table,touched,active,branchId,channels WHERE table=\$VALUE AND name=\$NAME';
   //static = product
   static const String Q_5 =
-      'SELECT name,id,description,picture,taxId,active,hasPicture,isImageLocal,touched,table,isDraft,color,isCurrentUpdate,businessId,supplierId,categoryId,createdAt,unit,updatedAt,count,channels WHERE table=\$VALUE AND name=\$NAME';
+      'SELECT name,id,description,picture,taxId,active,hasPicture,isImageLocal,touched,table,isDraft,color,isCurrentUpdate,businessId,supplierId,categoryId,createdAt,unit,updatedAt,count,channels WHERE table=\$T AND name=\$NAME';
   //static=tax
   static const String Q_6 =
       'SELECT name, id,  touched, table,  isDefault, percentage, businessId, channels WHERE table=\$VALUE AND name=\$NAME';
@@ -50,4 +50,10 @@ class Queries {
   //static = product
   static const String Q_16 =
       'SELECT name,id,description,picture,taxId,active,hasPicture,isImageLocal,touched,table,isDraft,color,isCurrentUpdate,businessId,supplierId,categoryId,createdAt,unit,updatedAt,count,channels WHERE table=\$T';
+  //static table = variantProduct
+  static const String Q_17 =
+      'SELECT variants.name,products.name as productName, variants.id,variants.sku,variants.unit,stocks.retailPrice FROM variants JOIN stocks ON variants.productId=stocks.productId JOIN products ON variants.productId=products.id WHERE variants.table=\$T AND variants.productId=\$PRODUCTID';
+  //static table = variantStock
+  static const String Q_18 =
+      'SELECT variants.name,products.name as productName, variants.id,variants.sku,variants.unit,stocks.retailPrice FROM variants JOIN stocks ON variants.productId=stocks.productId JOIN products ON variants.productId=products.id WHERE variants.table=\$T AND variants.id=\$VARIANTID';
 }

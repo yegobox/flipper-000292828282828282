@@ -108,7 +108,7 @@ class ProductViewModel extends ReactiveViewModel {
     String categoryId = category.id!;
     await ProxyService.api.update(
       endPoint: 'category/$categoryId',
-      data: category.toJson(),
+      data: category,
     );
     _appService.loadCategories();
   }
@@ -121,7 +121,7 @@ class ProductViewModel extends ReactiveViewModel {
         String id = unit.id!;
         await ProxyService.api.update(
           endPoint: 'unit/$id',
-          data: unit.toJson(),
+          data: unit,
         );
       }
     }
@@ -130,7 +130,7 @@ class ProductViewModel extends ReactiveViewModel {
     String id = unit.id!;
     await ProxyService.api.update(
       endPoint: 'unit/$id',
-      data: unit.toJson(),
+      data: unit,
     );
     _appService.loadUnits();
   }

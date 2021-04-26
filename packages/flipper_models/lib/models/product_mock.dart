@@ -1,12 +1,14 @@
 import 'product.dart';
 import 'package:flipper_services/proxy.dart';
+import 'package:uuid/uuid.dart';
 
+final id = Uuid().v1();
 final time = DateTime.now();
 final String userid = ProxyService.box.read(key: 'userId');
 final String businessId = ProxyService.box.read(key: 'businessId');
 final String branchId = ProxyService.box.read(key: 'branchId');
 final productMock = new Product(
-  id: "XX",
+  id: id,
   draft: true,
   currentUpdate: true,
   taxId: "XX",

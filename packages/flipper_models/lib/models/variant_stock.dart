@@ -4,6 +4,10 @@
 
 import 'dart:convert';
 
+VariantStock svariantStockFromJson(String str) =>
+    VariantStock.fromJson(json.decode(str));
+String svariantStockToJson(VariantStock data) => json.encode(data.toJson());
+
 List<VariantStock> variantStockFromJson(String str) => List<VariantStock>.from(
     json.decode(str).map((x) => VariantStock.fromJson(x)));
 

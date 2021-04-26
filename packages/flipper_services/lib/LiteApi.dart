@@ -27,7 +27,7 @@ import 'package:http/http.dart' as http;
 
 final Database db = Database("main");
 
-class LiteApi implements Api {
+class LiteApi<T> implements Api {
   Replicator? replicator;
   ExtendedClient client = ExtendedClient(http.Client());
   String userId = ProxyService.box.read(key: 'userId');
@@ -39,6 +39,9 @@ class LiteApi implements Api {
   dynamic Q12;
   dynamic Q10;
   dynamic Q16;
+  dynamic Q17;
+  dynamic Q18;
+  dynamic Q5;
   registerQueries() {
     Q14 = Query(db, Queries.Q_14);
     Q15 = Query(db, Queries.Q_15);
@@ -46,6 +49,9 @@ class LiteApi implements Api {
     Q12 = Query(db, Queries.Q_12);
     Q10 = Query(db, Queries.Q_10);
     Q16 = Query(db, Queries.Q_16);
+    Q17 = Query(db, Queries.Q_17);
+    Q18 = Query(db, Queries.Q_18);
+    Q5 = Query(db, Queries.Q_5);
   }
 
   LiteApi() {
@@ -157,27 +163,38 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<int> create<T>({T? data, required String endPoint}) {
-    // TODO: implement create
-    throw UnimplementedError();
+  Future<int> create<T>({T? data, required String endPoint}) async {
+    final Map dn = data as Map;
+    final doc = Document(dn['id'], data: data);
+
+    db.saveDocument(doc);
+    return 1;
   }
 
   @override
-  Future<Product> createProduct({required Product product}) {
-    // TODO: implement createProduct
-    throw UnimplementedError();
+  Future<Product> createProduct({required Product product}) async {
+    final doc = Document(product.id, data: product);
+
+    final Document data = db.saveDocument(doc);
+    return sproductFromJson(jsonEncode(data.json));
   }
 
   @override
-  Future<List<Product>> isTempProductExist() {
-    // TODO: implement isTempProductExist
-    throw UnimplementedError();
+  Future<List<Product>> isTempProductExist() async {
+    Q5.parameters = {'T': AppTables.product, 'NAME': 'temp'};
+    final ResultSet product = Q5.execute();
+    final List<Product> p = [];
+    for (Map map in product.allResults) {
+      p.add(sproductFromJson(jsonEncode(map)));
+    }
+    return p;
   }
 
   @override
-  Future<bool> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future<bool> logOut() async {
+    ProxyService.box.remove(key: 'userId');
+    ProxyService.box.remove(key: 'bearerToken');
+    return true;
   }
 
   @override
@@ -228,22 +245,37 @@ class LiteApi implements Api {
   }
 
   @override
-  Future<int> update<T>({T? data, required String endPoint}) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<int> update<T>({T? data, required String endPoint}) async {
+    final Map dn = data as Map;
+    Document doc = db.getMutableDocument(dn['id']);
+    data.forEach((key, value) {
+      doc.properties[key] = value;
+    });
+    db.saveDocument(doc);
+    return 1;
   }
 
   @override
   Future<List<VariantStock>> variantProduct(
-      {required String branchId, required String productId}) {
-    // TODO: implement variantProduct
-    throw UnimplementedError();
+      {required String branchId, required String productId}) async {
+    Q17.parameters = {'T': AppTables.variation, 'PRODUCTID': productId};
+    final ResultSet business = Q17.execute();
+    final List<VariantStock> variantStocks = [];
+    for (Map map in business.allResults) {
+      variantStocks.add(svariantStockFromJson(jsonEncode(map)));
+    }
+    return variantStocks;
   }
 
   @override
   Future<List<VariantStock>> variantStock(
-      {required String branchId, required String variantId}) {
-    // TODO: implement variantStock
-    throw UnimplementedError();
+      {required String branchId, required String variantId}) async {
+    Q17.parameters = {'T': AppTables.variation, 'VARIANTID': variantId};
+    final ResultSet business = Q17.execute();
+    final List<VariantStock> variantStocks = [];
+    for (Map map in business.allResults) {
+      variantStocks.add(svariantStockFromJson(jsonEncode(map)));
+    }
+    return variantStocks;
   }
 }

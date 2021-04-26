@@ -11,7 +11,6 @@ import 'abstractions/location.dart';
 import 'abstractions/platform.dart';
 import 'abstractions/storage.dart';
 import 'app_service.dart';
-import 'fake_api.dart';
 import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
 import 'local_storage.dart';
@@ -32,17 +31,12 @@ abstract class ThirdPartyServicesModule {
   @lazySingleton
   Api get apiService {
     Api apiService;
-    var choosenProvider =
-        ApiProvider.Lite; // change this to change the provider
-    switch (choosenProvider) {
-      case ApiProvider.Lite:
-        apiService = LiteApi();
-        break;
-      case ApiProvider.Rest:
-        apiService = HttpApi();
-        break;
-      default:
-        apiService = HttpApi();
+    if (UniversalPlatform.isWindows ||
+        UniversalPlatform.isAndroid ||
+        UniversalPlatform.isMacOS) {
+      apiService = LiteApi();
+    } else {
+      apiService = HttpApi();
     }
     return apiService;
   }
