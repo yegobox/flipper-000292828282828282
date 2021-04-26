@@ -90,7 +90,8 @@ class LiteApi<T> implements Api {
       password: 'iloveaurore',
       channels: ["300"],
       continuous: true,
-      replicatorType: ReplicatorType.push,
+      replicatorType: ReplicatorType
+          .pushAndPull, //in dev use pushAndPull to keep experimental otherwise push only.
     );
 
     // Set up a status listener
