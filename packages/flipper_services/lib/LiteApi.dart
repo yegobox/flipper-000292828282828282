@@ -148,11 +148,6 @@ class LiteApi<T> implements Api {
   }
 
   @override
-  void cleanKeyPad() {
-    // TODO: implement cleanKeyPad
-  }
-
-  @override
   Future<List<PColor>> colors({required String branchId}) async {
     Q14.parameters = {'T': AppTables.color, 'BRANCHID': branchId};
     final ResultSet business = Q14.execute();

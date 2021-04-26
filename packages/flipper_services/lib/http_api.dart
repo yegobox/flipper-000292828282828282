@@ -42,11 +42,6 @@ class HttpApi<T> implements Api {
   String flipperApi = "https://flipper.yegobox.com";
   String apihub = "https://apihub.yegobox.com";
   @override
-  void cleanKeyPad() {
-    // TODO: implement cleanKeyPad
-  }
-
-  @override
   Future<Login> login({required String phone}) async {
     final response = await client
         .post(Uri.parse("$flipperApi/open-login"), body: {'phone': phone});

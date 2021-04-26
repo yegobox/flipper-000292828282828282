@@ -10,7 +10,6 @@ import 'package:flipper_models/models/category.dart';
 import 'package:flipper_models/models/sync.dart';
 
 abstract class Api<T> {
-  void cleanKeyPad();
   Future<Login> login({required String phone});
   Future<List<Product>> products();
   Future<int> signup({required Map business});

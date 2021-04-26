@@ -25,11 +25,6 @@ class FakeApi implements Api {
   }
 
   @override
-  void cleanKeyPad() {
-    // TODO: implement cleanKeyPad
-  }
-
-  @override
   Future<Login> login({required String phone}) {
     // TODO: implement login
     throw UnimplementedError();
