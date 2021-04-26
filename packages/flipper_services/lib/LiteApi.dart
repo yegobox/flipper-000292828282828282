@@ -30,7 +30,6 @@ final Database db = Database("main_01");
 class LiteApi<T> implements Api {
   Replicator? replicator;
   ExtendedClient client = ExtendedClient(http.Client());
-  String userId = ProxyService.box.read(key: 'userId');
   String flipperApi = "https://flipper.yegobox.com";
   String apihub = "https://apihub.yegobox.com";
   dynamic Q14;
