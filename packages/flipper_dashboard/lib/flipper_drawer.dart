@@ -1,9 +1,137 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:stacked/stacked.dart';
+import 'package:flipper_models/view_models/drawer_viewmodel.dart';
+import 'package:flipper_services/abstractions/dynamic_link.dart';
+import 'package:flipper_services/proxy.dart';
+import 'package:flipper_services/locator.dart';
+import 'custom_widgets.dart';
 
 class FlipperDrawer extends StatelessWidget {
-  const FlipperDrawer({Key? key}) : super(key: key);
+  FlipperDrawer({Key? key}) : super(key: key);
+
+  final DynamicLink _link = locator<DynamicLink>();
+
+  ListTile _menuListRowButton(String title,
+      {Function? onPressed,
+      int? icon,
+      bool isEnable = false,
+      required BuildContext context}) {
+    return ListTile(
+      onTap: () {
+        if (onPressed != null) {
+          onPressed();
+        }
+      },
+      leading: icon == null
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: customIcon(
+                context,
+                icon: icon,
+                size: 25,
+                iconColor: isEnable
+                    ? Theme.of(context).iconTheme.color
+                    : Theme.of(context)
+                        .copyWith(canvasColor: Colors.grey)
+                        .canvasColor,
+              ),
+            ),
+      title: customText(
+        title,
+        style: TextStyle(
+          fontSize: 20,
+          color: isEnable
+              ? Theme.of(context)
+                  .copyWith(canvasColor: Colors.black)
+                  .canvasColor
+              : Theme.of(context)
+                  .copyWith(canvasColor: const Color(0xffe2e8ea))
+                  .canvasColor,
+        ),
+        context: context,
+      ),
+    );
+  }
+
+  Widget _footer(
+      {required DrawerViewModel drawerViewmodel,
+      required BuildContext context}) {
+    return Positioned(
+      bottom: 0,
+      right: 0,
+      left: 0,
+      child: Column(
+        children: <Widget>[
+          _menuListRowButton('Close a day',
+              isEnable: true, context: context, icon: 0xf155, onPressed: () {
+            //TODO:
+            // ProxyService.nav.navigateTo(
+            //   Routing.openCloseDrawerview,
+            //   arguments: OpenCloseDrawerViewArguments(
+            //     wording: 'Closing Float',
+            //     businessState: BusinessState.CLOSE,
+            //   ),
+            // );
+          }),
+          const Divider(height: 0),
+          Row(
+            children: <Widget>[
+              const SizedBox(
+                width: 10,
+                height: 45,
+              ),
+              FutureBuilder(
+                future: _link.createDynamicLink(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final ShortDynamicLink uri =
+                        snapshot.data as ShortDynamicLink;
+                    return GestureDetector(
+                      onTap: () {
+                        // print(uri.shortUrl.toString());
+                        ProxyService.share.share(uri.shortUrl.toString());
+                      },
+                      child: customIcon(context,
+                          icon: 0xf066,
+                          istwitterIcon: true,
+                          size: 25,
+                          iconColor: Theme.of(context).accentColor),
+                    );
+                  } else {
+                    return customIcon(context,
+                        icon: 0xf066,
+                        istwitterIcon: true,
+                        size: 25,
+                        iconColor: Theme.of(context).accentColor);
+                  }
+                },
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () {
+                  // drawerViewmodel.loginWithQr(context: context);
+                },
+                child: Image.asset(
+                  'assets/images/qr.png',
+                  height: 25,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+                height: 45,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateTo(String path) {
+    // ProxyService.nav.navigateTo(path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +145,11 @@ class FlipperDrawer extends StatelessWidget {
         child: Drawer(
           elevation: 0,
           child: Container(
-            color: AppColors.white,
+            color: Colors.white,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const BusinessList(),
+                // const BusinessList(),
                 Expanded(
                   child: Stack(
                     children: <Widget>[
@@ -67,11 +195,11 @@ class FlipperDrawer extends StatelessWidget {
                             // _menuListRowButton('Flipper deals',
                             //     context: context, icon: AppIcon.twitterAds),
                             // const Divider(),
-                            _menuListRowButton('Settings and privacy',
-                                context: context,
-                                isEnable: true, onPressed: () {
-                              _navigateTo(Routing.settingsView);
-                            }),
+                            // _menuListRowButton('Settings and privacy',
+                            //     context: context,
+                            //     isEnable: true, onPressed: () {
+                            //   _navigateTo(Routing.settingsView);
+                            // }),
 
                             const Divider(),
                             _menuListRowButton(

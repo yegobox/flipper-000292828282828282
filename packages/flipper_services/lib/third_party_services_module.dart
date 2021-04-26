@@ -1,4 +1,6 @@
+// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flipper_services/proxy.dart';
+import 'package:flipper_services/share_implementation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:injectable/injectable.dart';
@@ -7,10 +9,13 @@ import 'package:flipper_models/models/login.dart';
 import 'package:flipper/routes.router.dart';
 import 'LiteApi.dart';
 import 'abstractions/api.dart';
+import 'abstractions/dynamic_link.dart';
 import 'abstractions/location.dart';
 import 'abstractions/platform.dart';
+import 'abstractions/share.dart';
 import 'abstractions/storage.dart';
 import 'app_service.dart';
+import 'dynamic_link_service.dart';
 import 'flipper_firebase_auth.dart';
 import 'http_api.dart';
 import 'local_storage.dart';
@@ -28,6 +33,28 @@ final String platform = (!isWindows) ? 'mobile' : 'windows';
 
 @module
 abstract class ThirdPartyServicesModule {
+  @lazySingleton
+  Shareble get share {
+    Shareble share;
+    if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+      share = ShareImplementation();
+    } else {
+      share = UnSupportedShare();
+    }
+    return share;
+  }
+
+  @lazySingleton
+  DynamicLink get dynamicLink {
+    DynamicLink dynamicLink;
+    if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+      dynamicLink = DynamicLinkService();
+    } else {
+      dynamicLink = UnSupportedDynamicLink();
+    }
+    return dynamicLink;
+  }
+
   @lazySingleton
   Api get apiService {
     Api apiService;
@@ -88,6 +115,26 @@ abstract class ThirdPartyServicesModule {
 
   @lazySingleton
   AppService get appService;
+}
+
+class UnSupportedShare implements Shareble {
+  @override
+  void share(String shareble) {
+    // TODO: implement share
+  }
+}
+
+class UnSupportedDynamicLink implements DynamicLink {
+  @override
+  Future<dynamic> createDynamicLink() async {
+    return null; //a reson to not return UnimplementedError when a function could be called during widget rendering!
+  }
+
+  @override
+  Future handleDynamicLink() {
+    // TODO: implement handleDynamicLink
+    throw UnimplementedError();
+  }
 }
 
 class WindowsLocationService implements FlipperLocation {

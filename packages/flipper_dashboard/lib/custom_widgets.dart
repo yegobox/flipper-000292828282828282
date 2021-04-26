@@ -66,6 +66,7 @@ Widget customIcon(BuildContext context,
     child: Column(
       children: [
         Container(
+          height: 10,
           child: Icon(
             IconData(icon!,
                 fontFamily: istwitterIcon

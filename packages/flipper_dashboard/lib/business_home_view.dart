@@ -11,6 +11,7 @@ import 'package:flipper_services/proxy.dart';
 import 'add_product_buttons.dart';
 import 'bottom_menu_bar.dart';
 import 'custom_rect_tween.dart';
+import 'flipper_drawer.dart';
 import 'hero_dialog_route.dart';
 import 'home_app_bar.dart';
 import 'package:stacked/stacked.dart';
@@ -174,7 +175,7 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                 },
               ),
             ),
-            drawer: Text('I am Side drawer'),
+            drawer: FlipperDrawer(),
           ),
         );
       },

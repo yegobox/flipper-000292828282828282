@@ -3,13 +3,17 @@ import 'package:flipper_services/app_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'abstractions/api.dart';
+import 'abstractions/dynamic_link.dart';
 import 'abstractions/location.dart';
+import 'abstractions/share.dart';
 import 'abstractions/storage.dart';
 import 'locator.dart';
 
 final isWindows = UniversalPlatform.isWindows;
 
 final Api _apiService = locator<Api>();
+final DynamicLink _dynamicLink = locator<DynamicLink>();
+final Shareble _share = locator<Shareble>();
 final NavigationService _nav = locator<NavigationService>();
 final LoginStandard _auth = locator<LoginStandard>();
 final FlipperLocation _location = locator<FlipperLocation>();
@@ -19,6 +23,8 @@ final AppService _appService = locator<AppService>();
 
 abstract class ProxyService {
   static Api get api => _apiService;
+  static Shareble get share => _share;
+  static DynamicLink get dynamicLink => _dynamicLink;
   static NavigationService get nav => _nav;
   static FlipperLocation get location => _location;
   static LocalStorage get box => _box;
