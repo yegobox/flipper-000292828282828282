@@ -66,6 +66,9 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
   Widget build(BuildContext context) {
     return ViewModelBuilder<BusinessHomeViewModel>.reactive(
       viewModelBuilder: () => BusinessHomeViewModel(),
+      onModelReady: (model) {
+        model.loadBusinesses();
+      },
       builder: (context, model, child) {
         return WillPopScope(
           onWillPop: _onWillPop,
@@ -175,7 +178,9 @@ class _BusinessHomeViewState extends State<BusinessHomeView>
                 },
               ),
             ),
-            drawer: FlipperDrawer(),
+            drawer: FlipperDrawer(
+              businesses: model.businesses,
+            ),
           ),
         );
       },

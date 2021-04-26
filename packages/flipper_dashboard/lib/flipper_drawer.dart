@@ -5,11 +5,13 @@ import 'package:flipper_models/view_models/drawer_viewmodel.dart';
 import 'package:flipper_services/abstractions/dynamic_link.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_services/locator.dart';
+import 'business_list.dart';
 import 'custom_widgets.dart';
+import 'package:flipper_models/models/business.dart';
 
 class FlipperDrawer extends StatelessWidget {
-  FlipperDrawer({Key? key}) : super(key: key);
-
+  FlipperDrawer({Key? key, required this.businesses}) : super(key: key);
+  final List<Business> businesses;
   final DynamicLink _link = locator<DynamicLink>();
 
   ListTile _menuListRowButton(String title,
@@ -149,7 +151,9 @@ class FlipperDrawer extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                // const BusinessList(),
+                BusinessList(
+                  businesses: businesses,
+                ),
                 Expanded(
                   child: Stack(
                     children: <Widget>[

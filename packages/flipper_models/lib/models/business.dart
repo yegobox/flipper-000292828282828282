@@ -31,8 +31,9 @@ class Business {
     this.hexColor,
     this.image,
     required this.type,
+    this.active = false,
   });
-
+// TODO:add active propety in the API
   String id;
   String name;
   dynamic currency;
@@ -49,6 +50,7 @@ class Business {
   dynamic hexColor;
   dynamic image;
   String type;
+  bool? active;
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
         id: json["id"],
@@ -67,6 +69,7 @@ class Business {
         hexColor: json["hexColor"],
         image: json["image"],
         type: json["type"],
+        active: json["active"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -86,5 +89,6 @@ class Business {
         "hexColor": hexColor,
         "image": image,
         "type": type,
+        "active": active,
       };
 }
