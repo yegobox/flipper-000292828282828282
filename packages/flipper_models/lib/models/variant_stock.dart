@@ -17,10 +17,10 @@ String variantStockToJson(List<VariantStock> data) =>
 class VariantStock {
   VariantStock({
     required this.id,
-    required this.canTrackingStock,
+    this.canTrackingStock,
     required this.retailPrice,
     required this.productName,
-    required this.variantName,
+    this.variantName,
     required this.unit,
     required this.sku,
     required this.branchId,
@@ -33,10 +33,10 @@ class VariantStock {
   });
 
   String id;
-  bool canTrackingStock;
+  bool? canTrackingStock;
   double retailPrice;
   String productName;
-  String variantName;
+  String? variantName;
   String unit;
   String sku;
   String branchId;
@@ -49,10 +49,11 @@ class VariantStock {
 
   factory VariantStock.fromJson(Map<String, dynamic> json) => VariantStock(
         id: json["id"],
-        canTrackingStock: json["canTrackingStock"],
+        canTrackingStock:
+            json["canTrackingStock"] == null ? false : json["canTrackingStock"],
         retailPrice: json["retailPrice"],
         productName: json["productName"],
-        variantName: json["variantName"],
+        variantName: json["variantName"] == null ? null : json["variantName"],
         unit: json["unit"],
         sku: json["sku"],
         branchId: json["branchId"],
@@ -66,10 +67,10 @@ class VariantStock {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "canTrackingStock": canTrackingStock,
+        "canTrackingStock": canTrackingStock == null ? false : canTrackingStock,
         "retailPrice": retailPrice,
         "productName": productName,
-        "variantName": variantName,
+        "variantName": variantName == null ? '' : variantName,
         "unit": unit,
         "sku": sku,
         "branchId": branchId,

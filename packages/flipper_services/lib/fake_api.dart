@@ -121,4 +121,10 @@ class FakeApi implements Api {
     // TODO: implement update
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> delete({required String id, String? endPoint}) {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }

@@ -22,7 +22,7 @@ abstract class Api<T> {
   Future<List<Unit>> units({required String branchId});
   Future<int> create<T>({T? data, required String endPoint});
   Future<int> update<T>({T? data, required String endPoint});
-
+  Future<bool> delete({required String id, String? endPoint});
   Future<List<VariantStock>> variantStock(
       {required String branchId, required String variantId});
   Future<List<VariantStock>> variantProduct({

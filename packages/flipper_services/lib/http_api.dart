@@ -178,4 +178,11 @@ class HttpApi<T> implements Api {
         body: jsonEncode(data));
     return response.statusCode;
   }
+
+  @override
+  Future<bool> delete({required String id, String? endPoint}) async {
+    final response =
+        await client.delete(Uri.parse("$apihub/api/$endPoint/$id"));
+    return response.statusCode == 200;
+  }
 }

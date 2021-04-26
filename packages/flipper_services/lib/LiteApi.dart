@@ -25,7 +25,7 @@ import 'constants.dart';
 import 'http_api.dart';
 import 'package:http/http.dart' as http;
 
-final Database db = Database("main");
+final Database db = Database("main_01");
 
 class LiteApi<T> implements Api {
   Replicator? replicator;
@@ -273,5 +273,11 @@ class LiteApi<T> implements Api {
       variantStocks.add(svariantStockFromJson(jsonEncode(map)));
     }
     return variantStocks;
+  }
+
+  @override
+  Future<bool> delete({required String id, String? endPoint}) async {
+    db.purgeDocument(id);
+    return true;
   }
 }
