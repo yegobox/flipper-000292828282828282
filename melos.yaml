@@ -1,8 +1,8 @@
 name: flipper
 repository: https://github.com/FirebaseExtended/flutterfire
-
+# https://github.com/invertase/melos/issues/216 wait for this issue to be resolved
 packages:
-  - packages/**
+  # - packages/**
   - open-sources/**
   - lib/localize/**
 ignore:
