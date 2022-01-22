@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'custom_rect_tween.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 const String addProductHero = 'addProductHero';
 
@@ -21,13 +22,8 @@ class OptionModal extends StatelessWidget {
           createRectTween: (begin, end) {
             return CustomRectTween(begin: begin, end: end);
           },
-          child: Material(
-            elevation: 2,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: SingleChildScrollView(
-              child: child,
-            ),
+          child: SingleChildScrollView(
+            child: child,
           ),
         ),
       ),

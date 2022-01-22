@@ -1,5 +1,7 @@
 import 'package:localize/localize.dart';
 import 'package:flipper_dashboard/popup_modal.dart';
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluent_ui/fluent_ui.dart' as fluent;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,6 +31,15 @@ class SaleIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InfoBar(
+        title: Text('Update available'),
+        content:
+            Text('Restart the app to apply the latest update.'), // optional
+        severity:
+            InfoBarSeverity.info, // optional. Default to InfoBarSeverity.info
+        onClose: () {
+          // Dismiss the info bar
+        });
     return Row(children: [
       counts == 0
           ? Text(
@@ -80,14 +91,15 @@ class SaleIndicator extends StatelessWidget {
       ),
       InkWell(
         onTap: () {
-          Navigator.of(context).push(
-            HeroDialogRoute(
-              builder: (context) {
-                return const OptionModal(
-                  child: AddProductButtons(),
-                );
-              },
-            ),
+          fluent.showDialog(
+            context: context,
+            builder: (context) {
+              return ContentDialog(
+                title: SizedBox.shrink(),
+                content: SizedBox.shrink(),
+                actions: [AddProductButtons()],
+              );
+            },
           );
         },
         child: Icon(
