@@ -22,9 +22,9 @@ class StartUpViewModel extends BaseViewModel {
   Future<void> runStartupLogic() async {
     // ProxyService.api.logOut();
     // fake login
-    ProxyService.box.write(key: 'userId', value: "300");
-    ProxyService.box.write(key: 'chatUid', value: "300");
-    await ProxyService.api.login(userPhone: '+250783054874');
+    // ProxyService.box.write(key: 'userId', value: "300");
+    // ProxyService.box.write(key: 'chatUid', value: "300");
+    // await ProxyService.api.login(userPhone: '+250783054874');
     // fake login
     List<BusinessSync> businesses = [];
     try {
