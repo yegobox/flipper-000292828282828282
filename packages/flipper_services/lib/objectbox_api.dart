@@ -1677,8 +1677,6 @@ class ObjectBoxApi extends MobileUpload implements Api {
     final response =
         await client.get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
     List<BusinessSync> businesses = [];
-    log.d(response.statusCode);
-    log.d(response.body);
     if (response.statusCode != 200) {
       throw SessionException(term: "session expired");
     }

@@ -24,7 +24,6 @@ class StartUpViewModel extends BaseViewModel {
     // fake login
     ProxyService.box.write(key: 'userId', value: "300");
     ProxyService.box.write(key: 'chatUid', value: "300");
-    //
     await ProxyService.api.login(userPhone: '+250783054874');
     // fake login
     List<BusinessSync> businesses = [];
@@ -32,6 +31,7 @@ class StartUpViewModel extends BaseViewModel {
       businesses = await appInit();
     } catch (e) {
       if (e is SessionException) {
+        ProxyService.api.logOut();
         ProxyService.nav.navigateTo(Routes.login);
         return;
       }
@@ -127,22 +127,12 @@ class StartUpViewModel extends BaseViewModel {
   /// get IDS to use along the way in the app
   Future<List<BusinessSync>> appInit() async {
     List<BusinessSync> businesses = [];
-    if (ProxyService.box.read(key: 'branchId') != null ||
-        ProxyService.box.read(key: 'businessId') != null) return businesses;
+
     if (appService.isLoggedIn()) {
       String userId = ProxyService.box.read(key: 'userId');
 
       businesses =
           await ProxyService.api.getLocalOrOnlineBusiness(userId: userId);
-
-      if (businesses.isEmpty) {
-        //time to go to internet to fetch them
-        try {
-          businesses = await ProxyService.api.getOnlineBusiness(userId: userId);
-        } catch (e) {
-          ProxyService.api.logOut();
-        }
-      }
 
       if (businesses.isNotEmpty) {
         List<BranchSync> branches = [];
