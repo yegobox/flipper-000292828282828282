@@ -10,7 +10,6 @@ class BillingService {
   /// after the use instead I should check this property before I mutate the voucher
 
   Future<Voucher?> useVoucher({int? voucher, int? userId}) async {
-    log.e('useVoucher');
     Voucher? voucherUse =
         await ProxyService.api.consumeVoucher(voucherCode: voucher!);
     if (voucherUse != null) {
