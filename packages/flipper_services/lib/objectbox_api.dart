@@ -1677,9 +1677,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
     final response =
         await client.get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
     List<BusinessSync> businesses = [];
-
+    log.d(response.statusCode);
+    log.d(response.body);
     if (response.statusCode != 200) {
-      return businesses;
+      throw SessionException(term: "session expired");
     }
     final box = store.box<BusinessSync>();
     BusinessSync? business = box.get(sbusinessFromJson(response.body).id);
@@ -1699,7 +1700,8 @@ class ObjectBoxApi extends MobileUpload implements Api {
         .getAll()
         .where((business) => business.userId == userId)
         .toList();
-    if (businesses.length == 0) {
+
+    if (businesses.isEmpty) {
       return await getOnlineBusiness(userId: userId);
     } else {
       return businesses;

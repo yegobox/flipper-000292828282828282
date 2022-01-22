@@ -38,7 +38,7 @@ dependencies:
   # flutter_screenutil: ^5.0.0+2
   smooth_page_indicator: ^1.0.0+2
   colorize_text_avatar: ^1.0.2
-  fluent_ui: ^3.6.0
+  fluent_ui: ^3.7.0
   url_strategy: ^0.2.0
   system_theme: ^1.0.1
   bitsdojo_window: ^0.1.1+1

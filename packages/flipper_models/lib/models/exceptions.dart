@@ -5,3 +5,11 @@ class VoucherException implements Exception {
 
   VoucherException({required this.term});
 }
+
+class SessionException implements Exception {
+  String term;
+
+  String errMsg() => 'SessionException: $term';
+
+  SessionException({required this.term});
+}

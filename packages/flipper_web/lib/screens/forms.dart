@@ -52,7 +52,7 @@ class _FormsState extends State<Forms> {
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: AutoSuggestBox<String>(
+              child: AutoSuggestBox(
                 controller: autoSuggestBox,
                 items: values,
                 onSelected: (text) {
@@ -86,7 +86,7 @@ class _FormsState extends State<Forms> {
             suffixMode: OverlayVisibilityMode.always,
             minHeight: 100,
             suffix: IconButton(
-              icon: const Icon(FluentIcons.close),
+              icon: Icon(FluentIcons.chrome_close),
               onPressed: () {
                 _clearController.clear();
               },

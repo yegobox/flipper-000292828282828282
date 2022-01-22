@@ -224,6 +224,8 @@ dependencies:
   pubnub: ^4.1.0
   localize:
     path: "./lib/localize"
+  fluent_ui: ^3.7.0
+  flutter_acrylic: ^0.1.0
   # FIXME:switch to the bellow bluethooth package
   # blue_thermal_printer: ^1.1.8
   # ffi: 1.0.0

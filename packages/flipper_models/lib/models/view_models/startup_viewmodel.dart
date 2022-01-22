@@ -21,16 +21,24 @@ class StartUpViewModel extends BaseViewModel {
 
   Future<void> runStartupLogic() async {
     // ProxyService.api.logOut();
-    await appInit();
-
-    List<BusinessSync>? businesses = [];
+    // fake login
+    ProxyService.box.write(key: 'userId', value: "300");
+    ProxyService.box.write(key: 'chatUid', value: "300");
+    //
+    await ProxyService.api.login(userPhone: '+250783054874');
+    // fake login
+    List<BusinessSync> businesses = [];
+    try {
+      businesses = await appInit();
+    } catch (e) {
+      if (e is SessionException) {
+        ProxyService.nav.navigateTo(Routes.login);
+        return;
+      }
+    }
 
     // if we are logged in, go to home we have business locally arleady!
     if (appService.isLoggedIn()) {
-      String userId = ProxyService.box.getUserId()!;
-      businesses =
-          await ProxyService.api.getLocalOrOnlineBusiness(userId: userId);
-
       if (businesses.isEmpty) {
         /// a user has logged in but has no business, so first check using
         /// his phone number if has a tenant he can log to
@@ -117,13 +125,12 @@ class StartUpViewModel extends BaseViewModel {
   }
 
   /// get IDS to use along the way in the app
-  appInit() async {
+  Future<List<BusinessSync>> appInit() async {
+    List<BusinessSync> businesses = [];
     if (ProxyService.box.read(key: 'branchId') != null ||
-        ProxyService.box.read(key: 'businessId') != null) return;
+        ProxyService.box.read(key: 'businessId') != null) return businesses;
     if (appService.isLoggedIn()) {
       String userId = ProxyService.box.read(key: 'userId');
-
-      List<BusinessSync>? businesses = [];
 
       businesses =
           await ProxyService.api.getLocalOrOnlineBusiness(userId: userId);
@@ -137,7 +144,7 @@ class StartUpViewModel extends BaseViewModel {
         }
       }
 
-      if (businesses != null && businesses.isNotEmpty) {
+      if (businesses.isNotEmpty) {
         List<BranchSync> branches = [];
         branches = await ProxyService.api
             .getLocalBranches(businessId: businesses[0].id);
@@ -146,13 +153,10 @@ class StartUpViewModel extends BaseViewModel {
           branches =
               await ProxyService.api.branches(businessId: businesses[0].id);
         }
-
-        log.i(branches[0].id);
-        log.w(businesses[0].id);
-
         ProxyService.box.write(key: 'branchId', value: branches[0].id);
         ProxyService.box.write(key: 'businessId', value: businesses[0].id);
       }
     }
+    return businesses;
   }
 }

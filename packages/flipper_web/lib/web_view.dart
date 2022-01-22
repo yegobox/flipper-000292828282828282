@@ -143,7 +143,7 @@ class _DashBoardState extends State<DashBoard> {
             title: const Text('Others'),
           ),
         ],
-        autoSuggestBox: AutoSuggestBox<String>(
+        autoSuggestBox: AutoSuggestBox(
           controller: TextEditingController(),
           items: const ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
         ),

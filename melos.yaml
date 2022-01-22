@@ -9,6 +9,8 @@ ignore:
   - "*web*"
   - "*odm*"
   - "*example*"
+  - "synthetic_package"
+  - synthetic_package
 
 # melos publish --dry-run
 command:

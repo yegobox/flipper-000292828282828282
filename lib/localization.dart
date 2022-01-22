@@ -7,11 +7,13 @@ import 'package:flipper_services/drive_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_ui/flipper_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/flipper_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/flipper_localizations.dart';
 import 'package:overlay_support/overlay_support.dart'; // Add this line.
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+
+import 'localize/lib/gen_l10n/flipper_localizations.dart';
 
 class Localization {
   static AppLocalizations? of(BuildContext context) {
