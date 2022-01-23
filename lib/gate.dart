@@ -1,6 +1,5 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:localize/gen_l10n/flipper_localizations.dart';
 
 import 'package:flipper_models/models/view_models/business_home_viewmodel.dart';
 // import 'package:flutter_gen/gen_l10n/flipper_localizations.dart'; // Add this line.
@@ -14,6 +13,7 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'localize/lib/gen_l10n/flipper_localizations.dart';
 import 'theme.dart';
 
 /// DEFAULT EXAMPLE - Hot Reload Playground
@@ -295,16 +295,16 @@ class Gate extends StatelessWidget {
                         glowFactor: is10footScreen() ? 2.0 : 0.0,
                       ),
                     ),
-                    localizationsDelegates:
-                        AppLocalizations.localizationsDelegates,
-                    supportedLocales: AppLocalizations.supportedLocales,
-                    locale: model.languageService
-                        .locale, //french == rwanda language in our app
+                    // localizationsDelegates:
+                    //     AppLocalizations.localizationsDelegates,
+                    // supportedLocales: AppLocalizations.supportedLocales,
+                    // locale: model.languageService
+                    //     .locale, //french == rwanda language in our app
                     themeMode: model.settingService.themeMode.value,
-                    localeResolutionCallback: (locale, supportedLocales) {
-                      deviceLocale = locale!;
-                      return locale;
-                    },
+                    // localeResolutionCallback: (locale, supportedLocales) {
+                    //   deviceLocale = locale!;
+                    //   return locale;
+                    // },
                     navigatorKey: StackedService.navigatorKey,
                     onGenerateRoute: StackedRouter().onGenerateRoute,
                   );

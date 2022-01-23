@@ -22,7 +22,7 @@ import 'package:flipper_dashboard/create/list_categories.dart';
 import 'package:flipper_dashboard/create/list_units.dart';
 import 'package:flipper_dashboard/create/receive_stock.dart';
 import 'package:flipper_dashboard/customers.dart';
-import 'package:flipper_dashboard/flipper_app.dart';
+import 'package:flipper_dashboard/home_app.dart';
 import 'package:flipper_dashboard/inapp_browser.dart';
 import 'package:flipper_dashboard/order.dart';
 import 'package:flipper_dashboard/order_summary.dart';
@@ -41,7 +41,6 @@ import 'package:flipper_models/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
 
 class Routes {
   static const String initial = '/';
