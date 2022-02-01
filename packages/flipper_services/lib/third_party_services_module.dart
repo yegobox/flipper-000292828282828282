@@ -226,8 +226,8 @@ abstract class ThirdPartyServicesModule {
     return syncApi;
   }
 
-  @lazySingleton
-  NavigationService get nav;
+  // @lazySingleton
+  // NavigationService get nav;
   @lazySingleton
   LocalStorage get box {
     LocalStorage box;

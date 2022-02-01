@@ -82,7 +82,7 @@ class StartUpViewModel extends BaseViewModel {
             return;
           } else if (tenant.branches.length > 1) {
             /// TODOwhen we support multiple branches we need to add this logic
-            ProxyService.nav.navigateTo(Routes.switchBranch);
+            GoRouter.of(context).go(Routes.switchBranch);
           }
         }
 
@@ -93,8 +93,8 @@ class StartUpViewModel extends BaseViewModel {
         /// in local storage.
         /// first get the location
         String? countryName = await ProxyService.country.getCountryName();
-        _navigationService.replaceWith(Routes.signup,
-            arguments: SignUpFormViewArguments(countryNm: countryName!));
+        GoRouter.of(context).go(Routes.signup + "/$countryName");
+
         return;
       }
 

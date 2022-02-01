@@ -6,7 +6,7 @@ import 'customappbar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -289,7 +289,7 @@ class _SellState extends State<Sell> {
           backgroundColor: Colors.white,
           appBar: CustomAppBar(
             onPop: () {
-              ProxyService.nav.back();
+              GoRouter.of(context).pop();
             },
             title: buildTitle(model),
             rightActionButtonName: 'Save',
@@ -306,7 +306,7 @@ class _SellState extends State<Sell> {
                 showSimpleNotification(Text('No item selected'),
                     background: Colors.red);
               }
-              ProxyService.nav.back();
+              GoRouter.of(context).pop();
             },
             icon: Icons.close,
             multi: 1,

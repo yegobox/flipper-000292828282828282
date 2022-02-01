@@ -32,8 +32,10 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:flipper_login/login.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import 'routes.router.dart';
+
 final router = GoRouter(
-  initialLocation: '/boot',
+  initialLocation: Routes.boot,
   routes: [
     GoRoute(
       path: '/boot',
@@ -60,12 +62,12 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/signup',
+      path: '/signup/:country',
       name: 'signup',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
         child: SignUpFormView(
-          countryNm: 'Rwanda',
+          countryNm: state.params['country']!,
         ),
       ),
     ),
@@ -220,7 +222,7 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/analytics',
+      path: "/${Routes.analytics}",
       name: 'analytics',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
@@ -228,15 +230,17 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/qrview',
+      path: "/${Routes.qrview}/:intent",
       name: 'qrview',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
-        child: const ScannView(),
+        child: ScannView(
+          intent: state.params['intent']!,
+        ),
       ),
     ),
     GoRoute(
-      path: '/order',
+      path: Routes.order,
       name: 'order',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
@@ -252,7 +256,7 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/Customers/:orderId',
+      path: '//:orderId',
       name: 'Customers',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
