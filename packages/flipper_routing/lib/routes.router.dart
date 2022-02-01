@@ -300,7 +300,7 @@ class StackedRouter extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => Sell(
           key: args.key,
-          product: args.product,
+          productId: args.product.id,
         ),
         settings: data,
       );

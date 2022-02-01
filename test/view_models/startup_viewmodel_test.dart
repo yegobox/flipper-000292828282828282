@@ -1,14 +1,12 @@
 import 'package:flipper_models/models/models.dart';
-import 'package:flipper_routing/routes.router.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import '../helpers/test_helpers.dart';
 // import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 // import 'api_test.dart';
 
 StartUpViewModel _getModel() => StartUpViewModel();
-final BusinessSync businessMockData = new BusinessSync(
+final BusinessSync businessMockData = BusinessSync(
   id: 1,
   name: 'name',
   latitude: '1',
