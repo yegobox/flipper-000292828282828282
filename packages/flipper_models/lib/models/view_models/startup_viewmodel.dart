@@ -17,7 +17,6 @@ import 'package:go_router/go_router.dart';
 final isWeb = UniversalPlatform.isWeb;
 
 class StartUpViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
   final appService = locator<AppService>();
   bool isBusinessSet = false;
   final log = getLogger('StartUpViewModel');
@@ -46,7 +45,7 @@ class StartUpViewModel extends BaseViewModel {
           );
         } catch (e) {
           if (e is InternalServerError) {
-            _navigationService.replaceWith(Routes.login);
+            GoRouter.of(context).go(Routes.login);
           }
         }
       }
@@ -115,7 +114,6 @@ class StartUpViewModel extends BaseViewModel {
         log.e(e);
       }
     } else {
-      _navigationService.replaceWith(Routes.login);
       GoRouter.of(context).pushNamed('login');
     }
   }

@@ -26,6 +26,7 @@ import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_dashboard/switch_branch_view.dart';
 import 'package:flipper_login/signup_form_view.dart';
 import 'package:flipper_routing/finance_app.dart';
+import 'package:flipper_models/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -108,8 +109,8 @@ final router = GoRouter(
       name: 'categories',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
-        child: const ListCategories(
-          categories: [],
+        child: ListCategories(
+          categories: state.extra! as List<Category>,
         ),
       ),
     ),
@@ -222,7 +223,7 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: "/${Routes.analytics}",
+      path: "${Routes.analytics}",
       name: 'analytics',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
@@ -230,7 +231,7 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: "/${Routes.qrview}/:intent",
+      path: "/qrview/:intent",
       name: 'qrview',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
@@ -240,7 +241,7 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: Routes.order,
+      path: '/order',
       name: 'order',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
@@ -256,8 +257,8 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '//:orderId',
-      name: 'Customers',
+      path: '/customers/:orderId',
+      name: 'customers',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
         child: Customers(

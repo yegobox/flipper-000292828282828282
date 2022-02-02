@@ -27,8 +27,6 @@ void main() {
 
       // final appService = getAndRegisterAppService(hasLoggedInUser: true);
 
-      // final navigationService = getAndRegisterNavigationService();
-
       // final model = _getModel();
 
       // appService.isLoggedIn();
@@ -50,8 +48,6 @@ void main() {
     test('When user not logged in should take user to login', () async {
       // FiXMEthis test is failing
       // final appService = getAndRegisterAppService(hasLoggedInUser: false);
-
-      // final navigationService = getAndRegisterNavigationService();
 
       // final model = _getModel();
 
