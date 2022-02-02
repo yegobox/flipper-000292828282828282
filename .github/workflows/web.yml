@@ -1,20 +1,26 @@
-name: Deploy the web
+name: Deploy to web
 on:
-  workflow_dispatch: # Enable manual run
-  pull_request: #TODO:remove
-  push:
+  pull_request:
     branches: [mobile]
-    # Sequence of patterns matched against refs/tags
-    # tags:
-    # - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  # Enable manual run
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to (staging OR prod)"
+        required: true
+        default: "staging"
+  # Refs/tags push events to matching v*, i.e. v1.0, v20.15.10
+  push:
+    tags:
+      - "v*"
 
 jobs:
-  deploy-web:
+  build-and-deploy:
     runs-on: ubuntu-18.04
     steps:
       # Set up Flutter.
       - name: Clone Flutter repository with stable channel
-        uses: subosito/flutter-action@master
+        uses: subosito/flutter-action@4389e6cbc6cb8a4b18c628ff96ff90be0e926aa8
         with:
           channel: stable
       - run: flutter doctor -v
@@ -24,21 +30,15 @@ jobs:
         with:
           node-version: "14"
       - run: npm install -g firebase-tools
-      # Setup Ruby, Bundler, and Gemfile dependencies
-      - name: Configure GOOGLE_SERVICE_JSON
-        run: |
-          echo "$GOOGLE_SERVICE_JSON" > app/google-services.json
-        env:
-          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
-      # Checkout flipper code and get packages.
+
+      # Checkout gallery code and get packages.
       - name: Checkout flipper code
         uses: actions/checkout@v2
-      - name: submodule init
-        run: git submodule update --init
+      - run: git submodule update --init
       - run: flutter pub get
 
+      # Build and deploy (by default, to staging).
       - run: flutter build  web --release
-
-      - run: firebase deploy --only hosting
+      - run: irebase deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
