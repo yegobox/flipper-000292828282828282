@@ -39,6 +39,6 @@ jobs:
 
       # Build and deploy (by default, to staging).
       - run: flutter build  web --release
-      - run: irebase deploy --only hosting
+      - run: firebase deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
