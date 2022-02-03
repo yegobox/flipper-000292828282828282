@@ -214,8 +214,8 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/afterSale/:total',
-      name: 'afterSale',
+      path: '/sale/:total',
+      name: 'sale',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
         child: AfterSale(

@@ -10,8 +10,6 @@ import 'package:pubnub/pubnub.dart' as nub;
 import 'package:flipper_routing/routes.router.dart';
 import 'package:go_router/go_router.dart';
 
-const socketUrl = 'https://apihub.yegobox.com/ws-message';
-
 class CollectCashView extends StatefulWidget {
   const CollectCashView({Key? key, required this.paymentType})
       : super(key: key);
@@ -29,16 +27,8 @@ class _CollectCashViewState extends State<CollectCashView> {
   String message = '';
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _cash = TextEditingController();
-  late nub.PubNub pubnub;
-  final log = getLogger('CollectCashView');
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      pubnub = ProxyService.event.connect();
-    });
-  }
+  final log = getLogger('CollectCashView');
 
   @override
   void dispose() {
@@ -186,10 +176,12 @@ class _CollectCashViewState extends State<CollectCashView> {
           );
         },
         onModelReady: (model) {
+          nub.PubNub pubnub = ProxyService.event.connect();
           ProxyService.box.write(key: 'orderId', value: model.kOrder!.id);
           nub.Subscription subscription =
               pubnub.subscribe(channels: {"payment"});
           subscription.messages.listen((event) {
+            log.i('event: ${event.payload}');
             Payment payment = Payment.fromMap(event.payload);
             if (payment.userId.toString() == ProxyService.box.getUserId()) {
               double totalOrderAmount =

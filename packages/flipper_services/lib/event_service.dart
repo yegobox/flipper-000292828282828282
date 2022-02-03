@@ -4,7 +4,6 @@ import 'package:flipper_routing/routes.logger.dart';
 import 'package:flutter/cupertino.dart';
 // Or import PubNub into a named namespace
 import 'package:pubnub/pubnub.dart' as nub;
-import 'package:flipper_models/models/models.dart';
 // To parse this JSON data, do
 //     final loginData = loginDataFromMap(jsonString);
 import 'package:flipper_services/proxy.dart';
@@ -54,8 +53,8 @@ class EventService {
   final log = getLogger('LoginService');
   late nub.PubNub pubnub;
   final keySet = nub.Keyset(
-    subscribeKey: 'sub-c-9d0df480-67d5-11ec-a4f8-fa616d2d2ecf',
-    publishKey: 'pub-c-ca33a9a4-b6c5-42fc-9edc-f15947d3178b',
+    subscribeKey: 'sub-c-2fb5f1f2-84dc-11ec-9f2b-a2cedba671e8',
+    publishKey: 'pub-c-763b84f1-f366-4f07-b9db-3f626069e71c',
     uuid: const nub.UUID('5d012092-29c4-45fc-a37b-5776e64d4355'),
   );
   nub.PubNub connect() {
