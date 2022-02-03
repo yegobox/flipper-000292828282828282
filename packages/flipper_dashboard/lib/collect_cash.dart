@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:flipper_dashboard/customappbar.dart';
 import 'package:flipper/helpers/utils.dart';
@@ -9,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_models/models/models.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:stomp_dart_client/stomp.dart';
-import 'package:stomp_dart_client/stomp_config.dart';
-import 'package:stomp_dart_client/stomp_frame.dart';
+import 'package:pubnub/pubnub.dart' as nub;
 import 'package:flipper_routing/routes.router.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,47 +27,21 @@ class _CollectCashViewState extends State<CollectCashView> {
 
   final _formKey = GlobalKey<FormState>();
   String message = '';
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController cashReceivedController = TextEditingController();
-  StreamController<String> streamController =
-      StreamController<String>.broadcast();
-  late StreamSubscription<String> subscription;
+  final TextEditingController _phone = TextEditingController();
+  final TextEditingController _cash = TextEditingController();
+  late nub.PubNub pubnub;
   final log = getLogger('CollectCashView');
-  StompClient? stompClient;
-  void onConnect(StompFrame frame) {
-    stompClient?.subscribe(
-        destination: '/topic/payment',
-        callback: (StompFrame frame) {
-          if (frame.body != null) {
-            Map<String, dynamic> result = json.decode(frame.body!);
-            log.i(result['userId']);
-            streamController.add(result['userId']);
-          }
-        });
-  }
 
   @override
   void initState() {
     super.initState();
-
-    if (stompClient == null) {
-      stompClient = StompClient(
-          config: StompConfig.SockJS(
-        url: socketUrl,
-        onConnect: onConnect,
-        onWebSocketError: (dynamic error) => print(error.toString()),
-      ));
-
-      stompClient?.activate();
-    }
+    setState(() {
+      pubnub = ProxyService.event.connect();
+    });
   }
 
   @override
   void dispose() {
-    if (stompClient != null) {
-      stompClient?.deactivate();
-    }
-    subscription.cancel(); //unsubscribe from stream
     super.dispose();
   }
 
@@ -113,7 +82,7 @@ class _CollectCashViewState extends State<CollectCashView> {
                                             .textTheme
                                             .bodyText1!
                                             .copyWith(color: Colors.black),
-                                        controller: phoneController,
+                                        controller: _phone,
                                         decoration: InputDecoration(
                                           hintText: 'Payer phone number',
                                           fillColor: Theme.of(context)
@@ -156,7 +125,7 @@ class _CollectCashViewState extends State<CollectCashView> {
                                     }
                                     return null;
                                   },
-                                  controller: cashReceivedController,
+                                  controller: _cash,
                                   onChanged: (String cash) {},
                                   decoration: InputDecoration(
                                     hintText: 'Cash Received',
@@ -183,16 +152,17 @@ class _CollectCashViewState extends State<CollectCashView> {
 
                                 if (_formKey.currentState!.validate()) {
                                   model.keypad.setCashReceived(
-                                      amount: double.parse(
-                                          cashReceivedController.text));
+                                      amount: double.parse(_cash.text));
                                   if (widget.paymentType == 'spenn') {
                                     await model.collectSPENNPayment(
-                                        phoneNumber: phoneController.text,
+                                        phoneNumber: _phone.text,
                                         payableAmount: totalOrderAmount);
                                   } else {
                                     model.collectCashPayment(
                                         payableAmount: totalOrderAmount);
                                     _btnController.success();
+                                    GoRouter.of(context).push(Routes.afterSale +
+                                        "/$totalOrderAmount");
                                   }
                                 } else {
                                   _btnController.stop();
@@ -216,20 +186,17 @@ class _CollectCashViewState extends State<CollectCashView> {
           );
         },
         onModelReady: (model) {
-          // set the OrderId in object box for later use.
-          // FIXMEuse pub nub to listen on completed actions
           ProxyService.box.write(key: 'orderId', value: model.kOrder!.id);
-          Stream<String> stream = streamController.stream;
-          subscription = stream.listen((event) {
-            String userId = ProxyService.box.read(key: 'userId');
-            if (event == userId) {
-              _btnController.success();
+          nub.Subscription subscription =
+              pubnub.subscribe(channels: {"payment"});
+          subscription.messages.listen((event) {
+            Payment payment = Payment.fromMap(event.payload);
+            if (payment.userId.toString() == ProxyService.box.getUserId()) {
               double totalOrderAmount =
                   model.kOrder!.orderItems.fold(0, (a, b) => a + b.price);
+              _btnController.success();
               GoRouter.of(context)
                   .push(Routes.afterSale + "/$totalOrderAmount");
-            } else {
-              _btnController.error();
             }
           });
         },
