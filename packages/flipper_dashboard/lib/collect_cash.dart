@@ -181,8 +181,7 @@ class _CollectCashViewState extends State<CollectCashView> {
           nub.Subscription subscription =
               pubnub.subscribe(channels: {"payment"});
           subscription.messages.listen((event) {
-            log.i('event: ${event.payload}');
-            Payment payment = Payment.fromMap(event.payload);
+            Spenn payment = Spenn.fromJson(event.payload);
             if (payment.userId.toString() == ProxyService.box.getUserId()) {
               double totalOrderAmount =
                   model.kOrder!.orderItems.fold(0, (a, b) => a + b.price);
