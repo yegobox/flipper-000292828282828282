@@ -1,20 +1,31 @@
-name: localize
+name: flipper
 description: A new Flutter package project.
 version: 0.0.1
+# homepage:
 
 environment:
-  sdk: ">=2.15.1 <3.0.0"
+  sdk: ">=2.16.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutterfire_ui: ^0.3.2
-  go_router: ^3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  flipper_dashboard:
+  flipper_models:
+  flipper_login:
+  flipper_services:
+  flipper_routing:
+  loading:
+  overlay_support:
+  flutter_screenutil:
+  localize:
+  universal_platform: ^1.0.0+1
+  animations: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
