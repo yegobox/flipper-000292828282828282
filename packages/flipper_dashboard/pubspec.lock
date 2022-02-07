@@ -624,11 +624,25 @@ packages:
       relative: true
     source: path
     version: "1.0.3"
+  fluent_ui:
+    dependency: transitive
+    description:
+      name: fluent_ui
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.8.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_acrylic:
+    dependency: transitive
+    description:
+      name: flutter_acrylic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flutter_bloc:
     dependency: transitive
     description:
@@ -1502,6 +1516,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1+1"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   rounded_loading_button:
     dependency: "direct main"
     description:
@@ -1516,6 +1537,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
+  scroll_pos:
+    dependency: transitive
+    description:
+      name: scroll_pos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   scrollable_positioned_list:
     dependency: transitive
     description:
@@ -1724,6 +1752,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  system_theme:
+    dependency: transitive
+    description:
+      name: system_theme
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  system_theme_web:
+    dependency: transitive
+    description:
+      name: system_theme_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   system_time_check:
     dependency: "direct overridden"
     description:
