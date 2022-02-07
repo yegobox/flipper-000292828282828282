@@ -457,7 +457,7 @@ packages:
     source: hosted
     version: "0.2.0+5"
   firebase_dynamic_links:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_dynamic_links
       url: "https://pub.dartlang.org"
@@ -574,7 +574,7 @@ packages:
       path: "../flipper_dashboard"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.1-dev.1"
   flipper_finance:
     dependency: "direct overridden"
     description:
@@ -644,7 +644,7 @@ packages:
     source: hosted
     version: "3.3.0"
   flutter_chat_types:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../../open-sources/flutter_chat_types"
       relative: true
@@ -999,7 +999,7 @@ packages:
     source: hosted
     version: "2.3.1"
   google_sign_in:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_sign_in
       url: "https://pub.dartlang.org"
@@ -1048,7 +1048,7 @@ packages:
     source: hosted
     version: "0.15.0"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -1069,7 +1069,7 @@ packages:
     source: hosted
     version: "3.1.1"
   image_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
@@ -1111,7 +1111,7 @@ packages:
     source: hosted
     version: "1.5.3"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -1349,7 +1349,7 @@ packages:
     source: hosted
     version: "1.0.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"

@@ -1,8 +1,7 @@
 name: flipper_finance
 description: A new Flutter package project.
 version: 0.0.1
-# homepage:
-
+repository: https://github.com/yegobox/packages
 environment:
   sdk: ">=2.15.1 <3.0.0"
   # flutter: ">=1.17.0"

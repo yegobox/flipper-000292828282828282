@@ -1,6 +1,6 @@
 name: flipper_services
 description: flipper models scaffold.
-version: 0.0.1+1
+version: 0.0.1-dev.1
 
 # publish_to: "none"
 repository: https://github.com/yegobox/packages
@@ -38,3 +38,10 @@ dependencies:
   flutter_luban: ^0.1.13
   flutter_uploader: ^3.0.0-beta.3
   injectable: ^1.5.3
+  google_sign_in: ^5.2.3
+  firebase_dynamic_links: ^4.0.5
+  http: ^0.13.4
+  intl: ^0.17.0
+  image_picker: ^0.8.4+6
+  path_provider: ^2.0.8
+  flutter_chat_types: ^3.2.0
