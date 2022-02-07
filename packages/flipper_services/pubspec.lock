@@ -359,7 +359,7 @@ packages:
     source: hosted
     version: "0.3.0+1"
   firebase_auth:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_auth
       url: "https://pub.dartlang.org"
@@ -597,14 +597,14 @@ packages:
     source: path
     version: "0.0.1"
   flipper_models:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../flipper_models"
       relative: true
     source: path
     version: "0.0.1+1"
   flipper_routing:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../flipper_routing"
       relative: true

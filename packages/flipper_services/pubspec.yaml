@@ -11,23 +11,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flipper:
-  stacked:
+  flipper: ^99.99.99+99
+  stacked: ^2.2.8
   firebase_remote_config: ^2.0.0
   flutter_secure_storage: ^5.0.2
   share_plus: ^2.1.4
   system_time_check: ^1.0.0
-  in_app_review:
+  in_app_review: ^2.0.4
   firebase_messaging: ^11.2.3
   flutter_local_notifications: ^6.0.0
-  get_storage:
+  get_storage: ^2.0.3
   image: ^3.0.2
+  flipper_routing: ^0.0.1
+  flipper_models: ^0.0.1+1
+  firebase_auth: ^3.3.5
   esc_pos_utils_plus: ^2.0.1+3
   bluetooth_thermal_printer: ^0.0.6
   geolocator: ^8.0.5
   geocode: ^1.0.1
-  cron:
-  dio:
+  cron: ^0.4.0
+  dio: ^4.0.4
   extension_google_sign_in_as_googleapis_auth: ^2.0.3
   firebase_analytics: ^8.0.3
   firebase_crashlytics: ^2.5.0
