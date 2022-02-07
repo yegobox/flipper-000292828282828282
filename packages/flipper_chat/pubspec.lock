@@ -204,6 +204,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.1"
+  cupertino_icons:
+    dependency: transitive
+    description:
+      name: cupertino_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   desktop_webview_auth:
     dependency: transitive
     description:
@@ -407,6 +414,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1-dev.2"
+  firebase_core_desktop:
+    dependency: transitive
+    description:
+      name: firebase_core_desktop
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1-dev.3"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -811,13 +825,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  flutter_screenutil:
-    dependency: transitive
-    description:
-      name: flutter_screenutil
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.1"
   flutter_secure_storage:
     dependency: transitive
     description:

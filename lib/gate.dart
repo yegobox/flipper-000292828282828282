@@ -7,7 +7,6 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:flutter/foundation.dart';
 // import 'package:flutter/material.dart';
 import 'package:flipper_localize/flipper_localize.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:stacked/stacked.dart';
@@ -276,48 +275,40 @@ class _GateState extends State<Gate> {
           builder: (context, _) {
             final appTheme = context.watch<AppTheme>();
             return OverlaySupport.global(
-              child: ScreenUtilInit(
-                designSize: const Size(360, 690),
-                minTextAdapt: true,
-                splitScreenMode: true,
-                builder: () => FluentApp.router(
-                  color: Colors.blue,
-                  debugShowCheckedModeBanner: false,
-                  title: 'flipper',
-                  // Define the light theme for the app, based on defined colors and
-                  // properties above
-                  // .
-                  theme: ThemeData(
-                    accentColor: appTheme.color,
-                    brightness: appTheme.mode == ThemeMode.system
-                        ? false
-                            ? Brightness.dark
-                            : Brightness.light
-                        : appTheme.mode == ThemeMode.dark
-                            ? Brightness.dark
-                            : Brightness.light,
-                    visualDensity: VisualDensity.standard,
-                    focusTheme: FocusThemeData(
-                      glowFactor: is10footScreen() ? 2.0 : 0.0,
-                    ),
+              child: FluentApp.router(
+                color: Colors.blue,
+                debugShowCheckedModeBanner: false,
+                title: 'flipper',
+                theme: ThemeData(
+                  accentColor: appTheme.color,
+                  brightness: appTheme.mode == ThemeMode.system
+                      ? false
+                          ? Brightness.dark
+                          : Brightness.light
+                      : appTheme.mode == ThemeMode.dark
+                          ? Brightness.dark
+                          : Brightness.light,
+                  visualDensity: VisualDensity.standard,
+                  focusTheme: FocusThemeData(
+                    glowFactor: is10footScreen() ? 2.0 : 0.0,
                   ),
-                  localizationsDelegates: [
-                    FlutterFireUILocalizations.withDefaultOverrides(
-                        const LabelOverrides()),
-                    const FlipperLocalizationsDelegate(),
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  supportedLocales: const [
-                    Locale('en', 'US'), // English
-                    Locale('es', 'ES'), // Spanish
-                  ],
-                  locale: model.languageService
-                      .locale, //french == rwanda language in our app
-                  themeMode: model.settingService.themeMode.value,
-                  routeInformationParser: router.routeInformationParser,
-                  routerDelegate: router.routerDelegate,
                 ),
+                localizationsDelegates: [
+                  FlutterFireUILocalizations.withDefaultOverrides(
+                      const LabelOverrides()),
+                  const FlipperLocalizationsDelegate(),
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('en', 'US'), // English
+                  Locale('es', 'ES'), // Spanish
+                ],
+                locale: model.languageService
+                    .locale, //french == rwanda language in our app
+                themeMode: model.settingService.themeMode.value,
+                routeInformationParser: router.routeInformationParser,
+                routerDelegate: router.routerDelegate,
               ),
             );
           },
