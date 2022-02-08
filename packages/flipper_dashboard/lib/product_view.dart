@@ -1,11 +1,9 @@
 import 'package:flipper_dashboard/discount_row.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flipper_services/constants.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_models/models/models.dart';
-import 'custom_dropdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'product_row.dart';
 import 'package:flipper_services/proxy.dart';
@@ -46,165 +44,70 @@ class _onCreate extends State<ProductView> {
   String? strSearch;
   String dropdownValue = 'All Items';
 
-  final List _items = [
-    'All Items',
-    'Discounts',
-  ];
-
-  late List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String _currentItems = '';
-
-  @override
-  void initState() {
-    _dropDownMenuItems = getDropDownMenuItems();
-    _currentItems = _dropDownMenuItems[0].value!;
-    super.initState();
-  }
-
-  // here we are creating the list needed for the DropDownButton
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    final List<DropdownMenuItem<String>> items = [];
-    for (String val in _items) {
-      // here we are creating the drop down menu items, you can customize the item right here
-      // but I'll just use a simple text for this
-      items.add(
-        DropdownMenuItem(
-          value: val,
-          child: Text(
-            val,
-            style: const TextStyle(
-              color: Colors.black,
-            ),
-          ),
-        ),
-      );
-    }
-    return items;
-  }
-
-  void changedDropDownItem(String selectedZone) {
-    setState(() {
-      _currentItems = selectedZone;
-      spinner = false;
-    });
-  }
-
   Widget editModeView({required ProductViewModel model}) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        title: const Text(
-          'Items',
-          style: TextStyle(color: Colors.black, fontSize: 14.0),
-        ),
-        backgroundColor: Colors.grey[200],
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Divider(
-                color: Colors.grey[300],
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              InkWell(
-                onTap: () {
-                  // model.navigateTo(path: Routing.productsListView);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text('All Items',
-                          style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                  color: Colors.grey[800]))),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      child: Row(children: [
-                        // ignore: prefer_const_constructors
-                        Expanded(
-                          child: const Icon(
-                            FontAwesomeIcons.chevronDown,
-                            size: 20,
-                          ),
-                        ),
-                      ]),
-                    ),
-                  ],
-                ),
-              ),
-              //Categories
-              Divider(
-                color: Colors.grey[300],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              InkWell(
-                onTap: () {
-                  // model.navigateTo(path: Routing.listCategoryView);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Categories',
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                // model.navigateTo(path: Routing.productsListView);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Text('All Items',
                         style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                            color: Colors.grey[800],
-                          ),
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0,
+                                color: Colors.grey[800]))),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    child: Row(children: [
+                      // ignore: prefer_const_constructors
+                      Expanded(
+                        child: const Icon(
+                          FontAwesomeIcons.chevronDown,
+                          size: 20,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      child: Row(children: [
-                        const Expanded(
-                          child: Icon(
-                            FontAwesomeIcons.chevronRight,
-                            size: 20,
-                          ),
-                        ),
-                      ]),
-                    ),
-                  ],
-                ),
+                    ]),
+                  ),
+                ],
               ),
-              //===Modifier
-              Divider(
-                color: Colors.grey[300],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(
+            ),
+            //Categories
+
+            const SizedBox(
+              height: 10.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                // model.navigateTo(path: Routing.listCategoryView);
+              },
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Modifiers',
+                      'Categories',
                       style: GoogleFonts.lato(
                         textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                            color: Colors.grey[800]),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.0,
+                          color: Colors.grey[800],
+                        ),
                       ),
                     ),
                   ),
@@ -222,122 +125,158 @@ class _onCreate extends State<ProductView> {
                   ),
                 ],
               ),
-              // Discount
-              Divider(
-                color: Colors.grey[300],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              InkWell(
-                onTap: () {
-                  // model.navigateTo(path: Routing.discountView);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text('Discounts',
-                          style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                  color: Colors.grey[800]))),
+            ),
+            //===Modifier
+            // Divider(
+//                color: Colors.grey[300],
+//              ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Modifiers',
+                    style: GoogleFonts.lato(
+                      textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.0,
+                          color: Colors.grey[800]),
                     ),
-                    Expanded(
-                      flex: 1,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      child: Row(children: [
-                        const Expanded(
-                            child: Icon(
-                          FontAwesomeIcons.chevronRight,
-                          size: 20,
-                        )),
-                      ]),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              // Option
-              Divider(
-                color: Colors.grey[300],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(
+                Expanded(
+                  flex: 1,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  child: Row(children: [
+                    const Expanded(
+                      child: Icon(
+                        FontAwesomeIcons.chevronRight,
+                        size: 20,
+                      ),
+                    ),
+                  ]),
+                ),
+              ],
+            ),
+            // Discount
+            // Divider(
+//                color: Colors.grey[300],
+//              ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                // model.navigateTo(path: Routing.discountView);
+              },
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Text(
-                      'Options',
-                      style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.0,
-                          color: Colors.grey[800],
-                        ),
-                      ),
-                    ),
+                    child: Text('Discounts',
+                        style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0,
+                                color: Colors.grey[800]))),
                   ),
                   Expanded(
                     flex: 1,
                     // ignore: prefer_const_literals_to_create_immutables
-                    child: Row(
-                      children: const [
-                        Expanded(
+                    child: Row(children: [
+                      const Expanded(
                           child: Icon(
-                            FontAwesomeIcons.chevronRight,
-                            size: 20,
-                          ),
-                        ),
-                      ],
-                    ),
+                        FontAwesomeIcons.chevronRight,
+                        size: 20,
+                      )),
+                    ]),
                   ),
                 ],
               ),
-              // Discount
-              Divider(
-                color: Colors.grey[300],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Units',
-                      style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.0,
-                          color: Colors.grey[800],
-                        ),
+            ),
+            // Option
+            // Divider(
+//                color: Colors.grey[300],
+//              ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Options',
+                    style: GoogleFonts.lato(
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.0,
+                        color: Colors.grey[800],
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: const [
-                        Expanded(
-                          child: Icon(
-                            FontAwesomeIcons.chevronRight,
-                            size: 20,
-                          ),
+                ),
+                Expanded(
+                  flex: 1,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Icon(
+                          FontAwesomeIcons.chevronRight,
+                          size: 20,
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Discount
+            // Divider(
+//                color: Colors.grey[300],
+//              ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Units',
+                    style: GoogleFonts.lato(
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.0,
+                        color: Colors.grey[800],
+                      ),
                     ),
                   ),
-                ],
-              )
-            ],
-          ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Icon(
+                          FontAwesomeIcons.chevronRight,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -351,7 +290,7 @@ class _onCreate extends State<ProductView> {
   Widget searchItems(
       {required ProductViewModel model, required BuildContext context}) {
     if (search == false) {
-      _dropDownMenuItems = getDropDownMenuItems();
+      // _dropDownMenuItems = getDropDownMenuItems();
       return Column(children: [
         Container(
           decoration: const BoxDecoration(
@@ -362,38 +301,31 @@ class _onCreate extends State<ProductView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     spinner = true;
                   },
                   child: Container(
                     padding: const EdgeInsets.only(left: 12),
-                    child: CustomDropdownButton(
-                      value: _currentItems,
-                      items: _dropDownMenuItems,
-                      onChanged: changedDropDownItem,
-                    ),
+                    child: const Text('Dropdown'),
                   ),
                 ),
               ),
-              Container(
+              const SizedBox(
                 width: 1,
                 height: 48,
-                color: Colors.black26,
+                // color: Colors.black26,
               ),
-              Container(
-                // padding: EdgeInsets.only(top: 12, bottom: 12, left: 12),
-                child: InkWell(
-                  onTap: () {
-                    search = true;
-                    setState(() {});
-                  },
-                  child: Image.asset(
-                    'assets/ic_search.png',
-                    alignment: Alignment.center,
-                    width: 45,
-                    height: 30,
-                  ),
+              GestureDetector(
+                onTap: () {
+                  search = true;
+                  setState(() {});
+                },
+                child: Image.asset(
+                  'assets/ic_search.png',
+                  alignment: Alignment.center,
+                  width: 45,
+                  height: 30,
                 ),
               ),
               if (ProxyService.remoteConfig.scannSelling() &&
@@ -406,10 +338,7 @@ class _onCreate extends State<ProductView> {
                   },
                   child: const CircleAvatar(
                     backgroundColor: Colors.transparent,
-                    child: Icon(
-                      Icons.center_focus_weak,
-                      color: primary,
-                    ),
+                    child: Icon(FluentIcons.add),
                   ),
                 )
             ],
@@ -431,9 +360,9 @@ class _onCreate extends State<ProductView> {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.only(left: 12),
-                  child: TextFormField(
+                  child: TextFormBox(
                     keyboardType: TextInputType.text,
-                    cursorColor: Colors.black26,
+                    cursorColor: Colors.black,
                     controller: etSearch,
                     // onChanged: (value) => strSearch = value,
                     onChanged: (searchKey) {
@@ -443,18 +372,10 @@ class _onCreate extends State<ProductView> {
                       color: Color(0xff3d454c),
                       fontSize: 15,
                     ),
-                    decoration: const InputDecoration(
-                      hintText: 'Search All Items',
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        color: Colors.black26,
-                        fontSize: 15,
-                      ),
-                    ),
                   ),
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
                   search = false;
 
@@ -479,7 +400,7 @@ class _onCreate extends State<ProductView> {
   Widget build(BuildContext context) {
     etSearch = TextEditingController(text: strSearch);
     dropdownValue = 'All Items';
-    _dropDownMenuItems = getDropDownMenuItems();
+    // _dropDownMenuItems = getDropDownMenuItems();
 
     return ViewModelBuilder<ProductViewModel>.reactive(
       builder: (context, model, child) {

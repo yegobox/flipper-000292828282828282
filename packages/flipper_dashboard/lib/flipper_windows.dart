@@ -3,11 +3,11 @@ import 'package:flipper_rw/theme.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/link.dart';
-import 'settings.dart';
+import 'dashboard.dart';
+import 'product_view.dart';
 
 class FlipperAppWindows extends StatefulWidget {
   const FlipperAppWindows({Key? key}) : super(key: key);
@@ -32,11 +32,12 @@ class _FlipperAppWindowsState extends State<FlipperAppWindows> {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.watch<AppTheme>();
+
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => BusinessHomeViewModel(),
-        onModelReady: (model) {
+        onModelReady: (BusinessHomeViewModel model) {
           WidgetsBinding.instance?.addPostFrameCallback((_) {
-            Future.delayed(const Duration(milliseconds: 20), () {
+            Future.delayed(const Duration(milliseconds: 40), () {
               if (ProxyService.box.getDefaultDisplayMode() == 'compact') {
                 appTheme.displayMode = PaneDisplayMode.compact;
               } else if (ProxyService.box.getDefaultDisplayMode() ==
@@ -52,8 +53,10 @@ class _FlipperAppWindowsState extends State<FlipperAppWindows> {
             });
           });
         },
-        builder: (context, model, child) {
+        builder: (context, BusinessHomeViewModel model, child) {
           return NavigationView(
+            contentShape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
             pane: NavigationPane(
               selected: index,
               onChanged: (i) => setState(() => index = i),
@@ -102,7 +105,12 @@ class _FlipperAppWindowsState extends State<FlipperAppWindows> {
               ],
             ),
             content: NavigationBody(index: index, children: [
-              Settings(controller: settingsController),
+              Dashboard(
+                model: model,
+                sideBuilder: (context, action) {
+                  return const ProductView(userId: '1', items: true);
+                },
+              )
             ]),
           );
         });

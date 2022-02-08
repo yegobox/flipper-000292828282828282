@@ -179,36 +179,6 @@ class _SettingsState extends State<Settings> {
             );
           }),
         ]),
-        if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) ...[
-          biggerSpacer,
-          Text('Window Transparency',
-              style: FluentTheme.of(context).typography.subtitle),
-          spacer,
-          ...List.generate(flutter_acrylic.WindowEffect.values.length, (index) {
-            final mode = flutter_acrylic.WindowEffect.values[index];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: RadioButton(
-                checked: appTheme.acrylicEffect == mode,
-                onChanged: (value) {
-                  if (value) {
-                    appTheme.acrylicEffect = mode;
-                    flutter_acrylic.Window.setEffect(
-                      effect: mode,
-                      color: FluentTheme.of(context)
-                          .acrylicBackgroundColor
-                          .withOpacity(0.2),
-                      dark: darkMode,
-                    );
-                  }
-                },
-                content: Text(
-                  mode.toString().replaceAll('AcrylicEffect.', ''),
-                ),
-              ),
-            );
-          }),
-        ],
       ],
     );
   }
