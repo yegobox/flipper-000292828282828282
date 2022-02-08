@@ -385,7 +385,7 @@ packages:
       name: diffutil_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0+1"
+    version: "3.0.0"
   dio:
     dependency: transitive
     description:
@@ -700,7 +700,7 @@ packages:
       path: "packages/flipper_chat"
       relative: true
     source: path
-    version: "0.0.1-dev.3"
+    version: "0.0.1-dev.4"
   flipper_dashboard:
     dependency: "direct main"
     description:
@@ -735,7 +735,7 @@ packages:
       path: "packages/flipper_login"
       relative: true
     source: path
-    version: "0.0.1-dev.3"
+    version: "0.0.1-dev.4"
   flipper_models:
     dependency: "direct main"
     description:
@@ -756,7 +756,7 @@ packages:
       path: "packages/flipper_services"
       relative: true
     source: path
-    version: "0.0.1-dev.4"
+    version: "0.0.1-dev.5"
   flipper_ui:
     dependency: "direct main"
     description:
@@ -803,7 +803,7 @@ packages:
       path: "open-sources/flutter_chat_ui"
       relative: true
     source: path
-    version: "1.5.0"
+    version: "1.5.6"
   flutter_datetime_picker:
     dependency: transitive
     description:
