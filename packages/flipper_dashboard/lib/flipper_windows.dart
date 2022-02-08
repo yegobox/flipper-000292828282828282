@@ -53,6 +53,7 @@ class _FlipperAppWindowsState extends State<FlipperAppWindows> {
             });
           });
         },
+        //
         builder: (context, BusinessHomeViewModel model, child) {
           return NavigationView(
             contentShape:
