@@ -639,7 +639,7 @@ packages:
     source: path
     version: "1.0.3"
   fluent_ui:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: fluent_ui
       url: "https://pub.dartlang.org"
