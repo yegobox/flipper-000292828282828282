@@ -674,7 +674,7 @@ packages:
     source: path
     version: "1.0.3"
   fluent_ui:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "."
       ref: HEAD

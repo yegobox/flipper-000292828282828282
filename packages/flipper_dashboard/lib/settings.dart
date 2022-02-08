@@ -5,6 +5,7 @@ import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
 import 'package:provider/provider.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:flipper_rw/theme.dart';
+import 'package:flipper_services/proxy.dart';
 
 late bool darkMode;
 const List<String> accentColorNames = [
@@ -56,6 +57,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.watch<AppTheme>();
+
     final tooltipThemeData = TooltipThemeData(decoration: () {
       const radius = BorderRadius.zero;
       final shadow = [
@@ -119,7 +121,19 @@ class _SettingsState extends State<Settings> {
             child: RadioButton(
               checked: appTheme.displayMode == mode,
               onChanged: (value) {
-                if (value) appTheme.displayMode = mode;
+                if (ProxyService.box.getDefaultDisplayMode() != 'compact') {
+                  if (value) {
+                    appTheme.displayMode = mode;
+                    ProxyService.box
+                        .write(key: 'displayMode', value: mode.name);
+                  }
+                } else {
+                  if (value) {
+                    ProxyService.box
+                        .write(key: 'displayMode', value: mode.name);
+                    appTheme.displayMode = mode;
+                  }
+                }
               },
               content: Text(
                 mode.toString().replaceAll('PaneDisplayMode.', ''),

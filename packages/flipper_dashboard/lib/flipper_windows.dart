@@ -1,8 +1,11 @@
+import 'package:flipper_models/models/models.dart';
 import 'package:flipper_rw/theme.dart';
+import 'package:flipper_services/proxy.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/foundation.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 import 'package:url_launcher/link.dart';
 import 'settings.dart';
 
@@ -29,91 +32,80 @@ class _FlipperAppWindowsState extends State<FlipperAppWindows> {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.watch<AppTheme>();
-    return NavigationView(
-      pane: NavigationPane(
-        selected: index,
-        onChanged: (i) => setState(() => index = i),
-        size: const NavigationPaneSize(
-          openMinWidth: 250,
-          openMaxWidth: 320,
-        ),
-        header: Container(
-          height: kOneLineTileHeight,
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Image.asset('assets/logo.png'),
-        ),
-        displayMode: appTheme.displayMode,
-        indicatorBuilder: () {
-          switch (appTheme.indicator) {
-            case NavigationIndicators.end:
-              return NavigationIndicator.end;
-            case NavigationIndicators.sticky:
-            default:
-              return NavigationIndicator.sticky;
-          }
-        }(),
-        items: [
-          // It doesn't look good when resizing from compact to open
-          // PaneItemHeader(header: Text('User Interaction')),
-          PaneItem(
-            icon: const Icon(FluentIcons.checkbox_composite),
-            title: const Text('Inputs'),
-          ),
-          PaneItem(
-            icon: const Icon(FluentIcons.text_field),
-            title: const Text('Forms'),
-          ),
-          PaneItemSeparator(),
-          PaneItem(
-            icon: const Icon(FluentIcons.color),
-            title: const Text('Colors'),
-          ),
-          PaneItem(
-            icon: const Icon(FluentIcons.icon_sets_flag),
-            title: const Text('Icons'),
-          ),
-          PaneItem(
-            icon: const Icon(FluentIcons.plain_text),
-            title: const Text('Typography'),
-          ),
-          PaneItem(
-            icon: const Icon(FluentIcons.cell_phone),
-            title: const Text('Mobile'),
-          ),
-          PaneItem(
-            icon: Icon(
-              appTheme.displayMode == PaneDisplayMode.top
-                  ? FluentIcons.more
-                  : FluentIcons.more_vertical,
+    return ViewModelBuilder.reactive(
+        viewModelBuilder: () => BusinessHomeViewModel(),
+        onModelReady: (model) {
+          WidgetsBinding.instance?.addPostFrameCallback((_) {
+            Future.delayed(const Duration(milliseconds: 20), () {
+              if (ProxyService.box.getDefaultDisplayMode() == 'compact') {
+                appTheme.displayMode = PaneDisplayMode.compact;
+              } else if (ProxyService.box.getDefaultDisplayMode() ==
+                  'minimal') {
+                appTheme.displayMode = PaneDisplayMode.minimal;
+              } else if (ProxyService.box.getDefaultDisplayMode() == 'open') {
+                appTheme.displayMode = PaneDisplayMode.open;
+              } else if (ProxyService.box.getDefaultDisplayMode() == 'auto') {
+                appTheme.displayMode = PaneDisplayMode.auto;
+              } else if (ProxyService.box.getDefaultDisplayMode() == 'top') {
+                appTheme.displayMode = PaneDisplayMode.top;
+              }
+            });
+          });
+        },
+        builder: (context, model, child) {
+          return NavigationView(
+            pane: NavigationPane(
+              selected: index,
+              onChanged: (i) => setState(() => index = i),
+              size: const NavigationPaneSize(
+                openMinWidth: 250,
+                openMaxWidth: 320,
+              ),
+              header: Container(
+                height: kOneLineTileHeight,
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Image.asset('assets/logo.png'),
+              ),
+              displayMode: appTheme.displayMode,
+              indicatorBuilder: () {
+                switch (appTheme.indicator) {
+                  case NavigationIndicators.end:
+                    return NavigationIndicator.end;
+                  case NavigationIndicators.sticky:
+                  default:
+                    return NavigationIndicator.sticky;
+                }
+              }(),
+              items: [
+                PaneItemSeparator(),
+                PaneItem(
+                  icon: const Icon(FluentIcons.cell_phone),
+                  title: const Text('Mobile'),
+                ),
+              ],
+              autoSuggestBox: AutoSuggestBox(
+                controller: TextEditingController(),
+                items: const ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
+              ),
+              autoSuggestBoxReplacement: const Icon(FluentIcons.search),
+              footerItems: [
+                PaneItemSeparator(),
+                PaneItem(
+                  icon: const Icon(FluentIcons.settings),
+                  title: const Text('Settings'),
+                ),
+                _LinkPaneItemAction(
+                  icon: const Icon(FluentIcons.open_source),
+                  title: const Text('Source code'),
+                  link: 'https://github.com/bdlukaa/fluent_ui',
+                ),
+              ],
             ),
-            title: const Text('Others'),
-            infoBadge: const InfoBadge(
-              source: Text('9'),
-            ),
-          ),
-        ],
-        autoSuggestBox: AutoSuggestBox(
-          controller: TextEditingController(),
-          items: const ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-        ),
-        autoSuggestBoxReplacement: const Icon(FluentIcons.search),
-        footerItems: [
-          PaneItemSeparator(),
-          PaneItem(
-            icon: const Icon(FluentIcons.settings),
-            title: const Text('Settings'),
-          ),
-          _LinkPaneItemAction(
-            icon: const Icon(FluentIcons.open_source),
-            title: const Text('Source code'),
-            link: 'https://github.com/bdlukaa/fluent_ui',
-          ),
-        ],
-      ),
-      content: NavigationBody(index: index, children: [
-        Settings(controller: settingsController),
-      ]),
-    );
+            content: NavigationBody(index: index, children: [
+              Settings(controller: settingsController),
+            ]),
+          );
+        });
   }
 }
 

@@ -57,3 +57,7 @@ dependencies:
   get_it: ^7.2.0
   uuid: ^3.0.5
   cloud_firestore: ^3.1.7
+  fluent_ui:
+    git:
+      url: https://github.com/bdlukaa/fluent_ui.git
+      branch: master
