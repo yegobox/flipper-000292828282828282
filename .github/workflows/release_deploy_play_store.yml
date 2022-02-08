@@ -50,7 +50,7 @@ jobs:
       - name: Checkout flipper code
         uses: actions/checkout@v2
       - name: Update version in YAML
-        run: sed -i 's/99.99.99+99/1.41.0+111101041/g' pubspec.yaml
+        run: sed -i 's/1.0.1-dev.2/1.42.0+111101042/g' pubspec.yaml
       - name: submodule init
         run: git submodule update --init
       - run: dart pub global activate melos
@@ -71,12 +71,14 @@ jobs:
           echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
           echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
           echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+          echo "$INDEX" >> web/index.html
         env:
           PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
           KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
           KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+          INDEX: ${{ secrets.INDEX }}
         working-directory: android
 
       # Build and deploy with Fastlane (by default, to beta track) 🚀.
