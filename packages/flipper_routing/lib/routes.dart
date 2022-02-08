@@ -14,7 +14,8 @@ import 'package:flipper_dashboard/create/list_categories.dart';
 import 'package:flipper_dashboard/create/list_units.dart';
 import 'package:flipper_dashboard/create/receive_stock.dart';
 import 'package:flipper_dashboard/customers.dart';
-import 'package:flipper_dashboard/flipper_app.dart';
+// import 'package:flipper_dashboard/flipper_app.dart';
+import 'package:flipper_dashboard/flipper_windows.dart';
 import 'package:flipper_dashboard/inapp_browser.dart';
 import 'package:flipper_dashboard/order.dart';
 import 'package:flipper_dashboard/order_summary.dart';
@@ -84,7 +85,7 @@ final router = GoRouter(
       name: 'home',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
-        child: const FlipperApp(),
+        child: const FlipperAppWindows(),
       ),
     ),
     GoRoute(
