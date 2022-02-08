@@ -1,5 +1,5 @@
 import 'package:flipper_localize/flipper_localize.dart';
-import 'package:flipper/bottom_sheets/general_bottom_sheet.dart';
+import 'package:flipper_rw/bottom_sheets/general_bottom_sheet.dart';
 import 'package:flipper_dashboard/setting_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -244,40 +244,42 @@ void preferences(
             );
           },
         ),
-      ListTile(
-        leading: const Icon(Ionicons.analytics),
-        title: const Text('Analytics'),
-        trailing: const Icon(Icons.arrow_forward_ios),
-        onTap: () {
-          GoRouter.of(context).push(Routes.analytics);
-        },
-      ),
-      ListTile(
-        leading: const Icon(Ionicons.sync),
-        title: const Text('Sync'),
-        trailing: const Icon(Icons.arrow_forward_ios),
-        onTap: () {
-          bottomSheetBuilder(
-            header: header(title: 'Sync', context: context),
-            context: context,
-            body: ViewModelBuilder<SettingViewModel>.reactive(
-              viewModelBuilder: () => SettingViewModel(),
-              onModelReady: (model) {},
-              builder: (context, model, child) {
-                return Column(
-                  children: [
-                    SettingsTile.switchTile(
-                      title: 'Enable Sync',
-                      switchValue: model.getIsSyncSubscribed,
-                      onToggle: (bool value) {},
-                    ),
-                  ],
-                );
-              },
-            ),
-          );
-        },
-      ),
+      if (ProxyService.remoteConfig.isAnalyticFeatureAvailable())
+        ListTile(
+          leading: const Icon(Ionicons.analytics),
+          title: const Text('Analytics'),
+          trailing: const Icon(Icons.arrow_forward_ios),
+          onTap: () {
+            GoRouter.of(context).push(Routes.analytics);
+          },
+        ),
+      if (ProxyService.remoteConfig.isSyncAvailable())
+        ListTile(
+          leading: const Icon(Ionicons.sync),
+          title: const Text('Sync'),
+          trailing: const Icon(Icons.arrow_forward_ios),
+          onTap: () {
+            bottomSheetBuilder(
+              header: header(title: 'Sync', context: context),
+              context: context,
+              body: ViewModelBuilder<SettingViewModel>.reactive(
+                viewModelBuilder: () => SettingViewModel(),
+                onModelReady: (model) {},
+                builder: (context, model, child) {
+                  return Column(
+                    children: [
+                      SettingsTile.switchTile(
+                        title: 'Enable Sync',
+                        switchValue: model.getIsSyncSubscribed,
+                        onToggle: (bool value) {},
+                      ),
+                    ],
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ListTile(
         leading: const Icon(
           Icons.center_focus_weak,
