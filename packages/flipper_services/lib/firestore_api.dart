@@ -171,12 +171,13 @@ class FirestoreApi implements FlipperFirestore {
 
   @override
   Stream<List<BusinessSync>> contacts() {
-    return FirebaseChatCore.instance.contacts();
+    // return FirebaseChatCore.instance.contacts();
+    throw UnimplementedError();
   }
 
   @override
   void addContact({required BusinessSync business}) {
-    return FirebaseChatCore.instance.addContact(contact: business);
+    // return FirebaseChatCore.instance.addContact(contact: business);
   }
 
   @override
