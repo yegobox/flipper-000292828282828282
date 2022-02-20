@@ -1,5 +1,5 @@
-import 'package:flipper_routing/routes.locator.dart';
 import 'package:flipper_routing/routes.logger.dart';
+import 'package:flipper_routing/routes.locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/setting_service.dart';
 import 'package:flipper_services/language_service.dart';
@@ -32,7 +32,7 @@ class SettingViewModel extends ReactiveViewModel {
     return ProxyService.box.read(key: 'defaultLanguage');
   }
 
-  BusinessSync get business => ProxyService.api
+  Business get business => ProxyService.api
       .getBusinessById(id: ProxyService.box.read(key: 'businessId'));
 
   void setLanguage(String lang) {
@@ -123,8 +123,8 @@ class SettingViewModel extends ReactiveViewModel {
         await ProxyService.api
             .createGoogleSheetDoc(email: kSetting.settings!.email);
 
-        BusinessSync business = ProxyService.api.getBusiness();
-        business.email = kSetting.settings!.email;
+        Business? business = ProxyService.api.getBusiness();
+        business!.email = kSetting.settings!.email;
         await ProxyService.api.updateBusiness(
           id: business.id,
           business: business.toJson(),
@@ -151,13 +151,19 @@ class SettingViewModel extends ReactiveViewModel {
         callback(1);
       } else {
         /// the
-        BusinessSync business = ProxyService.api.getBusiness();
+        Business? business = ProxyService.api.getBusiness();
         ProxyService.api.enableAttendance(
-            businessId: business.id, email: kSetting.settings!.email);
+            businessId: business!.id, email: kSetting.settings!.email);
       }
     } else {
       callback(2);
     }
+  }
+
+  Pin? pin;
+  Future<void> createPin() async {
+    pin = await ProxyService.api.createPin();
+    notifyListeners();
   }
 
   /// if the callback return with 1 that is a failure
@@ -196,5 +202,10 @@ class SettingViewModel extends ReactiveViewModel {
       notifyListeners();
       success(1);
     }
+  }
+
+  void setIsprocessing({required bool value}) {
+    _isProceeding = value;
+    notifyListeners();
   }
 }

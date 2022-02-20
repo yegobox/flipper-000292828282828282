@@ -39,7 +39,7 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
-*.json
+google-services.json
 
 # Android Studio will place build artifacts here
 /android/app/debug
@@ -49,7 +49,7 @@ app.*.map.json
 index.html
 
 # file containg sensitive information
-config.dart
+# config.dart
 firebase_options.dart
 runner/**
 # runner

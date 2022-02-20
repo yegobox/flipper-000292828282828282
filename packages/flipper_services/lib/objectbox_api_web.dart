@@ -1,13 +1,19 @@
 import 'dart:convert';
-
+import 'dart:io';
+//import 'package:flipper_models/models/html/order.dart';
 import 'package:flipper_models/models/models.dart';
 import 'package:flipper_services/mobile_upload.dart';
+// import 'package:flipper_services/objectbox_api.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 import 'abstractions/api.dart';
+import 'package:isar/isar.dart';
+
+late Isar isar;
 
 class ObjectBoxApi extends MobileUpload implements Api {
-  String apihub = "https://apihub.yegobox.com";
   @override
   CustomerSync? addCustomer({required Map customer, required int orderId}) {
     // TODO: implement addCustomer
@@ -21,8 +27,25 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
+  Points addPoint({required int userId, required int point}) {
+    // TODO: implement addPoint
+    throw UnimplementedError();
+  }
+
+  @override
   Future<int> addUnits({required Map data}) {
     // TODO: implement addUnits
+    throw UnimplementedError();
+  }
+
+  @override
+  Subscription addUpdateSubscription(
+      {required int userId,
+      required int interval,
+      required double recurringAmount,
+      required String descriptor,
+      required List<Feature> features}) {
+    // TODO: implement addUpdateSubscription
     throw UnimplementedError();
   }
 
@@ -40,38 +63,6 @@ class ObjectBoxApi extends MobileUpload implements Api {
       {required int customerId, required int orderId}) {
     // TODO: implement assingOrderToCustomer
     throw UnimplementedError();
-  }
-
-  @override
-  Future<SyncF> login({required String userPhone}) async {
-    final response = await http.post(
-      Uri.parse(apihub + '/v2/api/user'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(
-        <String, String>{'phoneNumber': userPhone},
-      ),
-    );
-    log.d(response.body);
-    if (response.statusCode == 200) {
-      ProxyService.box.write(
-        key: 'bearerToken',
-        value: syncFromJson(response.body).token,
-      );
-      ProxyService.box.write(
-        key: 'userId',
-        value: syncFromJson(response.body).id.toString(),
-      );
-      ProxyService.box.write(
-        key: 'userPhone',
-        value: userPhone,
-      );
-      return syncFromJson(response.body);
-    } else {
-      log.e('error');
-      throw Exception('403 Error');
-    }
   }
 
   @override
@@ -106,28 +97,27 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Stream<List<BusinessSync>> contacts() {
-    // TODO: implement contacts
+  void consumePoints({required int userId, required int points}) {
+    // TODO: implement consumePoints
+  }
+
+  @override
+  Future<Voucher?> consumeVoucher({required int voucherCode}) {
+    // TODO: implement consumeVoucher
     throw UnimplementedError();
   }
 
-  // @override
-  // Stream<List<Conversation>> conversationStreamList({int? receiverId}) {
-  //   // TODO: implement conversationStreamList
-  //   throw UnimplementedError();
-  // }
+  @override
+  Stream<List<Business>> contacts() {
+    // TODO: implement contacts
+    throw UnimplementedError();
+  }
 
   @override
   Future<int> create<T>({required Map data, required String endPoint}) {
     // TODO: implement create
     throw UnimplementedError();
   }
-
-  // @override
-  // Conversation createConversation({required Conversation conversation}) {
-  //   // TODO: implement createConversation
-  //   throw UnimplementedError();
-  // }
 
   @override
   Future<void> createGoogleSheetDoc({required String email}) {
@@ -144,6 +134,12 @@ class ObjectBoxApi extends MobileUpload implements Api {
       String orderType = 'custom',
       double quantity = 1}) {
     // TODO: implement createOrder
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Pin?> createPin() {
+    // TODO: implement createPin
     throw UnimplementedError();
   }
 
@@ -178,19 +174,19 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  BusinessSync getBusiness() {
+  Business? getBusiness() {
     // TODO: implement getBusiness
     throw UnimplementedError();
   }
 
   @override
-  BusinessSync getBusinessById({required int id}) {
+  Business getBusinessById({required int id}) {
     // TODO: implement getBusinessById
     throw UnimplementedError();
   }
 
   @override
-  Future<BusinessSync> getBusinessFromOnlineGivenId({required int id}) {
+  Future<Business> getBusinessFromOnlineGivenId({required int id}) {
     // TODO: implement getBusinessFromOnlineGivenId
     throw UnimplementedError();
   }
@@ -202,16 +198,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Future<List<BusinessSync>> getContacts() {
+  Future<List<Business>> getContacts() {
     // TODO: implement getContacts
     throw UnimplementedError();
   }
-
-  // @override
-  // Conversation? getConversationByContactId({required int contactId}) {
-  //   // TODO: implement getConversationByContactId
-  //   throw UnimplementedError();
-  // }
 
   @override
   Future<VariantSync?> getCustomProductVariant() {
@@ -244,14 +234,13 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Future<List<BusinessSync>> getLocalOrOnlineBusiness(
-      {required String userId}) {
+  Future<List<Business>> getLocalOrOnlineBusiness({required String userId}) {
     // TODO: implement getLocalOrOnlineBusiness
     throw UnimplementedError();
   }
 
   @override
-  Future<List<BusinessSync>> getOnlineBusiness({required String userId}) {
+  Future<List<Business>> getOnlineBusiness({required String userId}) {
     // TODO: implement getOnlineBusiness
     throw UnimplementedError();
   }
@@ -282,6 +271,18 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
+  Future<Pin?> getPin({required String pin}) {
+    // TODO: implement getPin
+    throw UnimplementedError();
+  }
+
+  @override
+  Points? getPoints({required int userId}) {
+    // TODO: implement getPoints
+    throw UnimplementedError();
+  }
+
+  @override
   Future<ProductSync?> getProduct({required int id}) {
     // TODO: implement getProduct
     throw UnimplementedError();
@@ -306,6 +307,12 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
+  Subscription? getSubscription({required int userId}) {
+    // TODO: implement getSubscription
+    throw UnimplementedError();
+  }
+
+  @override
   List<VariantSync> getVariantByProductId({required int productId}) {
     // TODO: implement getVariantByProductId
     throw UnimplementedError();
@@ -324,7 +331,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  TenantSync? isTenant({required String phoneNumber}) {
+  Future<TenantSync?> isTenant({required String phoneNumber}) {
     // TODO: implement isTenant
     throw UnimplementedError();
   }
@@ -338,6 +345,12 @@ class ObjectBoxApi extends MobileUpload implements Api {
   @override
   Future<bool> logOut() {
     // TODO: implement logOut
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SyncF> login({required String userPhone}) {
+    // TODO: implement login
     throw UnimplementedError();
   }
 
@@ -496,7 +509,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Stream<List<BusinessSync>> users() {
+  Stream<List<Business>> users() {
     // TODO: implement users
     throw UnimplementedError();
   }
@@ -520,46 +533,6 @@ class ObjectBoxApi extends MobileUpload implements Api {
       required DateTime weekEndDate,
       required int branchId}) {
     // TODO: implement weeklyOrdersReport
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Voucher?> consumeVoucher({required int voucherCode}) {
-    // TODO: implement consumeVoucher
-    throw UnimplementedError();
-  }
-
-  @override
-  Points addPoint({required int userId, required int point}) {
-    // TODO: implement addPoint
-    throw UnimplementedError();
-  }
-
-  @override
-  Subscription? getSubscription({required int userId}) {
-    // TODO: implement getSubscription
-    throw UnimplementedError();
-  }
-
-  @override
-  void consumePoints({required int userId, required int points}) {
-    // TODO: implement consumePoints
-  }
-
-  @override
-  Points? getPoints({required int userId}) {
-    // TODO: implement getPoints
-    throw UnimplementedError();
-  }
-
-  @override
-  Subscription addUpdateSubscription(
-      {required int userId,
-      required int interval,
-      required double recurringAmount,
-      required String descriptor,
-      required List<Feature> features}) {
-    // TODO: implement addUpdateSubscription
     throw UnimplementedError();
   }
 }

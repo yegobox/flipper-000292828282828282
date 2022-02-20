@@ -78,6 +78,41 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0-nullsafety.0"
+  bitsdojo_window:
+    dependency: transitive
+    description:
+      name: bitsdojo_window
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+1"
+  bitsdojo_window_linux:
+    dependency: transitive
+    description:
+      name: bitsdojo_window_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
+  bitsdojo_window_macos:
+    dependency: transitive
+    description:
+      name: bitsdojo_window_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
+  bitsdojo_window_platform_interface:
+    dependency: transitive
+    description:
+      name: bitsdojo_window_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
+  bitsdojo_window_windows:
+    dependency: transitive
+    description:
+      name: bitsdojo_window_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   bloc:
     dependency: transitive
     description:
@@ -751,17 +786,26 @@ packages:
     source: path
     version: "1.0.3"
   fluent_ui:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      name: fluent_ui
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "5ab355860cfeb15d31e7d0f66e408a2bcb81fac6"
+      url: "https://github.com/bdlukaa/fluent_ui.git"
+    source: git
     version: "3.9.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_acrylic:
+    dependency: transitive
+    description:
+      name: flutter_acrylic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flutter_bloc:
     dependency: transitive
     description:
@@ -2002,6 +2046,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  system_theme:
+    dependency: transitive
+    description:
+      name: system_theme
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  system_theme_web:
+    dependency: transitive
+    description:
+      name: system_theme_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   system_time_check:
     dependency: "direct overridden"
     description:

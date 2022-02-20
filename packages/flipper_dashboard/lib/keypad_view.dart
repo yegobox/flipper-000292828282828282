@@ -3,7 +3,7 @@ library pos;
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-import 'package:flipper_models/models/view_models/business_home_viewmodel.dart';
+import 'package:flipper_models/models/models.dart';
 
 final isWindows = UniversalPlatform.isWindows;
 final isMacOs = UniversalPlatform.isMacOS;
@@ -13,6 +13,7 @@ class AlwaysDisabledFocusNode extends FocusNode {
   bool get hasFocus => false;
 }
 
+// ignore: must_be_immutable
 class KeyPadView extends StatelessWidget {
   const KeyPadView({Key? key, required this.model}) : super(key: key);
   final BusinessHomeViewModel model;
@@ -71,11 +72,6 @@ class KeyPadView extends StatelessWidget {
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: FluentTheme.of(context).accentColor,
-                      ),
-                    ),
                     alignment: Alignment.center,
                     child: const Text(
                       '3',
@@ -144,7 +140,7 @@ class KeyPadView extends StatelessWidget {
                       ),
                     ),
                     alignment: Alignment.center,
-                    child: Text(
+                    child: const Text(
                       '6',
                       textAlign: TextAlign.center,
                     ),
@@ -290,40 +286,6 @@ class KeyPadView extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class KeyboardKey extends StatelessWidget {
-  const KeyboardKey({
-    Key? key,
-    required this.model,
-    this.keyValue,
-  }) : super(key: key);
-  final keyValue;
-  final BusinessHomeViewModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 100,
-      height: MediaQuery.of(context).size.height,
-      child: GestureDetector(
-        onTap: () => {model.addKey(keyValue)},
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromRGBO(0, 0, 0, 0.2),
-              width: 0,
-            ),
-          ),
-          child: Center(
-            child: Text(
-              keyValue,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -88,8 +88,7 @@ class EventService {
         await ProxyService.api.login(
           userPhone: loginData.phone,
         );
-        // ProxyService.nav.navigateTo(Routes.initial);
-        GoRouter.of(context).go(Routes.boot);
+        GoRouter.of(context).go(Routes.home);
       }
     });
   }

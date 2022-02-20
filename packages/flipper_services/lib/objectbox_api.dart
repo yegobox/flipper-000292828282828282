@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flipper_rw/gate.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:flipper_models/models/models.dart';
@@ -262,7 +263,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
     ProxyService.box.remove(key: 'businessId');
 
     FirebaseAuth.instance.signOut();
-
+    loginInfo.isLoggedIn = false;
     return true;
   }
 
@@ -357,7 +358,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
         store.box<Message>().remove(id);
         break;
       case 'business':
-        store.box<BusinessSync>().remove(id);
+        store.box<Business>().remove(id);
         break;
       case 'discount':
         store.box<DiscountSync>().remove(id);
@@ -406,11 +407,16 @@ class ObjectBoxApi extends MobileUpload implements Api {
   Future<List<BranchSync>> branches({required int businessId}) async {
     final response =
         await client.get(Uri.parse("$apihub/v2/api/branches/$businessId"));
-    for (BranchSync branch in branchFromJson(response.body)) {
-      final box = store.box<BranchSync>();
-      box.put(branch, mode: PutMode.put);
+    log.i(businessId);
+    log.d(response.statusCode);
+    if (response.statusCode == 200) {
+      for (BranchSync branch in branchFromJson(response.body)) {
+        final box = store.box<BranchSync>();
+        box.put(branch, mode: PutMode.put);
+      }
+      return branchFromJson(response.body);
     }
-    return branchFromJson(response.body);
+    throw Exception('Failed to load branch');
   }
 
   @override
@@ -763,7 +769,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
       {required double amount, required phoneNumber}) async {
     String userId = ProxyService.box.read(key: 'userId');
     var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    String businessName = getBusiness().name;
+    String businessName = getBusiness()!.name;
     var request =
         http.Request('POST', Uri.parse('https://flipper.yegobox.com/pay'));
     request.bodyFields = {
@@ -901,12 +907,12 @@ class ObjectBoxApi extends MobileUpload implements Api {
         box.put(category, mode: PutMode.update);
         break;
       case 'business':
-        BusinessSync? business = store.box<BusinessSync>().get(id);
+        Business? business = store.box<Business>().get(id);
         Map map = business!.toJson();
         data.forEach((key, value) {
           map[key] = value;
         });
-        BusinessSync ubusiness = BusinessSync(
+        Business ubusiness = Business(
           active: map['active'],
           name: map['name'],
           table: map['table'],
@@ -938,7 +944,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
           typeId: map['typeId'],
           metadata: map['metadata'],
         );
-        final box = store.box<BusinessSync>();
+        final box = store.box<Business>();
         box.put(ubusiness, mode: PutMode.update);
         break;
       case 'variant':
@@ -1159,6 +1165,8 @@ class ObjectBoxApi extends MobileUpload implements Api {
         key: 'userPhone',
         value: userPhone,
       );
+      // get some data required by the app
+      getLocalOrOnlineBusiness(userId: ProxyService.box.getUserId()!);
       return syncFromJson(response.body);
     } else {
       throw InternalServerError(term: 'HTTP Error ${response.statusCode}');
@@ -1187,17 +1195,18 @@ class ObjectBoxApi extends MobileUpload implements Api {
   late StreamSubscription<Message> messageSubscription;
 
   @override
-  BusinessSync getBusiness() {
+  Business? getBusiness() {
     String? userId = ProxyService.box.read(key: 'userId');
     return store
-        .box<BusinessSync>()
-        .getAll()
-        .firstWhere((unit) => unit.userId == userId);
+        .box<Business>()
+        .query(Business_.userId.equals(userId!))
+        .build()
+        .findFirst();
   }
 
-  late StreamSubscription<BusinessSync> userSubs;
+  late StreamSubscription<Business> userSubs;
   @override
-  Stream<List<BusinessSync>> users() {
+  Stream<List<Business>> users() {
     // FIXMEstoped streaming business in the app
     // Stream<Business> stream = usersStreamController.stream;
     // userSubs = stream.listen((business) {
@@ -1215,7 +1224,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
     //   }
     // });
     return store
-        .box<BusinessSync>()
+        .box<Business>()
         .query()
         .watch(triggerImmediately: true)
         .map((query) => query.find());
@@ -1367,8 +1376,8 @@ class ObjectBoxApi extends MobileUpload implements Api {
   @override
   Future<void> createGoogleSheetDoc({required String email}) async {
     // TODOre-work on this until it work 100%;
-    BusinessSync? business = getBusiness();
-    String docName = business.name + '- Report';
+    Business? business = getBusiness();
+    String docName = business!.name + '- Report';
 
     final response = await client.post(
         Uri.parse("$apihub/v2/api/createSheetDocument"),
@@ -1383,9 +1392,9 @@ class ObjectBoxApi extends MobileUpload implements Api {
   ///is internet. because the method can take some time. it is advised to schedule it
   ///in cron so it can run in app backgroup like every hour.
   @override
-  Stream<List<BusinessSync>> contacts() async* {
+  Stream<List<Business>> contacts() async* {
     yield* store
-        .box<BusinessSync>()
+        .box<Business>()
         .query()
         .watch(triggerImmediately: true)
         .map((query) => query.find());
@@ -1496,10 +1505,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
   // }
 
   @override
-  BusinessSync getBusinessById({required int id}) {
+  Business getBusinessById({required int id}) {
     return store
-        .box<BusinessSync>()
-        .query(BusinessSync_.id.equals(id))
+        .box<Business>()
+        .query(Business_.id.equals(id))
         .build()
         .findFirst()!;
   }
@@ -1680,21 +1689,21 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Future<List<BusinessSync>> getContacts() async {
+  Future<List<Business>> getContacts() async {
     final response = await client.get(Uri.parse("$apihub/v2/api/users"));
     log.i('now fetching new contacts business now');
-    for (BusinessSync business in businessFromJson(response.body)) {
+    for (Business business in listFromJson(response.body)) {
       /// a user mast have been opted in to the app. chat feature.
       /// this is because there is old business that does not know about this feature
       /// otherwise it won't required as this step is part of startup logic.
       if (business.chatUid != null) {
-        final box = store.box<BusinessSync>();
+        final box = store.box<Business>();
         box.put(business);
       }
     }
     int businessId = ProxyService.box.read(key: 'businessId');
     return store
-        .box<BusinessSync>()
+        .box<Business>()
         .getAll()
         .where((unit) => unit.id != businessId)
         .toList();
@@ -1707,51 +1716,54 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Future<List<BusinessSync>> getOnlineBusiness({required String userId}) async {
+  Future<List<Business>> getOnlineBusiness({required String userId}) async {
     final response =
         await client.get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
-    List<BusinessSync> businesses = [];
+    List<Business> businesses = [];
     if (response.statusCode == 401) {
       throw SessionException(term: "session expired");
     }
-    final syncBusinessBox = store.box<BusinessSync>();
-    final localBusinessBox = store.box<LBusiness>();
-    BusinessSync? business =
-        syncBusinessBox.get(sbusinessFromJson(response.body).id);
-    localBusinessBox.put(lbusinessFromJson(response.body), mode: PutMode.put);
+    if (response.statusCode == 404) {
+      throw NotFoundException(term: "Business not found");
+    }
+    final box = store.box<Business>();
+    Business? business = box.get(sbusinessFromJson(response.body).id);
     if (business == null) {
-      syncBusinessBox.put(sbusinessFromJson(response.body), mode: PutMode.put);
+      box.put(fromJson(response.body), mode: PutMode.put);
 
       return store
-          .box<BusinessSync>()
+          .box<Business>()
           .getAll()
           .where((business) => business.userId == userId)
           .toList();
     }
 
-    businesses.add(sbusinessFromJson(response.body));
+    businesses.add(fromJson(response.body));
     return businesses;
   }
 
   @override
-  Future<List<BusinessSync>> getLocalOrOnlineBusiness(
+  Future<List<Business>> getLocalOrOnlineBusiness(
       {required String userId}) async {
-    List<BusinessSync> businesses = store
-        .box<BusinessSync>()
+    List<Business> businesses = store
+        .box<Business>()
         .getAll()
         .where((business) => business.userId == userId)
         .toList();
-    businesses = syncLocalWithSyncedModel(businesses, userId);
 
     if (businesses.isEmpty) {
-      return await getOnlineBusiness(userId: userId);
+      try {
+        return await getOnlineBusiness(userId: userId);
+      } catch (e) {
+        rethrow;
+      }
     } else {
       return businesses;
     }
   }
 
-  List<BusinessSync> syncLocalWithSyncedModel(
-      List<BusinessSync> businesses, String userId) {
+  List<Business> syncLocalWithSyncedModel(
+      List<Business> businesses, String userId) {
     if (businesses.isEmpty) {
       List<LBusiness> lbusinesses = store
           .box<LBusiness>()
@@ -1759,10 +1771,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
           .where((business) => business.userId == userId)
           .toList();
       if (lbusinesses.isNotEmpty) {
-        final syncBusinessBox = store.box<BusinessSync>();
+        final syncBusinessBox = store.box<Business>();
         for (LBusiness business in lbusinesses) {
           syncBusinessBox.put(
-            BusinessSync(
+            Business(
               id: business.id,
               name: business.name,
               userId: business.userId,
@@ -1778,7 +1790,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
       }
     }
     businesses = store
-        .box<BusinessSync>()
+        .box<Business>()
         .getAll()
         .where((business) => business.userId == userId)
         .toList();
@@ -1787,11 +1799,15 @@ class ObjectBoxApi extends MobileUpload implements Api {
 
   @override
   Future<List<BranchSync>> getLocalBranches({required int businessId}) async {
-    return store
+    List<BranchSync> kBranches = store
         .box<BranchSync>()
         .getAll()
         .where((unit) => unit.fbusinessId == businessId)
         .toList();
+    if (kBranches.isEmpty) {
+      return await branches(businessId: businessId);
+    }
+    return kBranches;
   }
 
   @override
@@ -1802,7 +1818,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  TenantSync? isTenant({required String phoneNumber}) {
+  Future<TenantSync?> isTenant({required String phoneNumber}) async {
     // return TenantSync from store where phoneNumber
     return store
         .box<TenantSync>()
@@ -1812,18 +1828,17 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Future<BusinessSync> getBusinessFromOnlineGivenId({required int id}) async {
-    if (store.box<BusinessSync>().get(id) != null)
-      return store.box<BusinessSync>().get(id)!;
+  Future<Business> getBusinessFromOnlineGivenId({required int id}) async {
+    if (store.box<Business>().get(id) != null) {
+      return store.box<Business>().get(id)!;
+    }
 
     final response = await client.get(Uri.parse("$apihub/v2/api/business/$id"));
 
-    BusinessSync business = sbusinessFromJson(response.body);
-    // save business to store
-    // log.d(business.toJson());
-    // store
-    if (store.box<BusinessSync>().get(business.id) == null)
-      store.box<BusinessSync>().put(business);
+    Business business = fromJson(response.body);
+    if (store.box<Business>().get(business.id) == null) {
+      store.box<Business>().put(business);
+    }
     return business;
   }
 
@@ -2070,7 +2085,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
     /// call to create attendance document
     /// get business from store
 
-    final business = store.box<BusinessSync>().get(businessId);
+    final business = store.box<Business>().get(businessId);
     final http.Response response = await client.post(
         Uri.parse("$apihub/v2/api/createAttendanceDoc"),
         body: jsonEncode({
@@ -2256,5 +2271,56 @@ class ObjectBoxApi extends MobileUpload implements Api {
       po.value = po.value - points;
       store.box<Points>().put(po);
     }
+  }
+
+  /// Check if pin exists in store
+  /// if it exists return it
+  /// if it does not exist create it on server and return it
+  @override
+  Future<Pin?> createPin() async {
+    // only debug
+    // store.box<Pin>().removeAll();
+
+    Pin? pin = store
+        .box<Pin>()
+        .query(Pin_.userId.equals(ProxyService.box.getUserId() ?? '1'))
+        .build()
+        .findFirst();
+    if (pin != null) {
+      return pin;
+    }
+    String id = ProxyService.box.getUserId() ??
+        '1' + ProxyService.box.getBusinessId().toString();
+
+    final http.Response response =
+        await client.post(Uri.parse("$apihub/v2/api/pin"),
+            body: jsonEncode(
+              <String, String>{
+                'userId': ProxyService.box.getUserId() ?? '1',
+                'branchId': ProxyService.box.getBranchId().toString(),
+                'businessId': ProxyService.box.getBusinessId().toString(),
+                'phoneNumber': ProxyService.box.getUserPhone() ?? '',
+                'pin': id
+              },
+            ),
+            headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      Pin pin = pinFromMap(response.body);
+      store.box<Pin>().put(pin);
+      return pin;
+    }
+    return null;
+  }
+
+  /// get a pin object given pin
+  ///fetch it from server using get
+  @override
+  Future<Pin?> getPin({required String pin}) async {
+    final http.Response response =
+        await client.get(Uri.parse("$apihub/v2/api/pin/$pin"));
+    if (response.statusCode == 200) {
+      return pinFromMap(response.body);
+    }
+    throw Exception('Failed to load pin');
   }
 }

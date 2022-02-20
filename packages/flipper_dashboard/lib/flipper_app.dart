@@ -84,6 +84,7 @@ class _FlipperAppState extends State<FlipperApp> {
     /// to avoid receiving the message of the contact you don't have in your book
     /// we need to load contacts when the app starts.
     // ProxyService.api.contacts().asBroadcastStream();
+    // ProxyService.api.createPin();
 
     super.initState();
     if (SchedulerBinding.instance?.schedulerPhase ==
@@ -145,6 +146,8 @@ class _FlipperAppState extends State<FlipperApp> {
         ProxyService.notification.initialize(context);
         ProxyService.notification.listen(context);
         ProxyService.dynamicLink.handleDynamicLink(context);
+        // load data for report
+        model.loadReport();
       },
       builder: (context, model, child) {
         return WillPopScope(
@@ -202,15 +205,24 @@ class _FlipperAppState extends State<FlipperApp> {
                   });
                 },
                 currentIndex: model.tab,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
+                items: <BottomNavigationBarItem>[
+                  const BottomNavigationBarItem(
                     icon: Icon(Icons.calculate),
                     label: 'KeyPad',
                   ),
-                  BottomNavigationBarItem(
+                  const BottomNavigationBarItem(
+                    icon: Icon(Icons.analytics),
+                    label: 'Analytics',
+                  ),
+                  const BottomNavigationBarItem(
                     icon: Icon(Icons.store),
                     label: 'Store',
                   ),
+                  if (ProxyService.remoteConfig.isLinkedDeviceAvailable())
+                    const BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      label: 'Settings',
+                    ),
                 ],
               ),
             ),

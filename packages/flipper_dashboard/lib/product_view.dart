@@ -333,8 +333,8 @@ class _onCreate extends State<ProductView> {
                   !isMacOs)
                 GestureDetector(
                   onTap: () {
-                    // ProxyService.nav.navigateTo(Routes.qrview);
-                    GoRouter.of(context).go(Routes.qrview);
+                    // pass fake intent the intent will come from what we scann!
+                    GoRouter.of(context).push(Routes.scann + "/se");
                   },
                   child: const CircleAvatar(
                     backgroundColor: Colors.transparent,

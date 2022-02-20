@@ -57,13 +57,13 @@ class CronService {
   // then we will customize invoice to match with actual data.
   schedule() async {
     //save the device token to firestore if it is not already there
-    BusinessSync? business = await ProxyService.api.getBusiness();
-    String? token = null;
+    Business? business = ProxyService.api.getBusiness();
+    String? token;
     if (!Platform.isWindows) {
       token = await FirebaseMessaging.instance.getToken();
       log.e("DeviceToken:" + token!);
 
-      Map updatedBusiness = business.toJson();
+      Map updatedBusiness = business!.toJson();
       updatedBusiness['deviceToken'] = token.toString();
       ProxyService.firestore
           .saveTokenToDatabase(token: token, business: updatedBusiness);
@@ -79,9 +79,9 @@ class CronService {
     // });
 
     /// backup the user db every day
-    cron.schedule(Schedule.parse('0 0 * * *'), () async {
-      BusinessSync business = await ProxyService.api.getBusiness();
-      if (business.backUpEnabled!) {
+    cron.schedule(Schedule.parse('0 0 * * *'), () {
+      Business? business = ProxyService.api.getBusiness();
+      if (business!.backUpEnabled!) {
         final drive = GoogleDrive();
         drive.backUpNow();
       }
@@ -97,17 +97,17 @@ class CronService {
       ProxyService.billing.monitorSubscription(userId: int.parse(userId));
       ProxyService.box.remove(key: 'checkIn');
       if (settingService.isDailyReportEnabled()) {
-        List<OrderFSync> completed_orders =
+        List<OrderFSync> completedOrders =
             await ProxyService.api.getOrderByStatus(status: completeStatus);
 
-        for (OrderFSync completed_order in completed_orders) {
-          completed_order.reported = true;
+        for (OrderFSync completedOrder in completedOrders) {
+          completedOrder.reported = true;
           log.i('now sending the report to mail...');
           final response = await ProxyService.api
-              .sendReport(orderItems: completed_order.orderItems);
+              .sendReport(orderItems: completedOrder.orderItems);
           if (response == 200) {
             ProxyService.api
-                .update(data: completed_order.toJson(), endPoint: 'order');
+                .update(data: completedOrder.toJson(), endPoint: 'order');
           }
         }
       }

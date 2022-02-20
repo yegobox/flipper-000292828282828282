@@ -9,7 +9,7 @@ import 'package:stacked/stacked.dart';
 import 'package:flipper_models/models/models.dart';
 import 'package:flipper_ui/flipper_ui.dart';
 import 'customappbar.dart';
-
+import 'package:google_ui/google_ui.dart';
 import 'package:go_router/go_router.dart';
 
 class AfterSale extends StatefulWidget {
@@ -39,11 +39,10 @@ class _AfterSaleState extends State<AfterSale> {
           return SafeArea(
             child: Scaffold(
               appBar: CustomAppBar(
-                useTransparentButton: true,
+                useTransparentButton: false,
                 onPop: () {
-                  // refresh orders
                   model.currentOrder();
-                  GoRouter.of(context).pop();
+                  GoRouter.of(context).push(Routes.home);
                 },
                 title: '',
                 closeButton: CLOSEBUTTON.BUTTON,
@@ -51,9 +50,8 @@ class _AfterSaleState extends State<AfterSale> {
                 showActionButton: true,
                 onPressedCallback: () async {
                   await model.getOrderById();
-                  log.i(model.kOrder!.id);
-                  GoRouter.of(context)
-                      .go(Routes.customers + '/' + model.kOrder!.id.toString());
+                  GoRouter.of(context).push(
+                      Routes.customers + '/' + model.kOrder!.id.toString());
                 },
                 leftActionButtonName:
                     model.kOrder != null && model.kOrder!.customerId != null
@@ -116,10 +114,11 @@ class _AfterSaleState extends State<AfterSale> {
                                               padding: const EdgeInsets.only(
                                                   left: 18, right: 18),
                                               child: SizedBox(
+                                                height: 50,
                                                 width: double.infinity,
-                                                child: BoxButton.outline(
-                                                  title: 'Email',
-                                                  onTap: () {},
+                                                child: GOutlinedButton(
+                                                  'Email',
+                                                  onPressed: () {},
                                                 ),
                                               ),
                                             )
@@ -129,14 +128,15 @@ class _AfterSaleState extends State<AfterSale> {
                                         padding: const EdgeInsets.only(
                                             left: 18, right: 18),
                                         child: SizedBox(
+                                          height: 50,
                                           width: double.infinity,
-                                          child: BoxButton.outline(
-                                            title: 'No Receipt',
-                                            onTap: () {
+                                          child: GOutlinedButton(
+                                            'No Receipt',
+                                            onPressed: () {
                                               // refresh orders
                                               model.currentOrder();
                                               GoRouter.of(context)
-                                                  .pushNamed(Routes.home);
+                                                  .push(Routes.home);
                                             },
                                           ),
                                         ),
@@ -189,14 +189,19 @@ class _AfterSaleState extends State<AfterSale> {
                     ),
                     Positioned(
                         bottom: 0,
-                        // center:
                         child: Row(
-                          children: const [
+                          children: [
                             IconButton(
-                              icon: FaIcon(FontAwesomeIcons.globe),
+                              icon: const FaIcon(FontAwesomeIcons.globe),
+                              color: Theme.of(context).colorScheme.primary,
                               onPressed: null,
                             ),
-                            Text('English')
+                            Text(
+                              'English',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            )
                           ],
                         ))
                   ],

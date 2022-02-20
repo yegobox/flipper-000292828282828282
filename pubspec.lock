@@ -309,6 +309,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  connectivity_plus:
+    dependency: transitive
+    description:
+      name: connectivity_plus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
+  connectivity_plus_linux:
+    dependency: transitive
+    description:
+      name: connectivity_plus_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
+  connectivity_plus_macos:
+    dependency: transitive
+    description:
+      name: connectivity_plus_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1"
+  connectivity_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: connectivity_plus_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
+  connectivity_plus_web:
+    dependency: transitive
+    description:
+      name: connectivity_plus_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
+  connectivity_plus_windows:
+    dependency: transitive
+    description:
+      name: connectivity_plus_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   convert:
     dependency: transitive
     description:
@@ -365,6 +407,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  dbus:
+    dependency: transitive
+    description:
+      name: dbus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.8"
   desktop_webview_auth:
     dependency: transitive
     description:
@@ -735,14 +784,21 @@ packages:
       path: "packages/flipper_chat"
       relative: true
     source: path
-    version: "0.0.1-dev.4"
+    version: "0.0.1-dev.5"
   flipper_dashboard:
     dependency: "direct main"
     description:
       path: "packages/flipper_dashboard"
       relative: true
     source: path
-    version: "0.0.1-dev.4"
+    version: "0.0.1-dev.7"
+  flipper_data_table:
+    dependency: "direct main"
+    description:
+      path: "packages/flipper_data_table"
+      relative: true
+    source: path
+    version: "1.0.0-dev.2"
   flipper_finance:
     dependency: "direct overridden"
     description:
@@ -770,28 +826,28 @@ packages:
       path: "packages/flipper_login"
       relative: true
     source: path
-    version: "0.0.1-dev.4"
+    version: "0.0.1-dev.5"
   flipper_models:
     dependency: "direct main"
     description:
       path: "packages/flipper_models"
       relative: true
     source: path
-    version: "0.0.1-dev.3"
+    version: "0.0.1-dev.6"
   flipper_routing:
     dependency: "direct main"
     description:
       path: "packages/flipper_routing"
       relative: true
     source: path
-    version: "0.0.1-dev.2"
+    version: "0.0.1-dev.3"
   flipper_services:
     dependency: "direct main"
     description:
       path: "packages/flipper_services"
       relative: true
     source: path
-    version: "0.0.1-dev.5"
+    version: "0.0.1-dev.6"
   flipper_ui:
     dependency: "direct main"
     description:
@@ -858,9 +914,11 @@ packages:
   flutter_datetime_picker:
     dependency: transitive
     description:
-      name: flutter_datetime_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: eb66486c47d50bf550950c196486121ffcea8885
+      resolved-ref: eb66486c47d50bf550950c196486121ffcea8885
+      url: "git://github.com/Realank/flutter_datetime_picker.git"
+    source: git
     version: "1.5.1"
   flutter_driver:
     dependency: "direct dev"
@@ -873,21 +931,21 @@ packages:
       name: flutter_facebook_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.5.7"
+    version: "4.0.1"
   flutter_facebook_auth_platform_interface:
     dependency: transitive
     description:
       name: flutter_facebook_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.7.1"
+    version: "3.0.1"
   flutter_facebook_auth_web:
     dependency: transitive
     description:
       name: flutter_facebook_auth_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.0+2"
+    version: "3.0.0+1"
   flutter_firebase_chat_core:
     dependency: "direct overridden"
     description:
@@ -964,14 +1022,21 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "9.3.2"
+  flutter_local_notifications_linux:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1+1"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
       name: flutter_local_notifications_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "5.0.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -991,6 +1056,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  flutter_riverpod:
+    dependency: "direct main"
+    description:
+      name: flutter_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_secure_storage:
     dependency: transitive
     description:
@@ -1098,7 +1170,7 @@ packages:
       name: flutterfire_ui
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.2"
+    version: "0.3.3"
   font_awesome_flutter:
     dependency: transitive
     description:
@@ -1244,6 +1316,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.0+4"
+  google_ui:
+    dependency: "direct main"
+    description:
+      path: "open-sources/google_ui"
+      relative: true
+    source: path
+    version: "2.7.1"
   googleapis:
     dependency: transitive
     description:
@@ -1396,6 +1475,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  isar:
+    dependency: transitive
+    description:
+      name: isar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
+  isar_flutter_libs:
+    dependency: transitive
+    description:
+      name: isar_flutter_libs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   js:
     dependency: transitive
     description:
@@ -1515,6 +1608,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  nm:
+    dependency: transitive
+    description:
+      name: nm
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.4"
   node_preamble:
     dependency: transitive
     description:
@@ -1539,9 +1639,9 @@ packages:
   objectbox_generator:
     dependency: "direct dev"
     description:
-      name: objectbox_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/generator"
+      relative: true
+    source: path
     version: "1.3.0"
   objectbox_sync_flutter_libs:
     dependency: "direct main"
@@ -1823,6 +1923,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  riverpod:
+    dependency: transitive
+    description:
+      name: riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   rounded_loading_button:
     dependency: transitive
     description:
@@ -2012,6 +2119,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  simple_animations:
+    dependency: transitive
+    description:
+      name: simple_animations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -2052,6 +2166,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
+  spring:
+    dependency: transitive
+    description:
+      name: spring
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   sqflite:
     dependency: transitive
     description:
@@ -2101,6 +2222,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.8+1"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.2+1"
   stream_channel:
     dependency: transitive
     description:
@@ -2122,6 +2250,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  supercharged:
+    dependency: transitive
+    description:
+      name: supercharged
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
+  supercharged_dart:
+    dependency: transitive
+    description:
+      name: supercharged_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   sync_http:
     dependency: transitive
     description:
@@ -2198,7 +2340,7 @@ packages:
       name: timezone
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0"
+    version: "0.8.0"
   timing:
     dependency: transitive
     description:

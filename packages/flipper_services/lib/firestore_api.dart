@@ -12,8 +12,8 @@ abstract class FlipperFirestore {
   Future<void> getUser({required String userId});
   Future<void> saveTokenToDatabase({String? token, Map? business});
   Future<void> createUserInFirestore({required Map user});
-  Stream<List<BusinessSync>> contacts();
-  void addContact({required BusinessSync business});
+  Stream<List<Business>> contacts();
+  void addContact({required Business business});
   void deleteRoom({required String roomId});
   void pullProducts({required int branchId});
   void pushProducts({required int branchId});
@@ -45,13 +45,13 @@ class UnSupportedFirestoreApi implements FlipperFirestore {
   }
 
   @override
-  Stream<List<BusinessSync>> contacts() {
+  Stream<List<Business>> contacts() {
     // TODO: implement contacts
     throw UnimplementedError();
   }
 
   @override
-  void addContact({required BusinessSync business}) {
+  void addContact({required Business business}) {
     // TODO: implement addContact
   }
 
@@ -170,17 +170,6 @@ class FirestoreApi implements FlipperFirestore {
   }
 
   @override
-  Stream<List<BusinessSync>> contacts() {
-    // return FirebaseChatCore.instance.contacts();
-    throw UnimplementedError();
-  }
-
-  @override
-  void addContact({required BusinessSync business}) {
-    // return FirebaseChatCore.instance.addContact(contact: business);
-  }
-
-  @override
   void deleteRoom({required String roomId}) {
     return FirebaseChatCore.instance.deleteRoom(roomId: roomId);
   }
@@ -290,5 +279,16 @@ class FirestoreApi implements FlipperFirestore {
   void pushVariations(
       {required int branchId, required List<VariantSync> products}) {
     // TODO: implement pushVariations
+  }
+
+  @override
+  void addContact({required Business business}) {
+    // TODO: implement addContact
+  }
+
+  @override
+  Stream<List<Business>> contacts() {
+    // TODO: implement contacts
+    throw UnimplementedError();
   }
 }

@@ -1,8 +1,10 @@
-// To parse this JSON data, do
-//
-//     final order = orderFromJsonSync(jsonString);
-import 'package:flipper_models/models/models.dart';
 import 'dart:convert';
+
+import 'package:isar/isar.dart';
+
+import 'order_item.dart';
+
+part 'order.g.dart';
 
 OrderFSync orderFromJsonSync(String str) =>
     OrderFSync.fromJson(json.decode(str));
@@ -15,53 +17,55 @@ List<OrderFSync> ordersFromJsonSync(String str) =>
 String orderToJson(List<OrderFSync> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+@Collection()
 class OrderFSync {
-  OrderFSync(
-      {this.id = 0,
-      required this.reference,
-      required this.orderNumber,
-      required this.fbranchId,
-      required this.status,
-      required this.orderType,
-      required this.active,
-      required this.draft,
-      required this.subTotal,
-      required this.paymentType,
-      required this.cashReceived,
-      required this.customerChangeDue,
-      required this.createdAt,
-      this.updatedAt,
-      this.reported,
-      // required this.orderItems,
-      required this.table,
-      this.channels,
-      this.note,
-      this.customerId,
-      required this.orderItems});
-  int id;
-  String reference;
-  String orderNumber;
-  int fbranchId;
-  String status;
-  String orderType;
-  bool active;
-  bool draft;
-  double subTotal;
-  String paymentType;
-  double cashReceived;
-  double customerChangeDue;
-  String createdAt;
-  String? updatedAt;
-  bool? reported;
+  OrderFSync({
+    this.id = 0,
+    required this.reference,
+    required this.orderNumber,
+    required this.fbranchId,
+    required this.status,
+    required this.orderType,
+    required this.active,
+    required this.draft,
+    required this.subTotal,
+    required this.paymentType,
+    required this.cashReceived,
+    required this.customerChangeDue,
+    required this.createdAt,
+    this.updatedAt,
+    this.reported,
+    required this.orderItems,
+    required this.table,
+    this.channels,
+    this.note,
+    this.customerId,
+    // required this.orderItems,
+  });
+  late int id = Isar.autoIncrement;
+  late String reference;
+  late String orderNumber;
+  late int fbranchId;
+  late String status;
+  late String orderType;
+  late bool active;
+  late bool draft;
+  late double subTotal;
+  late String paymentType;
+  late double cashReceived;
+  late double customerChangeDue;
+  late String createdAt;
+  late String? updatedAt;
+  late bool? reported;
 
-  String table;
+  late String table;
 
-  List<String>? channels;
+  late List<String>? channels;
 
   // now add a customer to an order
-  int? customerId;
+  late int? customerId;
 
-  String? note;
+  late String? note;
   List<OrderItemSync> orderItems;
 
   factory OrderFSync.fromJson(Map<String, dynamic> json) => OrderFSync(
@@ -84,8 +88,9 @@ class OrderFSync {
         table: json["table"],
         customerId: json["customerId"],
         channels: List<String>.from(json["channels"].map((x) => x)),
-        orderItems: List<OrderItemSync>.from(
-            json["orderItems"].map((x) => OrderItemSync.fromJson(x))),
+        orderItems: [],
+        // orderItems: List<OrderItemSync>.from(
+        // json["orderItems"].map((x) => OrderItemSync.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

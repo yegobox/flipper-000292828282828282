@@ -1,3 +1,4 @@
+import 'package:flipper_rw/gate.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:flipper_models/models/models.dart';
@@ -17,8 +18,8 @@ class AppService with ReactiveServiceMixin {
   final _categories = ReactiveValue<List<Category>>([]);
   List<Category> get categories => _categories.value;
 
-  final _businesses = ReactiveValue<List<BusinessSync>>([]);
-  List<BusinessSync> get businesses => _businesses.value;
+  final _businesses = ReactiveValue<List<Business>>([]);
+  List<Business> get businesses => _businesses.value;
 
   final _units = ReactiveValue<List<Unit>>([]);
   List<Unit> get units => _units.value;
@@ -33,7 +34,7 @@ class AppService with ReactiveServiceMixin {
     _currentColor.value = color;
   }
 
-  setBusiness({required List<BusinessSync> businesses}) {
+  setBusiness({required List<Business> businesses}) {
     _businesses.value = businesses;
   }
 
@@ -62,7 +63,6 @@ class AppService with ReactiveServiceMixin {
 
     for (PColor color in _colors.value) {
       if (color.active) {
-        print(color.name);
         setCurrentColor(color: color.name!);
       }
     }
@@ -73,16 +73,17 @@ class AppService with ReactiveServiceMixin {
 
   bool isLoggedIn() {
     _loggedIn = ProxyService.box.read(key: 'userId') == null ? false : true;
+    // loginInfo.isLoggedIn = _loggedIn;
     notifyListeners();
     return _loggedIn;
   }
 
-  final _contacts = ReactiveValue<List<BusinessSync>>([]);
-  List<BusinessSync> get contacts => _contacts.value;
+  final _contacts = ReactiveValue<List<Business>>([]);
+  List<Business> get contacts => _contacts.value;
 
   /// contact are business in other words
   Future<void> loadContacts() async {
-    Stream<List<BusinessSync>> contacts =
+    Stream<List<Business>> contacts =
         ProxyService.api.contacts().asBroadcastStream();
     contacts.listen((event) {
       _contacts.value = event;
