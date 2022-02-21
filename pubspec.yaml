@@ -38,9 +38,6 @@ dependencies:
   animations: ^2.0.0
   sentry_flutter: ^6.3.0
   fluent_ui:
-    git:
-      url: https://github.com/bdlukaa/fluent_ui.git
-      branch: master
   system_theme: ^1.0.1
   flutter_acrylic: ^0.1.0
   provider: ^6.0.1

@@ -61,9 +61,6 @@ dependencies:
   # FXME: soon go back to use stable version not from git.
   # fluent_ui: ^3.8.0
   fluent_ui:
-    git:
-      url: https://github.com/bdlukaa/fluent_ui.git
-      branch: master
   flipper_services: ^0.0.1-dev.6
   flutter_vector_icons: ^1.0.0
   flipper_chat: ^0.0.1-dev.5

@@ -1,3 +1,4 @@
+import 'package:flipper_dashboard/flipper_windows.dart';
 import 'package:flipper_login/login.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_rw/theme.dart';
@@ -192,7 +193,7 @@ class _GateState extends State<Gate> {
           name: 'home',
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
-            child: const FlipperApp(),
+            child: const FlipperAppWindows(),
           ),
         ),
         GoRoute(
@@ -457,6 +458,7 @@ class _GateState extends State<Gate> {
                   ),
                 ),
                 localizationsDelegates: [
+                  fluent.DefaultFluentLocalizations.delegate,
                   FlutterFireUILocalizations.withDefaultOverrides(
                       const LabelOverrides()),
                   const FlipperLocalizationsDelegate(),
