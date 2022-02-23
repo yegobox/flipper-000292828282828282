@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_login/config.dart';
 import 'package:flipper_rw/gate.dart';
+import 'package:flipper_services/app_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:flipper_dashboard/startup_view.dart';
@@ -10,38 +11,11 @@ import 'package:flipper_services/proxy.dart';
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'desktop_login_view.dart';
+import 'package:flipper_routing/routes.locator.dart';
+import 'package:flutter/scheduler.dart';
 
 final isWindows = UniversalPlatform.isWindows;
 final isWeb = UniversalPlatform.isWeb;
-
-// Overrides a label for en locale
-// To add localization for a custom language follow the guide here:
-// https://flutter.dev/docs/development/accessibility-and-localization/internationalization#an-alternative-class-for-the-apps-localized-resources
-
-final emailLinkProviderConfig = EmailLinkProviderConfiguration(
-  actionCodeSettings: ActionCodeSettings(
-    url: 'https://reactnativefirebase.page.link',
-    handleCodeInApp: true,
-    androidMinimumVersion: '12',
-    androidPackageName:
-        'io.flutter.plugins.flutterfire_ui.flutterfire_ui_example',
-    iOSBundleId: 'io.flutter.plugins.flutterfireui.flutterfireUIExample',
-  ),
-);
-
-final providerConfigs = [
-  const EmailProviderConfiguration(),
-  // emailLinkProviderConfig,
-  const PhoneProviderConfiguration(),
-  // const GoogleProviderConfiguration(clientId: GOOGLE_CLIENT_ID),
-  // const AppleProviderConfiguration(),
-  // const FacebookProviderConfiguration(clientId: FACEBOOK_CLIENT_ID),
-  // const TwitterProviderConfiguration(
-  //   apiKey: TWITTER_API_KEY,
-  //   apiSecretKey: TWITTER_API_SECRET_KEY,
-  //   redirectUri: TWITTER_REDIRECT_URI,
-  // ),
-];
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -52,16 +26,18 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final log = getLogger('LoginView');
+  final appService = locator<AppService>();
 
   Future<void> isNetAvailable() async {
-    ConnectivityResult connectivityResult =
-        await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      // GoRouter.of(context).pushNamed('login');
-      loginInfo.noNet = false;
-    } else {
-      loginInfo.noNet = true;
+    if (!appService.isLoggedIn()) {
+      ConnectivityResult connectivityResult =
+          await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile ||
+          connectivityResult == ConnectivityResult.wifi) {
+        loginInfo.noNet = false;
+      } else {
+        loginInfo.noNet = true;
+      }
     }
   }
 
@@ -70,16 +46,24 @@ class _LoginViewState extends State<LoginView> {
     ProxyService.remoteConfig.config();
     ProxyService.remoteConfig.setDefault();
     ProxyService.remoteConfig.fetch();
-    isNetAvailable();
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      // Got a new connectivity status!
-      if (result == ConnectivityResult.mobile ||
-          result == ConnectivityResult.wifi) {
-        loginInfo.noNet = false;
-      } else {
-        loginInfo.noNet = true;
-      }
+    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+      isNetAvailable();
     });
+    if (!appService.isLoggedIn()) {
+      SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+        Connectivity()
+            .onConnectivityChanged
+            .listen((ConnectivityResult result) {
+          // Got a new connectivity status!
+          if (result == ConnectivityResult.mobile ||
+              result == ConnectivityResult.wifi) {
+            loginInfo.noNet = false;
+          } else {
+            loginInfo.noNet = true;
+          }
+        });
+      });
+    }
     super.initState();
   }
 

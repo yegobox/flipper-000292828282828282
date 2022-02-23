@@ -10,12 +10,12 @@ import 'dart:io';
 // ->right now ditch is comlicated bcs isar still need some feature required for this easy migration
 // ->migrating slowly on web will give more insight as we wait for the feature to be omplemented on isar side
 // ->isar won't need to use same interface as objectbox since isar support all platforms
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:flipper_services/proxy.dart';
 
 import 'interface.dart';
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 import 'isar/points.dart';
 import 'isar/pin.dart';
 import 'isar/order_item.dart';
@@ -27,6 +27,7 @@ import 'isar/customer.dart';
 import 'isar/color.dart';
 import 'isar/category.dart';
 import 'isar/business_local.dart';
+import 'isar/business.dart';
 import 'isar/branch.dart';
 import 'isar/voucher.dart';
 import 'isar/variant_sync.dart';
@@ -52,10 +53,10 @@ class ExtendedClient extends http.BaseClient {
   ExtendedClient(this._inner);
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    String? token = "ProxyService.box.read(key: 'bearerToken')";
-    String? userId = "ProxyService.box.read(key: 'userId')";
-    request.headers['Authorization'] = token;
-    request.headers['userId'] = userId;
+    String? token = ProxyService.box.read(key: 'bearerToken');
+    String? userId = ProxyService.box.read(key: 'userId');
+    request.headers['Authorization'] = token ?? '';
+    request.headers['userId'] = userId ?? '';
     request.headers['Content-Type'] = 'application/json';
     // request.headers['Connection'] = "Keep-Alive";
     // request.headers['Keep-Alive'] = "timeout=5, max=1000";
@@ -63,7 +64,7 @@ class ExtendedClient extends http.BaseClient {
   }
 }
 
-class IsarAPI implements Api {
+class IsarAPI implements IsarApiInterface {
   final log = getLogger('IsarAPI');
   ExtendedClient client = ExtendedClient(http.Client());
   String apihub = "https://apihub.yegobox.com";
@@ -72,14 +73,20 @@ class IsarAPI implements Api {
       directory: dbName,
       schemas: [
         OrderFSyncSchema,
+        BusinessSyncSchema,
+        BranchSyncSchema,
+        BusinessSchema,
+        OrderItemSyncSchema,
       ],
       inspector: false,
     );
   }
 
   IsarAPI({String? dbName, Directory? dir}) {
-    getDir(dbName: dbName!);
-    log.d('dbName: $dbName');
+    if (dbName != null) {
+      getDir(dbName: dbName);
+      log.d('dbName: $dbName');
+    }
   }
 
   @override
@@ -452,7 +459,7 @@ class IsarAPI implements Api {
   }
 
   @override
-  Future<Voucher?> consumeVoucher({required int voucherCode}) async {
+  Future<VoucherM?> consumeVoucher({required int voucherCode}) async {
     final http.Response response =
         await client.patch(Uri.parse("$apihub/v2/api/voucher"),
             body: jsonEncode(
@@ -460,7 +467,7 @@ class IsarAPI implements Api {
             ),
             headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 422) return null;
-    return Voucher.fromMap(json.decode(response.body));
+    return VoucherM.fromMap(json.decode(response.body));
   }
 
   @override
@@ -479,7 +486,7 @@ class IsarAPI implements Api {
   Future<void> createGoogleSheetDoc({required String email}) async {
     // TODOre-work on this until it work 100%;
     Business? business = getBusiness();
-    String docName = business!.name + '- Report';
+    String docName = business!.name! + '- Report';
 
     await client.post(Uri.parse("$apihub/v2/api/createSheetDocument"),
         body: jsonEncode({"title": docName, "shareToEmail": email}),
@@ -612,35 +619,42 @@ class IsarAPI implements Api {
     return kBranches;
   }
 
+  // get list of Business from isar where userId = userId
+  // if list is empty then get list from online
   @override
-  Future<List<Business>> getLocalOrOnlineBusiness({required String userId}) {
-    // TODO: implement getLocalOrOnlineBusiness
-    throw UnimplementedError();
+  Future<Business> getLocalOrOnlineBusiness({required String userId}) async {
+    log.e("reaching here");
+    Business? kBusiness =
+        await isar.businesss.filter().userIdEqualTo(userId).findFirst();
+    if (kBusiness == null) {
+      return await getOnlineBusiness(userId: userId);
+    }
+    return kBusiness;
   }
 
   @override
-  Future<List<Business>> getOnlineBusiness({required String userId}) async {
+  Future<Business> getOnlineBusiness({required String userId}) async {
     final response =
         await client.get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
-    List<Business> businesses = [];
+
     if (response.statusCode == 401) {
       throw SessionException(term: "session expired");
     }
     if (response.statusCode == 404) {
       throw NotFoundException(term: "Business not found");
     }
-    // final box = store.box<Business>();
+    log.d(response.body);
     Business? business = isar.businesss.getSync(fromJson(response.body).id);
     if (business == null) {
-      // box.put(fromJson(response.body), mode: PutMode.put);
-      // save fromJson(response.body) to db
-      isar.businesss.put(fromJson(response.body));
-      // return all business from isar db
-      return isar.businesss.filter().userIdEqualTo(userId).findAll();
+      await isar.writeTxn((isar) async {
+        isar.businesss.put(fromJson(response.body));
+      });
+      business =
+          await isar.businesss.filter().userIdEqualTo(userId).findFirst();
+      return business!;
+    } else {
+      return business;
     }
-
-    businesses.add(fromJson(response.body));
-    return businesses;
   }
 
   @override
@@ -741,9 +755,16 @@ class IsarAPI implements Api {
   }
 
   @override
-  Future<bool> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future<bool> logOut() async {
+    ProxyService.box.remove(key: 'userId');
+    ProxyService.box.remove(key: 'bearerToken');
+    ProxyService.box.remove(key: 'branchId');
+    ProxyService.box.remove(key: 'userPhone');
+    ProxyService.box.remove(key: 'UToken');
+    ProxyService.box.remove(key: 'businessId');
+
+    FirebaseAuth.instance.signOut();
+    return await Future.value(true);
   }
 
   @override

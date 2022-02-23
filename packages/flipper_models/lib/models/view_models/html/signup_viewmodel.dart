@@ -10,6 +10,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_services/constants.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flipper_models/isar_models.dart' as isar;
 
 final isWindows = UniversalPlatform.isWindows;
 
@@ -93,18 +94,18 @@ class SignupViewModel extends FormViewModel {
     if (okStatus == 200) {
       final String userId = ProxyService.box.getUserId()!;
       //get businesses's id then look for related branch [0] create the default category
-      List<Business> businesses =
-          await ProxyService.api.getOnlineBusiness(userId: userId);
-      if (businesses.isEmpty) return;
-      ProxyService.box.write(key: 'businessId', value: businesses[0].id);
-      ProxyService.appService.setBusiness(businesses: businesses);
+      isar.Business businesses =
+          await ProxyService.isarApi.getOnlineBusiness(userId: userId);
+
+      ProxyService.box.write(key: 'businessId', value: businesses.id);
+      ProxyService.appService.setBusiness(business: businesses);
       // if (ProxyService.remoteConfig.isSubmitDeviceTokenEnabled()) {
       // String? token = await FirebaseMessaging.instance.getToken();
       // ProxyService.firestore
       //     .saveTokenToDatabase(token: token!, business: businesses[0].toJson());
       // // }
       List<BranchSync> branches =
-          await ProxyService.api.branches(businessId: businesses[0].id);
+          await ProxyService.api.branches(businessId: businesses.id);
 
       ProxyService.box.write(key: 'branchId', value: branches[0].id);
 

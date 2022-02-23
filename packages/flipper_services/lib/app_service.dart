@@ -1,4 +1,4 @@
-import 'package:flipper_rw/gate.dart';
+import 'package:flipper_models/isar_models.dart' as isar;
 import 'package:stacked/stacked.dart';
 
 import 'package:flipper_models/models/models.dart';
@@ -18,8 +18,8 @@ class AppService with ReactiveServiceMixin {
   final _categories = ReactiveValue<List<Category>>([]);
   List<Category> get categories => _categories.value;
 
-  final _businesses = ReactiveValue<List<Business>>([]);
-  List<Business> get businesses => _businesses.value;
+  final _business = ReactiveValue<isar.Business>(isar.Business());
+  isar.Business get business => _business.value;
 
   final _units = ReactiveValue<List<Unit>>([]);
   List<Unit> get units => _units.value;
@@ -34,8 +34,8 @@ class AppService with ReactiveServiceMixin {
     _currentColor.value = color;
   }
 
-  setBusiness({required List<Business> businesses}) {
-    _businesses.value = businesses;
+  setBusiness({required isar.Business business}) {
+    _business.value = business;
   }
 
   void loadCategories() async {
@@ -73,8 +73,6 @@ class AppService with ReactiveServiceMixin {
 
   bool isLoggedIn() {
     _loggedIn = ProxyService.box.read(key: 'userId') == null ? false : true;
-    // loginInfo.isLoggedIn = _loggedIn;
-    notifyListeners();
     return _loggedIn;
   }
 
@@ -92,6 +90,6 @@ class AppService with ReactiveServiceMixin {
 
   AppService() {
     listenToReactiveValues(
-        [_categories, _units, _colors, _currentColor, _businesses, _contacts]);
+        [_categories, _units, _colors, _currentColor, _business, _contacts]);
   }
 }

@@ -37,6 +37,8 @@ import 'local_notification_service.dart';
 import 'local_storage.dart';
 import 'location_service.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:flipper_models/interface.dart';
+import 'package:flipper_models/isar_api.dart';
 
 final isWindows = UniversalPlatform.isWindows;
 
@@ -182,6 +184,13 @@ abstract class ThirdPartyServicesModule {
     late Api apiService;
     apiService = ObjectBoxApi();
     return apiService;
+  }
+
+  @lazySingleton
+  IsarApiInterface get isarApi {
+    late IsarApiInterface isarApi;
+    isarApi = IsarAPI();
+    return isarApi;
   }
 
   @lazySingleton

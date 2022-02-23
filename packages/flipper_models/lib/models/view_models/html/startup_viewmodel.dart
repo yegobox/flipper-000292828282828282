@@ -13,6 +13,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:go_router/go_router.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flipper_rw/gate.dart';
+import 'package:flipper_models/isar_models.dart' as isar;
 
 final isWeb = UniversalPlatform.isWeb;
 
@@ -146,7 +147,7 @@ class StartUpViewModel extends BaseViewModel {
   }
 
   void navigateToDashboard(
-      {required Business business,
+      {required isar.Business business,
       BranchSync? branch,
       required BuildContext context}) {
     if (branch != null) {
@@ -154,9 +155,9 @@ class StartUpViewModel extends BaseViewModel {
     }
     ProxyService.box.write(key: 'businessId', value: business.id);
 
-    ProxyService.appService.setBusiness(businesses: [business]);
+    ProxyService.appService.setBusiness(business: business);
     ProxyService.box.write(key: 'userName', value: business.name);
-    String name = business.name;
+    String name = business.name!;
     ProxyService.box.write(
         key: 'businessUrl',
         value: business.businessUrl ??

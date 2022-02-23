@@ -170,6 +170,17 @@ class FirestoreApi implements FlipperFirestore {
   }
 
   @override
+  Stream<List<Business>> contacts() {
+    // return FirebaseChatCore.instance.contacts();
+    throw UnimplementedError();
+  }
+
+  @override
+  void addContact({required Business business}) {
+    // return FirebaseChatCore.instance.addContact(contact: business);
+  }
+
+  @override
   void deleteRoom({required String roomId}) {
     return FirebaseChatCore.instance.deleteRoom(roomId: roomId);
   }
@@ -179,7 +190,7 @@ class FirestoreApi implements FlipperFirestore {
     CollectionReference reference =
         FirebaseFirestore.instance.collection('products');
     reference.snapshots().listen((querySnapshot) {
-      querySnapshot.docChanges.forEach((change) {
+      for (var change in querySnapshot.docChanges) {
         if (change.type == DocumentChangeType.added) {
           Map<dynamic, dynamic> data =
               change.doc.data() as Map<dynamic, dynamic>;
@@ -216,7 +227,7 @@ class FirestoreApi implements FlipperFirestore {
           log.d('firestore:removed triggered');
           // ProxyService.api.deleteProduct(product: change.document.data());
         }
-      });
+      }
     });
   }
 
@@ -279,16 +290,5 @@ class FirestoreApi implements FlipperFirestore {
   void pushVariations(
       {required int branchId, required List<VariantSync> products}) {
     // TODO: implement pushVariations
-  }
-
-  @override
-  void addContact({required Business business}) {
-    // TODO: implement addContact
-  }
-
-  @override
-  Stream<List<Business>> contacts() {
-    // TODO: implement contacts
-    throw UnimplementedError();
   }
 }

@@ -2,13 +2,11 @@ import 'package:flipper_dashboard/flipper_windows.dart';
 import 'package:flipper_login/login.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_rw/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/i10n.dart';
 import 'package:flipper_models/models/models.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:overlay_support/overlay_support.dart';
-// import 'package:flutter/fluent.dart';
-import 'package:fluent_ui/fluent_ui.dart' as fluent;
-import 'package:flipper_localize/flipper_localize.dart';
+// import 'package:flutter/dart';
+import 'package:fluent_ui/fluent_ui.dart';
 // import 'package:google_ui/google_ui.dart';
 import 'package:stacked/stacked.dart';
 import 'package:provider/provider.dart';
@@ -105,7 +103,8 @@ class _GateState extends State<Gate> {
       redirect: (state) {
         final bool loggedIn = loginInfo.isLoggedIn;
         final bool needSignUp = loginInfo.needSignUp;
-        final String country = loginInfo.country;
+        // when a country is for example United state with space in it will cause a loop so replace space init
+        final String country = loginInfo.country.replaceAll(" ", "");
         final bool noNet = loginInfo.noNet;
         final bool needSwitchBranch = loginInfo.switchBranch;
         final bool isLogging = state.subloc == '/login';
@@ -124,7 +123,6 @@ class _GateState extends State<Gate> {
             needSignUp &&
             !isArleadySignup &&
             !isArleadyHome &&
-            !isLogging &&
             !isRedirecting) {
           return Routes.signup + "/$country";
         }
@@ -150,14 +148,14 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/boot',
           name: 'boot',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const StartUpView(),
           ),
         ),
         GoRoute(
           path: '/',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const StartUpView(),
           ),
@@ -165,7 +163,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/omni',
           name: 'chat',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const OmniChat(),
           ),
@@ -173,7 +171,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/contacts',
           name: 'contacts',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const OmniContacts(),
           ),
@@ -181,7 +179,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/signup/:country',
           name: 'signup',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: SignUpFormView(
               countryNm: state.params['country']!,
@@ -191,7 +189,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/home',
           name: 'home',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const FlipperAppWindows(),
           ),
@@ -199,7 +197,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/login',
           name: 'login',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const LoginView(),
           ),
@@ -207,7 +205,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/product',
           name: 'product',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const AddProductView(),
           ),
@@ -215,7 +213,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/product/:id',
           name: 'editProduct',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: AddProductView(
               productId: int.parse(state.params['id']!),
@@ -225,7 +223,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/discount',
           name: 'discount',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: AddDiscount(),
           ),
@@ -233,7 +231,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/categories',
           name: 'categories',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: ListCategories(
               categories: state.extra! as List<Category>,
@@ -243,7 +241,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/colors',
           name: 'colors',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const ColorTile(),
           ),
@@ -251,7 +249,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/stock/:id',
           name: 'stock',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: ReceiveStock(
               variantId: int.parse(state.params['id']!),
@@ -261,7 +259,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/variation/:productId',
           name: 'variation',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: AddVariation(
               productId: int.parse(state.params['productId']!),
@@ -271,7 +269,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/category',
           name: 'category',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: AddCategory(),
           ),
@@ -279,7 +277,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/units/:type',
           name: 'units',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: ListUnits(
               type: state.params['type']!,
@@ -289,7 +287,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/summary',
           name: 'summary',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: OrderSummary(),
           ),
@@ -297,7 +295,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/sell',
           name: 'sell',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: Sell(
               product: state.extra! as ProductSync,
@@ -307,7 +305,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/pay',
           name: 'pay',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: Payments(),
           ),
@@ -315,7 +313,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/collect/:paymentType',
           name: 'collect',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: CollectCashView(
               paymentType: state.params['paymentType']!,
@@ -325,7 +323,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/sale/:total',
           name: 'sale',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: AfterSale(
               totalOrderAmount: double.parse(state.params['total']!),
@@ -335,7 +333,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/settings',
           name: 'settings',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: SettingsScreen(),
           ),
@@ -343,7 +341,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/switchBranch',
           name: 'switchBranch',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: SwitchBranchView(),
           ),
@@ -351,7 +349,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: Routes.analytics,
           name: 'analytics',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: Analytics(),
           ),
@@ -359,7 +357,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: "/scann/:intent",
           name: 'scann',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: ScannView(
               intent: state.params['intent']!,
@@ -369,7 +367,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/order',
           name: 'order',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: OrderView(),
           ),
@@ -377,7 +375,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/browse',
           name: 'browse',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const InAppBrowser(),
           ),
@@ -385,7 +383,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/customers/:orderId',
           name: 'customers',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: Customers(
               orderId: int.parse(state.params['orderId']!),
@@ -395,7 +393,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/finance',
           name: 'finance',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const FinanceApp(),
           ),
@@ -403,7 +401,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/nonetwork',
           name: 'nonetwork',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: const NoNet(),
           ),
@@ -411,7 +409,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/pin',
           name: 'pin',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: PinLogin(),
           ),
@@ -419,7 +417,7 @@ class _GateState extends State<Gate> {
         GoRoute(
           path: '/devices/:pin',
           name: 'devices',
-          pageBuilder: (context, state) => MaterialPage(
+          pageBuilder: (context, state) => material.MaterialPage(
             key: state.pageKey,
             child: Devices(pin: int.parse(state.params['pin']!)),
           ),
@@ -439,11 +437,11 @@ class _GateState extends State<Gate> {
           builder: (context, _) {
             final appTheme = context.watch<AppTheme>();
             return OverlaySupport.global(
-              child: fluent.FluentApp.router(
+              child: FluentApp.router(
                 color: Colors.blue,
                 debugShowCheckedModeBanner: false,
                 title: 'flipper',
-                theme: fluent.ThemeData(
+                theme: ThemeData(
                   accentColor: appTheme.color,
                   brightness: appTheme.mode == ThemeMode.system
                       ? false
@@ -453,21 +451,15 @@ class _GateState extends State<Gate> {
                           ? Brightness.dark
                           : Brightness.light,
                   visualDensity: VisualDensity.standard,
-                  focusTheme: fluent.FocusThemeData(
-                    glowFactor: fluent.is10footScreen() ? 2.0 : 0.0,
+                  focusTheme: FocusThemeData(
+                    glowFactor: is10footScreen() ? 2.0 : 0.0,
                   ),
                 ),
-                localizationsDelegates: [
-                  fluent.DefaultFluentLocalizations.delegate,
-                  FlutterFireUILocalizations.withDefaultOverrides(
-                      const LabelOverrides()),
-                  const FlipperLocalizationsDelegate(),
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
+                localizationsDelegates: const [
+                  DefaultFluentLocalizations.delegate,
                 ],
                 supportedLocales: const [
                   Locale('en', 'US'), // English
-                  Locale('es', 'ES'), // Spanish
                 ],
                 locale: const Locale('es'),
                 // locale: model.languageService
