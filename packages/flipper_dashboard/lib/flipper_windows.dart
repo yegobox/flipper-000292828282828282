@@ -109,7 +109,7 @@ class _FlipperAppWindowsState extends State<FlipperAppWindows> {
               Dashboard(
                 model: model,
                 sideBuilder: (context, action) {
-                  return const ProductView(userId: '1', items: true);
+                  return const ProductView();
                 },
               )
             ]),

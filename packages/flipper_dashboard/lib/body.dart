@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flipper_data_table/page/sortable_page.dart';
 import 'package:google_ui/google_ui.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'settings.dart';
 
 final isDesktopOrWeb = UniversalPlatform.isDesktopOrWeb;
 

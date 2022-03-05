@@ -1,210 +1,80 @@
-import 'package:flutter/foundation.dart';
+import 'package:flipper_dashboard/setting_view_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_settings_ui/flutter_settings_ui.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_ui/google_ui.dart';
+import 'package:stacked/stacked.dart';
+import 'package:flipper_models/isar_models.dart' as isar;
 
-import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
-import 'package:provider/provider.dart';
-import 'package:system_theme/system_theme.dart';
-import 'package:flipper_rw/theme.dart';
-import 'package:flipper_services/proxy.dart';
-
-late bool darkMode;
-const List<String> accentColorNames = [
-  'System',
-  'Yellow',
-  'Orange',
-  'Red',
-  'Magenta',
-  'Purple',
-  'Blue',
-  'Teal',
-  'Green',
-];
-
-class Settings extends StatefulWidget {
-  const Settings({Key? key, this.controller}) : super(key: key);
-
-  final ScrollController? controller;
-
-  @override
-  State<Settings> createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
-  dark() async {
-    if (defaultTargetPlatform == TargetPlatform.windows ||
-        defaultTargetPlatform == TargetPlatform.android ||
-        kIsWeb) {
-      darkMode = await SystemTheme.darkMode;
-      await SystemTheme.accentInstance.load();
-    } else {
-      darkMode = true;
-    }
-    if (!kIsWeb &&
-        [TargetPlatform.windows, TargetPlatform.linux]
-            .contains(defaultTargetPlatform)) {
-      try {
-        await flutter_acrylic.Window.initialize();
-      } catch (e) {}
-    }
-  }
-
-  @override
-  void initState() {
-    dark();
-    super.initState();
-  }
-
+class SettingPage extends StatelessWidget {
+  const SettingPage({Key? key, this.business}) : super(key: key);
+  final isar.Business? business;
   @override
   Widget build(BuildContext context) {
-    final appTheme = context.watch<AppTheme>();
-
-    final tooltipThemeData = TooltipThemeData(decoration: () {
-      const radius = BorderRadius.zero;
-      final shadow = [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2),
-          offset: const Offset(1, 1),
-          blurRadius: 10.0,
-        ),
-      ];
-      final border = Border.all(color: Colors.grey[100], width: 0.5);
-      if (FluentTheme.of(context).brightness == Brightness.light) {
-        return BoxDecoration(
-          color: Colors.white,
-          borderRadius: radius,
-          border: border,
-          boxShadow: shadow,
-        );
-      } else {
-        return BoxDecoration(
-          color: Colors.grey,
-          borderRadius: radius,
-          border: border,
-          boxShadow: shadow,
-        );
-      }
-    }());
-
-    const spacer = SizedBox(height: 10.0);
-    const biggerSpacer = SizedBox(height: 40.0);
-    return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Settings')),
-      scrollController: widget.controller,
-      children: [
-        Text('Theme mode', style: FluentTheme.of(context).typography.subtitle),
-        spacer,
-        ...List.generate(ThemeMode.values.length, (index) {
-          final mode = ThemeMode.values[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: RadioButton(
-              checked: appTheme.mode == mode,
-              onChanged: (value) {
-                if (value) {
-                  appTheme.mode = mode;
-                }
-              },
-              content: Text('$mode'.replaceAll('ThemeMode.', '')),
-            ),
-          );
-        }),
-        biggerSpacer,
-        Text(
-          'Navigation Pane Display Mode',
-          style: FluentTheme.of(context).typography.subtitle,
-        ),
-        spacer,
-        ...List.generate(PaneDisplayMode.values.length, (index) {
-          final mode = PaneDisplayMode.values[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: RadioButton(
-              checked: appTheme.displayMode == mode,
-              onChanged: (value) {
-                if (ProxyService.box.getDefaultDisplayMode() != 'compact') {
-                  if (value) {
-                    appTheme.displayMode = mode;
-                    ProxyService.box
-                        .write(key: 'displayMode', value: mode.name);
-                  }
-                } else {
-                  if (value) {
-                    ProxyService.box
-                        .write(key: 'displayMode', value: mode.name);
-                    appTheme.displayMode = mode;
-                  }
-                }
-              },
-              content: Text(
-                mode.toString().replaceAll('PaneDisplayMode.', ''),
+    return ViewModelBuilder<SettingViewModel>.reactive(
+      viewModelBuilder: () => SettingViewModel(),
+      onModelReady: (model) async => await model.createPin(),
+      builder: (context, model, child) {
+        return Scaffold(
+          backgroundColor: Theme.of(context).canvasColor,
+          body: SafeArea(
+            child: Center(
+              child: Column(
+                children: [
+                  const GText(
+                    "Settings",
+                    variant: GTextVariant.headline4,
+                  ),
+                  Flexible(
+                    child: SettingsList(
+                      backgroundColor: Theme.of(context).canvasColor,
+                      sections: [
+                        SettingsSection(
+                          tiles: [
+                            SettingsTile(
+                              title: business?.name,
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.person,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: (BuildContext context) {},
+                            ),
+                            SettingsTile(
+                              title: "Linked Devices",
+                              leading: const CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.computer,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: (BuildContext context) {
+                                GoRouter.of(context).push(
+                                    "/devices/" + model.pin!.pin.toString());
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          );
-        }),
-        biggerSpacer,
-        Text('Navigation Indicator',
-            style: FluentTheme.of(context).typography.subtitle),
-        spacer,
-        ...List.generate(NavigationIndicators.values.length, (index) {
-          final mode = NavigationIndicators.values[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: RadioButton(
-              checked: appTheme.indicator == mode,
-              onChanged: (value) {
-                if (value) appTheme.indicator = mode;
-              },
-              content: Text(
-                mode.toString().replaceAll('NavigationIndicators.', ''),
-              ),
-            ),
-          );
-        }),
-        biggerSpacer,
-        Text('Accent Color',
-            style: FluentTheme.of(context).typography.subtitle),
-        spacer,
-        Wrap(children: [
-          Tooltip(
-            style: tooltipThemeData,
-            child: _buildColorBlock(appTheme, systemAccentColor),
-            message: accentColorNames[0],
           ),
-          ...List.generate(Colors.accentColors.length, (index) {
-            final color = Colors.accentColors[index];
-            return Tooltip(
-              style: tooltipThemeData,
-              message: accentColorNames[index + 1],
-              child: _buildColorBlock(appTheme, color),
-            );
-          }),
-        ]),
-      ],
-    );
-  }
-
-  Widget _buildColorBlock(AppTheme appTheme, AccentColor color) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Button(
-        onPressed: () {
-          appTheme.color = color;
-        },
-        style: ButtonStyle(padding: ButtonState.all(EdgeInsets.zero)),
-        child: Container(
-          height: 40,
-          width: 40,
-          color: color,
-          alignment: Alignment.center,
-          child: appTheme.color == color
-              ? Icon(
-                  FluentIcons.check_mark,
-                  color: color.basedOnLuminance(),
-                  size: 22.0,
-                )
-              : null,
-        ),
-      ),
+        );
+      },
     );
   }
 }
