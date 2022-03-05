@@ -155,6 +155,7 @@ class StartUpViewModel extends BaseViewModel {
           await ProxyService.isarApi.getLocalBranches(businessId: business.id);
 
       ProxyService.box.write(key: 'branchId', value: branches[0].id);
+      ProxyService.box.write(key: 'businessId', value: business.id);
 
       return business;
     } catch (e) {

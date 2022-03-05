@@ -1,7 +1,8 @@
 import 'package:flipper_models/models/models.dart';
 
 abstract class Api<T> {
-  Future<List<ProductSync>> products({required int branchId});
+  Stream<List<ProductSync>> products({required int branchId});
+  Future<List<ProductSync>> productsFuture({required int branchId});
   Future<int> signup({required Map business});
   Future<SyncF> login({required String userPhone});
   Future<List<Business>> getOnlineBusiness({required String userId});
@@ -38,7 +39,7 @@ abstract class Api<T> {
   // Future
   //this function for now figure out what is the business id on backend side.
   Future<ProductSync> createProduct({required ProductSync product});
-  Future<List<ProductSync>> isTempProductExist({required int branchId});
+  ProductSync? isTempProductExist({required int branchId});
   Future<bool> logOut();
 
   Future<Voucher?> consumeVoucher({required int voucherCode});
@@ -149,14 +150,14 @@ abstract class Api<T> {
   Profile? updateProfile({required Profile profile});
   void saveTenant({required String phoneNumber});
   Points addPoint({required int userId, required int point});
-  Subscription addUpdateSubscription({
+  Future<Subscription> addUpdateSubscription({
     required int userId,
     required int interval,
     required double recurringAmount,
     required String descriptor,
     required List<Feature> features,
   });
-  Subscription? getSubscription({required int userId});
+  Future<Subscription?> getSubscription({required int userId});
   Points? getPoints({required int userId});
   void consumePoints({required int userId, required int points});
   Future<Pin?> createPin();

@@ -1,3 +1,5 @@
+// import 'package:flipper_routing/routes.logger.dart';
+import 'package:flipper_routing/routes.logger.dart';
 import 'package:flipper_rw/helpers/utils.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_localize/flipper_localize.dart';
@@ -47,35 +49,42 @@ class ProductRow extends StatelessWidget {
         },
         child: Column(children: <Widget>[
           ListTile(
-            contentPadding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+            contentPadding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
             leading: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: 58,
-                child: !hasImage
-                    ? TextDrawable(
-                        backgroundColor: HexColor(color),
-                        text: name,
-                        isTappable: true,
-                        onTap: null,
-                        boxShape: BoxShape.rectangle,
-                      )
-                    : CachedNetworkImage(
-                        imageUrl: imageUrl!,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
+              height: MediaQuery.of(context).size.height,
+              width: 58,
+              child: !hasImage
+                  ? TextDrawable(
+                      backgroundColor: HexColor(color),
+                      text: name,
+                      isTappable: true,
+                      onTap: null,
+                      boxShape: BoxShape.rectangle,
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: imageUrl!,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      )),
+                      ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+            ),
             title: Text(
               name,
+              style: const TextStyle(color: Colors.black),
+            ),
+            subtitle: Text(
+              stocks.isNotEmpty
+                  ? 'In stock ' + stocks[0].currentStock.toString()
+                  : 'In stock 0.0',
               style: const TextStyle(color: Colors.black),
             ),
             trailing: stocks.isEmpty
@@ -83,13 +92,17 @@ class ProductRow extends StatelessWidget {
                     ' Prices',
                     style: TextStyle(color: Colors.black),
                   )
-                : stocks.length > 1
+                : product.variations.isNotEmpty && product.variations.length > 1
                     ? const Text(
                         ' Prices',
                         style: TextStyle(color: Colors.black),
                       )
                     : Text(
-                        'RWF ' + stocks[0].retailPrice.toInt().toString(),
+                        'RWF ' +
+                            (product.variations.isEmpty
+                                ? '0'
+                                : product.variations.first.retailPrice
+                                    .toString()),
                         style: const TextStyle(color: Colors.black),
                       ),
           ),

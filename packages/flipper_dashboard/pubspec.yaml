@@ -30,7 +30,6 @@ dependencies:
     git:
       url: git://github.com/Realank/flutter_datetime_picker.git
       ref: eb66486c47d50bf550950c196486121ffcea8885
-  qr_flutter: ^4.0.0
   flex_color_scheme: ^4.2.0
   image_picker: ^0.8.0+4
   firebase_storage: ^10.2.5
@@ -48,14 +47,13 @@ dependencies:
   universal_platform: ^1.0.0+1
   ionicons: ^0.1.2
   overlay_support: ^1.2.1
-
   flutter_settings_ui: ^2.0.1
   flutter_inappwebview: ^5.3.2
   url_launcher: ^6.0.18
   google_fonts: ^2.1.0
   number_display: ^3.0.0
   firebase_auth_desktop: ^0.1.1-dev.0
-  firebase_core: ^1.9.0
+  firebase_core: ^1.13.1
   firebase_core_desktop: ^0.1.1-dev.0
   cupertino_icons: ^1.0.4
   # FXME: soon go back to use stable version not from git.
@@ -76,7 +74,10 @@ dependencies:
   connectivity_plus: ^2.2.0
   flipper_data_table: ^1.0.0-dev.2
   device_info_plus: ^3.2.1
-  # provider: ^6.0.2
+  gap: ^2.0.0
+  barcode: ^2.2.0
+  printing: ^5.3.0
+  qr_flutter: ^4.0.1
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -87,6 +88,7 @@ flutter:
     - ../../assets/
     - ../../assets/images/
     - ../../assets/icons/
+    - ../../assets/svg/
 
   fonts:
     - family: Poppins

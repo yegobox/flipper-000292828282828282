@@ -19,7 +19,7 @@ class AppSetup {
 // flutter packages pub run build_runner build --delete-conflicting-outputs
 //  firebase deploy --only hosting
 //  firebase deploy --only functions
-// // flutter build web --release
+//  flutter build web --release
 // NOTE:TODO: when rebuilding login_popup_view remember to add library flipper_login; in generated file
 // firebase install https://firebase.flutter.dev/docs/installation/android/
 // flutter create --template=package hello
@@ -73,7 +73,7 @@ class AppSetup {
 // test pin:085214
 
 // when adding new repo with other submodules
-// git submodule add https://github.com/yegobox/google_ui.git open-sources/google_ui
+// git submodule add https://github.com/yegobox/qr.flutter.git open-sources/qr.flutter
 // https://gist.github.com/myusuf3/7f645819ded92bda6677
 
 // %AppData%
@@ -167,8 +167,8 @@ class AppSetup {
 
 // docker run --rm -it -v $(pwd):/data --publish 0.0.0.0:908:9999  --publish 0.0.0.0:907:9980 --user $UID objectboxio/sync:21.5.14-server --model ./data/objectbox-model.json --unsecured-no-authentication --browser-bind 0.0.0.0:9980
 
-// use config file
-// docker run --rm -it -v $(pwd):/data --publish 0.0.0.0:908:9999  --publish 0.0.0.0:907:9980 -d --user $UID objectboxio/sync:21.5.14-server --browser-bind 0.0.0.0:9980
+// use config file, the config file has model and password in it. so no need to add them below.
+// docker run --rm -it -v $(pwd):/data --publish 0.0.0.0:908:9999  --publish 0.0.0.0:907:9980 -d --user $UID objectboxio/sync:21.5.14-server --browser-bind 0.0.0.0:9981
 
 // push all branches to github
 // git push origin --mirror
@@ -205,3 +205,13 @@ class AppSetup {
 // https://birju.dev/posts/burying-the-hatchet-of-build-runner-once-and-for-all/
 
 // flutter run -t lib/demo.dart (run demo when we need to!)
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !! Irrecoverable memory error detected: store instance is corrupt!!
+// 2
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !! Irrecoverable memory error detected: store instance is corrupt!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// https://www.sandromaglione.com/dart-flutter-static-metaprogramming-macro-prototype/ learn more about macro
+// https://www.vendhq.com/
+

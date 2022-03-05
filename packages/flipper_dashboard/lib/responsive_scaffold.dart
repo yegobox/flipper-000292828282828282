@@ -1,3 +1,4 @@
+import 'package:flipper_dashboard/flipper_app.dart';
 import 'package:flipper_dashboard/sale_indicator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -463,21 +464,21 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
         // in the 2nd part of the Row.
         Expanded(
           child: Scaffold(
-            appBar: (widget.model.tab != 1 && widget.model.tab != 3)
+            appBar: (widget.model.tab != 1 && widget.model.tab != 3) ||
+                    (widget.model.tab == 1 &&
+                        widget.model.tab != 3 &&
+                        !isDesktopOrWeb)
                 ? AppBar(
                     // systemOverlayStyle: SystemUiOverlayStyle.light,
                     title: SaleIndicator(
                       counts: widget.model.countedOrderItems,
                       onClick: () {
                         if (widget.model.countedOrderItems > 0) {
-                          // ProxyService.nav.navigateTo(Routes.summary);
                           GoRouter.of(context).push(Routes.summary);
                         }
                       },
                       onLogout: () async {
-                        await ProxyService.api.logOut();
-
-                        // ProxyService.nav.navigateTo(Routes.initial);
+                        await ProxyService.isarApi.logOut();
                       },
                     ),
 
@@ -997,7 +998,7 @@ class _UserProfileState extends State<_UserProfile> {
                         const SizedBox(width: 10),
                         TextButton(
                           onPressed: () async {
-                            await ProxyService.api.logOut();
+                            await ProxyService.isarApi.logOut();
                             GoRouter.of(context).push(Routes.boot);
                           },
                           child: Column(

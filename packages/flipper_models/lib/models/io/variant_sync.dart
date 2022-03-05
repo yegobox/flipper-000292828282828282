@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final variation = variationFromJson(jsonString);
 library flipper_models;
 
 import 'dart:convert';
@@ -40,7 +37,6 @@ class VariantSync {
     this.taxPercentage,
   });
 
-  @Id(assignable: true)
   int id;
   String name;
   String sku;
@@ -68,7 +64,7 @@ class VariantSync {
         unit: json["unit"],
         supplyPrice: json["supplyPrice"],
         retailPrice: json["retailPrice"],
-        synced: json["synced"] == null ? false : json["synced"],
+        synced: json["synced"] ?? false,
         table: json["table"],
         productName: json["productName"],
         fbranchId: json["fbranchId"],
@@ -87,7 +83,7 @@ class VariantSync {
         "table": table,
         "supplyPrice": supplyPrice,
         "retailPrice": retailPrice,
-        "synced": synced == null ? false : synced,
+        "synced": synced ?? false,
         "productName": productName,
         "fbranchId": int.parse(fbranchId.toString()),
         "taxName": taxName ?? '',

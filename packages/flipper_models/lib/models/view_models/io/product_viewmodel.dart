@@ -13,12 +13,12 @@ import 'package:flipper_services/product_service.dart';
 
 import 'package:flipper_services/constants.dart';
 
-class ProductViewModel extends BusinessHomeViewModel {
+// class ProductViewModel extends BusinessHomeViewModel {
+class ProductViewModel extends ReactiveViewModel {
+  // extends ReactiveViewModel
   final AppService _appService = locator<AppService>();
   // ignore: annotate_overrides, overridden_fields
   final log = getLogger('ProductViewModel');
-  @override
-  // ignore: overridden_fields
   final ProductService productService = locator<ProductService>();
 
   List<PColor> get colors => _appService.colors;
@@ -35,7 +35,6 @@ class ProductViewModel extends BusinessHomeViewModel {
 
   get currentColor => _appService.currentColor;
 
-  @override
   List<VariantSync>? get variants => productService.variants;
 
   Stream<String> getBarCode() async* {
@@ -44,7 +43,7 @@ class ProductViewModel extends BusinessHomeViewModel {
 
   Future<void> loadProducts() async {
     int branchId = ProxyService.box.read(key: 'branchId');
-    await productService.loadProducts(branchId: branchId);
+    productService.loadProducts(branchId: branchId);
   }
 
   /// Create a temporal product to use during this session of product creation
@@ -61,10 +60,12 @@ class ProductViewModel extends BusinessHomeViewModel {
       notifyListeners();
       return product.id;
     }
-    int branchId = ProxyService.box.read(key: 'branchId');
-    List<ProductSync> isTemp =
-        await ProxyService.api.isTempProductExist(branchId: branchId);
-    if (isTemp.isEmpty) {
+    int branchId = ProxyService.box.getBranchId()!;
+    ProductSync? isTemp =
+        ProxyService.api.isTempProductExist(branchId: branchId);
+    log.d(isTemp);
+    log.d(branchId);
+    if (isTemp == null) {
       ProductSync product =
           await ProxyService.api.createProduct(product: productMock);
       productService.variantsProduct(productId: product.id);
@@ -75,11 +76,11 @@ class ProductViewModel extends BusinessHomeViewModel {
       return product.id;
     }
 
-    productService.setCurrentProduct(product: isTemp[0]);
-    productService.variantsProduct(productId: isTemp[0].id);
+    productService.setCurrentProduct(product: isTemp);
+    productService.variantsProduct(productId: isTemp.id);
     notifyListeners();
 
-    return isTemp[0].id;
+    return isTemp.id;
   }
 
   void isPriceSet(bool bool) {
@@ -93,7 +94,7 @@ class ProductViewModel extends BusinessHomeViewModel {
   void setName({String? name}) {
     _name = name;
     final cleaned = name?.trim();
-    _lock = cleaned?.length == null || cleaned?.length == 0 || !_price;
+    _lock = cleaned?.length == null || !_price;
     notifyListeners();
   }
 
@@ -337,7 +338,6 @@ class ProductViewModel extends BusinessHomeViewModel {
   Future<bool> addProduct({required Map mproduct, required String name}) async {
     mproduct['name'] = name;
     mproduct['barCode'] = productService.barCode.toString();
-    log.i(productService.barCode);
     mproduct['color'] = currentColor;
     mproduct['color'] = currentColor;
     mproduct['draft'] = false;
@@ -378,9 +378,9 @@ class ProductViewModel extends BusinessHomeViewModel {
     Map kProduct = product.toJson();
     kProduct['expiryDate'] = date.toIso8601String();
     ProxyService.api.update(data: kProduct, endPoint: 'product');
-    ProductSync? Cproduct =
+    ProductSync? cProduct =
         await ProxyService.api.getProduct(id: kProduct['id']);
-    productService.setCurrentProduct(product: Cproduct!);
+    productService.setCurrentProduct(product: cProduct!);
     notifyListeners();
   }
 
@@ -426,7 +426,8 @@ class ProductViewModel extends BusinessHomeViewModel {
               .update(data: item.toJson(), endPoint: 'orderItem/$id');
         }
       }
-      updatePayable();
+      // TODOD: update the order commented this may cause issue. as I no longer extends businessHomeViewmodel
+      // updatePayable();
       return true;
     }
     return false;

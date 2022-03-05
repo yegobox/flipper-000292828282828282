@@ -13,7 +13,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:flipper_services/proxy.dart';
-
+import 'package:flipper_rw/gate.dart';
 import 'interface.dart';
 import 'package:isar/isar.dart';
 import 'isar/points.dart';
@@ -235,7 +235,7 @@ class IsarAPI implements IsarApiInterface {
           table: data['table'],
           value: map['value'],
           name: map['name'],
-          fbranchId: 1,
+          fbranchId: data['fbranchId'],
         );
         // save unit to db
         await isar.units.put(unit);
@@ -362,12 +362,32 @@ class IsarAPI implements IsarApiInterface {
     if (response.statusCode == 200) {
       await isar.writeTxn((isar) async {
         for (BranchSync branch in branchsFromJson(response.body)) {
+          // TODOget back on this know if isar is not auto incrementing the ID
+          // log.d(branch.id);
+
           // save branch in db
-          await isar.branchSyncs.put(branch);
+          final b = BranchSync()
+            ..active = branch.active
+            // do not forget to reassign id as we don't use local ID:
+            ..id = branch.id
+            ..description = branch.description
+            ..latitude = branch.latitude.toString()
+            ..name = branch.name
+            ..table = 'banches'
+            ..longitude = branch.longitude.toString()
+            ..description = branch.description
+            ..fbusinessId = branch.fbusinessId;
+
+          await isar.branchSyncs.put(b);
         }
       });
       // return all branches from db
-      return isar.branchSyncs.filter().fbusinessIdEqualTo(businessId).findAll();
+      /// right now the the branch business Id is empty return here id is in this range
+      /// instead, will fix later.
+      List<BranchSync> bb =
+          await isar.branchSyncs.filter().tableEqualTo('banches').findAll();
+
+      return bb;
     }
     throw Exception('Failed to load branch');
   }
@@ -554,8 +574,8 @@ class IsarAPI implements IsarApiInterface {
 
   @override
   Business? getBusiness() {
-    // TODO: implement getBusiness
-    throw UnimplementedError();
+    String? userId = ProxyService.box.getUserId();
+    return isar.businesss.filter().userIdEqualTo(userId!).findFirstSync();
   }
 
   @override
@@ -608,11 +628,10 @@ class IsarAPI implements IsarApiInterface {
 
   @override
   Future<List<BranchSync>> getLocalBranches({required int businessId}) async {
+    // clean all branches from db
     // get all branch from isar db
-    List<BranchSync> kBranches = await isar.branchSyncs
-        .filter()
-        .fbusinessIdEqualTo(businessId)
-        .findAll();
+    List<BranchSync> kBranches =
+        await isar.branchSyncs.filter().tableEqualTo('banches').findAll();
     if (kBranches.isEmpty) {
       return await branches(businessId: businessId);
     }
@@ -643,7 +662,6 @@ class IsarAPI implements IsarApiInterface {
     if (response.statusCode == 404) {
       throw NotFoundException(term: "Business not found");
     }
-    log.d(response.body);
     Business? business = isar.businesss.getSync(fromJson(response.body).id);
     if (business == null) {
       await isar.writeTxn((isar) async {
@@ -756,13 +774,24 @@ class IsarAPI implements IsarApiInterface {
 
   @override
   Future<bool> logOut() async {
+    log.i("logging out");
+
+    /// delete all business and branches from isar db for
+    /// potential next business that can log-in to not mix data.
+    await isar.writeTxn((isar) async {
+      // delete all business
+      await isar.businessSyncs.clear();
+      await isar.businesss.clear();
+      // delete all branches.
+      await isar.branchSyncs.clear();
+    });
     ProxyService.box.remove(key: 'userId');
     ProxyService.box.remove(key: 'bearerToken');
     ProxyService.box.remove(key: 'branchId');
     ProxyService.box.remove(key: 'userPhone');
     ProxyService.box.remove(key: 'UToken');
     ProxyService.box.remove(key: 'businessId');
-
+    loginInfo.isLoggedIn = false;
     FirebaseAuth.instance.signOut();
     return await Future.value(true);
   }

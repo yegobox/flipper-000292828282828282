@@ -9,7 +9,6 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 // import 'package:google_ui/google_ui.dart';
 import 'package:stacked/stacked.dart';
-import 'package:provider/provider.dart';
 import 'package:flipper_chat/omni/omni_contacts.dart';
 import 'package:flipper_chat/omni_chat.dart';
 import 'package:flipper_dashboard/add_discount.dart';
@@ -461,7 +460,7 @@ class _GateState extends State<Gate> {
                 supportedLocales: const [
                   Locale('en', 'US'), // English
                 ],
-                locale: const Locale('es'),
+                locale: const Locale('US'),
                 // locale: model.languageService
                 //     .locale, //french == rwanda language in our app
                 themeMode: model.settingService.themeMode.value,

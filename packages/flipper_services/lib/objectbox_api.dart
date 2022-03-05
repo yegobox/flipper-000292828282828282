@@ -3,33 +3,22 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flipper_rw/gate.dart';
-import 'package:flutter/foundation.dart' as f;
-import 'package:path_provider/path_provider.dart';
-
 import 'package:flipper_models/models/models.dart';
-import 'package:flipper_services/dio_client.dart';
-import 'package:flipper_services/mobile_upload.dart';
-// import 'package:get_storage/get_storage.dart';
-// import 'package:flipper_services/pdf_api.dart';
 
-import 'package:flipper_services/constants.dart';
-import 'package:flipper_services/proxy.dart';
-
-import 'abstractions/api.dart';
-import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
-// import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-
-///
-///final isWeb = UniversalPlatform.isWeb;
-// import 'package:flipper_models/objectbox.g.dart';
 import 'package:flipper_models/models/objectbox.dart';
 import 'package:flipper_routing/routes.logger.dart';
+import 'package:flipper_rw/gate.dart';
+import 'package:flipper_services/constants.dart';
+import 'package:flipper_services/dio_client.dart';
+import 'package:flipper_services/mobile_upload.dart';
+import 'package:flipper_services/proxy.dart';
+import 'package:flutter/foundation.dart' as f;
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
-// import 'api_result.dart';
-// import 'network_exceptions.dart';
-// final socketUrl = 'https://apihub.yegobox.com/stomp';
+import 'abstractions/api.dart';
+
 late Store store;
 
 class ExtendedClient extends http.BaseClient {
@@ -66,119 +55,43 @@ class ObjectBoxApi extends MobileUpload implements Api {
     // log.i('Path' + dir.path + '/$dbName');
     store = Store(getObjectBoxModel(), directory: dir.path + '/$dbName');
     ProxyService.api.migrateToSync();
-    if (!Platform.isWindows) {
-      // this is to say that we are on a device mobile then where all subs are activated
-      if(f.kDebugMode){
-        partial();
-      }else{
-        if (Sync.isAvailable() && ProxyService.billing.activeSubscription()) {
-          sync();
-        } else {
-          partial();
-        }
-      }
-
+    SyncClient syncClient = Sync.client(
+      store,
+      'ws://sync.yegobox.com:908', // wss for SSL, ws for unencrypted traffic
+      SyncCredentials.sharedSecretString("!@2022aurora"),
+    );
+    if (!f.kDebugMode &&
+        Sync.isAvailable() &&
+        await ProxyService.billing.activeSubscription()) {
+      syncClient.setRequestUpdatesMode(SyncRequestUpdatesMode.auto);
+      final print = getLogger('ObjectBoxAPi');
+      syncClient.requestUpdates(subscribeForFuturePushes: true);
+      syncClient.start();
+      syncClient.loginEvents.listen((event) {
+        if (event == SyncLoginEvent.loggedIn) print.d('sync fully');
+      });
+    } else if (f.kDebugMode) {
+      syncClient.setRequestUpdatesMode(SyncRequestUpdatesMode.auto);
+      final print = getLogger('ObjectBoxAPi');
+      syncClient.requestUpdates(subscribeForFuturePushes: true);
+      syncClient.start();
+      syncClient.loginEvents.listen((event) {
+        if (event == SyncLoginEvent.loggedIn) print.d('sync fully');
+      });
     } else {
-      // on desktop sync should be activated by default.
-      sync();
+      syncClient.setRequestUpdatesMode(SyncRequestUpdatesMode.auto);
+      final print = getLogger('ObjectBoxAPi');
+      syncClient.requestUpdates(subscribeForFuturePushes: true);
+      syncClient.stop();
+      syncClient.loginEvents.listen((event) {
+        if (event == SyncLoginEvent.loggedIn) print.d('sync fully');
+      });
     }
   }
 
-  static void partial() {
-    SyncClient syncClient = Sync.client(
-      store,
-      'ws://sync.yegobox.com:908', // wss for SSL, ws for unencrypted traffic
-      SyncCredentials.sharedSecretString("!@2022aurora"),
-    );
-
-    /// if a user is paying then use this config or otherwise
-    syncClient.requestUpdates(subscribeForFuturePushes: true);
-
-    /// set sync to manual for now until further notice!
-    syncClient.setRequestUpdatesMode(SyncRequestUpdatesMode.autoNoPushes);
-
-    syncClient.start();
-    syncClient.loginEvents.listen((event) {
-      if (event == SyncLoginEvent.loggedIn) print('Logged in successfully');
-    });
-  }
-
-  static void sync() {
-    SyncClient syncClient = Sync.client(
-      store,
-      'ws://sync.yegobox.com:908', // wss for SSL, ws for unencrypted traffic
-      SyncCredentials.sharedSecretString("!@2022aurora"),
-    );
-
-    /// if a user is paying then use this config or otherwise
-    syncClient.requestUpdates(subscribeForFuturePushes: true);
-
-    /// set sync to manual for now until futher notice!
-    syncClient.setRequestUpdatesMode(SyncRequestUpdatesMode.auto);
-
-    syncClient.start();
-    syncClient.loginEvents.listen((event) {
-      if (event == SyncLoginEvent.loggedIn) print('Logged in successfully');
-    });
-  }
-
-  ///FIXMEsocket has some issue now so stoping it now
-  // StompClient? stompMessageClient;
-  // StreamController<Message> messageStreamController =
-  //     StreamController<Message>.broadcast();
-
-  // StompClient? stompUsersClient;
-  // StreamController<Business> usersStreamController =
-  //     StreamController<Business>.broadcast();
-  // void onConnect(StompFrame frame) {
-  //   log.i('onConnect');
-
-  //   /// for message
-  //   stompMessageClient?.subscribe(
-  //       destination: '/topic/messages',
-  //       callback: (StompFrame frame) {
-  //         if (frame.body != null) {
-  //           Message result = sMessageJson(frame.body!);
-  //           messageStreamController.add(result);
-  //         }
-  //       });
-
-  //   /// for users socket listner
-  //   stompUsersClient?.subscribe(
-  //       destination: '/topic/users',
-  //       callback: (StompFrame frame) {
-  //         if (frame.body != null) {
-  //           Business result = sbusinessFromJson(frame.body!);
-  //           usersStreamController.add(result);
-  //         }
-  //       });
-  // }
-
   ObjectBoxApi({String? dbName, Directory? dir}) {
     dioClient = DioClient(apihub, interceptors: []);
-    //connect socket
-    // FIXMEstoped socket
-    // if (stompMessageClient == null && stompUsersClient == null) {
-    //   stompMessageClient = StompClient(
-    //       config: StompConfig.SockJS(
-    //     url: socketUrl,
-    //     onConnect: onConnect,
-    //     onWebSocketError: (dynamic error) => log.i(error.toString()),
-    //   ));
 
-    //   stompMessageClient?.activate();
-
-    //   /// activate the users client
-    //   stompUsersClient = StompClient(
-    //       config: StompConfig.SockJS(
-    //     url: socketUrl,
-    //     onConnect: onConnect,
-    //     onWebSocketError: (dynamic error) => print(error.toString()),
-    //   ));
-
-    //   stompUsersClient?.activate();
-    // }
-    // get store initialized.
     if (dbName != null) {
       getDir(dbName: dbName);
     }
@@ -226,7 +139,6 @@ class ObjectBoxApi extends MobileUpload implements Api {
     }
     if (endPoint == 'category') {
       final category = Category(
-        id: DateTime.now().millisecondsSinceEpoch,
         name: data['name'],
         table: data['table'],
         active: data['active'],
@@ -241,22 +153,33 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Future<List<ProductSync>> isTempProductExist({required int branchId}) async {
+  ProductSync? isTempProductExist({required int branchId}) {
     return store
         .box<ProductSync>()
-        .getAll()
-        .where((v) => v.fbranchId == branchId)
-        .where((product) => product.name == 'temp')
-        .toList();
+        .query(ProductSync_.fbranchId
+            .equals(branchId)
+            .and(ProductSync_.name.equals('temp')))
+        .build()
+        .findFirst();
   }
 
+  /// stream a list of products with synced data
   @override
-  Future<List<ProductSync>> products({required int branchId}) async {
-    return store
+  Stream<List<ProductSync>> products({required int branchId}) async* {
+    yield* store
         .box<ProductSync>()
-        .getAll()
-        .where((v) => v.fbranchId == branchId)
-        .toList();
+        .query(
+          ProductSync_.fbranchId
+              .equals(branchId)
+              .and(
+                ProductSync_.name.notEquals('temp'),
+              )
+              .and(
+                ProductSync_.name.notEquals('Custom Amount'),
+              ),
+        )
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
   }
 
   @override
@@ -328,13 +251,13 @@ class ObjectBoxApi extends MobileUpload implements Api {
   @override
   Future<StockSync?> getStock(
       {required int branchId, required int variantId}) async {
-    List<StockSync> stocks = store
+    StockSync? stock = store
         .box<StockSync>()
-        .getAll()
-        .where((v) => v.fvariantId == variantId)
-        .toList();
-    if (stocks.length > 0) {
-      return stocks[0];
+        .query(StockSync_.fvariantId.equals(variantId))
+        .build()
+        .findFirst();
+    if (stock != null) {
+      return stock;
     }
     return null;
   }
@@ -413,8 +336,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
   Future<List<BranchSync>> branches({required int businessId}) async {
     final response =
         await client.get(Uri.parse("$apihub/v2/api/branches/$businessId"));
-    log.i(businessId);
-    log.d(response.statusCode);
+
     if (response.statusCode == 200) {
       for (BranchSync branch in branchFromJson(response.body)) {
         final box = store.box<BranchSync>();
@@ -428,107 +350,26 @@ class ObjectBoxApi extends MobileUpload implements Api {
   @override
   Future<void> collectCashPayment(
       {required double cashReceived, required OrderFSync order}) async {
-    Map data = order.toJson();
-    data['cashReceived'] = cashReceived;
-    data['status'] = completeStatus;
-    data['reported'] = false;
-    data['draft'] = false;
-    final date = DateTime.now();
-    final dueDate = date.add(Duration(days: 7));
+    // Map data = order.toJson();
+    // data['cashReceived'] = cashReceived;
+    // data['status'] = completeStatus;
+    // data['reported'] = false;
+    // data['draft'] = false;
+    order.cashReceived = cashReceived;
+    order.status = completeStatus;
+    order.reported = false;
+    order.draft = false;
 
-    final invoice = Invoice(
-      supplier: Supplier(
-        name: 'Sarah Field',
-        address: 'Sarah Street 9, Beijing, China',
-        paymentInfo: 'https://paypal.me/sarahfieldzz',
-      ),
-      customer: CustomerSync(
-        name: 'Apple Inc.',
-        branchId: ProxyService.box.read(key: 'branchId'),
-        address: 'Apple Street, Cupertino, CA 95014',
-        email: '',
-        phone: '',
-        orderId: 0,
-      ),
-      info: InvoiceInfo(
-        date: date,
-        dueDate: dueDate,
-        description: 'My description...',
-        number: '${DateTime.now().year}-9999',
-      ),
-      items: [
-        InvoiceItem(
-          description: 'Coffee',
-          date: DateTime.now(),
-          quantity: 3,
-          vat: 0.19,
-          unitPrice: 5.99,
-        ),
-        InvoiceItem(
-          description: 'Water',
-          date: DateTime.now(),
-          quantity: 8,
-          vat: 0.19,
-          unitPrice: 0.99,
-        ),
-        InvoiceItem(
-          description: 'Orange',
-          date: DateTime.now(),
-          quantity: 3,
-          vat: 0.19,
-          unitPrice: 2.99,
-        ),
-        InvoiceItem(
-          description: 'Apple',
-          date: DateTime.now(),
-          quantity: 8,
-          vat: 0.19,
-          unitPrice: 3.99,
-        ),
-        InvoiceItem(
-          description: 'Mango',
-          date: DateTime.now(),
-          quantity: 1,
-          vat: 0.19,
-          unitPrice: 1.59,
-        ),
-        InvoiceItem(
-          description: 'Blue Berries',
-          date: DateTime.now(),
-          quantity: 5,
-          vat: 0.19,
-          unitPrice: 0.99,
-        ),
-        InvoiceItem(
-          description: 'Lemon',
-          date: DateTime.now(),
-          quantity: 4,
-          vat: 0.19,
-          unitPrice: 1.29,
-        ),
-      ],
-    );
-
-    update(data: data, endPoint: 'order');
-
-    if (ProxyService.remoteConfig.isPrinterAvailable()) {
-      // final pdfFile =
-      //     await ProxyService.pdfInvoice.generate(invoice, order.id.toString());
-
-      /// read user setting and see if he choose to open a receipt file on complete of a sale.
-      /// this is handy in case a client want to print on his machine directly
-      String userId = ProxyService.box.read(key: 'userId');
-      Setting? setting = await getSetting(userId: int.parse(userId));
-      if (setting != null &&
-          setting.openReceiptFileOSaleComplete != null &&
-          setting.openReceiptFileOSaleComplete == true) {
-        // ProxyService.pdfApi.openFile(pdfFile);
-      }
-      if (setting != null &&
-          setting.autoPrint != null &&
-          setting.autoPrint == true) {
-        // ProxyService.pdfApi.openFile(pdfFile);
-        // TODOnow call the printing service
+    update(data: order.toJson(), endPoint: 'order');
+    // update order's orderItems
+    for (OrderItemSync item in order.orderItems) {
+      // each item.variantId should have new stock value
+      StockSync? stock =
+          await getStock(branchId: order.fbranchId, variantId: item.fvariantId);
+      if (stock != null) {
+        stock.currentStock = stock.currentStock - item.count;
+        stock.lowStock = stock.lowStock - item.count;
+        update(data: stock.toJson(), endPoint: 'stock/${stock.id}');
       }
     }
   }
@@ -551,8 +392,8 @@ class ObjectBoxApi extends MobileUpload implements Api {
       bool useProductName = false,
       String orderType = 'custom',
       double quantity = 1}) async {
-    final ref = Uuid().v1();
-    final orderNUmber = Uuid().v1();
+    final ref = const Uuid().v1();
+    final orderNUmber = const Uuid().v1();
     String userId = ProxyService.box.read(key: 'userId');
     int branchId = ProxyService.box.read(key: 'branchId');
     OrderFSync? existOrder = await pendingOrderExist(branchId: branchId);
@@ -633,37 +474,18 @@ class ObjectBoxApi extends MobileUpload implements Api {
 
   @override
   Future<ProductSync> createProduct({required ProductSync product}) async {
-    final Map data = product.toJson();
+    product.active = false;
+    product.id = DateTime.now().microsecondsSinceEpoch;
+    product.description = 'description';
+    product.hasPicture = false;
+    product.fbusinessId = ProxyService.box.getBusinessId()!;
+    product.fbranchId = ProxyService.box.getBranchId()!;
 
-    data['active'] = false;
-    data['description'] = 'description';
-    data['hasPicture'] = false;
-    data['fbusinessId'] = ProxyService.box.read(key: 'businessId');
-    data['fbranchId'] = ProxyService.box.read(key: 'branchId');
-    data['taxId'] = 'XX';
-    ProductSync products = ProductSync(
-      active: data['active'],
-      fbranchId: data['fbranchId'],
-      fbusinessId: data['fbusinessId'],
-      color: data['color'],
-      description: data['description'],
-      hasPicture: data['hasPicture'],
-      name: data['name'],
-      table: data['table'],
-      unit: data['unit'],
-      createdAt: data['createdAt'],
-      currentUpdate: data['currentUpdate'],
-      draft: data['draft'],
-      imageLocal: data['imageLocal'],
-      imageUrl: data['imageUrl'],
-      fsupplierId: data['fsupplierId'],
-      ftaxId: data['ftaxId'],
-    );
     final String? userId = ProxyService.box.read(key: 'userId');
-    final int? branchId = ProxyService.box.read(key: 'branchId');
+    final int branchId = ProxyService.box.getBranchId()!;
 
     final productId =
-        store.box<ProductSync>().put(products, mode: PutMode.insert);
+        store.box<ProductSync>().put(product, mode: PutMode.insert);
     VariantSync variant = VariantSync(
       name: 'Regular',
       sku: 'sku',
@@ -671,8 +493,8 @@ class ObjectBoxApi extends MobileUpload implements Api {
       unit: 'Per Item',
       table: AppTables.variation,
       channels: [userId!],
-      productName: data['name'],
-      fbranchId: branchId!,
+      productName: product.name,
+      fbranchId: branchId,
       taxName: 'N/A',
       taxPercentage: 0.0,
       retailPrice: 0.0,
@@ -685,12 +507,9 @@ class ObjectBoxApi extends MobileUpload implements Api {
 
     store.box<ProductSync>().put(productFromStore);
 
-    // final productFromStore2 = store.box<ProductSync>().get(productId)!;
-
-    // log.d(productFromStore2.variations[0].toJson());
     List<VariantSync> v =
         await variants(branchId: branchId, productId: productId);
-    final stock = new StockSync(
+    final stock = StockSync(
       fbranchId: branchId,
       fvariantId: v[0].id,
       lowStock: 0.0,
@@ -838,15 +657,17 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
+        int branchId = ProxyService.box.getBranchId()!;
+        int businessId = ProxyService.box.getBusinessId()!;
         ProductSync product = ProductSync(
           active: map['active'],
-          fbranchId: map['fbranchId'],
+          fbranchId: branchId,
           table: map['table'],
           barCode: map['barCode'],
           channels: map['channels'],
           id: map['id'],
           expiryDate: map['expiryDate'],
-          fbusinessId: map['fbusinessId'],
+          fbusinessId: businessId,
           fcategoryId: map['fcategoryId'],
           color: map['color'],
           description: map['description'],
@@ -863,7 +684,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
           ftaxId: map['ftaxId'],
         );
         List<VariantSync> variants =
-            await ProxyService.api.getVariantByProductId(productId: map['id']);
+            ProxyService.api.getVariantByProductId(productId: map['id']);
         final box = store.box<ProductSync>();
         product.variations.addAll(variants);
 
@@ -875,9 +696,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
+        int branchId = ProxyService.box.getBranchId()!;
         StockSync stock = StockSync(
           active: map['active'],
-          fbranchId: map['branchId'],
+          fbranchId: branchId,
           table: map['table'],
           channels: map['channels'],
           id: map['id'],
@@ -959,8 +781,9 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
+        int branchId = ProxyService.box.getBranchId()!;
         VariantSync variant = VariantSync(
-          fbranchId: map['fbranchId'],
+          fbranchId: branchId,
           name: map['name'],
           table: map['table'],
           channels: map['channels'],
@@ -985,9 +808,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
+        int branchId = ProxyService.box.getBranchId()!;
         Unit unit = Unit(
           active: map['active'],
-          fbranchId: map['branchId'],
+          fbranchId: branchId,
           name: map['name'],
           table: map['table'],
           channels: map['channels'],
@@ -1003,9 +827,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
+        int branchId = ProxyService.box.getBranchId()!;
         PColor pcolor = PColor(
           active: map['active'],
-          fbranchId: map['branchId'],
+          fbranchId: branchId,
           table: map['table'],
           channels: map['channels'],
           id: map['id'],
@@ -1020,9 +845,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
+        int branchId = ProxyService.box.getBranchId()!;
         OrderFSync order = OrderFSync(
           active: map['active'],
-          fbranchId: map['fbranchId'],
+          fbranchId: branchId,
           table: map['table'],
           channels: map['channels'],
           id: map['id'],
@@ -1058,7 +884,6 @@ class ObjectBoxApi extends MobileUpload implements Api {
             item.forderId = data['id'];
             item.fvariantId = data['fvariantId'];
             updatedOrderItem.add(item);
-            log.i(item);
             store.box<OrderItemSync>().put(item, mode: PutMode.update);
           }
         }
@@ -1092,9 +917,10 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
+        int branchId = ProxyService.box.getBranchId()!;
         CustomerSync kCustomer = CustomerSync(
             email: map['email'],
-            branchId: map['branchId'],
+            branchId: branchId,
             updatedAt: map['updatedAt'],
             phone: map['phone'],
             name: map['name'],
@@ -1111,9 +937,9 @@ class ObjectBoxApi extends MobileUpload implements Api {
         data.forEach((key, value) {
           map[key] = value;
         });
-        // 1.0.toInt();
+        int branchId = ProxyService.box.getBranchId()!;
         DiscountSync kDiscount = DiscountSync(
-          branchId: map['branchId'],
+          branchId: branchId,
           amount: map['amount'].toInt(),
           name: map['name'],
           id: map['id'],
@@ -1608,7 +1434,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
               DateTime.parse(order.createdAt).difference(date).inDays >= -7 &&
               order.fbranchId == branchId)
           .toList();
-      if (orders.length > 0) {
+      if (orders.isNotEmpty) {
         //if in pastOrders there is no object orders[0] that exist then we add it in the list
         for (var i = 0; i < orders.length; i++) {
           //is orders[i] does not exist in pastOrders then we add it in the list
@@ -1628,8 +1454,8 @@ class ObjectBoxApi extends MobileUpload implements Api {
   Future<void> saveDiscount(
       {required int branchId, required name, double? amount}) async {
     // create Discount object and add it to the store
-    var discount = new DiscountSync(
-        name: name, amount: amount!.toInt(), branchId: branchId);
+    var discount =
+        DiscountSync(name: name, amount: amount!.toInt(), branchId: branchId);
     store.box<DiscountSync>().put(discount);
   }
 
@@ -1982,7 +1808,7 @@ class ObjectBoxApi extends MobileUpload implements Api {
 
       /// get old stock
       final stock = store
-          .box<Stock>()
+          .box<StockSync>()
           .getAll()
           .where((v) => v.fvariantId == variantss[0].id)
           .toList()[0];
@@ -2188,13 +2014,13 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Subscription addUpdateSubscription({
+  Future<Subscription> addUpdateSubscription({
     required int userId,
     required int interval,
     required double recurringAmount,
     required String descriptor,
     required List<Feature> features,
-  }) {
+  }) async {
     Subscription? sub = store
         .box<Subscription>()
         .query(Subscription_.userId.equals(userId))
@@ -2226,10 +2052,46 @@ class ObjectBoxApi extends MobileUpload implements Api {
         descriptor: descriptor,
         userId: userId,
         interval: interval,
-        lastBillingDate: DateTime.now().toIso8601String(),
+        lastBillingDate: DateTime.now().toIso8601String().toString(),
         nextBillingDate: nextBillingDate.toIso8601String(),
         recurring: recurringAmount,
       );
+
+      // get current branch
+      int branchId = ProxyService.box.read(key: 'branchId');
+      int businessId = ProxyService.box.read(key: 'businessId');
+      String a = sub.lastBillingDate.toString();
+      String b = sub.nextBillingDate.toString();
+
+      final response =
+          await client.post(Uri.parse("$apihub/v2/api/subscription"),
+              body: jsonEncode(<String, dynamic>{
+                "lastBillingDate": a,
+                "nextBillingDate": b,
+                "userId": userId,
+                "interval": interval,
+                "descriptor": descriptor,
+                "branches": [
+                  {
+                    "id": branchId,
+                    "active": true,
+                    "description": "desc",
+                    "name": "'$branchId'",
+                    "businessId": businessId,
+                    "longitude": "0",
+                    "latitude": "0",
+                    "table": "branches",
+                    "createdAt": "2/22/2021",
+                    "tenants": []
+                  }
+                ],
+                "features": [
+                  {"name": "chat"},
+                  {"name": "inventory"}
+                ]
+              }),
+              headers: {'Content-Type': 'application/json'});
+      if (response.statusCode != 201) throw Exception(response.body);
       int id = store.box<Subscription>().put(sub);
       Subscription s = store.box<Subscription>().get(id)!;
       for (var feature in features) {
@@ -2249,12 +2111,27 @@ class ObjectBoxApi extends MobileUpload implements Api {
   }
 
   @override
-  Subscription? getSubscription({required int userId}) {
-    return store
+  Future<Subscription?> getSubscription({required int userId}) async {
+    //re-write bellow code in short version of code
+    Subscription? local = store
         .box<Subscription>()
         .query(Subscription_.userId.equals(userId))
         .build()
         .findFirst();
+    if (local == null) {
+      final response =
+          await client.get(Uri.parse("$apihub/v2/api/subscription/$userId"));
+      if (response.statusCode == 200) {
+        Subscription? sub = Subscription.fromJson(json.decode(response.body));
+        log.d(sub.toJson());
+        store.box<Subscription>().put(sub);
+        return sub;
+      } else {
+        return null;
+      }
+    } else {
+      return local;
+    }
   }
 
   @override
@@ -2330,5 +2207,14 @@ class ObjectBoxApi extends MobileUpload implements Api {
       return pinFromMap(response.body);
     }
     throw Exception('Failed to load pin');
+  }
+
+  @override
+  Future<List<ProductSync>> productsFuture({required int branchId}) async {
+    return store
+        .box<ProductSync>()
+        .getAll()
+        .where((v) => v.fbranchId == branchId)
+        .toList();
   }
 }

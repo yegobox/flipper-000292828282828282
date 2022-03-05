@@ -1,10 +1,12 @@
 import 'package:flipper_dashboard/discount_row.dart';
+import 'package:flipper_services/constants.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_models/models/models.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'custom_dropdown.dart';
 import 'product_row.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -18,17 +20,10 @@ final isMacOs = UniversalPlatform.isMacOS;
 class ProductView extends StatefulWidget {
   const ProductView({
     Key? key,
-    required this.userId,
-    required this.items,
-    this.sellingModeView = false,
   }) : super(key: key);
 
-  final bool items;
-  final bool sellingModeView;
-  final String userId;
-
   @override
-  _onCreate createState() => _onCreate(userId, items, sellingModeView);
+  State<ProductView> createState() => _ProductViewState();
 }
 
 // ignore: camel_case_types
@@ -403,86 +398,124 @@ class _onCreate extends State<ProductView> {
     // _dropDownMenuItems = getDropDownMenuItems();
 
     return ViewModelBuilder<ProductViewModel>.reactive(
-      builder: (context, model, child) {
-        return sellingModeView
-            ? editModeView(model: model)
-            : searchItems(model: model, context: context);
-      },
       onModelReady: (model) {
-        model.loadProducts();
+        int branchId = ProxyService.box.getBranchId()!;
+        model.productService
+            .loadProducts(branchId: branchId)
+            .listen((products) {
+          model.productService.products = products;
+        });
       },
       viewModelBuilder: () => ProductViewModel(),
-    );
-  }
-}
+      builder: (context, model, child) {
+        return ListView(
+          shrinkWrap: true,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      // spinner = true;
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: CustomDropdownButton(
+                        value: _currentItems,
+                        items: _dropDownMenuItems,
+                        onChanged: (value) {
+                          model.filterProduct(searchKey: value.toString());
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 1,
+                  height: 48,
+                  color: Colors.black26,
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: Image.asset(
+                    'assets/ic_search.png',
+                    alignment: Alignment.center,
+                    width: 45,
+                    height: 30,
+                  ),
+                ),
+                if (ProxyService.remoteConfig.scannSelling() &&
+                    !isWindows &&
+                    !isMacOs)
+                  GestureDetector(
+                    onTap: () {
+                      // pass fake intent the intent will come from what we scann!
+                      GoRouter.of(context).push(Routes.scann + "/se");
+                    },
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      child: Icon(
+                        FluentIcons.generic_scan,
+                        color: primary,
+                      ),
+                    ),
+                  )
+              ],
+            ),
 
-class BuildProductsView extends StatelessWidget {
-  final log = getLogger('_onCreate');
-  BuildProductsView({
-    Key? key,
-    required this.model,
-  }) : super(key: key);
-  final ProductViewModel model;
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      children: [
-        /// show the discounts..
-        if (ProxyService.remoteConfig.isDiscountAvailable())
-          ...model.productService.discounts.map((discount) {
-            return DiscountRow(
-              discount: discount,
-              name: discount.name,
-              model: model,
-              hasImage: false,
-              delete: (id) {
-                model.deleteDiscount(id: id);
-              },
-              edit: (discount) {
-                // ProxyService.nav.navigateTo(
-                //   Routes.discount,
-                //   arguments: AddDiscountArguments(
-                //     discount: discount,
-                //   ),
-                // );
-              },
-              applyDiscount: (discount) async {
-                await model.applyDiscount(discount: discount);
-                showSimpleNotification(
-                  const Text('Apply discount'),
-                  background: Colors.green,
-                  position: NotificationPosition.bottom,
+            /// show the discounts..
+            if (ProxyService.remoteConfig.isDiscountAvailable())
+              ...model.productService.discounts.map((discount) {
+                return DiscountRow(
+                  discount: discount,
+                  name: discount.name,
+                  model: model,
+                  hasImage: false,
+                  delete: (id) {
+                    model.deleteDiscount(id: id);
+                  },
+                  edit: (discount) {
+                    GoRouter.of(context).push(Routes.discount);
+                  },
+                  applyDiscount: (discount) async {
+                    await model.applyDiscount(discount: discount);
+                    showSimpleNotification(
+                      const Text('Apply discount'),
+                      background: Colors.green,
+                      position: NotificationPosition.bottom,
+                    );
+                  },
+                );
+              }).toList(),
+
+            /// show the products
+            ...model.productService.products.map(
+              (product) {
+                return ProductRow(
+                  color: product.color,
+                  stocks: model.productService
+                      .loadStockByProductId(productId: product.id),
+                  model: model,
+                  hasImage: product.hasPicture,
+                  product: product,
+                  name: product.name,
+                  imageUrl: product.imageUrl,
+                  edit: (productId) {
+                    GoRouter.of(context).push(Routes.product + "/$productId");
+                  },
+                  addToMenu: (productId) {
+                    model.addToMenu(productId: productId);
+                  },
+                  delete: (productId) {
+                    model.deleteProduct(productId: productId);
+                  },
                 );
               },
-            );
-          }).toList(),
-
-        /// show the products
-        ...model.productService.products.map(
-          (product) {
-            return ProductRow(
-              color: product.color,
-              stocks: model.productService
-                  .loadStockByProductId(productId: product.id),
-              model: model,
-              hasImage: product.hasPicture,
-              product: product,
-              name: product.name,
-              imageUrl: product.imageUrl,
-              edit: (productId) {
-                GoRouter.of(context).push(Routes.product + "/$productId");
-              },
-              addToMenu: (productId) {
-                model.addToMenu(productId: productId);
-              },
-              delete: (productId) {
-                model.deleteProduct(productId: productId);
-              },
-            );
-          },
-        ).toList()
-      ],
+            ).toList()
+          ],
+        );
+      },
     );
   }
 }

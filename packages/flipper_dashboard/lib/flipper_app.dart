@@ -22,6 +22,8 @@ final isMacOs = UniversalPlatform.isMacOS;
 final isAndroid = UniversalPlatform.isAndroid;
 final isWeb = UniversalPlatform.isWeb;
 
+final isDesktopOrWeb = UniversalPlatform.isDesktopOrWeb;
+
 class FlipperApp extends StatefulWidget {
   const FlipperApp({
     Key? key,
@@ -89,13 +91,13 @@ class _FlipperAppState extends State<FlipperApp> {
     super.initState();
     if (SchedulerBinding.instance?.schedulerPhase ==
         SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
+      SchedulerBinding.instance?.addPostFrameCallback((_) async {
         int businessId = ProxyService.box.read(key: 'businessId');
         Profile? profile = ProxyService.api.profile(businessId: businessId);
 
         int today = DateTime.now().day;
         // if today is tuesday for example and other even days
-        if (profile == null && today % 2 == 0) {
+        if (profile == null && today % 2 == 0 && !isWindows) {
           bottomSheetBuilderProfile(
             context: context,
             body: <Widget>[const UpdateProfile()],
@@ -103,7 +105,9 @@ class _FlipperAppState extends State<FlipperApp> {
           );
         }
         // if to day is monday or wednesday and other odd days
-        if (today % 2 == 1 && !ProxyService.billing.activeSubscription()) {
+        if (today % 2 == 1 &&
+            !await ProxyService.billing.activeSubscription() &&
+            !isWindows) {
           activateSubscription(
             context: context,
             body: <Widget>[const SubscriptionWidget()],
@@ -146,7 +150,6 @@ class _FlipperAppState extends State<FlipperApp> {
         ProxyService.notification.initialize(context);
         ProxyService.notification.listen(context);
         ProxyService.dynamicLink.handleDynamicLink(context);
-        // load data for report
         model.loadReport();
       },
       builder: (context, model, child) {
@@ -189,13 +192,11 @@ class _FlipperAppState extends State<FlipperApp> {
                       dialogStyle: UpgradeDialogStyle.cupertino,
                       child: BodyWidget(
                         model: model,
-                        sideOpenController: _sideOpenController,
                         controller: controller,
                       ),
                     )
                   : BodyWidget(
                       model: model,
-                      sideOpenController: _sideOpenController,
                       controller: controller,
                     ),
               bottomNavigationBar: BottomNavigationBar(
@@ -210,10 +211,11 @@ class _FlipperAppState extends State<FlipperApp> {
                     icon: Icon(Icons.calculate),
                     label: 'KeyPad',
                   ),
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.analytics),
-                    label: 'Analytics',
-                  ),
+                  if (UniversalPlatform.isDesktopOrWeb)
+                    const BottomNavigationBarItem(
+                      icon: Icon(Icons.analytics),
+                      label: 'Analytics',
+                    ),
                   const BottomNavigationBarItem(
                     icon: Icon(Icons.store),
                     label: 'Store',

@@ -21,12 +21,12 @@ class LocalStorageImpl implements LocalStorage {
 
   @override
   int? getBranchId() {
-    return box.read('businessId');
+    return box.read('branchId');
   }
 
   @override
   int? getBusinessId() {
-    return box.read('branchId');
+    return box.read('businessId');
   }
 
   @override
@@ -46,6 +46,7 @@ class LocalStorageImpl implements LocalStorage {
 
   @override
   String getDefaultDisplayMode() {
-    return box.read('displayMode') ?? 'compact';
+    // TODO: implement getDefaultDisplayMode
+    throw UnimplementedError();
   }
 }
