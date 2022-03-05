@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:overlay_support/overlay_support.dart';
 // import 'package:flutter/dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:provider/provider.dart';
 // import 'package:google_ui/google_ui.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_chat/omni/omni_contacts.dart';
@@ -25,7 +26,6 @@ import 'package:flipper_dashboard/create/list_categories.dart';
 import 'package:flipper_dashboard/create/list_units.dart';
 import 'package:flipper_dashboard/create/receive_stock.dart';
 import 'package:flipper_dashboard/customers.dart';
-import 'package:flipper_dashboard/flipper_app.dart';
 import 'package:flipper_dashboard/inapp_browser.dart';
 import 'package:flipper_dashboard/order.dart';
 import 'package:flipper_dashboard/order_summary.dart';
@@ -460,7 +460,7 @@ class _GateState extends State<Gate> {
                 supportedLocales: const [
                   Locale('en', 'US'), // English
                 ],
-                locale: const Locale('US'),
+                locale: const Locale('en'),
                 // locale: model.languageService
                 //     .locale, //french == rwanda language in our app
                 themeMode: model.settingService.themeMode.value,

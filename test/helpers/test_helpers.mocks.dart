@@ -73,11 +73,7 @@ class _FakeBusiness_14 extends _i1.Fake implements _i9.Business {}
 /// See the documentation for Mockito's code generation for more information.
 class MockApi<T> extends _i1.Mock implements _i10.Api<T> {
   @override
-<<<<<<< HEAD
-  _i11.Future<List<_i2.ProductSync>> products({int? branchId}) => (super
-=======
   _i11.Stream<List<_i2.ProductSync>> products({int? branchId}) => (super
->>>>>>> main
           .noSuchMethod(Invocation.method(#products, [], {#branchId: branchId}),
               returnValue: Stream<List<_i2.ProductSync>>.empty())
       as _i11.Stream<List<_i2.ProductSync>>);
@@ -87,11 +83,7 @@ class MockApi<T> extends _i1.Mock implements _i10.Api<T> {
               Invocation.method(#productsFuture, [], {#branchId: branchId}),
               returnValue:
                   Future<List<_i2.ProductSync>>.value(<_i2.ProductSync>[]))
-<<<<<<< HEAD
-      as _i11.Future<List<_i2.ProductSync>>);
-=======
           as _i11.Future<List<_i2.ProductSync>>);
->>>>>>> main
   @override
   _i11.Future<int> signup({Map<dynamic, dynamic>? business}) =>
       (super.noSuchMethod(Invocation.method(#signup, [], {#business: business}),
@@ -243,18 +235,9 @@ class MockApi<T> extends _i1.Mock implements _i10.Api<T> {
               returnValue: Future<_i2.ProductSync>.value(_FakeProductSync_2()))
           as _i11.Future<_i2.ProductSync>);
   @override
-<<<<<<< HEAD
-  _i11.Future<List<_i2.ProductSync>> isTempProductExist({int? branchId}) =>
-      (super.noSuchMethod(
-              Invocation.method(#isTempProductExist, [], {#branchId: branchId}),
-              returnValue:
-                  Future<List<_i2.ProductSync>>.value(<_i2.ProductSync>[]))
-          as _i11.Future<List<_i2.ProductSync>>);
-=======
   _i2.ProductSync? isTempProductExist({int? branchId}) => (super.noSuchMethod(
           Invocation.method(#isTempProductExist, [], {#branchId: branchId}))
       as _i2.ProductSync?);
->>>>>>> main
   @override
   _i11.Future<bool> logOut() =>
       (super.noSuchMethod(Invocation.method(#logOut, []),
@@ -898,19 +881,11 @@ class MockProductService extends _i1.Mock implements _i15.ProductService {
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value()) as _i11.Future<void>);
   @override
-<<<<<<< HEAD
-  _i11.Future<List<_i2.ProductSync>> loadProducts({int? branchId}) => (super
-      .noSuchMethod(Invocation.method(#loadProducts, [], {#branchId: branchId}),
-          returnValue:
-              Future<List<_i2.ProductSync>>.value(<_i2.ProductSync>[])) as _i11
-      .Future<List<_i2.ProductSync>>);
-=======
   _i11.Stream<List<_i2.ProductSync>> loadProducts({int? branchId}) =>
       (super.noSuchMethod(
               Invocation.method(#loadProducts, [], {#branchId: branchId}),
               returnValue: Stream<List<_i2.ProductSync>>.empty())
           as _i11.Stream<List<_i2.ProductSync>>);
->>>>>>> main
   @override
   _i11.Future<void> filtterProduct({String? searchKey, int? branchId}) =>
       (super.noSuchMethod(
