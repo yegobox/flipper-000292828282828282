@@ -6,6 +6,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/link.dart';
+import 'config.dart';
 import 'dashboard.dart';
 import 'product_view.dart';
 
@@ -34,87 +35,84 @@ class _FlipperAppWindowsState extends State<FlipperAppWindows> {
     final appTheme = context.watch<AppTheme>();
 
     return ViewModelBuilder.reactive(
-        viewModelBuilder: () => BusinessHomeViewModel(),
-        onModelReady: (BusinessHomeViewModel model) {
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
-            Future.delayed(const Duration(milliseconds: 40), () {
-              if (ProxyService.box.getDefaultDisplayMode() == 'compact') {
-                appTheme.displayMode = PaneDisplayMode.compact;
-              } else if (ProxyService.box.getDefaultDisplayMode() ==
-                  'minimal') {
-                appTheme.displayMode = PaneDisplayMode.minimal;
-              } else if (ProxyService.box.getDefaultDisplayMode() == 'open') {
-                appTheme.displayMode = PaneDisplayMode.open;
-              } else if (ProxyService.box.getDefaultDisplayMode() == 'auto') {
-                appTheme.displayMode = PaneDisplayMode.auto;
-              } else if (ProxyService.box.getDefaultDisplayMode() == 'top') {
-                appTheme.displayMode = PaneDisplayMode.top;
-              }
-            });
+      viewModelBuilder: () => BusinessHomeViewModel(),
+      onModelReady: (BusinessHomeViewModel model) {
+        WidgetsBinding.instance?.addPostFrameCallback((_) {
+          Future.delayed(const Duration(milliseconds: 40), () {
+            if (ProxyService.box.getDefaultDisplayMode() == 'compact') {
+              appTheme.displayMode = PaneDisplayMode.compact;
+            } else if (ProxyService.box.getDefaultDisplayMode() == 'minimal') {
+              appTheme.displayMode = PaneDisplayMode.minimal;
+            } else if (ProxyService.box.getDefaultDisplayMode() == 'open') {
+              appTheme.displayMode = PaneDisplayMode.open;
+            } else if (ProxyService.box.getDefaultDisplayMode() == 'auto') {
+              appTheme.displayMode = PaneDisplayMode.auto;
+            } else if (ProxyService.box.getDefaultDisplayMode() == 'top') {
+              appTheme.displayMode = PaneDisplayMode.top;
+            }
           });
-        },
-        //
-        builder: (context, BusinessHomeViewModel model, child) {
-          return NavigationView(
-            contentShape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
-            pane: NavigationPane(
-              selected: index,
-              onChanged: (i) => setState(() => index = i),
-              size: const NavigationPaneSize(
-                openMinWidth: 250,
-                openMaxWidth: 320,
-              ),
-              header: Container(
-                height: kOneLineTileHeight,
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Image.asset('assets/logo.png'),
-              ),
-              displayMode: appTheme.displayMode,
-              indicatorBuilder: () {
-                switch (appTheme.indicator) {
-                  case NavigationIndicators.end:
-                    return NavigationIndicator.end;
-                  case NavigationIndicators.sticky:
-                  default:
-                    return NavigationIndicator.sticky;
-                }
-              }(),
-              items: [
-                PaneItemSeparator(),
-                PaneItem(
-                  icon: const Icon(FluentIcons.cell_phone),
-                  title: const Text('Mobile'),
-                ),
-              ],
-              autoSuggestBox: AutoSuggestBox(
-                controller: TextEditingController(),
-                items: const ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-              ),
-              autoSuggestBoxReplacement: const Icon(FluentIcons.search),
-              footerItems: [
-                PaneItemSeparator(),
-                PaneItem(
-                  icon: const Icon(FluentIcons.settings),
-                  title: const Text('Settings'),
-                ),
-                _LinkPaneItemAction(
-                  icon: const Icon(FluentIcons.open_source),
-                  title: const Text('Source code'),
-                  link: 'https://github.com/bdlukaa/fluent_ui',
-                ),
-              ],
-            ),
-            content: NavigationBody(index: index, children: [
-              Dashboard(
-                model: model,
-                sideBuilder: (context, action) {
-                  return const ProductView();
-                },
-              )
-            ]),
-          );
         });
+      },
+      //
+      builder: (context, BusinessHomeViewModel model, child) {
+        return NavigationView(
+          contentShape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+          pane: NavigationPane(
+            selected: index,
+            onChanged: (i) => setState(() => index = i),
+            size: const NavigationPaneSize(
+              openMinWidth: 250,
+              openMaxWidth: 320,
+            ),
+            header: Container(
+              height: kOneLineTileHeight,
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Image.asset('assets/logo.png'),
+            ),
+            displayMode: appTheme.displayMode,
+            indicatorBuilder: () {
+              switch (appTheme.indicator) {
+                case NavigationIndicators.end:
+                  return NavigationIndicator.end;
+                case NavigationIndicators.sticky:
+                default:
+                  return NavigationIndicator.sticky;
+              }
+            }(),
+            items: [
+              PaneItemSeparator(),
+              PaneItem(
+                icon: const Icon(FluentIcons.cell_phone),
+                title: const Text('Mobile'),
+              ),
+            ],
+            autoSuggestBox: AutoSuggestBox(
+              controller: TextEditingController(),
+              items: const ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
+            ),
+            autoSuggestBoxReplacement: const Icon(FluentIcons.search),
+            footerItems: [
+              PaneItemSeparator(),
+              PaneItem(
+                icon: const Icon(FluentIcons.settings),
+                title: const Text('Settings'),
+              ),
+            ],
+          ),
+          content: NavigationBody(index: index, children: [
+            // TODOmake this desktop be exactly like square app on iPad.
+            Dashboard(
+              model: model,
+              sideBuilder: (context, action) {
+                return const ProductView();
+              },
+            ),
+            Settings(controller: settingsController),
+          ]),
+        );
+      },
+    );
   }
 }
 
