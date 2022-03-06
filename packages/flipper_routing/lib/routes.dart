@@ -204,14 +204,7 @@ class AppSetup {
 // Next blog post
 // https://birju.dev/posts/burying-the-hatchet-of-build-runner-once-and-for-all/
 
-// flutter run -t lib/demo.dart (run demo when we need to!)
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !! Irrecoverable memory error detected: store instance is corrupt!!
-// 2
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !! Irrecoverable memory error detected: store instance is corrupt!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 // https://www.sandromaglione.com/dart-flutter-static-metaprogramming-macro-prototype/ learn more about macro
 // https://www.vendhq.com/
+// java -jar .\rra.war
 
