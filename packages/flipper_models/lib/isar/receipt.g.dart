@@ -15,7 +15,7 @@ extension GetReceiptCollection on Isar {
 const ReceiptSchema = CollectionSchema(
   name: 'Receipt',
   schema:
-      '{"name":"Receipt","idName":"id","properties":[{"name":"intrlData","type":"String"},{"name":"mrcNo","type":"String"},{"name":"orderId","type":"Long"},{"name":"qrCode","type":"String"},{"name":"rcptNo","type":"Long"},{"name":"rcptSign","type":"String"},{"name":"resultCd","type":"String"},{"name":"resultDt","type":"String"},{"name":"resultMsg","type":"String"},{"name":"sdcId","type":"String"},{"name":"totRcptNo","type":"Long"},{"name":"vsdcRcptPbctDate","type":"String"}],"indexes":[{"name":"orderId","unique":false,"replace":false,"properties":[{"name":"orderId","type":"Value","caseSensitive":false}]}],"links":[]}',
+      '{"name":"Receipt","idName":"id","properties":[{"name":"intrlData","type":"String"},{"name":"mrcNo","type":"String"},{"name":"orderId","type":"Long"},{"name":"qrCode","type":"String"},{"name":"rcptNo","type":"Long"},{"name":"rcptSign","type":"String"},{"name":"receiptType","type":"String"},{"name":"resultCd","type":"String"},{"name":"resultDt","type":"String"},{"name":"resultMsg","type":"String"},{"name":"sdcId","type":"String"},{"name":"totRcptNo","type":"Long"},{"name":"vsdcRcptPbctDate","type":"String"}],"indexes":[{"name":"orderId","unique":false,"replace":false,"properties":[{"name":"orderId","type":"Value","caseSensitive":false}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'intrlData': 0,
@@ -24,12 +24,13 @@ const ReceiptSchema = CollectionSchema(
     'qrCode': 3,
     'rcptNo': 4,
     'rcptSign': 5,
-    'resultCd': 6,
-    'resultDt': 7,
-    'resultMsg': 8,
-    'sdcId': 9,
-    'totRcptNo': 10,
-    'vsdcRcptPbctDate': 11
+    'receiptType': 6,
+    'resultCd': 7,
+    'resultDt': 8,
+    'resultMsg': 9,
+    'sdcId': 10,
+    'totRcptNo': 11,
+    'vsdcRcptPbctDate': 12
   },
   listProperties: {},
   indexIds: {'orderId': 0},
@@ -93,22 +94,25 @@ void _receiptSerializeNative(
   final value5 = object.rcptSign;
   final _rcptSign = IsarBinaryWriter.utf8Encoder.convert(value5);
   dynamicSize += (_rcptSign.length) as int;
-  final value6 = object.resultCd;
-  final _resultCd = IsarBinaryWriter.utf8Encoder.convert(value6);
+  final value6 = object.receiptType;
+  final _receiptType = IsarBinaryWriter.utf8Encoder.convert(value6);
+  dynamicSize += (_receiptType.length) as int;
+  final value7 = object.resultCd;
+  final _resultCd = IsarBinaryWriter.utf8Encoder.convert(value7);
   dynamicSize += (_resultCd.length) as int;
-  final value7 = object.resultDt;
-  final _resultDt = IsarBinaryWriter.utf8Encoder.convert(value7);
+  final value8 = object.resultDt;
+  final _resultDt = IsarBinaryWriter.utf8Encoder.convert(value8);
   dynamicSize += (_resultDt.length) as int;
-  final value8 = object.resultMsg;
-  final _resultMsg = IsarBinaryWriter.utf8Encoder.convert(value8);
+  final value9 = object.resultMsg;
+  final _resultMsg = IsarBinaryWriter.utf8Encoder.convert(value9);
   dynamicSize += (_resultMsg.length) as int;
-  final value9 = object.sdcId;
-  final _sdcId = IsarBinaryWriter.utf8Encoder.convert(value9);
+  final value10 = object.sdcId;
+  final _sdcId = IsarBinaryWriter.utf8Encoder.convert(value10);
   dynamicSize += (_sdcId.length) as int;
-  final value10 = object.totRcptNo;
-  final _totRcptNo = value10;
-  final value11 = object.vsdcRcptPbctDate;
-  final _vsdcRcptPbctDate = IsarBinaryWriter.utf8Encoder.convert(value11);
+  final value11 = object.totRcptNo;
+  final _totRcptNo = value11;
+  final value12 = object.vsdcRcptPbctDate;
+  final _vsdcRcptPbctDate = IsarBinaryWriter.utf8Encoder.convert(value12);
   dynamicSize += (_vsdcRcptPbctDate.length) as int;
   final size = staticSize + dynamicSize;
 
@@ -122,12 +126,13 @@ void _receiptSerializeNative(
   writer.writeBytes(offsets[3], _qrCode);
   writer.writeLong(offsets[4], _rcptNo);
   writer.writeBytes(offsets[5], _rcptSign);
-  writer.writeBytes(offsets[6], _resultCd);
-  writer.writeBytes(offsets[7], _resultDt);
-  writer.writeBytes(offsets[8], _resultMsg);
-  writer.writeBytes(offsets[9], _sdcId);
-  writer.writeLong(offsets[10], _totRcptNo);
-  writer.writeBytes(offsets[11], _vsdcRcptPbctDate);
+  writer.writeBytes(offsets[6], _receiptType);
+  writer.writeBytes(offsets[7], _resultCd);
+  writer.writeBytes(offsets[8], _resultDt);
+  writer.writeBytes(offsets[9], _resultMsg);
+  writer.writeBytes(offsets[10], _sdcId);
+  writer.writeLong(offsets[11], _totRcptNo);
+  writer.writeBytes(offsets[12], _vsdcRcptPbctDate);
 }
 
 Receipt _receiptDeserializeNative(IsarCollection<Receipt> collection, int id,
@@ -140,12 +145,13 @@ Receipt _receiptDeserializeNative(IsarCollection<Receipt> collection, int id,
   object.qrCode = reader.readString(offsets[3]);
   object.rcptNo = reader.readLong(offsets[4]);
   object.rcptSign = reader.readString(offsets[5]);
-  object.resultCd = reader.readString(offsets[6]);
-  object.resultDt = reader.readString(offsets[7]);
-  object.resultMsg = reader.readString(offsets[8]);
-  object.sdcId = reader.readString(offsets[9]);
-  object.totRcptNo = reader.readLong(offsets[10]);
-  object.vsdcRcptPbctDate = reader.readString(offsets[11]);
+  object.receiptType = reader.readString(offsets[6]);
+  object.resultCd = reader.readString(offsets[7]);
+  object.resultDt = reader.readString(offsets[8]);
+  object.resultMsg = reader.readString(offsets[9]);
+  object.sdcId = reader.readString(offsets[10]);
+  object.totRcptNo = reader.readLong(offsets[11]);
+  object.vsdcRcptPbctDate = reader.readString(offsets[12]);
   return object;
 }
 
@@ -175,8 +181,10 @@ P _receiptDeserializePropNative<P>(
     case 9:
       return (reader.readString(offset)) as P;
     case 10:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 11:
+      return (reader.readLong(offset)) as P;
+    case 12:
       return (reader.readString(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
@@ -193,6 +201,7 @@ dynamic _receiptSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'qrCode', object.qrCode);
   IsarNative.jsObjectSet(jsObj, 'rcptNo', object.rcptNo);
   IsarNative.jsObjectSet(jsObj, 'rcptSign', object.rcptSign);
+  IsarNative.jsObjectSet(jsObj, 'receiptType', object.receiptType);
   IsarNative.jsObjectSet(jsObj, 'resultCd', object.resultCd);
   IsarNative.jsObjectSet(jsObj, 'resultDt', object.resultDt);
   IsarNative.jsObjectSet(jsObj, 'resultMsg', object.resultMsg);
@@ -214,6 +223,7 @@ Receipt _receiptDeserializeWeb(
   object.rcptNo =
       IsarNative.jsObjectGet(jsObj, 'rcptNo') ?? double.negativeInfinity;
   object.rcptSign = IsarNative.jsObjectGet(jsObj, 'rcptSign') ?? '';
+  object.receiptType = IsarNative.jsObjectGet(jsObj, 'receiptType') ?? '';
   object.resultCd = IsarNative.jsObjectGet(jsObj, 'resultCd') ?? '';
   object.resultDt = IsarNative.jsObjectGet(jsObj, 'resultDt') ?? '';
   object.resultMsg = IsarNative.jsObjectGet(jsObj, 'resultMsg') ?? '';
@@ -243,6 +253,8 @@ P _receiptDeserializePropWeb<P>(Object jsObj, String propertyName) {
           double.negativeInfinity) as P;
     case 'rcptSign':
       return (IsarNative.jsObjectGet(jsObj, 'rcptSign') ?? '') as P;
+    case 'receiptType':
+      return (IsarNative.jsObjectGet(jsObj, 'receiptType') ?? '') as P;
     case 'resultCd':
       return (IsarNative.jsObjectGet(jsObj, 'resultCd') ?? '') as P;
     case 'resultDt':
@@ -964,6 +976,109 @@ extension ReceiptQueryFilter
     ));
   }
 
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'receiptType',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'receiptType',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'receiptType',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'receiptType',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'receiptType',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'receiptType',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'receiptType',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterFilterCondition> receiptTypeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'receiptType',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<Receipt, Receipt, QAfterFilterCondition> resultCdEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1591,6 +1706,14 @@ extension ReceiptQueryWhereSortBy on QueryBuilder<Receipt, Receipt, QSortBy> {
     return addSortByInternal('rcptSign', Sort.desc);
   }
 
+  QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByReceiptType() {
+    return addSortByInternal('receiptType', Sort.asc);
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByReceiptTypeDesc() {
+    return addSortByInternal('receiptType', Sort.desc);
+  }
+
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByResultCd() {
     return addSortByInternal('resultCd', Sort.asc);
   }
@@ -1698,6 +1821,14 @@ extension ReceiptQueryWhereSortThenBy
     return addSortByInternal('rcptSign', Sort.desc);
   }
 
+  QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByReceiptType() {
+    return addSortByInternal('receiptType', Sort.asc);
+  }
+
+  QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByReceiptTypeDesc() {
+    return addSortByInternal('receiptType', Sort.desc);
+  }
+
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByResultCd() {
     return addSortByInternal('resultCd', Sort.asc);
   }
@@ -1781,6 +1912,11 @@ extension ReceiptQueryWhereDistinct
     return addDistinctByInternal('rcptSign', caseSensitive: caseSensitive);
   }
 
+  QueryBuilder<Receipt, Receipt, QDistinct> distinctByReceiptType(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('receiptType', caseSensitive: caseSensitive);
+  }
+
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByResultCd(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('resultCd', caseSensitive: caseSensitive);
@@ -1840,6 +1976,10 @@ extension ReceiptQueryProperty
 
   QueryBuilder<Receipt, String, QQueryOperations> rcptSignProperty() {
     return addPropertyNameInternal('rcptSign');
+  }
+
+  QueryBuilder<Receipt, String, QQueryOperations> receiptTypeProperty() {
+    return addPropertyNameInternal('receiptType');
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> resultCdProperty() {

@@ -593,7 +593,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       receiptSignature: receipt.rcptSign,
       cashierName: business.name!,
       sdcId: receipt.sdcId,
-      sdcReceiptNum: receipt.rcptNo.toString(),
+      sdcReceiptNum: receipt.receiptType,
       invoiceNum: receipt.totRcptNo,
       brandName: business.name!,
       brandAddress: business.adrs ?? "No address",
@@ -614,18 +614,24 @@ class BusinessHomeViewModel extends ReactiveViewModel {
   Future<void> generateRRAReceipt(
       {required List<OrderItem> items,
       required Business business,
+      String? receiptType = "NS",
       required Order order}) async {
-    ReceiptSignature? receiptSignature =
-        await ProxyService.tax.createReceipt(order: order, items: items);
+    ReceiptSignature? receiptSignature = await ProxyService.tax
+        .createReceipt(order: order, items: items, receiptType: receiptType!);
 
     String time = DateTime.now().toString().substring(11, 19);
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-mm-yyy').format(now);
     // qrCode with the followinf format (ddmmyyyy)#time(hhmmss)#sdc number#sdc_receipt_number#internal_data#receipt_signature
+    String receiptNumber =
+        "${receiptSignature!.data.rcptNo}/${receiptSignature.data.totRcptNo} $receiptType";
     String qrCode =
-        '$formattedDate#$time#${receiptSignature!.data.sdcId}#${receiptSignature.data.rcptNo}#${receiptSignature.data.intrlData}#${receiptSignature.data.rcptSign}';
+        '$formattedDate#$time#${receiptSignature.data.sdcId}#$receiptNumber#${receiptSignature.data.intrlData}#${receiptSignature.data.rcptSign}';
     await ProxyService.isarApi.createReceipt(
-        signature: receiptSignature, order: order, qrCode: qrCode);
+        signature: receiptSignature,
+        order: order,
+        qrCode: qrCode,
+        receiptType: receiptNumber);
     receiptReady = true;
     notifyListeners();
   }

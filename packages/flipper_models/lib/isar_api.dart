@@ -1431,7 +1431,8 @@ class IsarAPI implements IsarApiInterface {
   Future<Receipt?> createReceipt(
       {required ReceiptSignature signature,
       required Order order,
-      required String qrCode}) {
+      required String qrCode,
+      required String receiptType}) {
     // add receipt to isar db
 
     return isar.writeTxn((isar) async {
@@ -1442,6 +1443,7 @@ class IsarAPI implements IsarApiInterface {
         ..intrlData = signature.data.intrlData
         ..rcptSign = signature.data.rcptSign
         ..qrCode = qrCode
+        ..receiptType = receiptType
         ..vsdcRcptPbctDate = signature.data.vsdcRcptPbctDate
         ..sdcId = signature.data.sdcId
         ..totRcptNo = signature.data.totRcptNo
