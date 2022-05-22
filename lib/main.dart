@@ -324,12 +324,13 @@ void main() async {
           ),
         ),
         GoRoute(
-          path: '/sale/:total',
+          path: '/sale/:total/:receiptType',
           name: 'sale',
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
             child: AfterSale(
               totalOrderAmount: double.parse(state.params['total']!),
+              receiptType: state.params['receiptType']!,
               order: state.extra! as Order,
             ),
           ),

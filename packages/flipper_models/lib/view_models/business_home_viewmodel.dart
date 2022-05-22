@@ -20,9 +20,6 @@ import 'package:flipper_models/isar_models.dart';
 import 'package:receipt/print.dart';
 
 class BusinessHomeViewModel extends ReactiveViewModel {
-  // Services
-  // ThemeMode themeMode = ThemeMode.system;
-
   final settingService = locator<SettingsService>();
   final languageService = locator<LanguageService>();
   final bool _updateStarted = false;
@@ -60,7 +57,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
   final log = getLogger('BusinessHomeViewModel');
   final KeyPadService keypad = locator<KeyPadService>();
   final ProductService productService = locator<ProductService>();
-  final AppService _app = locator<AppService>();
+  final AppService app = locator<AppService>();
   String get key => keypad.key;
 
   late String? longitude;
@@ -165,7 +162,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     return await ProxyService.isarApi.productsFuture(branchId: branchId);
   }
 
-  Business get businesses => _app.business;
+  Business get businesses => app.business;
 
   void pop() {
     ProxyService.keypad.pop();
@@ -408,11 +405,14 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       {required String email,
       required String phone,
       required String name,
-      required int orderId}) {
-    log.i({'email': email, 'phone': phone, 'name': name});
-    ProxyService.isarApi.addCustomer(
-        customer: {'email': email, 'phone': phone, 'name': name},
-        orderId: orderId);
+      required int orderId,
+      required String tinNumber}) {
+    ProxyService.isarApi.addCustomer(customer: {
+      'email': email,
+      'phone': phone,
+      'name': name,
+      'tinNumber': tinNumber
+    }, orderId: orderId);
   }
 
   Future<void> assignToSale(
@@ -601,6 +601,8 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       brandTIN: business.tinNumber.toString(),
       brandDescription: business.name!,
       brandFooter: business.name!,
+      emails: [app.customer?.email ?? 'info@yegobox.com', 'info@yegobox.com'],
+      customerTin: app.customer?.tinNumber ?? 0000000000,
     );
   }
 
@@ -650,7 +652,13 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  Customer? get customer => app.customer;
+
+  void deleteCustomer(int id) {
+    ProxyService.isarApi.delete(id: id, endPoint: 'customer');
+  }
+
   @override
   List<ReactiveServiceMixin> get reactiveServices =>
-      [keypad, _app, productService, settingService, languageService];
+      [keypad, app, productService, settingService, languageService];
 }
