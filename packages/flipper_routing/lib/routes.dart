@@ -239,3 +239,6 @@ class AppSetup {
 // handle splash better than anyone!
 // https://pub.dev/packages/flutter_native_splash
 
+// TODO:format date cheat sheet
+// shorturl.at/ijGU9
+

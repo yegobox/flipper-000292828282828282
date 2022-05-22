@@ -636,6 +636,20 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  List<Order> completedOrders = [];
+  List<Order> get completedOrdersList => completedOrders;
+  set completedOrdersList(List<Order> value) {
+    completedOrders = value;
+    notifyListeners();
+  }
+
+  List<OrderItem> completedOrderItems = [];
+  List<OrderItem> get completedOrderItemsList => completedOrderItems;
+  set completedOrderItemsList(List<OrderItem> value) {
+    completedOrderItems = value;
+    notifyListeners();
+  }
+
   @override
   List<ReactiveServiceMixin> get reactiveServices =>
       [keypad, _app, productService, settingService, languageService];

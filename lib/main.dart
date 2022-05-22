@@ -28,6 +28,7 @@ import 'package:flipper_dashboard/sell.dart';
 import 'package:flipper_dashboard/setting_secreen.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_dashboard/switch_branch_view.dart';
+import 'package:flipper_dashboard/transactions_details.dart';
 import 'package:flipper_login/pin_login.dart';
 import 'package:flipper_login/signup_form_view.dart';
 import 'package:flipper_models/view_models/gate.dart';
@@ -334,6 +335,16 @@ void main() async {
           ),
         ),
         GoRoute(
+          path: '/trDetail',
+          name: 'trDetail',
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: TransactionDetail(
+              order: state.extra! as Order,
+            ),
+          ),
+        ),
+        GoRoute(
           path: '/settings',
           name: 'settings',
           pageBuilder: (context, state) => MaterialPage(
@@ -432,7 +443,7 @@ void main() async {
             key: state.pageKey,
             child: const TaxConfiguration(),
           ),
-        )
+        ),
       ],
     );
     ErrorWidget.builder = (details) => Material(
