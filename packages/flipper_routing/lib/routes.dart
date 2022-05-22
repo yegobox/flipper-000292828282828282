@@ -223,7 +223,6 @@ class AppSetup {
 
 //  nohup java -jar rra.war &
 // find . -name "*.bak" -type f -delete
-//FIXMEuntil this is fixed we can't upgrade melos now working is 2.0.0 https://github.com/invertase/melos/issues/117
 
 // ngix stuff:
 // https://lowendbox.com/blog/how-to-replace-apache-with-nginx-on-ubuntu-18-04/

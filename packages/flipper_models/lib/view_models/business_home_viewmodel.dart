@@ -4,6 +4,7 @@ import 'package:flipper_models/isar/receipt_signature.dart';
 import 'package:flipper_routing/routes.locator.dart';
 import 'package:flipper_routing/routes.logger.dart';
 // import 'package:flipper_models/isar_models.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_services/keypad_service.dart';
@@ -104,7 +105,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         double amount = double.parse(ProxyService.keypad.key);
 
         await saveOrder(
-            amount: amount, variationId: variation!.id, customItem: true);
+            amountTotal: amount, variationId: variation!.id, customItem: true);
 
         ProxyService.keypad.reset();
       }
@@ -236,7 +237,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
 
   Future<bool> saveOrder({
     required int variationId,
-    required double amount,
+    required double amountTotal,
     required bool customItem,
   }) async {
     Variant? variation =
@@ -246,18 +247,10 @@ class BusinessHomeViewModel extends ReactiveViewModel {
 
     String name = '';
 
-    if (variation.name == 'Regular') {
-      if (variation.productName != 'Custom Amount') {
-        name = variation.productName + '(Regular)';
-      } else {
-        name = variation.productName;
-      }
+    if (variation.productName != 'Custom Amount') {
+      name = variation.productName + '(${variation.name})';
     } else {
-      if (variation.productName != 'Custom Amount') {
-        name = variation.productName + '(${variation.name})';
-      } else {
-        name = variation.productName;
-      }
+      name = variation.productName;
     }
 
     /// if variation  given it exist in the orderItems of currentPending order then we update the order with new count
@@ -275,7 +268,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       name: name,
       variation: variation,
       stock: stock,
-      amount: amount,
+      amountTotal: amountTotal,
       isCustom: customItem,
       item: existOrderItem,
     );
@@ -295,7 +288,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       required String name,
       required Variant variation,
       Stock? stock,
-      required double amount,
+      required double amountTotal,
       required bool isCustom,
       OrderItem? item}) async {
     /// just on custom item being sold we never update the orderItems
@@ -304,8 +297,8 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     ///now we will be updating the orderItem
     if (item != null && !isCustom) {
       item.qty = item.qty + quantity.toDouble();
-      item.price = item.price + amount;
-      pendingOrder!.subTotal = pendingOrder.subTotal + (amount);
+      item.price = amountTotal / quantity; // price of one unit
+      pendingOrder!.subTotal = pendingOrder.subTotal + (amountTotal);
       ProxyService.isarApi.update(data: pendingOrder);
       ProxyService.isarApi.updateOrderItem(order: pendingOrder, item: item);
       // return as have done update and we don't want to proceed.
@@ -314,7 +307,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     if (pendingOrder != null) {
       OrderItem newItem = OrderItem()
         ..qty = isCustom ? 1 : quantity.toDouble()
-        ..price = (quantity.toDouble()) * (amount / quantity.toDouble())
+        ..price = (amountTotal / quantity) // price of one unit
         ..variantId = variationId
         ..name = name
         ..discount = 0.0
@@ -361,7 +354,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         ..modrNm = variation.modrNm
         // end of fields twakuye muri variants
         ..remainingStock = stock!.currentStock - quantity;
-      pendingOrder.subTotal = pendingOrder.subTotal + amount;
+      pendingOrder.subTotal = pendingOrder.subTotal + amountTotal;
       ProxyService.isarApi.update(data: pendingOrder);
 
       ProxyService.isarApi.addOrderItem(order: pendingOrder, item: newItem);
@@ -496,7 +489,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     if (keypad.order == null) return 0.0;
 
     num? totalPayable =
-        keypad.order!.orderItems.fold(0, (a, b) => a! + (b.price));
+        keypad.order!.orderItems.fold(0, (a, b) => a! + (b.price * b.qty));
     await keypad.order!.orderItems.load();
 
     num? totalDiscount = keypad.order!.orderItems
@@ -580,6 +573,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     Order? order = await ProxyService.isarApi.getOrderById(id: oorder.id);
     Receipt? receipt =
         await ProxyService.isarApi.getReceipt(orderId: order!.id);
+    // get time formatted like hhmmss
 
     Print print = Print();
     print.feed(items);
@@ -593,10 +587,9 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       cash: order.subTotal,
       received: order.cashReceived,
       payMode: "Cash",
-      bank: "-",
       mrc: receipt!.mrcNo,
       internalData: receipt.intrlData,
-      receiptQrCode: 'data',
+      receiptQrCode: receipt.qrCode,
       receiptSignature: receipt.rcptSign,
       cashierName: business.name!,
       sdcId: receipt.sdcId,
@@ -625,8 +618,14 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     ReceiptSignature? receiptSignature =
         await ProxyService.tax.createReceipt(order: order, items: items);
 
-    await ProxyService.isarApi
-        .createReceipt(signature: receiptSignature!, order: order);
+    String time = DateTime.now().toString().substring(11, 19);
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('dd-mm-yyy').format(now);
+    // qrCode with the followinf format (ddmmyyyy)#time(hhmmss)#sdc number#sdc_receipt_number#internal_data#receipt_signature
+    String qrCode =
+        '$formattedDate#$time#${receiptSignature!.data.sdcId}#${receiptSignature.data.rcptNo}#${receiptSignature.data.intrlData}#${receiptSignature.data.rcptSign}';
+    await ProxyService.isarApi.createReceipt(
+        signature: receiptSignature, order: order, qrCode: qrCode);
     receiptReady = true;
     notifyListeners();
   }

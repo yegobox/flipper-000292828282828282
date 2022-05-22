@@ -501,7 +501,7 @@ class IsarAPI implements IsarApiInterface {
         ..productName = product.name
         ..branchId = branchId
         ..taxName = 'N/A'
-        ..isTaxExempted = true
+        ..isTaxExempted = false
         ..taxPercentage = 0
         ..retailPrice = 0
         // RRA fields
@@ -1429,8 +1429,11 @@ class IsarAPI implements IsarApiInterface {
 
   @override
   Future<Receipt?> createReceipt(
-      {required ReceiptSignature signature, required Order order}) {
+      {required ReceiptSignature signature,
+      required Order order,
+      required String qrCode}) {
     // add receipt to isar db
+
     return isar.writeTxn((isar) async {
       Receipt receipt = Receipt()
         ..resultCd = signature.resultCd
@@ -1438,6 +1441,7 @@ class IsarAPI implements IsarApiInterface {
         ..rcptNo = signature.data.rcptNo
         ..intrlData = signature.data.intrlData
         ..rcptSign = signature.data.rcptSign
+        ..qrCode = qrCode
         ..vsdcRcptPbctDate = signature.data.vsdcRcptPbctDate
         ..sdcId = signature.data.sdcId
         ..totRcptNo = signature.data.totRcptNo

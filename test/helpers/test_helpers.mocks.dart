@@ -567,10 +567,12 @@ class MockIsarApiInterface extends _i1.Mock implements _i2.IsarApiInterface {
           returnValue: Future<bool>.value(false)) as _i9.Future<bool>);
   @override
   _i9.Future<_i2.Receipt?> createReceipt(
-          {_i10.ReceiptSignature? signature, _i2.Order? order}) =>
+          {_i10.ReceiptSignature? signature,
+          _i2.Order? order,
+          String? qrCode}) =>
       (super.noSuchMethod(
-              Invocation.method(
-                  #createReceipt, [], {#signature: signature, #order: order}),
+              Invocation.method(#createReceipt, [],
+                  {#signature: signature, #order: order, #qrCode: qrCode}),
               returnValue: Future<_i2.Receipt?>.value())
           as _i9.Future<_i2.Receipt?>);
   @override

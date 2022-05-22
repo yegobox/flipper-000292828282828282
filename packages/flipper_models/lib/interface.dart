@@ -175,6 +175,8 @@ abstract class IsarApiInterface {
   Future<Variant?> getVariantById({required int id});
   Future<bool> isTaxEnabled();
   Future<Receipt?> createReceipt(
-      {required ReceiptSignature signature, required Order order});
+      {required ReceiptSignature signature,
+      required Order order,
+      required String qrCode});
   Future<Receipt?> getReceipt({required int orderId});
 }
