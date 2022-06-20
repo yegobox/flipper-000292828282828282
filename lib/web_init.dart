@@ -29,7 +29,6 @@ Future<void> initDb() async {
       ReceiptSchema,
       DrawersSchema
     ],
-    inspector: false,
   );
   IsarAPI.instance(isarRef: isar);
   await Firebase.initializeApp();

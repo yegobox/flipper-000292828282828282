@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetBusinessCollection on Isar {
   IsarCollection<Business> get businesss => getCollection();
@@ -92,7 +93,7 @@ void _businessSetId(Business object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _businessGetLinks(Business object) {
+List<IsarLinkBase<dynamic>> _businessGetLinks(Business object) {
   return [];
 }
 
@@ -103,264 +104,255 @@ void _businessSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.active;
-  final _active = value0;
-  final value1 = object.adrs;
-  IsarUint8List? _adrs;
-  if (value1 != null) {
-    _adrs = IsarBinaryWriter.utf8Encoder.convert(value1);
+  IsarUint8List? adrs$Bytes;
+  final adrs$Value = object.adrs;
+  if (adrs$Value != null) {
+    adrs$Bytes = IsarBinaryWriter.utf8Encoder.convert(adrs$Value);
   }
-  dynamicSize += (_adrs?.length ?? 0) as int;
-  final value2 = object.backUpEnabled;
-  final _backUpEnabled = value2;
-  final value3 = object.backupFileId;
-  IsarUint8List? _backupFileId;
-  if (value3 != null) {
-    _backupFileId = IsarBinaryWriter.utf8Encoder.convert(value3);
+  IsarUint8List? backupFileId$Bytes;
+  final backupFileId$Value = object.backupFileId;
+  if (backupFileId$Value != null) {
+    backupFileId$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(backupFileId$Value);
   }
-  dynamicSize += (_backupFileId?.length ?? 0) as int;
-  final value4 = object.bhfId;
-  IsarUint8List? _bhfId;
-  if (value4 != null) {
-    _bhfId = IsarBinaryWriter.utf8Encoder.convert(value4);
+  IsarUint8List? bhfId$Bytes;
+  final bhfId$Value = object.bhfId;
+  if (bhfId$Value != null) {
+    bhfId$Bytes = IsarBinaryWriter.utf8Encoder.convert(bhfId$Value);
   }
-  dynamicSize += (_bhfId?.length ?? 0) as int;
-  final value5 = object.businessUrl;
-  IsarUint8List? _businessUrl;
-  if (value5 != null) {
-    _businessUrl = IsarBinaryWriter.utf8Encoder.convert(value5);
+  IsarUint8List? businessUrl$Bytes;
+  final businessUrl$Value = object.businessUrl;
+  if (businessUrl$Value != null) {
+    businessUrl$Bytes = IsarBinaryWriter.utf8Encoder.convert(businessUrl$Value);
   }
-  dynamicSize += (_businessUrl?.length ?? 0) as int;
-  final value6 = object.channels;
-  dynamicSize += (value6?.length ?? 0) * 8;
-  List<IsarUint8List?>? bytesList6;
-  if (value6 != null) {
-    bytesList6 = [];
-    for (var str in value6) {
+  var channels$BytesCount = (object.channels?.length ?? 0) * 8;
+  List<IsarUint8List?>? channels$BytesList;
+  final channels$Value = object.channels;
+  if (channels$Value != null) {
+    channels$BytesList = [];
+    for (var str in channels$Value) {
       final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-      bytesList6.add(bytes);
-      dynamicSize += bytes.length as int;
+      channels$BytesList.add(bytes);
+      channels$BytesCount += bytes.length;
     }
   }
-  final _channels = bytesList6;
-  final value7 = object.chatUid;
-  IsarUint8List? _chatUid;
-  if (value7 != null) {
-    _chatUid = IsarBinaryWriter.utf8Encoder.convert(value7);
+  IsarUint8List? chatUid$Bytes;
+  final chatUid$Value = object.chatUid;
+  if (chatUid$Value != null) {
+    chatUid$Bytes = IsarBinaryWriter.utf8Encoder.convert(chatUid$Value);
   }
-  dynamicSize += (_chatUid?.length ?? 0) as int;
-  final value8 = object.country;
-  IsarUint8List? _country;
-  if (value8 != null) {
-    _country = IsarBinaryWriter.utf8Encoder.convert(value8);
+  IsarUint8List? country$Bytes;
+  final country$Value = object.country;
+  if (country$Value != null) {
+    country$Bytes = IsarBinaryWriter.utf8Encoder.convert(country$Value);
   }
-  dynamicSize += (_country?.length ?? 0) as int;
-  final value9 = object.createdAt;
-  IsarUint8List? _createdAt;
-  if (value9 != null) {
-    _createdAt = IsarBinaryWriter.utf8Encoder.convert(value9);
+  IsarUint8List? createdAt$Bytes;
+  final createdAt$Value = object.createdAt;
+  if (createdAt$Value != null) {
+    createdAt$Bytes = IsarBinaryWriter.utf8Encoder.convert(createdAt$Value);
   }
-  dynamicSize += (_createdAt?.length ?? 0) as int;
-  final value10 = object.currency;
-  IsarUint8List? _currency;
-  if (value10 != null) {
-    _currency = IsarBinaryWriter.utf8Encoder.convert(value10);
+  IsarUint8List? currency$Bytes;
+  final currency$Value = object.currency;
+  if (currency$Value != null) {
+    currency$Bytes = IsarBinaryWriter.utf8Encoder.convert(currency$Value);
   }
-  dynamicSize += (_currency?.length ?? 0) as int;
-  final value11 = object.deviceToken;
-  IsarUint8List? _deviceToken;
-  if (value11 != null) {
-    _deviceToken = IsarBinaryWriter.utf8Encoder.convert(value11);
+  IsarUint8List? deviceToken$Bytes;
+  final deviceToken$Value = object.deviceToken;
+  if (deviceToken$Value != null) {
+    deviceToken$Bytes = IsarBinaryWriter.utf8Encoder.convert(deviceToken$Value);
   }
-  dynamicSize += (_deviceToken?.length ?? 0) as int;
-  final value12 = object.dvcSrlNo;
-  IsarUint8List? _dvcSrlNo;
-  if (value12 != null) {
-    _dvcSrlNo = IsarBinaryWriter.utf8Encoder.convert(value12);
+  IsarUint8List? dvcSrlNo$Bytes;
+  final dvcSrlNo$Value = object.dvcSrlNo;
+  if (dvcSrlNo$Value != null) {
+    dvcSrlNo$Bytes = IsarBinaryWriter.utf8Encoder.convert(dvcSrlNo$Value);
   }
-  dynamicSize += (_dvcSrlNo?.length ?? 0) as int;
-  final value13 = object.email;
-  IsarUint8List? _email;
-  if (value13 != null) {
-    _email = IsarBinaryWriter.utf8Encoder.convert(value13);
+  IsarUint8List? email$Bytes;
+  final email$Value = object.email;
+  if (email$Value != null) {
+    email$Bytes = IsarBinaryWriter.utf8Encoder.convert(email$Value);
   }
-  dynamicSize += (_email?.length ?? 0) as int;
-  final value14 = object.fcategoryId;
-  final _fcategoryId = value14;
-  final value15 = object.firstName;
-  IsarUint8List? _firstName;
-  if (value15 != null) {
-    _firstName = IsarBinaryWriter.utf8Encoder.convert(value15);
+  IsarUint8List? firstName$Bytes;
+  final firstName$Value = object.firstName;
+  if (firstName$Value != null) {
+    firstName$Bytes = IsarBinaryWriter.utf8Encoder.convert(firstName$Value);
   }
-  dynamicSize += (_firstName?.length ?? 0) as int;
-  final value16 = object.fullName;
-  IsarUint8List? _fullName;
-  if (value16 != null) {
-    _fullName = IsarBinaryWriter.utf8Encoder.convert(value16);
+  IsarUint8List? fullName$Bytes;
+  final fullName$Value = object.fullName;
+  if (fullName$Value != null) {
+    fullName$Bytes = IsarBinaryWriter.utf8Encoder.convert(fullName$Value);
   }
-  dynamicSize += (_fullName?.length ?? 0) as int;
-  final value17 = object.hexColor;
-  IsarUint8List? _hexColor;
-  if (value17 != null) {
-    _hexColor = IsarBinaryWriter.utf8Encoder.convert(value17);
+  IsarUint8List? hexColor$Bytes;
+  final hexColor$Value = object.hexColor;
+  if (hexColor$Value != null) {
+    hexColor$Bytes = IsarBinaryWriter.utf8Encoder.convert(hexColor$Value);
   }
-  dynamicSize += (_hexColor?.length ?? 0) as int;
-  final value18 = object.imageUrl;
-  IsarUint8List? _imageUrl;
-  if (value18 != null) {
-    _imageUrl = IsarBinaryWriter.utf8Encoder.convert(value18);
+  IsarUint8List? imageUrl$Bytes;
+  final imageUrl$Value = object.imageUrl;
+  if (imageUrl$Value != null) {
+    imageUrl$Bytes = IsarBinaryWriter.utf8Encoder.convert(imageUrl$Value);
   }
-  dynamicSize += (_imageUrl?.length ?? 0) as int;
-  final value19 = object.isLastSubscriptionPaymentSucceeded;
-  final _isLastSubscriptionPaymentSucceeded = value19;
-  final value20 = object.lastDbBackup;
-  IsarUint8List? _lastDbBackup;
-  if (value20 != null) {
-    _lastDbBackup = IsarBinaryWriter.utf8Encoder.convert(value20);
+  IsarUint8List? lastDbBackup$Bytes;
+  final lastDbBackup$Value = object.lastDbBackup;
+  if (lastDbBackup$Value != null) {
+    lastDbBackup$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(lastDbBackup$Value);
   }
-  dynamicSize += (_lastDbBackup?.length ?? 0) as int;
-  final value21 = object.lastName;
-  IsarUint8List? _lastName;
-  if (value21 != null) {
-    _lastName = IsarBinaryWriter.utf8Encoder.convert(value21);
+  IsarUint8List? lastName$Bytes;
+  final lastName$Value = object.lastName;
+  if (lastName$Value != null) {
+    lastName$Bytes = IsarBinaryWriter.utf8Encoder.convert(lastName$Value);
   }
-  dynamicSize += (_lastName?.length ?? 0) as int;
-  final value22 = object.lastSeen;
-  final _lastSeen = value22;
-  final value23 = object.latitude;
-  IsarUint8List? _latitude;
-  if (value23 != null) {
-    _latitude = IsarBinaryWriter.utf8Encoder.convert(value23);
+  IsarUint8List? latitude$Bytes;
+  final latitude$Value = object.latitude;
+  if (latitude$Value != null) {
+    latitude$Bytes = IsarBinaryWriter.utf8Encoder.convert(latitude$Value);
   }
-  dynamicSize += (_latitude?.length ?? 0) as int;
-  final value24 = object.longitude;
-  IsarUint8List? _longitude;
-  if (value24 != null) {
-    _longitude = IsarBinaryWriter.utf8Encoder.convert(value24);
+  IsarUint8List? longitude$Bytes;
+  final longitude$Value = object.longitude;
+  if (longitude$Value != null) {
+    longitude$Bytes = IsarBinaryWriter.utf8Encoder.convert(longitude$Value);
   }
-  dynamicSize += (_longitude?.length ?? 0) as int;
-  final value25 = object.metadata;
-  IsarUint8List? _metadata;
-  if (value25 != null) {
-    _metadata = IsarBinaryWriter.utf8Encoder.convert(value25);
+  IsarUint8List? metadata$Bytes;
+  final metadata$Value = object.metadata;
+  if (metadata$Value != null) {
+    metadata$Bytes = IsarBinaryWriter.utf8Encoder.convert(metadata$Value);
   }
-  dynamicSize += (_metadata?.length ?? 0) as int;
-  final value26 = object.name;
-  IsarUint8List? _name;
-  if (value26 != null) {
-    _name = IsarBinaryWriter.utf8Encoder.convert(value26);
+  IsarUint8List? name$Bytes;
+  final name$Value = object.name;
+  if (name$Value != null) {
+    name$Bytes = IsarBinaryWriter.utf8Encoder.convert(name$Value);
   }
-  dynamicSize += (_name?.length ?? 0) as int;
-  final value27 = object.nextBillingDate;
-  IsarUint8List? _nextBillingDate;
-  if (value27 != null) {
-    _nextBillingDate = IsarBinaryWriter.utf8Encoder.convert(value27);
+  IsarUint8List? nextBillingDate$Bytes;
+  final nextBillingDate$Value = object.nextBillingDate;
+  if (nextBillingDate$Value != null) {
+    nextBillingDate$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(nextBillingDate$Value);
   }
-  dynamicSize += (_nextBillingDate?.length ?? 0) as int;
-  final value28 = object.previousBillingDate;
-  IsarUint8List? _previousBillingDate;
-  if (value28 != null) {
-    _previousBillingDate = IsarBinaryWriter.utf8Encoder.convert(value28);
+  IsarUint8List? previousBillingDate$Bytes;
+  final previousBillingDate$Value = object.previousBillingDate;
+  if (previousBillingDate$Value != null) {
+    previousBillingDate$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(previousBillingDate$Value);
   }
-  dynamicSize += (_previousBillingDate?.length ?? 0) as int;
-  final value29 = object.role;
-  IsarUint8List? _role;
-  if (value29 != null) {
-    _role = IsarBinaryWriter.utf8Encoder.convert(value29);
+  IsarUint8List? role$Bytes;
+  final role$Value = object.role;
+  if (role$Value != null) {
+    role$Bytes = IsarBinaryWriter.utf8Encoder.convert(role$Value);
   }
-  dynamicSize += (_role?.length ?? 0) as int;
-  final value30 = object.subscriptionPlan;
-  IsarUint8List? _subscriptionPlan;
-  if (value30 != null) {
-    _subscriptionPlan = IsarBinaryWriter.utf8Encoder.convert(value30);
+  IsarUint8List? subscriptionPlan$Bytes;
+  final subscriptionPlan$Value = object.subscriptionPlan;
+  if (subscriptionPlan$Value != null) {
+    subscriptionPlan$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(subscriptionPlan$Value);
   }
-  dynamicSize += (_subscriptionPlan?.length ?? 0) as int;
-  final value31 = object.table;
-  IsarUint8List? _table;
-  if (value31 != null) {
-    _table = IsarBinaryWriter.utf8Encoder.convert(value31);
+  IsarUint8List? table$Bytes;
+  final table$Value = object.table;
+  if (table$Value != null) {
+    table$Bytes = IsarBinaryWriter.utf8Encoder.convert(table$Value);
   }
-  dynamicSize += (_table?.length ?? 0) as int;
-  final value32 = object.taxEnabled;
-  final _taxEnabled = value32;
-  final value33 = object.taxServerUrl;
-  IsarUint8List? _taxServerUrl;
-  if (value33 != null) {
-    _taxServerUrl = IsarBinaryWriter.utf8Encoder.convert(value33);
+  IsarUint8List? taxServerUrl$Bytes;
+  final taxServerUrl$Value = object.taxServerUrl;
+  if (taxServerUrl$Value != null) {
+    taxServerUrl$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(taxServerUrl$Value);
   }
-  dynamicSize += (_taxServerUrl?.length ?? 0) as int;
-  final value34 = object.timeZone;
-  IsarUint8List? _timeZone;
-  if (value34 != null) {
-    _timeZone = IsarBinaryWriter.utf8Encoder.convert(value34);
+  IsarUint8List? timeZone$Bytes;
+  final timeZone$Value = object.timeZone;
+  if (timeZone$Value != null) {
+    timeZone$Bytes = IsarBinaryWriter.utf8Encoder.convert(timeZone$Value);
   }
-  dynamicSize += (_timeZone?.length ?? 0) as int;
-  final value35 = object.tinNumber;
-  final _tinNumber = value35;
-  final value36 = object.type;
-  IsarUint8List? _type;
-  if (value36 != null) {
-    _type = IsarBinaryWriter.utf8Encoder.convert(value36);
+  IsarUint8List? type$Bytes;
+  final type$Value = object.type;
+  if (type$Value != null) {
+    type$Bytes = IsarBinaryWriter.utf8Encoder.convert(type$Value);
   }
-  dynamicSize += (_type?.length ?? 0) as int;
-  final value37 = object.typeId;
-  IsarUint8List? _typeId;
-  if (value37 != null) {
-    _typeId = IsarBinaryWriter.utf8Encoder.convert(value37);
+  IsarUint8List? typeId$Bytes;
+  final typeId$Value = object.typeId;
+  if (typeId$Value != null) {
+    typeId$Bytes = IsarBinaryWriter.utf8Encoder.convert(typeId$Value);
   }
-  dynamicSize += (_typeId?.length ?? 0) as int;
-  final value38 = object.userId;
-  IsarUint8List? _userId;
-  if (value38 != null) {
-    _userId = IsarBinaryWriter.utf8Encoder.convert(value38);
+  IsarUint8List? userId$Bytes;
+  final userId$Value = object.userId;
+  if (userId$Value != null) {
+    userId$Bytes = IsarBinaryWriter.utf8Encoder.convert(userId$Value);
   }
-  dynamicSize += (_userId?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
+  final size = staticSize +
+      (adrs$Bytes?.length ?? 0) +
+      (backupFileId$Bytes?.length ?? 0) +
+      (bhfId$Bytes?.length ?? 0) +
+      (businessUrl$Bytes?.length ?? 0) +
+      channels$BytesCount +
+      (chatUid$Bytes?.length ?? 0) +
+      (country$Bytes?.length ?? 0) +
+      (createdAt$Bytes?.length ?? 0) +
+      (currency$Bytes?.length ?? 0) +
+      (deviceToken$Bytes?.length ?? 0) +
+      (dvcSrlNo$Bytes?.length ?? 0) +
+      (email$Bytes?.length ?? 0) +
+      (firstName$Bytes?.length ?? 0) +
+      (fullName$Bytes?.length ?? 0) +
+      (hexColor$Bytes?.length ?? 0) +
+      (imageUrl$Bytes?.length ?? 0) +
+      (lastDbBackup$Bytes?.length ?? 0) +
+      (lastName$Bytes?.length ?? 0) +
+      (latitude$Bytes?.length ?? 0) +
+      (longitude$Bytes?.length ?? 0) +
+      (metadata$Bytes?.length ?? 0) +
+      (name$Bytes?.length ?? 0) +
+      (nextBillingDate$Bytes?.length ?? 0) +
+      (previousBillingDate$Bytes?.length ?? 0) +
+      (role$Bytes?.length ?? 0) +
+      (subscriptionPlan$Bytes?.length ?? 0) +
+      (table$Bytes?.length ?? 0) +
+      (taxServerUrl$Bytes?.length ?? 0) +
+      (timeZone$Bytes?.length ?? 0) +
+      (type$Bytes?.length ?? 0) +
+      (typeId$Bytes?.length ?? 0) +
+      (userId$Bytes?.length ?? 0);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _active);
-  writer.writeBytes(offsets[1], _adrs);
-  writer.writeBool(offsets[2], _backUpEnabled);
-  writer.writeBytes(offsets[3], _backupFileId);
-  writer.writeBytes(offsets[4], _bhfId);
-  writer.writeBytes(offsets[5], _businessUrl);
-  writer.writeStringList(offsets[6], _channels);
-  writer.writeBytes(offsets[7], _chatUid);
-  writer.writeBytes(offsets[8], _country);
-  writer.writeBytes(offsets[9], _createdAt);
-  writer.writeBytes(offsets[10], _currency);
-  writer.writeBytes(offsets[11], _deviceToken);
-  writer.writeBytes(offsets[12], _dvcSrlNo);
-  writer.writeBytes(offsets[13], _email);
-  writer.writeLong(offsets[14], _fcategoryId);
-  writer.writeBytes(offsets[15], _firstName);
-  writer.writeBytes(offsets[16], _fullName);
-  writer.writeBytes(offsets[17], _hexColor);
-  writer.writeBytes(offsets[18], _imageUrl);
-  writer.writeBool(offsets[19], _isLastSubscriptionPaymentSucceeded);
-  writer.writeBytes(offsets[20], _lastDbBackup);
-  writer.writeBytes(offsets[21], _lastName);
-  writer.writeLong(offsets[22], _lastSeen);
-  writer.writeBytes(offsets[23], _latitude);
-  writer.writeBytes(offsets[24], _longitude);
-  writer.writeBytes(offsets[25], _metadata);
-  writer.writeBytes(offsets[26], _name);
-  writer.writeBytes(offsets[27], _nextBillingDate);
-  writer.writeBytes(offsets[28], _previousBillingDate);
-  writer.writeBytes(offsets[29], _role);
-  writer.writeBytes(offsets[30], _subscriptionPlan);
-  writer.writeBytes(offsets[31], _table);
-  writer.writeBool(offsets[32], _taxEnabled);
-  writer.writeBytes(offsets[33], _taxServerUrl);
-  writer.writeBytes(offsets[34], _timeZone);
-  writer.writeLong(offsets[35], _tinNumber);
-  writer.writeBytes(offsets[36], _type);
-  writer.writeBytes(offsets[37], _typeId);
-  writer.writeBytes(offsets[38], _userId);
+  writer.writeBool(offsets[0], object.active);
+  writer.writeBytes(offsets[1], adrs$Bytes);
+  writer.writeBool(offsets[2], object.backUpEnabled);
+  writer.writeBytes(offsets[3], backupFileId$Bytes);
+  writer.writeBytes(offsets[4], bhfId$Bytes);
+  writer.writeBytes(offsets[5], businessUrl$Bytes);
+  writer.writeStringList(offsets[6], channels$BytesList);
+  writer.writeBytes(offsets[7], chatUid$Bytes);
+  writer.writeBytes(offsets[8], country$Bytes);
+  writer.writeBytes(offsets[9], createdAt$Bytes);
+  writer.writeBytes(offsets[10], currency$Bytes);
+  writer.writeBytes(offsets[11], deviceToken$Bytes);
+  writer.writeBytes(offsets[12], dvcSrlNo$Bytes);
+  writer.writeBytes(offsets[13], email$Bytes);
+  writer.writeLong(offsets[14], object.fcategoryId);
+  writer.writeBytes(offsets[15], firstName$Bytes);
+  writer.writeBytes(offsets[16], fullName$Bytes);
+  writer.writeBytes(offsets[17], hexColor$Bytes);
+  writer.writeBytes(offsets[18], imageUrl$Bytes);
+  writer.writeBool(offsets[19], object.isLastSubscriptionPaymentSucceeded);
+  writer.writeBytes(offsets[20], lastDbBackup$Bytes);
+  writer.writeBytes(offsets[21], lastName$Bytes);
+  writer.writeLong(offsets[22], object.lastSeen);
+  writer.writeBytes(offsets[23], latitude$Bytes);
+  writer.writeBytes(offsets[24], longitude$Bytes);
+  writer.writeBytes(offsets[25], metadata$Bytes);
+  writer.writeBytes(offsets[26], name$Bytes);
+  writer.writeBytes(offsets[27], nextBillingDate$Bytes);
+  writer.writeBytes(offsets[28], previousBillingDate$Bytes);
+  writer.writeBytes(offsets[29], role$Bytes);
+  writer.writeBytes(offsets[30], subscriptionPlan$Bytes);
+  writer.writeBytes(offsets[31], table$Bytes);
+  writer.writeBool(offsets[32], object.taxEnabled);
+  writer.writeBytes(offsets[33], taxServerUrl$Bytes);
+  writer.writeBytes(offsets[34], timeZone$Bytes);
+  writer.writeLong(offsets[35], object.tinNumber);
+  writer.writeBytes(offsets[36], type$Bytes);
+  writer.writeBytes(offsets[37], typeId$Bytes);
+  writer.writeBytes(offsets[38], userId$Bytes);
 }
 
 Business _businessDeserializeNative(IsarCollection<Business> collection, int id,
@@ -498,7 +490,7 @@ P _businessDeserializePropNative<P>(
   }
 }
 
-dynamic _businessSerializeWeb(
+Object _businessSerializeWeb(
     IsarCollection<Business> collection, Business object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
@@ -547,7 +539,7 @@ dynamic _businessSerializeWeb(
 }
 
 Business _businessDeserializeWeb(
-    IsarCollection<Business> collection, dynamic jsObj) {
+    IsarCollection<Business> collection, Object jsObj) {
   final object = Business(
     active: IsarNative.jsObjectGet(jsObj, 'active'),
     adrs: IsarNative.jsObjectGet(jsObj, 'adrs'),
@@ -593,7 +585,8 @@ Business _businessDeserializeWeb(
     userId: IsarNative.jsObjectGet(jsObj, 'userId'),
   );
   object.createdAt = IsarNative.jsObjectGet(jsObj, 'createdAt');
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.id =
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   return object;
 }
 
@@ -639,8 +632,8 @@ P _businessDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'hexColor':
       return (IsarNative.jsObjectGet(jsObj, 'hexColor')) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'imageUrl':
       return (IsarNative.jsObjectGet(jsObj, 'imageUrl')) as P;
     case 'isLastSubscriptionPaymentSucceeded':
@@ -689,7 +682,8 @@ P _businessDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _businessAttachLinks(IsarCollection col, int id, Business object) {}
+void _businessAttachLinks(
+    IsarCollection<dynamic> col, int id, Business object) {}
 
 extension BusinessQueryWhereSort on QueryBuilder<Business, Business, QWhere> {
   QueryBuilder<Business, Business, QAfterWhere> anyId() {
@@ -808,27 +802,22 @@ extension BusinessQueryWhere on QueryBuilder<Business, Business, QWhereClause> {
 extension BusinessQueryFilter
     on QueryBuilder<Business, Business, QFilterCondition> {
   QueryBuilder<Business, Business, QAfterFilterCondition> activeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'active',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> activeEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> adrsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'adrs',
-      value: null,
     ));
   }
 
@@ -836,8 +825,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'adrs',
       value: value,
       caseSensitive: caseSensitive,
@@ -849,8 +837,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'adrs',
       value: value,
@@ -863,8 +850,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'adrs',
       value: value,
@@ -893,8 +879,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'adrs',
       value: value,
       caseSensitive: caseSensitive,
@@ -905,8 +890,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'adrs',
       value: value,
       caseSensitive: caseSensitive,
@@ -916,8 +900,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> adrsContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'adrs',
       value: value,
       caseSensitive: caseSensitive,
@@ -927,37 +910,31 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> adrsMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'adrs',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       backUpEnabledIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'backUpEnabled',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> backUpEnabledEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'backUpEnabled',
       value: value,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> backupFileIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'backupFileId',
-      value: null,
     ));
   }
 
@@ -965,8 +942,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'backupFileId',
       value: value,
       caseSensitive: caseSensitive,
@@ -979,8 +955,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'backupFileId',
       value: value,
@@ -993,8 +968,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'backupFileId',
       value: value,
@@ -1024,8 +998,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'backupFileId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1036,8 +1009,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'backupFileId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1047,8 +1019,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> backupFileIdContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'backupFileId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1058,19 +1029,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> backupFileIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'backupFileId',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> bhfIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'bhfId',
-      value: null,
     ));
   }
 
@@ -1078,8 +1046,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'bhfId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1091,8 +1058,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'bhfId',
       value: value,
@@ -1105,8 +1071,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'bhfId',
       value: value,
@@ -1135,8 +1100,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'bhfId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1147,8 +1111,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'bhfId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1158,8 +1121,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> bhfIdContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'bhfId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1169,19 +1131,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> bhfIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'bhfId',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> businessUrlIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'businessUrl',
-      value: null,
     ));
   }
 
@@ -1189,8 +1148,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'businessUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -1203,8 +1161,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'businessUrl',
       value: value,
@@ -1217,8 +1174,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'businessUrl',
       value: value,
@@ -1247,8 +1203,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'businessUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -1259,8 +1214,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'businessUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -1270,8 +1224,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> businessUrlContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'businessUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -1281,25 +1234,21 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> businessUrlMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'businessUrl',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> channelsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'channels',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> channelsAnyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(const FilterCondition.equalTo(
       property: 'channels',
       value: null,
     ));
@@ -1309,8 +1258,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -1323,8 +1271,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'channels',
       value: value,
@@ -1337,8 +1284,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'channels',
       value: value,
@@ -1367,8 +1313,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -1379,8 +1324,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -1390,8 +1334,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> channelsAnyContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -1401,19 +1344,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> channelsAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'channels',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> chatUidIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'chatUid',
-      value: null,
     ));
   }
 
@@ -1421,8 +1361,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'chatUid',
       value: value,
       caseSensitive: caseSensitive,
@@ -1434,8 +1373,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'chatUid',
       value: value,
@@ -1448,8 +1386,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'chatUid',
       value: value,
@@ -1478,8 +1415,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'chatUid',
       value: value,
       caseSensitive: caseSensitive,
@@ -1490,8 +1426,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'chatUid',
       value: value,
       caseSensitive: caseSensitive,
@@ -1501,8 +1436,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> chatUidContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'chatUid',
       value: value,
       caseSensitive: caseSensitive,
@@ -1512,19 +1446,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> chatUidMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'chatUid',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> countryIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'country',
-      value: null,
     ));
   }
 
@@ -1532,8 +1463,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -1545,8 +1475,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'country',
       value: value,
@@ -1559,8 +1488,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'country',
       value: value,
@@ -1589,8 +1517,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -1601,8 +1528,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -1612,8 +1538,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> countryContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -1623,19 +1548,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> countryMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'country',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> createdAtIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'createdAt',
-      value: null,
     ));
   }
 
@@ -1643,8 +1565,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1656,8 +1577,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -1670,8 +1590,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -1700,8 +1619,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1712,8 +1630,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1723,8 +1640,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> createdAtContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1734,19 +1650,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> createdAtMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'createdAt',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> currencyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'currency',
-      value: null,
     ));
   }
 
@@ -1754,8 +1667,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'currency',
       value: value,
       caseSensitive: caseSensitive,
@@ -1767,8 +1679,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'currency',
       value: value,
@@ -1781,8 +1692,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'currency',
       value: value,
@@ -1811,8 +1721,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'currency',
       value: value,
       caseSensitive: caseSensitive,
@@ -1823,8 +1732,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'currency',
       value: value,
       caseSensitive: caseSensitive,
@@ -1834,8 +1742,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> currencyContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'currency',
       value: value,
       caseSensitive: caseSensitive,
@@ -1845,19 +1752,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> currencyMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'currency',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> deviceTokenIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'deviceToken',
-      value: null,
     ));
   }
 
@@ -1865,8 +1769,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'deviceToken',
       value: value,
       caseSensitive: caseSensitive,
@@ -1879,8 +1782,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'deviceToken',
       value: value,
@@ -1893,8 +1795,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'deviceToken',
       value: value,
@@ -1923,8 +1824,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'deviceToken',
       value: value,
       caseSensitive: caseSensitive,
@@ -1935,8 +1835,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'deviceToken',
       value: value,
       caseSensitive: caseSensitive,
@@ -1946,8 +1845,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> deviceTokenContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'deviceToken',
       value: value,
       caseSensitive: caseSensitive,
@@ -1957,19 +1855,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> deviceTokenMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'deviceToken',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> dvcSrlNoIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'dvcSrlNo',
-      value: null,
     ));
   }
 
@@ -1977,8 +1872,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'dvcSrlNo',
       value: value,
       caseSensitive: caseSensitive,
@@ -1990,8 +1884,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'dvcSrlNo',
       value: value,
@@ -2004,8 +1897,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'dvcSrlNo',
       value: value,
@@ -2034,8 +1926,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'dvcSrlNo',
       value: value,
       caseSensitive: caseSensitive,
@@ -2046,8 +1937,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'dvcSrlNo',
       value: value,
       caseSensitive: caseSensitive,
@@ -2057,8 +1947,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> dvcSrlNoContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'dvcSrlNo',
       value: value,
       caseSensitive: caseSensitive,
@@ -2068,19 +1957,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> dvcSrlNoMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'dvcSrlNo',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> emailIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'email',
-      value: null,
     ));
   }
 
@@ -2088,8 +1974,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -2101,8 +1986,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'email',
       value: value,
@@ -2115,8 +1999,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'email',
       value: value,
@@ -2145,8 +2028,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -2157,8 +2039,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -2168,8 +2049,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> emailContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -2179,26 +2059,22 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> emailMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'email',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> fcategoryIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'fcategoryId',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> fcategoryIdEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fcategoryId',
       value: value,
     ));
@@ -2209,8 +2085,7 @@ extension BusinessQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fcategoryId',
       value: value,
@@ -2221,8 +2096,7 @@ extension BusinessQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fcategoryId',
       value: value,
@@ -2245,10 +2119,8 @@ extension BusinessQueryFilter
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> firstNameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'firstName',
-      value: null,
     ));
   }
 
@@ -2256,8 +2128,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'firstName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2269,8 +2140,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'firstName',
       value: value,
@@ -2283,8 +2153,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'firstName',
       value: value,
@@ -2313,8 +2182,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'firstName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2325,8 +2193,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'firstName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2336,8 +2203,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> firstNameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'firstName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2347,19 +2213,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> firstNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'firstName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> fullNameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'fullName',
-      value: null,
     ));
   }
 
@@ -2367,8 +2230,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fullName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2380,8 +2242,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fullName',
       value: value,
@@ -2394,8 +2255,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fullName',
       value: value,
@@ -2424,8 +2284,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'fullName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2436,8 +2295,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'fullName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2447,8 +2305,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> fullNameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'fullName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2458,19 +2315,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> fullNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'fullName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> hexColorIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'hexColor',
-      value: null,
     ));
   }
 
@@ -2478,8 +2332,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'hexColor',
       value: value,
       caseSensitive: caseSensitive,
@@ -2491,8 +2344,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'hexColor',
       value: value,
@@ -2505,8 +2357,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'hexColor',
       value: value,
@@ -2535,8 +2386,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'hexColor',
       value: value,
       caseSensitive: caseSensitive,
@@ -2547,8 +2397,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'hexColor',
       value: value,
       caseSensitive: caseSensitive,
@@ -2558,8 +2407,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> hexColorContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'hexColor',
       value: value,
       caseSensitive: caseSensitive,
@@ -2569,17 +2417,15 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> hexColorMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'hexColor',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -2589,8 +2435,7 @@ extension BusinessQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -2601,8 +2446,7 @@ extension BusinessQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -2625,10 +2469,8 @@ extension BusinessQueryFilter
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> imageUrlIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'imageUrl',
-      value: null,
     ));
   }
 
@@ -2636,8 +2478,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'imageUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -2649,8 +2490,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'imageUrl',
       value: value,
@@ -2663,8 +2503,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'imageUrl',
       value: value,
@@ -2693,8 +2532,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'imageUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -2705,8 +2543,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'imageUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -2716,8 +2553,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> imageUrlContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'imageUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -2727,37 +2563,31 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> imageUrlMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'imageUrl',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       isLastSubscriptionPaymentSucceededIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'isLastSubscriptionPaymentSucceeded',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       isLastSubscriptionPaymentSucceededEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'isLastSubscriptionPaymentSucceeded',
       value: value,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> lastDbBackupIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'lastDbBackup',
-      value: null,
     ));
   }
 
@@ -2765,8 +2595,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'lastDbBackup',
       value: value,
       caseSensitive: caseSensitive,
@@ -2779,8 +2608,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'lastDbBackup',
       value: value,
@@ -2793,8 +2621,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'lastDbBackup',
       value: value,
@@ -2824,8 +2651,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'lastDbBackup',
       value: value,
       caseSensitive: caseSensitive,
@@ -2836,8 +2662,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'lastDbBackup',
       value: value,
       caseSensitive: caseSensitive,
@@ -2847,8 +2672,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> lastDbBackupContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'lastDbBackup',
       value: value,
       caseSensitive: caseSensitive,
@@ -2858,19 +2682,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> lastDbBackupMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'lastDbBackup',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> lastNameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'lastName',
-      value: null,
     ));
   }
 
@@ -2878,8 +2699,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'lastName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2891,8 +2711,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'lastName',
       value: value,
@@ -2905,8 +2724,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'lastName',
       value: value,
@@ -2935,8 +2753,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'lastName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2947,8 +2764,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'lastName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2958,8 +2774,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> lastNameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'lastName',
       value: value,
       caseSensitive: caseSensitive,
@@ -2969,26 +2784,22 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> lastNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'lastName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> lastSeenIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'lastSeen',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> lastSeenEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'lastSeen',
       value: value,
     ));
@@ -2998,8 +2809,7 @@ extension BusinessQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'lastSeen',
       value: value,
@@ -3010,8 +2820,7 @@ extension BusinessQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'lastSeen',
       value: value,
@@ -3034,10 +2843,8 @@ extension BusinessQueryFilter
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> latitudeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'latitude',
-      value: null,
     ));
   }
 
@@ -3045,8 +2852,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3058,8 +2864,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'latitude',
       value: value,
@@ -3072,8 +2877,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'latitude',
       value: value,
@@ -3102,8 +2906,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3114,8 +2917,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3125,8 +2927,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> latitudeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3136,19 +2937,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> latitudeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'latitude',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> longitudeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'longitude',
-      value: null,
     ));
   }
 
@@ -3156,8 +2954,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3169,8 +2966,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'longitude',
       value: value,
@@ -3183,8 +2979,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'longitude',
       value: value,
@@ -3213,8 +3008,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3225,8 +3019,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3236,8 +3029,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> longitudeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -3247,19 +3039,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> longitudeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'longitude',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> metadataIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'metadata',
-      value: null,
     ));
   }
 
@@ -3267,8 +3056,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'metadata',
       value: value,
       caseSensitive: caseSensitive,
@@ -3280,8 +3068,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'metadata',
       value: value,
@@ -3294,8 +3081,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'metadata',
       value: value,
@@ -3324,8 +3110,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'metadata',
       value: value,
       caseSensitive: caseSensitive,
@@ -3336,8 +3121,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'metadata',
       value: value,
       caseSensitive: caseSensitive,
@@ -3347,8 +3131,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> metadataContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'metadata',
       value: value,
       caseSensitive: caseSensitive,
@@ -3358,19 +3141,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> metadataMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'metadata',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> nameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'name',
-      value: null,
     ));
   }
 
@@ -3378,8 +3158,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -3391,8 +3170,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -3405,8 +3183,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -3435,8 +3212,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -3447,8 +3223,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -3458,8 +3233,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -3469,20 +3243,17 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       nextBillingDateIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'nextBillingDate',
-      value: null,
     ));
   }
 
@@ -3491,8 +3262,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3505,8 +3275,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'nextBillingDate',
       value: value,
@@ -3520,8 +3289,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'nextBillingDate',
       value: value,
@@ -3552,8 +3320,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3565,8 +3332,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3575,8 +3341,7 @@ extension BusinessQueryFilter
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       nextBillingDateContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3585,20 +3350,17 @@ extension BusinessQueryFilter
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       nextBillingDateMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'nextBillingDate',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       previousBillingDateIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'previousBillingDate',
-      value: null,
     ));
   }
 
@@ -3607,8 +3369,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'previousBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3621,8 +3382,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'previousBillingDate',
       value: value,
@@ -3636,8 +3396,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'previousBillingDate',
       value: value,
@@ -3668,8 +3427,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'previousBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3681,8 +3439,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'previousBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3691,8 +3448,7 @@ extension BusinessQueryFilter
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       previousBillingDateContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'previousBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -3701,19 +3457,16 @@ extension BusinessQueryFilter
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       previousBillingDateMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'previousBillingDate',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> roleIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'role',
-      value: null,
     ));
   }
 
@@ -3721,8 +3474,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'role',
       value: value,
       caseSensitive: caseSensitive,
@@ -3734,8 +3486,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'role',
       value: value,
@@ -3748,8 +3499,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'role',
       value: value,
@@ -3778,8 +3528,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'role',
       value: value,
       caseSensitive: caseSensitive,
@@ -3790,8 +3539,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'role',
       value: value,
       caseSensitive: caseSensitive,
@@ -3801,8 +3549,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> roleContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'role',
       value: value,
       caseSensitive: caseSensitive,
@@ -3812,20 +3559,17 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> roleMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'role',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       subscriptionPlanIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'subscriptionPlan',
-      value: null,
     ));
   }
 
@@ -3834,8 +3578,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'subscriptionPlan',
       value: value,
       caseSensitive: caseSensitive,
@@ -3848,8 +3591,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'subscriptionPlan',
       value: value,
@@ -3863,8 +3605,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'subscriptionPlan',
       value: value,
@@ -3895,8 +3636,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'subscriptionPlan',
       value: value,
       caseSensitive: caseSensitive,
@@ -3908,8 +3648,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'subscriptionPlan',
       value: value,
       caseSensitive: caseSensitive,
@@ -3918,8 +3657,7 @@ extension BusinessQueryFilter
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       subscriptionPlanContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'subscriptionPlan',
       value: value,
       caseSensitive: caseSensitive,
@@ -3928,19 +3666,16 @@ extension BusinessQueryFilter
 
   QueryBuilder<Business, Business, QAfterFilterCondition>
       subscriptionPlanMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'subscriptionPlan',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> tableIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'table',
-      value: null,
     ));
   }
 
@@ -3948,8 +3683,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -3961,8 +3695,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'table',
       value: value,
@@ -3975,8 +3708,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'table',
       value: value,
@@ -4005,8 +3737,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -4017,8 +3748,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -4028,8 +3758,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> tableContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -4039,36 +3768,30 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> tableMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'table',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> taxEnabledIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'taxEnabled',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> taxEnabledEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'taxEnabled',
       value: value,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> taxServerUrlIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'taxServerUrl',
-      value: null,
     ));
   }
 
@@ -4076,8 +3799,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'taxServerUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -4090,8 +3812,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'taxServerUrl',
       value: value,
@@ -4104,8 +3825,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'taxServerUrl',
       value: value,
@@ -4135,8 +3855,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'taxServerUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -4147,8 +3866,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'taxServerUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -4158,8 +3876,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> taxServerUrlContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'taxServerUrl',
       value: value,
       caseSensitive: caseSensitive,
@@ -4169,19 +3886,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> taxServerUrlMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'taxServerUrl',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> timeZoneIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'timeZone',
-      value: null,
     ));
   }
 
@@ -4189,8 +3903,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'timeZone',
       value: value,
       caseSensitive: caseSensitive,
@@ -4202,8 +3915,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'timeZone',
       value: value,
@@ -4216,8 +3928,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'timeZone',
       value: value,
@@ -4246,8 +3957,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'timeZone',
       value: value,
       caseSensitive: caseSensitive,
@@ -4258,8 +3968,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'timeZone',
       value: value,
       caseSensitive: caseSensitive,
@@ -4269,8 +3978,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> timeZoneContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'timeZone',
       value: value,
       caseSensitive: caseSensitive,
@@ -4280,26 +3988,22 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> timeZoneMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'timeZone',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> tinNumberIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'tinNumber',
-      value: null,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> tinNumberEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'tinNumber',
       value: value,
     ));
@@ -4309,8 +4013,7 @@ extension BusinessQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'tinNumber',
       value: value,
@@ -4321,8 +4024,7 @@ extension BusinessQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'tinNumber',
       value: value,
@@ -4345,10 +4047,8 @@ extension BusinessQueryFilter
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> typeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'type',
-      value: null,
     ));
   }
 
@@ -4356,8 +4056,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'type',
       value: value,
       caseSensitive: caseSensitive,
@@ -4369,8 +4068,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'type',
       value: value,
@@ -4383,8 +4081,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'type',
       value: value,
@@ -4413,8 +4110,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'type',
       value: value,
       caseSensitive: caseSensitive,
@@ -4425,8 +4121,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'type',
       value: value,
       caseSensitive: caseSensitive,
@@ -4436,8 +4131,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> typeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'type',
       value: value,
       caseSensitive: caseSensitive,
@@ -4447,19 +4141,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> typeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'type',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> typeIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'typeId',
-      value: null,
     ));
   }
 
@@ -4467,8 +4158,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'typeId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4480,8 +4170,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'typeId',
       value: value,
@@ -4494,8 +4183,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'typeId',
       value: value,
@@ -4524,8 +4212,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'typeId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4536,8 +4223,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'typeId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4547,8 +4233,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> typeIdContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'typeId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4558,19 +4243,16 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> typeIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'typeId',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Business, Business, QAfterFilterCondition> userIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'userId',
-      value: null,
     ));
   }
 
@@ -4578,8 +4260,7 @@ extension BusinessQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'userId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4591,8 +4272,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'userId',
       value: value,
@@ -4605,8 +4285,7 @@ extension BusinessQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'userId',
       value: value,
@@ -4635,8 +4314,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'userId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4647,8 +4325,7 @@ extension BusinessQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'userId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4658,8 +4335,7 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> userIdContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'userId',
       value: value,
       caseSensitive: caseSensitive,
@@ -4669,10 +4345,9 @@ extension BusinessQueryFilter
   QueryBuilder<Business, Business, QAfterFilterCondition> userIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'userId',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -4817,14 +4492,6 @@ extension BusinessQueryWhereSortBy
 
   QueryBuilder<Business, Business, QAfterSortBy> sortByHexColorDesc() {
     return addSortByInternal('hexColor', Sort.desc);
-  }
-
-  QueryBuilder<Business, Business, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Business, Business, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Business, Business, QAfterSortBy> sortByImageUrl() {
@@ -5399,10 +5066,6 @@ extension BusinessQueryWhereDistinct
   QueryBuilder<Business, Business, QDistinct> distinctByHexColor(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('hexColor', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<Business, Business, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Business, Business, QDistinct> distinctByImageUrl(

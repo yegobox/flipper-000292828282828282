@@ -6,7 +6,8 @@ part of 'order.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetOrderCollection on Isar {
   IsarCollection<Order> get orders => getCollection();
@@ -74,88 +75,70 @@ void _orderSetId(Order object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _orderGetLinks(Order object) {
+List<IsarLinkBase<dynamic>> _orderGetLinks(Order object) {
   return [object.discounts, object.orderItems];
 }
 
 void _orderSerializeNative(IsarCollection<Order> collection, IsarCObject cObj,
     Order object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.active;
-  final _active = value0;
-  final value1 = object.branchId;
-  final _branchId = value1;
-  final value2 = object.cashReceived;
-  final _cashReceived = value2;
-  final value3 = object.createdAt;
-  final _createdAt = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_createdAt.length) as int;
-  final value4 = object.customerChangeDue;
-  final _customerChangeDue = value4;
-  final value5 = object.customerId;
-  final _customerId = value5;
-  final value6 = object.draft;
-  final _draft = value6;
-  final value7 = object.note;
-  IsarUint8List? _note;
-  if (value7 != null) {
-    _note = IsarBinaryWriter.utf8Encoder.convert(value7);
+  final createdAt$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.createdAt);
+  IsarUint8List? note$Bytes;
+  final note$Value = object.note;
+  if (note$Value != null) {
+    note$Bytes = IsarBinaryWriter.utf8Encoder.convert(note$Value);
   }
-  dynamicSize += (_note?.length ?? 0) as int;
-  final value8 = object.orderNumber;
-  final _orderNumber = IsarBinaryWriter.utf8Encoder.convert(value8);
-  dynamicSize += (_orderNumber.length) as int;
-  final value9 = object.orderType;
-  final _orderType = IsarBinaryWriter.utf8Encoder.convert(value9);
-  dynamicSize += (_orderType.length) as int;
-  final value10 = object.paymentType;
-  final _paymentType = IsarBinaryWriter.utf8Encoder.convert(value10);
-  dynamicSize += (_paymentType.length) as int;
-  final value11 = object.receiptType;
-  IsarUint8List? _receiptType;
-  if (value11 != null) {
-    _receiptType = IsarBinaryWriter.utf8Encoder.convert(value11);
+  final orderNumber$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.orderNumber);
+  final orderType$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.orderType);
+  final paymentType$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.paymentType);
+  IsarUint8List? receiptType$Bytes;
+  final receiptType$Value = object.receiptType;
+  if (receiptType$Value != null) {
+    receiptType$Bytes = IsarBinaryWriter.utf8Encoder.convert(receiptType$Value);
   }
-  dynamicSize += (_receiptType?.length ?? 0) as int;
-  final value12 = object.reference;
-  final _reference = IsarBinaryWriter.utf8Encoder.convert(value12);
-  dynamicSize += (_reference.length) as int;
-  final value13 = object.reported;
-  final _reported = value13;
-  final value14 = object.status;
-  final _status = IsarBinaryWriter.utf8Encoder.convert(value14);
-  dynamicSize += (_status.length) as int;
-  final value15 = object.subTotal;
-  final _subTotal = value15;
-  final value16 = object.updatedAt;
-  IsarUint8List? _updatedAt;
-  if (value16 != null) {
-    _updatedAt = IsarBinaryWriter.utf8Encoder.convert(value16);
+  final reference$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.reference);
+  final status$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.status);
+  IsarUint8List? updatedAt$Bytes;
+  final updatedAt$Value = object.updatedAt;
+  if (updatedAt$Value != null) {
+    updatedAt$Bytes = IsarBinaryWriter.utf8Encoder.convert(updatedAt$Value);
   }
-  dynamicSize += (_updatedAt?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
+  final size = staticSize +
+      (createdAt$Bytes.length) +
+      (note$Bytes?.length ?? 0) +
+      (orderNumber$Bytes.length) +
+      (orderType$Bytes.length) +
+      (paymentType$Bytes.length) +
+      (receiptType$Bytes?.length ?? 0) +
+      (reference$Bytes.length) +
+      (status$Bytes.length) +
+      (updatedAt$Bytes?.length ?? 0);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _active);
-  writer.writeLong(offsets[1], _branchId);
-  writer.writeDouble(offsets[2], _cashReceived);
-  writer.writeBytes(offsets[3], _createdAt);
-  writer.writeDouble(offsets[4], _customerChangeDue);
-  writer.writeLong(offsets[5], _customerId);
-  writer.writeBool(offsets[6], _draft);
-  writer.writeBytes(offsets[7], _note);
-  writer.writeBytes(offsets[8], _orderNumber);
-  writer.writeBytes(offsets[9], _orderType);
-  writer.writeBytes(offsets[10], _paymentType);
-  writer.writeBytes(offsets[11], _receiptType);
-  writer.writeBytes(offsets[12], _reference);
-  writer.writeBool(offsets[13], _reported);
-  writer.writeBytes(offsets[14], _status);
-  writer.writeDouble(offsets[15], _subTotal);
-  writer.writeBytes(offsets[16], _updatedAt);
+  writer.writeBool(offsets[0], object.active);
+  writer.writeLong(offsets[1], object.branchId);
+  writer.writeDouble(offsets[2], object.cashReceived);
+  writer.writeBytes(offsets[3], createdAt$Bytes);
+  writer.writeDouble(offsets[4], object.customerChangeDue);
+  writer.writeLong(offsets[5], object.customerId);
+  writer.writeBool(offsets[6], object.draft);
+  writer.writeBytes(offsets[7], note$Bytes);
+  writer.writeBytes(offsets[8], orderNumber$Bytes);
+  writer.writeBytes(offsets[9], orderType$Bytes);
+  writer.writeBytes(offsets[10], paymentType$Bytes);
+  writer.writeBytes(offsets[11], receiptType$Bytes);
+  writer.writeBytes(offsets[12], reference$Bytes);
+  writer.writeBool(offsets[13], object.reported);
+  writer.writeBytes(offsets[14], status$Bytes);
+  writer.writeDouble(offsets[15], object.subTotal);
+  writer.writeBytes(offsets[16], updatedAt$Bytes);
 }
 
 Order _orderDeserializeNative(IsarCollection<Order> collection, int id,
@@ -227,7 +210,7 @@ P _orderDeserializePropNative<P>(
   }
 }
 
-dynamic _orderSerializeWeb(IsarCollection<Order> collection, Order object) {
+Object _orderSerializeWeb(IsarCollection<Order> collection, Order object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
   IsarNative.jsObjectSet(jsObj, 'branchId', object.branchId);
@@ -250,11 +233,11 @@ dynamic _orderSerializeWeb(IsarCollection<Order> collection, Order object) {
   return jsObj;
 }
 
-Order _orderDeserializeWeb(IsarCollection<Order> collection, dynamic jsObj) {
+Order _orderDeserializeWeb(IsarCollection<Order> collection, Object jsObj) {
   final object = Order();
   object.active = IsarNative.jsObjectGet(jsObj, 'active') ?? false;
-  object.branchId =
-      IsarNative.jsObjectGet(jsObj, 'branchId') ?? double.negativeInfinity;
+  object.branchId = IsarNative.jsObjectGet(jsObj, 'branchId') ??
+      (double.negativeInfinity as int);
   object.cashReceived =
       IsarNative.jsObjectGet(jsObj, 'cashReceived') ?? double.negativeInfinity;
   object.createdAt = IsarNative.jsObjectGet(jsObj, 'createdAt') ?? '';
@@ -263,7 +246,8 @@ Order _orderDeserializeWeb(IsarCollection<Order> collection, dynamic jsObj) {
           double.negativeInfinity;
   object.customerId = IsarNative.jsObjectGet(jsObj, 'customerId');
   object.draft = IsarNative.jsObjectGet(jsObj, 'draft') ?? false;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.id =
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.note = IsarNative.jsObjectGet(jsObj, 'note');
   object.orderNumber = IsarNative.jsObjectGet(jsObj, 'orderNumber') ?? '';
   object.orderType = IsarNative.jsObjectGet(jsObj, 'orderType') ?? '';
@@ -275,8 +259,10 @@ Order _orderDeserializeWeb(IsarCollection<Order> collection, dynamic jsObj) {
   object.subTotal =
       IsarNative.jsObjectGet(jsObj, 'subTotal') ?? double.negativeInfinity;
   object.updatedAt = IsarNative.jsObjectGet(jsObj, 'updatedAt');
-  _orderAttachLinks(collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity, object);
+  _orderAttachLinks(
+      collection,
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+      object);
   return object;
 }
 
@@ -286,7 +272,7 @@ P _orderDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'active') ?? false) as P;
     case 'branchId':
       return (IsarNative.jsObjectGet(jsObj, 'branchId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'cashReceived':
       return (IsarNative.jsObjectGet(jsObj, 'cashReceived') ??
           double.negativeInfinity) as P;
@@ -300,8 +286,8 @@ P _orderDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'draft':
       return (IsarNative.jsObjectGet(jsObj, 'draft') ?? false) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'note':
       return (IsarNative.jsObjectGet(jsObj, 'note')) as P;
     case 'orderNumber':
@@ -328,7 +314,7 @@ P _orderDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _orderAttachLinks(IsarCollection col, int id, Order object) {
+void _orderAttachLinks(IsarCollection<dynamic> col, int id, Order object) {
   object.discounts.attach(col, col.isar.discounts, 'discounts', id);
   object.orderItems.attach(col, col.isar.orderItems, 'orderItems', id);
 }
@@ -581,16 +567,14 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
 
 extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> activeEqualTo(bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> branchIdEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'branchId',
       value: value,
     ));
@@ -600,8 +584,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -612,8 +595,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -637,8 +619,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
 
   QueryBuilder<Order, Order, QAfterFilterCondition> cashReceivedGreaterThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'cashReceived',
       value: value,
@@ -647,8 +628,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
 
   QueryBuilder<Order, Order, QAfterFilterCondition> cashReceivedLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'cashReceived',
       value: value,
@@ -670,8 +650,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -683,8 +662,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -697,8 +675,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -727,8 +704,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -739,8 +715,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -750,8 +725,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> createdAtContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'createdAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -761,18 +735,16 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> createdAtMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'createdAt',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition>
       customerChangeDueGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'customerChangeDue',
       value: value,
@@ -781,8 +753,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
 
   QueryBuilder<Order, Order, QAfterFilterCondition> customerChangeDueLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'customerChangeDue',
       value: value,
@@ -801,17 +772,14 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> customerIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'customerId',
-      value: null,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> customerIdEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'customerId',
       value: value,
     ));
@@ -821,8 +789,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'customerId',
       value: value,
@@ -833,8 +800,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'customerId',
       value: value,
@@ -857,16 +823,14 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> draftEqualTo(bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'draft',
       value: value,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -876,8 +840,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -888,8 +851,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -912,10 +874,8 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> noteIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'note',
-      value: null,
     ));
   }
 
@@ -923,8 +883,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -936,8 +895,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'note',
       value: value,
@@ -950,8 +908,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'note',
       value: value,
@@ -980,8 +937,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -992,8 +948,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -1002,8 +957,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
 
   QueryBuilder<Order, Order, QAfterFilterCondition> noteContains(String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -1012,10 +966,9 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
 
   QueryBuilder<Order, Order, QAfterFilterCondition> noteMatches(String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'note',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1024,8 +977,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'orderNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -1037,8 +989,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'orderNumber',
       value: value,
@@ -1051,8 +1002,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'orderNumber',
       value: value,
@@ -1081,8 +1031,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'orderNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -1093,8 +1042,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'orderNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -1104,8 +1052,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> orderNumberContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'orderNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -1115,10 +1062,9 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> orderNumberMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'orderNumber',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1127,8 +1073,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'orderType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1140,8 +1085,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'orderType',
       value: value,
@@ -1154,8 +1098,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'orderType',
       value: value,
@@ -1184,8 +1127,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'orderType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1196,8 +1138,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'orderType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1207,8 +1148,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> orderTypeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'orderType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1218,10 +1158,9 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> orderTypeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'orderType',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1230,8 +1169,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1243,8 +1181,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'paymentType',
       value: value,
@@ -1257,8 +1194,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'paymentType',
       value: value,
@@ -1287,8 +1223,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1299,8 +1234,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1310,8 +1244,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> paymentTypeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1321,19 +1254,16 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> paymentTypeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'paymentType',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> receiptTypeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'receiptType',
-      value: null,
     ));
   }
 
@@ -1341,8 +1271,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'receiptType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1354,8 +1283,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'receiptType',
       value: value,
@@ -1368,8 +1296,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'receiptType',
       value: value,
@@ -1398,8 +1325,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'receiptType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1410,8 +1336,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'receiptType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1421,8 +1346,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> receiptTypeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'receiptType',
       value: value,
       caseSensitive: caseSensitive,
@@ -1432,10 +1356,9 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> receiptTypeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'receiptType',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1444,8 +1367,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'reference',
       value: value,
       caseSensitive: caseSensitive,
@@ -1457,8 +1379,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'reference',
       value: value,
@@ -1471,8 +1392,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'reference',
       value: value,
@@ -1501,8 +1421,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'reference',
       value: value,
       caseSensitive: caseSensitive,
@@ -1513,8 +1432,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'reference',
       value: value,
       caseSensitive: caseSensitive,
@@ -1524,8 +1442,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> referenceContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'reference',
       value: value,
       caseSensitive: caseSensitive,
@@ -1535,26 +1452,22 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> referenceMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'reference',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> reportedIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'reported',
-      value: null,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> reportedEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'reported',
       value: value,
     ));
@@ -1564,8 +1477,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -1577,8 +1489,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'status',
       value: value,
@@ -1591,8 +1502,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'status',
       value: value,
@@ -1621,8 +1531,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -1633,8 +1542,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -1643,8 +1551,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
 
   QueryBuilder<Order, Order, QAfterFilterCondition> statusContains(String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -1654,18 +1561,16 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> statusMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'status',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> subTotalGreaterThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'subTotal',
       value: value,
@@ -1674,8 +1579,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
 
   QueryBuilder<Order, Order, QAfterFilterCondition> subTotalLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'subTotal',
       value: value,
@@ -1694,10 +1598,8 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }
 
   QueryBuilder<Order, Order, QAfterFilterCondition> updatedAtIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'updatedAt',
-      value: null,
     ));
   }
 
@@ -1705,8 +1607,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'updatedAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1718,8 +1619,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'updatedAt',
       value: value,
@@ -1732,8 +1632,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'updatedAt',
       value: value,
@@ -1762,8 +1661,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'updatedAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1774,8 +1672,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'updatedAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1785,8 +1682,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> updatedAtContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'updatedAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1796,10 +1692,9 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> updatedAtMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'updatedAt',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1880,14 +1775,6 @@ extension OrderQueryWhereSortBy on QueryBuilder<Order, Order, QSortBy> {
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByDraftDesc() {
     return addSortByInternal('draft', Sort.desc);
-  }
-
-  QueryBuilder<Order, Order, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Order, Order, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByNote() {
@@ -2145,10 +2032,6 @@ extension OrderQueryWhereDistinct on QueryBuilder<Order, Order, QDistinct> {
 
   QueryBuilder<Order, Order, QDistinct> distinctByDraft() {
     return addDistinctByInternal('draft');
-  }
-
-  QueryBuilder<Order, Order, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByNote(

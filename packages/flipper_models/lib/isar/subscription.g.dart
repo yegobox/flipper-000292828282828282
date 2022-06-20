@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetSubscriptionCollection on Isar {
   IsarCollection<Subscription> get subscriptions => getCollection();
@@ -59,7 +60,7 @@ void _subscriptionSetId(Subscription object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _subscriptionGetLinks(Subscription object) {
+List<IsarLinkBase<dynamic>> _subscriptionGetLinks(Subscription object) {
   return [object.features];
 }
 
@@ -70,34 +71,27 @@ void _subscriptionSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.descriptor;
-  final _descriptor = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_descriptor.length) as int;
-  final value1 = object.interval;
-  final _interval = value1;
-  final value2 = object.lastBillingDate;
-  final _lastBillingDate = IsarBinaryWriter.utf8Encoder.convert(value2);
-  dynamicSize += (_lastBillingDate.length) as int;
-  final value3 = object.nextBillingDate;
-  final _nextBillingDate = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_nextBillingDate.length) as int;
-  final value4 = object.recurring;
-  final _recurring = value4;
-  final value5 = object.userId;
-  final _userId = value5;
-  final size = staticSize + dynamicSize;
-
+  final descriptor$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.descriptor);
+  final lastBillingDate$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.lastBillingDate);
+  final nextBillingDate$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.nextBillingDate);
+  final size = staticSize +
+      (descriptor$Bytes.length) +
+      (lastBillingDate$Bytes.length) +
+      (nextBillingDate$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _descriptor);
-  writer.writeLong(offsets[1], _interval);
-  writer.writeBytes(offsets[2], _lastBillingDate);
-  writer.writeBytes(offsets[3], _nextBillingDate);
-  writer.writeDouble(offsets[4], _recurring);
-  writer.writeLong(offsets[5], _userId);
+  writer.writeBytes(offsets[0], descriptor$Bytes);
+  writer.writeLong(offsets[1], object.interval);
+  writer.writeBytes(offsets[2], lastBillingDate$Bytes);
+  writer.writeBytes(offsets[3], nextBillingDate$Bytes);
+  writer.writeDouble(offsets[4], object.recurring);
+  writer.writeLong(offsets[5], object.userId);
 }
 
 Subscription _subscriptionDeserializeNative(
@@ -140,7 +134,7 @@ P _subscriptionDeserializePropNative<P>(
   }
 }
 
-dynamic _subscriptionSerializeWeb(
+Object _subscriptionSerializeWeb(
     IsarCollection<Subscription> collection, Subscription object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'descriptor', object.descriptor);
@@ -154,20 +148,23 @@ dynamic _subscriptionSerializeWeb(
 }
 
 Subscription _subscriptionDeserializeWeb(
-    IsarCollection<Subscription> collection, dynamic jsObj) {
+    IsarCollection<Subscription> collection, Object jsObj) {
   final object = Subscription(
     descriptor: IsarNative.jsObjectGet(jsObj, 'descriptor') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
-    interval:
-        IsarNative.jsObjectGet(jsObj, 'interval') ?? double.negativeInfinity,
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+    interval: IsarNative.jsObjectGet(jsObj, 'interval') ??
+        (double.negativeInfinity as int),
     lastBillingDate: IsarNative.jsObjectGet(jsObj, 'lastBillingDate') ?? '',
     nextBillingDate: IsarNative.jsObjectGet(jsObj, 'nextBillingDate') ?? '',
     recurring:
         IsarNative.jsObjectGet(jsObj, 'recurring') ?? double.negativeInfinity,
-    userId: IsarNative.jsObjectGet(jsObj, 'userId') ?? double.negativeInfinity,
+    userId: IsarNative.jsObjectGet(jsObj, 'userId') ??
+        (double.negativeInfinity as int),
   );
-  _subscriptionAttachLinks(collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity, object);
+  _subscriptionAttachLinks(
+      collection,
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+      object);
   return object;
 }
 
@@ -176,11 +173,11 @@ P _subscriptionDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'descriptor':
       return (IsarNative.jsObjectGet(jsObj, 'descriptor') ?? '') as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'interval':
       return (IsarNative.jsObjectGet(jsObj, 'interval') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'lastBillingDate':
       return (IsarNative.jsObjectGet(jsObj, 'lastBillingDate') ?? '') as P;
     case 'nextBillingDate':
@@ -190,13 +187,14 @@ P _subscriptionDeserializePropWeb<P>(Object jsObj, String propertyName) {
           double.negativeInfinity) as P;
     case 'userId':
       return (IsarNative.jsObjectGet(jsObj, 'userId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     default:
       throw 'Illegal propertyName';
   }
 }
 
-void _subscriptionAttachLinks(IsarCollection col, int id, Subscription object) {
+void _subscriptionAttachLinks(
+    IsarCollection<dynamic> col, int id, Subscription object) {
   object.features.attach(col, col.isar.features, 'features', id);
 }
 
@@ -348,8 +346,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'descriptor',
       value: value,
       caseSensitive: caseSensitive,
@@ -362,8 +359,7 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'descriptor',
       value: value,
@@ -377,8 +373,7 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'descriptor',
       value: value,
@@ -409,8 +404,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'descriptor',
       value: value,
       caseSensitive: caseSensitive,
@@ -422,8 +416,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'descriptor',
       value: value,
       caseSensitive: caseSensitive,
@@ -432,8 +425,7 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       descriptorContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'descriptor',
       value: value,
       caseSensitive: caseSensitive,
@@ -442,18 +434,16 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       descriptorMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'descriptor',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> idEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -463,8 +453,7 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -475,8 +464,7 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -500,8 +488,7 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       intervalEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'interval',
       value: value,
     ));
@@ -512,8 +499,7 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'interval',
       value: value,
@@ -525,8 +511,7 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'interval',
       value: value,
@@ -554,8 +539,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'lastBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -568,8 +552,7 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'lastBillingDate',
       value: value,
@@ -583,8 +566,7 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'lastBillingDate',
       value: value,
@@ -615,8 +597,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'lastBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -628,8 +609,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'lastBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -638,8 +618,7 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       lastBillingDateContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'lastBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -648,10 +627,9 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       lastBillingDateMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'lastBillingDate',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -661,8 +639,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -675,8 +652,7 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'nextBillingDate',
       value: value,
@@ -690,8 +666,7 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'nextBillingDate',
       value: value,
@@ -722,8 +697,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -735,8 +709,7 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -745,8 +718,7 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       nextBillingDateContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'nextBillingDate',
       value: value,
       caseSensitive: caseSensitive,
@@ -755,18 +727,16 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       nextBillingDateMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'nextBillingDate',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       recurringGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'recurring',
       value: value,
@@ -775,8 +745,7 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       recurringLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'recurring',
       value: value,
@@ -796,8 +765,7 @@ extension SubscriptionQueryFilter
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> userIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'userId',
       value: value,
     ));
@@ -808,8 +776,7 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'userId',
       value: value,
@@ -821,8 +788,7 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'userId',
       value: value,
@@ -866,14 +832,6 @@ extension SubscriptionQueryWhereSortBy
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       sortByDescriptorDesc() {
     return addSortByInternal('descriptor', Sort.desc);
-  }
-
-  QueryBuilder<Subscription, Subscription, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByInterval() {
@@ -990,10 +948,6 @@ extension SubscriptionQueryWhereDistinct
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByDescriptor(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('descriptor', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<Subscription, Subscription, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByInterval() {

@@ -36,7 +36,6 @@ Future<void> initDb() async {
       ReceiptSchema,
       DrawersSchema
     ],
-    inspector: false,
   );
   IsarAPI.instance(isarRef: isar);
   if (Platform.isIOS || Platform.isMacOS || Platform.isAndroid) {

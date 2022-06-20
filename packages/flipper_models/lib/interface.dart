@@ -120,8 +120,7 @@ abstract class IsarApiInterface {
   Future<List<Discount>> getDiscounts({required int branchId});
 
   Future<void> addOrderItem({required Order order, OrderItem? item});
-  Future<void> updateOrderItem({required Order order, required OrderItem item});
-
+  
   // Conversation createConversation({required Conversation conversation});
 
   // Conversation? getConversationByContactId({required int contactId});

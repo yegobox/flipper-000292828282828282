@@ -6,7 +6,8 @@ part of 'setting.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetSettingCollection on Isar {
   IsarCollection<Setting> get settings => getCollection();
@@ -63,7 +64,7 @@ void _settingSetId(Setting object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _settingGetLinks(Setting object) {
+List<IsarLinkBase<dynamic>> _settingGetLinks(Setting object) {
   return [];
 }
 
@@ -74,49 +75,33 @@ void _settingSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.attendnaceDocCreated;
-  final _attendnaceDocCreated = value0;
-  final value1 = object.autoPrint;
-  final _autoPrint = value1;
-  final value2 = object.defaultLanguage;
-  IsarUint8List? _defaultLanguage;
-  if (value2 != null) {
-    _defaultLanguage = IsarBinaryWriter.utf8Encoder.convert(value2);
+  IsarUint8List? defaultLanguage$Bytes;
+  final defaultLanguage$Value = object.defaultLanguage;
+  if (defaultLanguage$Value != null) {
+    defaultLanguage$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(defaultLanguage$Value);
   }
-  dynamicSize += (_defaultLanguage?.length ?? 0) as int;
-  final value3 = object.email;
-  final _email = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_email.length) as int;
-  final value4 = object.googleSheetDocCreated;
-  final _googleSheetDocCreated = value4;
-  final value5 = object.hasPin;
-  final _hasPin = IsarBinaryWriter.utf8Encoder.convert(value5);
-  dynamicSize += (_hasPin.length) as int;
-  final value6 = object.isAttendanceEnabled;
-  final _isAttendanceEnabled = value6;
-  final value7 = object.openReceiptFileOSaleComplete;
-  final _openReceiptFileOSaleComplete = value7;
-  final value8 = object.sendDailyReport;
-  final _sendDailyReport = value8;
-  final value9 = object.userId;
-  final _userId = value9;
-  final size = staticSize + dynamicSize;
-
+  final email$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.email);
+  final hasPin$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.hasPin);
+  final size = staticSize +
+      (defaultLanguage$Bytes?.length ?? 0) +
+      (email$Bytes.length) +
+      (hasPin$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _attendnaceDocCreated);
-  writer.writeBool(offsets[1], _autoPrint);
-  writer.writeBytes(offsets[2], _defaultLanguage);
-  writer.writeBytes(offsets[3], _email);
-  writer.writeBool(offsets[4], _googleSheetDocCreated);
-  writer.writeBytes(offsets[5], _hasPin);
-  writer.writeBool(offsets[6], _isAttendanceEnabled);
-  writer.writeBool(offsets[7], _openReceiptFileOSaleComplete);
-  writer.writeBool(offsets[8], _sendDailyReport);
-  writer.writeLong(offsets[9], _userId);
+  writer.writeBool(offsets[0], object.attendnaceDocCreated);
+  writer.writeBool(offsets[1], object.autoPrint);
+  writer.writeBytes(offsets[2], defaultLanguage$Bytes);
+  writer.writeBytes(offsets[3], email$Bytes);
+  writer.writeBool(offsets[4], object.googleSheetDocCreated);
+  writer.writeBytes(offsets[5], hasPin$Bytes);
+  writer.writeBool(offsets[6], object.isAttendanceEnabled);
+  writer.writeBool(offsets[7], object.openReceiptFileOSaleComplete);
+  writer.writeBool(offsets[8], object.sendDailyReport);
+  writer.writeLong(offsets[9], object.userId);
 }
 
 Setting _settingDeserializeNative(IsarCollection<Setting> collection, int id,
@@ -167,7 +152,7 @@ P _settingDeserializePropNative<P>(
   }
 }
 
-dynamic _settingSerializeWeb(
+Object _settingSerializeWeb(
     IsarCollection<Setting> collection, Setting object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(
@@ -189,7 +174,7 @@ dynamic _settingSerializeWeb(
 }
 
 Setting _settingDeserializeWeb(
-    IsarCollection<Setting> collection, dynamic jsObj) {
+    IsarCollection<Setting> collection, Object jsObj) {
   final object = Setting(
     attendnaceDocCreated: IsarNative.jsObjectGet(jsObj, 'attendnaceDocCreated'),
     autoPrint: IsarNative.jsObjectGet(jsObj, 'autoPrint'),
@@ -198,12 +183,13 @@ Setting _settingDeserializeWeb(
     googleSheetDocCreated:
         IsarNative.jsObjectGet(jsObj, 'googleSheetDocCreated'),
     hasPin: IsarNative.jsObjectGet(jsObj, 'hasPin') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
     isAttendanceEnabled: IsarNative.jsObjectGet(jsObj, 'isAttendanceEnabled'),
     openReceiptFileOSaleComplete:
         IsarNative.jsObjectGet(jsObj, 'openReceiptFileOSaleComplete'),
     sendDailyReport: IsarNative.jsObjectGet(jsObj, 'sendDailyReport'),
-    userId: IsarNative.jsObjectGet(jsObj, 'userId') ?? double.negativeInfinity,
+    userId: IsarNative.jsObjectGet(jsObj, 'userId') ??
+        (double.negativeInfinity as int),
   );
   return object;
 }
@@ -223,8 +209,8 @@ P _settingDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'hasPin':
       return (IsarNative.jsObjectGet(jsObj, 'hasPin') ?? '') as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'isAttendanceEnabled':
       return (IsarNative.jsObjectGet(jsObj, 'isAttendanceEnabled')) as P;
     case 'openReceiptFileOSaleComplete':
@@ -234,13 +220,13 @@ P _settingDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'sendDailyReport')) as P;
     case 'userId':
       return (IsarNative.jsObjectGet(jsObj, 'userId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     default:
       throw 'Illegal propertyName';
   }
 }
 
-void _settingAttachLinks(IsarCollection col, int id, Setting object) {}
+void _settingAttachLinks(IsarCollection<dynamic> col, int id, Setting object) {}
 
 extension SettingQueryWhereSort on QueryBuilder<Setting, Setting, QWhere> {
   QueryBuilder<Setting, Setting, QAfterWhere> anyId() {
@@ -381,34 +367,28 @@ extension SettingQueryFilter
     on QueryBuilder<Setting, Setting, QFilterCondition> {
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       attendnaceDocCreatedIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'attendnaceDocCreated',
-      value: null,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       attendnaceDocCreatedEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'attendnaceDocCreated',
       value: value,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition> autoPrintIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'autoPrint',
-      value: null,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition> autoPrintEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'autoPrint',
       value: value,
     ));
@@ -416,10 +396,8 @@ extension SettingQueryFilter
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       defaultLanguageIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'defaultLanguage',
-      value: null,
     ));
   }
 
@@ -427,8 +405,7 @@ extension SettingQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'defaultLanguage',
       value: value,
       caseSensitive: caseSensitive,
@@ -441,8 +418,7 @@ extension SettingQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'defaultLanguage',
       value: value,
@@ -455,8 +431,7 @@ extension SettingQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'defaultLanguage',
       value: value,
@@ -486,8 +461,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'defaultLanguage',
       value: value,
       caseSensitive: caseSensitive,
@@ -498,8 +472,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'defaultLanguage',
       value: value,
       caseSensitive: caseSensitive,
@@ -509,8 +482,7 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> defaultLanguageContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'defaultLanguage',
       value: value,
       caseSensitive: caseSensitive,
@@ -520,10 +492,9 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> defaultLanguageMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'defaultLanguage',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -532,8 +503,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -545,8 +515,7 @@ extension SettingQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'email',
       value: value,
@@ -559,8 +528,7 @@ extension SettingQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'email',
       value: value,
@@ -589,8 +557,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -601,8 +568,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -612,8 +578,7 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> emailContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -623,27 +588,23 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> emailMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'email',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       googleSheetDocCreatedIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'googleSheetDocCreated',
-      value: null,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       googleSheetDocCreatedEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'googleSheetDocCreated',
       value: value,
     ));
@@ -653,8 +614,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'hasPin',
       value: value,
       caseSensitive: caseSensitive,
@@ -666,8 +626,7 @@ extension SettingQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'hasPin',
       value: value,
@@ -680,8 +639,7 @@ extension SettingQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'hasPin',
       value: value,
@@ -710,8 +668,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'hasPin',
       value: value,
       caseSensitive: caseSensitive,
@@ -722,8 +679,7 @@ extension SettingQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'hasPin',
       value: value,
       caseSensitive: caseSensitive,
@@ -733,8 +689,7 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> hasPinContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'hasPin',
       value: value,
       caseSensitive: caseSensitive,
@@ -744,17 +699,15 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> hasPinMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'hasPin',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -764,8 +717,7 @@ extension SettingQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -776,8 +728,7 @@ extension SettingQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -801,17 +752,14 @@ extension SettingQueryFilter
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       isAttendanceEnabledIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'isAttendanceEnabled',
-      value: null,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       isAttendanceEnabledEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'isAttendanceEnabled',
       value: value,
     ));
@@ -819,17 +767,14 @@ extension SettingQueryFilter
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       openReceiptFileOSaleCompleteIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'openReceiptFileOSaleComplete',
-      value: null,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       openReceiptFileOSaleCompleteEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'openReceiptFileOSaleComplete',
       value: value,
     ));
@@ -837,17 +782,14 @@ extension SettingQueryFilter
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition>
       sendDailyReportIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'sendDailyReport',
-      value: null,
     ));
   }
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition> sendDailyReportEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'sendDailyReport',
       value: value,
     ));
@@ -855,8 +797,7 @@ extension SettingQueryFilter
 
   QueryBuilder<Setting, Setting, QAfterFilterCondition> userIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'userId',
       value: value,
     ));
@@ -866,8 +807,7 @@ extension SettingQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'userId',
       value: value,
@@ -878,8 +818,7 @@ extension SettingQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'userId',
       value: value,
@@ -954,14 +893,6 @@ extension SettingQueryWhereSortBy on QueryBuilder<Setting, Setting, QSortBy> {
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByHasPinDesc() {
     return addSortByInternal('hasPin', Sort.desc);
-  }
-
-  QueryBuilder<Setting, Setting, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Setting, Setting, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByIsAttendanceEnabled() {
@@ -1122,10 +1053,6 @@ extension SettingQueryWhereDistinct
   QueryBuilder<Setting, Setting, QDistinct> distinctByHasPin(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('hasPin', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<Setting, Setting, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctByIsAttendanceEnabled() {

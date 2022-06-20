@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetStockCollection on Isar {
   IsarCollection<Stock> get stocks => getCollection();
@@ -63,72 +64,44 @@ void _stockSetId(Stock object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _stockGetLinks(Stock object) {
+List<IsarLinkBase<dynamic>> _stockGetLinks(Stock object) {
   return [];
 }
 
 void _stockSerializeNative(IsarCollection<Stock> collection, IsarCObject cObj,
     Stock object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.active;
-  final _active = value0;
-  final value1 = object.canTrackingStock;
-  final _canTrackingStock = value1;
-  final value2 = object.channels;
-  dynamicSize += (value2?.length ?? 0) * 8;
-  List<IsarUint8List?>? bytesList2;
-  if (value2 != null) {
-    bytesList2 = [];
-    for (var str in value2) {
+  var channels$BytesCount = (object.channels?.length ?? 0) * 8;
+  List<IsarUint8List?>? channels$BytesList;
+  final channels$Value = object.channels;
+  if (channels$Value != null) {
+    channels$BytesList = [];
+    for (var str in channels$Value) {
       final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-      bytesList2.add(bytes);
-      dynamicSize += bytes.length as int;
+      channels$BytesList.add(bytes);
+      channels$BytesCount += bytes.length;
     }
   }
-  final _channels = bytesList2;
-  final value3 = object.currentStock;
-  final _currentStock = value3;
-  final value4 = object.fbranchId;
-  final _fbranchId = value4;
-  final value5 = object.fproductId;
-  final _fproductId = value5;
-  final value6 = object.fvariantId;
-  final _fvariantId = value6;
-  final value7 = object.lowStock;
-  final _lowStock = value7;
-  final value8 = object.migrated;
-  final _migrated = value8;
-  final value9 = object.retailPrice;
-  final _retailPrice = value9;
-  final value10 = object.showLowStockAlert;
-  final _showLowStockAlert = value10;
-  final value11 = object.supplyPrice;
-  final _supplyPrice = value11;
-  final value12 = object.table;
-  final _table = IsarBinaryWriter.utf8Encoder.convert(value12);
-  dynamicSize += (_table.length) as int;
-  final value13 = object.value;
-  final _value = value13;
-  final size = staticSize + dynamicSize;
-
+  final table$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.table);
+  final size = staticSize + channels$BytesCount + (table$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _active);
-  writer.writeBool(offsets[1], _canTrackingStock);
-  writer.writeStringList(offsets[2], _channels);
-  writer.writeDouble(offsets[3], _currentStock);
-  writer.writeLong(offsets[4], _fbranchId);
-  writer.writeLong(offsets[5], _fproductId);
-  writer.writeLong(offsets[6], _fvariantId);
-  writer.writeDouble(offsets[7], _lowStock);
-  writer.writeBool(offsets[8], _migrated);
-  writer.writeDouble(offsets[9], _retailPrice);
-  writer.writeBool(offsets[10], _showLowStockAlert);
-  writer.writeDouble(offsets[11], _supplyPrice);
-  writer.writeBytes(offsets[12], _table);
-  writer.writeDouble(offsets[13], _value);
+  writer.writeBool(offsets[0], object.active);
+  writer.writeBool(offsets[1], object.canTrackingStock);
+  writer.writeStringList(offsets[2], channels$BytesList);
+  writer.writeDouble(offsets[3], object.currentStock);
+  writer.writeLong(offsets[4], object.fbranchId);
+  writer.writeLong(offsets[5], object.fproductId);
+  writer.writeLong(offsets[6], object.fvariantId);
+  writer.writeDouble(offsets[7], object.lowStock);
+  writer.writeBool(offsets[8], object.migrated);
+  writer.writeDouble(offsets[9], object.retailPrice);
+  writer.writeBool(offsets[10], object.showLowStockAlert);
+  writer.writeDouble(offsets[11], object.supplyPrice);
+  writer.writeBytes(offsets[12], table$Bytes);
+  writer.writeDouble(offsets[13], object.value);
 }
 
 Stock _stockDeserializeNative(IsarCollection<Stock> collection, int id,
@@ -191,7 +164,7 @@ P _stockDeserializePropNative<P>(
   }
 }
 
-dynamic _stockSerializeWeb(IsarCollection<Stock> collection, Stock object) {
+Object _stockSerializeWeb(IsarCollection<Stock> collection, Stock object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
   IsarNative.jsObjectSet(jsObj, 'canTrackingStock', object.canTrackingStock);
@@ -211,7 +184,7 @@ dynamic _stockSerializeWeb(IsarCollection<Stock> collection, Stock object) {
   return jsObj;
 }
 
-Stock _stockDeserializeWeb(IsarCollection<Stock> collection, dynamic jsObj) {
+Stock _stockDeserializeWeb(IsarCollection<Stock> collection, Object jsObj) {
   final object = Stock(
     active: IsarNative.jsObjectGet(jsObj, 'active'),
     canTrackingStock:
@@ -223,11 +196,11 @@ Stock _stockDeserializeWeb(IsarCollection<Stock> collection, dynamic jsObj) {
     currentStock: IsarNative.jsObjectGet(jsObj, 'currentStock') ??
         double.negativeInfinity,
     fbranchId: IsarNative.jsObjectGet(jsObj, 'fbranchId'),
-    fproductId:
-        IsarNative.jsObjectGet(jsObj, 'fproductId') ?? double.negativeInfinity,
-    fvariantId:
-        IsarNative.jsObjectGet(jsObj, 'fvariantId') ?? double.negativeInfinity,
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
+    fproductId: IsarNative.jsObjectGet(jsObj, 'fproductId') ??
+        (double.negativeInfinity as int),
+    fvariantId: IsarNative.jsObjectGet(jsObj, 'fvariantId') ??
+        (double.negativeInfinity as int),
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
     lowStock:
         IsarNative.jsObjectGet(jsObj, 'lowStock') ?? double.negativeInfinity,
     migrated: IsarNative.jsObjectGet(jsObj, 'migrated'),
@@ -261,13 +234,13 @@ P _stockDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'fbranchId')) as P;
     case 'fproductId':
       return (IsarNative.jsObjectGet(jsObj, 'fproductId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'fvariantId':
       return (IsarNative.jsObjectGet(jsObj, 'fvariantId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'lowStock':
       return (IsarNative.jsObjectGet(jsObj, 'lowStock') ??
           double.negativeInfinity) as P;
@@ -291,7 +264,7 @@ P _stockDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _stockAttachLinks(IsarCollection col, int id, Stock object) {}
+void _stockAttachLinks(IsarCollection<dynamic> col, int id, Stock object) {}
 
 extension StockQueryWhereSort on QueryBuilder<Stock, Stock, QWhere> {
   QueryBuilder<Stock, Stock, QAfterWhere> anyId() {
@@ -356,16 +329,13 @@ extension StockQueryWhere on QueryBuilder<Stock, Stock, QWhereClause> {
 
 extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
   QueryBuilder<Stock, Stock, QAfterFilterCondition> activeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'active',
-      value: null,
     ));
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> activeEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
     ));
@@ -373,24 +343,20 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> canTrackingStockEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'canTrackingStock',
       value: value,
     ));
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> channelsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'channels',
-      value: null,
     ));
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> channelsAnyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(const FilterCondition.equalTo(
       property: 'channels',
       value: null,
     ));
@@ -400,8 +366,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -413,8 +378,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'channels',
       value: value,
@@ -427,8 +391,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'channels',
       value: value,
@@ -457,8 +420,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -469,8 +431,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -480,8 +441,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
   QueryBuilder<Stock, Stock, QAfterFilterCondition> channelsAnyContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -491,18 +451,16 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
   QueryBuilder<Stock, Stock, QAfterFilterCondition> channelsAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'channels',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> currentStockGreaterThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'currentStock',
       value: value,
@@ -511,8 +469,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> currentStockLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'currentStock',
       value: value,
@@ -531,17 +488,14 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> fbranchIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'fbranchId',
-      value: null,
     ));
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> fbranchIdEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fbranchId',
       value: value,
     ));
@@ -551,8 +505,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fbranchId',
       value: value,
@@ -563,8 +516,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fbranchId',
       value: value,
@@ -588,8 +540,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> fproductIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fproductId',
       value: value,
     ));
@@ -599,8 +550,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fproductId',
       value: value,
@@ -611,8 +561,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fproductId',
       value: value,
@@ -636,8 +585,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> fvariantIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fvariantId',
       value: value,
     ));
@@ -647,8 +595,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fvariantId',
       value: value,
@@ -659,8 +606,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fvariantId',
       value: value,
@@ -683,8 +629,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -694,8 +639,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -706,8 +650,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -731,8 +674,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> lowStockGreaterThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'lowStock',
       value: value,
@@ -741,8 +683,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> lowStockLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'lowStock',
       value: value,
@@ -761,17 +702,14 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> migratedIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'migrated',
-      value: null,
     ));
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> migratedEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'migrated',
       value: value,
     ));
@@ -779,8 +717,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> retailPriceGreaterThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'retailPrice',
       value: value,
@@ -789,8 +726,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> retailPriceLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'retailPrice',
       value: value,
@@ -810,8 +746,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> showLowStockAlertEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'showLowStockAlert',
       value: value,
     ));
@@ -819,8 +754,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> supplyPriceGreaterThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'supplyPrice',
       value: value,
@@ -829,8 +763,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> supplyPriceLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'supplyPrice',
       value: value,
@@ -852,8 +785,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -865,8 +797,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'table',
       value: value,
@@ -879,8 +810,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'table',
       value: value,
@@ -909,8 +839,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -921,8 +850,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -931,8 +859,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> tableContains(String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -941,18 +868,16 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> tableMatches(String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'table',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> valueGreaterThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'value',
       value: value,
@@ -961,8 +886,7 @@ extension StockQueryFilter on QueryBuilder<Stock, Stock, QFilterCondition> {
 
   QueryBuilder<Stock, Stock, QAfterFilterCondition> valueLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'value',
       value: value,
@@ -1030,14 +954,6 @@ extension StockQueryWhereSortBy on QueryBuilder<Stock, Stock, QSortBy> {
 
   QueryBuilder<Stock, Stock, QAfterSortBy> sortByFvariantIdDesc() {
     return addSortByInternal('fvariantId', Sort.desc);
-  }
-
-  QueryBuilder<Stock, Stock, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Stock, Stock, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Stock, Stock, QAfterSortBy> sortByLowStock() {
@@ -1234,10 +1150,6 @@ extension StockQueryWhereDistinct on QueryBuilder<Stock, Stock, QDistinct> {
 
   QueryBuilder<Stock, Stock, QDistinct> distinctByFvariantId() {
     return addDistinctByInternal('fvariantId');
-  }
-
-  QueryBuilder<Stock, Stock, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Stock, Stock, QDistinct> distinctByLowStock() {

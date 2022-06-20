@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetCategoryCollection on Isar {
   IsarCollection<Category> get categorys => getCollection();
@@ -58,7 +59,7 @@ void _categorySetId(Category object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _categoryGetLinks(Category object) {
+List<IsarLinkBase<dynamic>> _categoryGetLinks(Category object) {
   return [];
 }
 
@@ -69,33 +70,23 @@ void _categorySerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.active;
-  final _active = value0;
-  final value1 = object.branchId;
-  final _branchId = value1;
-  final value2 = object.focused;
-  final _focused = value2;
-  final value3 = object.name;
-  final _name = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_name.length) as int;
-  final value4 = object.table;
-  IsarUint8List? _table;
-  if (value4 != null) {
-    _table = IsarBinaryWriter.utf8Encoder.convert(value4);
+  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
+  IsarUint8List? table$Bytes;
+  final table$Value = object.table;
+  if (table$Value != null) {
+    table$Bytes = IsarBinaryWriter.utf8Encoder.convert(table$Value);
   }
-  dynamicSize += (_table?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
+  final size = staticSize + (name$Bytes.length) + (table$Bytes?.length ?? 0);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _active);
-  writer.writeLong(offsets[1], _branchId);
-  writer.writeBool(offsets[2], _focused);
-  writer.writeBytes(offsets[3], _name);
-  writer.writeBytes(offsets[4], _table);
+  writer.writeBool(offsets[0], object.active);
+  writer.writeLong(offsets[1], object.branchId);
+  writer.writeBool(offsets[2], object.focused);
+  writer.writeBytes(offsets[3], name$Bytes);
+  writer.writeBytes(offsets[4], table$Bytes);
 }
 
 Category _categoryDeserializeNative(IsarCollection<Category> collection, int id,
@@ -130,7 +121,7 @@ P _categoryDeserializePropNative<P>(
   }
 }
 
-dynamic _categorySerializeWeb(
+Object _categorySerializeWeb(
     IsarCollection<Category> collection, Category object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
@@ -143,13 +134,14 @@ dynamic _categorySerializeWeb(
 }
 
 Category _categoryDeserializeWeb(
-    IsarCollection<Category> collection, dynamic jsObj) {
+    IsarCollection<Category> collection, Object jsObj) {
   final object = Category();
   object.active = IsarNative.jsObjectGet(jsObj, 'active') ?? false;
-  object.branchId =
-      IsarNative.jsObjectGet(jsObj, 'branchId') ?? double.negativeInfinity;
+  object.branchId = IsarNative.jsObjectGet(jsObj, 'branchId') ??
+      (double.negativeInfinity as int);
   object.focused = IsarNative.jsObjectGet(jsObj, 'focused') ?? false;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.id =
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
   object.table = IsarNative.jsObjectGet(jsObj, 'table');
   return object;
@@ -161,12 +153,12 @@ P _categoryDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'active') ?? false) as P;
     case 'branchId':
       return (IsarNative.jsObjectGet(jsObj, 'branchId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'focused':
       return (IsarNative.jsObjectGet(jsObj, 'focused') ?? false) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'name':
       return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
     case 'table':
@@ -176,7 +168,8 @@ P _categoryDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _categoryAttachLinks(IsarCollection col, int id, Category object) {}
+void _categoryAttachLinks(
+    IsarCollection<dynamic> col, int id, Category object) {}
 
 extension CategoryQueryWhereSort on QueryBuilder<Category, Category, QWhere> {
   QueryBuilder<Category, Category, QAfterWhere> anyId() {
@@ -318,8 +311,7 @@ extension CategoryQueryFilter
     on QueryBuilder<Category, Category, QFilterCondition> {
   QueryBuilder<Category, Category, QAfterFilterCondition> activeEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
     ));
@@ -327,8 +319,7 @@ extension CategoryQueryFilter
 
   QueryBuilder<Category, Category, QAfterFilterCondition> branchIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'branchId',
       value: value,
     ));
@@ -338,8 +329,7 @@ extension CategoryQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -350,8 +340,7 @@ extension CategoryQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -375,16 +364,14 @@ extension CategoryQueryFilter
 
   QueryBuilder<Category, Category, QAfterFilterCondition> focusedEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'focused',
       value: value,
     ));
   }
 
   QueryBuilder<Category, Category, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -394,8 +381,7 @@ extension CategoryQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -406,8 +392,7 @@ extension CategoryQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -433,8 +418,7 @@ extension CategoryQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -446,8 +430,7 @@ extension CategoryQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -460,8 +443,7 @@ extension CategoryQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -490,8 +472,7 @@ extension CategoryQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -502,8 +483,7 @@ extension CategoryQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -513,8 +493,7 @@ extension CategoryQueryFilter
   QueryBuilder<Category, Category, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -524,19 +503,16 @@ extension CategoryQueryFilter
   QueryBuilder<Category, Category, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Category, Category, QAfterFilterCondition> tableIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'table',
-      value: null,
     ));
   }
 
@@ -544,8 +520,7 @@ extension CategoryQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -557,8 +532,7 @@ extension CategoryQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'table',
       value: value,
@@ -571,8 +545,7 @@ extension CategoryQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'table',
       value: value,
@@ -601,8 +574,7 @@ extension CategoryQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -613,8 +585,7 @@ extension CategoryQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -624,8 +595,7 @@ extension CategoryQueryFilter
   QueryBuilder<Category, Category, QAfterFilterCondition> tableContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -635,10 +605,9 @@ extension CategoryQueryFilter
   QueryBuilder<Category, Category, QAfterFilterCondition> tableMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'table',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -671,14 +640,6 @@ extension CategoryQueryWhereSortBy
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByFocusedDesc() {
     return addSortByInternal('focused', Sort.desc);
-  }
-
-  QueryBuilder<Category, Category, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Category, Category, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByName() {
@@ -761,10 +722,6 @@ extension CategoryQueryWhereDistinct
 
   QueryBuilder<Category, Category, QDistinct> distinctByFocused() {
     return addDistinctByInternal('focused');
-  }
-
-  QueryBuilder<Category, Category, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Category, Category, QDistinct> distinctByName(

@@ -6,7 +6,8 @@ part of 'feature.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetFeatureCollection on Isar {
   IsarCollection<Feature> get features => getCollection();
@@ -48,7 +49,7 @@ void _featureSetId(Feature object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _featureGetLinks(Feature object) {
+List<IsarLinkBase<dynamic>> _featureGetLinks(Feature object) {
   return [];
 }
 
@@ -59,17 +60,14 @@ void _featureSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.name;
-  final _name = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_name.length) as int;
-  final size = staticSize + dynamicSize;
-
+  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
+  final size = staticSize + (name$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _name);
+  writer.writeBytes(offsets[0], name$Bytes);
 }
 
 Feature _featureDeserializeNative(IsarCollection<Feature> collection, int id,
@@ -93,7 +91,7 @@ P _featureDeserializePropNative<P>(
   }
 }
 
-dynamic _featureSerializeWeb(
+Object _featureSerializeWeb(
     IsarCollection<Feature> collection, Feature object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
@@ -102,9 +100,9 @@ dynamic _featureSerializeWeb(
 }
 
 Feature _featureDeserializeWeb(
-    IsarCollection<Feature> collection, dynamic jsObj) {
+    IsarCollection<Feature> collection, Object jsObj) {
   final object = Feature(
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
     name: IsarNative.jsObjectGet(jsObj, 'name') ?? '',
   );
   return object;
@@ -113,8 +111,8 @@ Feature _featureDeserializeWeb(
 P _featureDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'name':
       return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
     default:
@@ -122,7 +120,7 @@ P _featureDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _featureAttachLinks(IsarCollection col, int id, Feature object) {}
+void _featureAttachLinks(IsarCollection<dynamic> col, int id, Feature object) {}
 
 extension FeatureQueryWhereSort on QueryBuilder<Feature, Feature, QWhere> {
   QueryBuilder<Feature, Feature, QAfterWhere> anyId() {
@@ -188,8 +186,7 @@ extension FeatureQueryWhere on QueryBuilder<Feature, Feature, QWhereClause> {
 extension FeatureQueryFilter
     on QueryBuilder<Feature, Feature, QFilterCondition> {
   QueryBuilder<Feature, Feature, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -199,8 +196,7 @@ extension FeatureQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -211,8 +207,7 @@ extension FeatureQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -238,8 +233,7 @@ extension FeatureQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -251,8 +245,7 @@ extension FeatureQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -265,8 +258,7 @@ extension FeatureQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -295,8 +287,7 @@ extension FeatureQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -307,8 +298,7 @@ extension FeatureQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -318,8 +308,7 @@ extension FeatureQueryFilter
   QueryBuilder<Feature, Feature, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -329,10 +318,9 @@ extension FeatureQueryFilter
   QueryBuilder<Feature, Feature, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -342,14 +330,6 @@ extension FeatureQueryLinks
     on QueryBuilder<Feature, Feature, QFilterCondition> {}
 
 extension FeatureQueryWhereSortBy on QueryBuilder<Feature, Feature, QSortBy> {
-  QueryBuilder<Feature, Feature, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Feature, Feature, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
-  }
-
   QueryBuilder<Feature, Feature, QAfterSortBy> sortByName() {
     return addSortByInternal('name', Sort.asc);
   }
@@ -380,10 +360,6 @@ extension FeatureQueryWhereSortThenBy
 
 extension FeatureQueryWhereDistinct
     on QueryBuilder<Feature, Feature, QDistinct> {
-  QueryBuilder<Feature, Feature, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
-  }
-
   QueryBuilder<Feature, Feature, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('name', caseSensitive: caseSensitive);

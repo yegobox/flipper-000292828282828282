@@ -6,7 +6,8 @@ part of 'conversation.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetConversationCollection on Isar {
   IsarCollection<Conversation> get conversations => getCollection();
@@ -57,7 +58,7 @@ void _conversationSetId(Conversation object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _conversationGetLinks(Conversation object) {
+List<IsarLinkBase<dynamic>> _conversationGetLinks(Conversation object) {
   return [];
 }
 
@@ -68,47 +69,37 @@ void _conversationSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.createdAt;
-  final _createdAt = value0;
-  final value1 = object.dbAvatars;
-  IsarUint8List? _dbAvatars;
-  if (value1 != null) {
-    _dbAvatars = IsarBinaryWriter.utf8Encoder.convert(value1);
+  IsarUint8List? dbAvatars$Bytes;
+  final dbAvatars$Value = object.dbAvatars;
+  if (dbAvatars$Value != null) {
+    dbAvatars$Bytes = IsarBinaryWriter.utf8Encoder.convert(dbAvatars$Value);
   }
-  dynamicSize += (_dbAvatars?.length ?? 0) as int;
-  final value2 = object.delivered;
-  final _delivered = value2;
-  final value3 = object.lastMessage;
-  IsarUint8List? _lastMessage;
-  if (value3 != null) {
-    _lastMessage = IsarBinaryWriter.utf8Encoder.convert(value3);
+  IsarUint8List? lastMessage$Bytes;
+  final lastMessage$Value = object.lastMessage;
+  if (lastMessage$Value != null) {
+    lastMessage$Bytes = IsarBinaryWriter.utf8Encoder.convert(lastMessage$Value);
   }
-  dynamicSize += (_lastMessage?.length ?? 0) as int;
-  final value4 = object.receiverId;
-  final _receiverId = value4;
-  final value5 = object.senderId;
-  final _senderId = value5;
-  final value6 = object.senderName;
-  final _senderName = IsarBinaryWriter.utf8Encoder.convert(value6);
-  dynamicSize += (_senderName.length) as int;
-  final value7 = object.status;
-  final _status = IsarBinaryWriter.utf8Encoder.convert(value7);
-  dynamicSize += (_status.length) as int;
-  final size = staticSize + dynamicSize;
-
+  final senderName$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.senderName);
+  final status$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.status);
+  final size = staticSize +
+      (dbAvatars$Bytes?.length ?? 0) +
+      (lastMessage$Bytes?.length ?? 0) +
+      (senderName$Bytes.length) +
+      (status$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], _createdAt);
-  writer.writeBytes(offsets[1], _dbAvatars);
-  writer.writeBool(offsets[2], _delivered);
-  writer.writeBytes(offsets[3], _lastMessage);
-  writer.writeLong(offsets[4], _receiverId);
-  writer.writeLong(offsets[5], _senderId);
-  writer.writeBytes(offsets[6], _senderName);
-  writer.writeBytes(offsets[7], _status);
+  writer.writeLong(offsets[0], object.createdAt);
+  writer.writeBytes(offsets[1], dbAvatars$Bytes);
+  writer.writeBool(offsets[2], object.delivered);
+  writer.writeBytes(offsets[3], lastMessage$Bytes);
+  writer.writeLong(offsets[4], object.receiverId);
+  writer.writeLong(offsets[5], object.senderId);
+  writer.writeBytes(offsets[6], senderName$Bytes);
+  writer.writeBytes(offsets[7], status$Bytes);
 }
 
 Conversation _conversationDeserializeNative(
@@ -154,7 +145,7 @@ P _conversationDeserializePropNative<P>(
   }
 }
 
-dynamic _conversationSerializeWeb(
+Object _conversationSerializeWeb(
     IsarCollection<Conversation> collection, Conversation object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'createdAt', object.createdAt);
@@ -170,17 +161,18 @@ dynamic _conversationSerializeWeb(
 }
 
 Conversation _conversationDeserializeWeb(
-    IsarCollection<Conversation> collection, dynamic jsObj) {
+    IsarCollection<Conversation> collection, Object jsObj) {
   final object = Conversation();
-  object.createdAt =
-      IsarNative.jsObjectGet(jsObj, 'createdAt') ?? double.negativeInfinity;
+  object.createdAt = IsarNative.jsObjectGet(jsObj, 'createdAt') ??
+      (double.negativeInfinity as int);
   object.delivered = IsarNative.jsObjectGet(jsObj, 'delivered') ?? false;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.id =
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.lastMessage = IsarNative.jsObjectGet(jsObj, 'lastMessage');
-  object.receiverId =
-      IsarNative.jsObjectGet(jsObj, 'receiverId') ?? double.negativeInfinity;
-  object.senderId =
-      IsarNative.jsObjectGet(jsObj, 'senderId') ?? double.negativeInfinity;
+  object.receiverId = IsarNative.jsObjectGet(jsObj, 'receiverId') ??
+      (double.negativeInfinity as int);
+  object.senderId = IsarNative.jsObjectGet(jsObj, 'senderId') ??
+      (double.negativeInfinity as int);
   object.senderName = IsarNative.jsObjectGet(jsObj, 'senderName') ?? '';
   object.status = IsarNative.jsObjectGet(jsObj, 'status') ?? '';
   return object;
@@ -190,22 +182,22 @@ P _conversationDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'createdAt':
       return (IsarNative.jsObjectGet(jsObj, 'createdAt') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'dbAvatars':
       return (IsarNative.jsObjectGet(jsObj, 'dbAvatars')) as P;
     case 'delivered':
       return (IsarNative.jsObjectGet(jsObj, 'delivered') ?? false) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'lastMessage':
       return (IsarNative.jsObjectGet(jsObj, 'lastMessage')) as P;
     case 'receiverId':
       return (IsarNative.jsObjectGet(jsObj, 'receiverId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'senderId':
       return (IsarNative.jsObjectGet(jsObj, 'senderId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'senderName':
       return (IsarNative.jsObjectGet(jsObj, 'senderName') ?? '') as P;
     case 'status':
@@ -216,7 +208,7 @@ P _conversationDeserializePropWeb<P>(Object jsObj, String propertyName) {
 }
 
 void _conversationAttachLinks(
-    IsarCollection col, int id, Conversation object) {}
+    IsarCollection<dynamic> col, int id, Conversation object) {}
 
 extension ConversationQueryWhereSort
     on QueryBuilder<Conversation, Conversation, QWhere> {
@@ -288,8 +280,7 @@ extension ConversationQueryFilter
     on QueryBuilder<Conversation, Conversation, QFilterCondition> {
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       createdAtEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'createdAt',
       value: value,
     ));
@@ -300,8 +291,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -313,8 +303,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -339,10 +328,8 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       dbAvatarsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'dbAvatars',
-      value: null,
     ));
   }
 
@@ -351,8 +338,7 @@ extension ConversationQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'dbAvatars',
       value: value,
       caseSensitive: caseSensitive,
@@ -365,8 +351,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'dbAvatars',
       value: value,
@@ -380,8 +365,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'dbAvatars',
       value: value,
@@ -412,8 +396,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'dbAvatars',
       value: value,
       caseSensitive: caseSensitive,
@@ -425,8 +408,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'dbAvatars',
       value: value,
       caseSensitive: caseSensitive,
@@ -435,8 +417,7 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       dbAvatarsContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'dbAvatars',
       value: value,
       caseSensitive: caseSensitive,
@@ -445,18 +426,16 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       dbAvatarsMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'dbAvatars',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       deliveredEqualTo(bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'delivered',
       value: value,
     ));
@@ -464,8 +443,7 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition> idEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -475,8 +453,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -487,8 +464,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -512,10 +488,8 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       lastMessageIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'lastMessage',
-      value: null,
     ));
   }
 
@@ -524,8 +498,7 @@ extension ConversationQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'lastMessage',
       value: value,
       caseSensitive: caseSensitive,
@@ -538,8 +511,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'lastMessage',
       value: value,
@@ -553,8 +525,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'lastMessage',
       value: value,
@@ -585,8 +556,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'lastMessage',
       value: value,
       caseSensitive: caseSensitive,
@@ -598,8 +568,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'lastMessage',
       value: value,
       caseSensitive: caseSensitive,
@@ -608,8 +577,7 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       lastMessageContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'lastMessage',
       value: value,
       caseSensitive: caseSensitive,
@@ -618,18 +586,16 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       lastMessageMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'lastMessage',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       receiverIdEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'receiverId',
       value: value,
     ));
@@ -640,8 +606,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'receiverId',
       value: value,
@@ -653,8 +618,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'receiverId',
       value: value,
@@ -679,8 +643,7 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       senderIdEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'senderId',
       value: value,
     ));
@@ -691,8 +654,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'senderId',
       value: value,
@@ -704,8 +666,7 @@ extension ConversationQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'senderId',
       value: value,
@@ -733,8 +694,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'senderName',
       value: value,
       caseSensitive: caseSensitive,
@@ -747,8 +707,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'senderName',
       value: value,
@@ -762,8 +721,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'senderName',
       value: value,
@@ -794,8 +752,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'senderName',
       value: value,
       caseSensitive: caseSensitive,
@@ -807,8 +764,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'senderName',
       value: value,
       caseSensitive: caseSensitive,
@@ -817,8 +773,7 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       senderNameContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'senderName',
       value: value,
       caseSensitive: caseSensitive,
@@ -827,10 +782,9 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       senderNameMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'senderName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -839,8 +793,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -853,8 +806,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'status',
       value: value,
@@ -868,8 +820,7 @@ extension ConversationQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'status',
       value: value,
@@ -899,8 +850,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -912,8 +862,7 @@ extension ConversationQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -922,8 +871,7 @@ extension ConversationQueryFilter
 
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition>
       statusContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'status',
       value: value,
       caseSensitive: caseSensitive,
@@ -933,10 +881,9 @@ extension ConversationQueryFilter
   QueryBuilder<Conversation, Conversation, QAfterFilterCondition> statusMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'status',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -969,14 +916,6 @@ extension ConversationQueryWhereSortBy
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByDeliveredDesc() {
     return addSortByInternal('delivered', Sort.desc);
-  }
-
-  QueryBuilder<Conversation, Conversation, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByLastMessage() {
@@ -1114,10 +1053,6 @@ extension ConversationQueryWhereDistinct
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByDelivered() {
     return addDistinctByInternal('delivered');
-  }
-
-  QueryBuilder<Conversation, Conversation, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByLastMessage(

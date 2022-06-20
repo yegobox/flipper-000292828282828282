@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetVariantStockCollection on Isar {
   IsarCollection<VariantStock> get variantStocks => getCollection();
@@ -62,7 +63,7 @@ void _variantStockSetId(VariantStock object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _variantStockGetLinks(VariantStock object) {
+List<IsarLinkBase<dynamic>> _variantStockGetLinks(VariantStock object) {
   return [];
 }
 
@@ -73,62 +74,47 @@ void _variantStockSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.canTrackingStock;
-  final _canTrackingStock = value0;
-  final value1 = object.currentStock;
-  final _currentStock = value1;
-  final value2 = object.fbranchId;
-  final _fbranchId = IsarBinaryWriter.utf8Encoder.convert(value2);
-  dynamicSize += (_fbranchId.length) as int;
-  final value3 = object.fvariantId;
-  final _fvariantId = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_fvariantId.length) as int;
-  final value4 = object.lowStock;
-  final _lowStock = value4;
-  final value5 = object.productName;
-  final _productName = IsarBinaryWriter.utf8Encoder.convert(value5);
-  dynamicSize += (_productName.length) as int;
-  final value6 = object.retailPrice;
-  final _retailPrice = value6;
-  final value7 = object.sku;
-  final _sku = IsarBinaryWriter.utf8Encoder.convert(value7);
-  dynamicSize += (_sku.length) as int;
-  final value8 = object.taxName;
-  IsarUint8List? _taxName;
-  if (value8 != null) {
-    _taxName = IsarBinaryWriter.utf8Encoder.convert(value8);
+  final fbranchId$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.fbranchId);
+  final fvariantId$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.fvariantId);
+  final productName$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.productName);
+  final sku$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.sku);
+  IsarUint8List? taxName$Bytes;
+  final taxName$Value = object.taxName;
+  if (taxName$Value != null) {
+    taxName$Bytes = IsarBinaryWriter.utf8Encoder.convert(taxName$Value);
   }
-  dynamicSize += (_taxName?.length ?? 0) as int;
-  final value9 = object.taxPercentage;
-  final _taxPercentage = value9;
-  final value10 = object.unit;
-  final _unit = IsarBinaryWriter.utf8Encoder.convert(value10);
-  dynamicSize += (_unit.length) as int;
-  final value11 = object.value;
-  final _value = value11;
-  final value12 = object.variantName;
-  final _variantName = IsarBinaryWriter.utf8Encoder.convert(value12);
-  dynamicSize += (_variantName.length) as int;
-  final size = staticSize + dynamicSize;
-
+  final unit$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.unit);
+  final variantName$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.variantName);
+  final size = staticSize +
+      (fbranchId$Bytes.length) +
+      (fvariantId$Bytes.length) +
+      (productName$Bytes.length) +
+      (sku$Bytes.length) +
+      (taxName$Bytes?.length ?? 0) +
+      (unit$Bytes.length) +
+      (variantName$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _canTrackingStock);
-  writer.writeDouble(offsets[1], _currentStock);
-  writer.writeBytes(offsets[2], _fbranchId);
-  writer.writeBytes(offsets[3], _fvariantId);
-  writer.writeDouble(offsets[4], _lowStock);
-  writer.writeBytes(offsets[5], _productName);
-  writer.writeDouble(offsets[6], _retailPrice);
-  writer.writeBytes(offsets[7], _sku);
-  writer.writeBytes(offsets[8], _taxName);
-  writer.writeDouble(offsets[9], _taxPercentage);
-  writer.writeBytes(offsets[10], _unit);
-  writer.writeDouble(offsets[11], _value);
-  writer.writeBytes(offsets[12], _variantName);
+  writer.writeBool(offsets[0], object.canTrackingStock);
+  writer.writeDouble(offsets[1], object.currentStock);
+  writer.writeBytes(offsets[2], fbranchId$Bytes);
+  writer.writeBytes(offsets[3], fvariantId$Bytes);
+  writer.writeDouble(offsets[4], object.lowStock);
+  writer.writeBytes(offsets[5], productName$Bytes);
+  writer.writeDouble(offsets[6], object.retailPrice);
+  writer.writeBytes(offsets[7], sku$Bytes);
+  writer.writeBytes(offsets[8], taxName$Bytes);
+  writer.writeDouble(offsets[9], object.taxPercentage);
+  writer.writeBytes(offsets[10], unit$Bytes);
+  writer.writeDouble(offsets[11], object.value);
+  writer.writeBytes(offsets[12], variantName$Bytes);
 }
 
 VariantStock _variantStockDeserializeNative(
@@ -191,7 +177,7 @@ P _variantStockDeserializePropNative<P>(
   }
 }
 
-dynamic _variantStockSerializeWeb(
+Object _variantStockSerializeWeb(
     IsarCollection<VariantStock> collection, VariantStock object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'canTrackingStock', object.canTrackingStock);
@@ -212,7 +198,7 @@ dynamic _variantStockSerializeWeb(
 }
 
 VariantStock _variantStockDeserializeWeb(
-    IsarCollection<VariantStock> collection, dynamic jsObj) {
+    IsarCollection<VariantStock> collection, Object jsObj) {
   final object = VariantStock(
     canTrackingStock:
         IsarNative.jsObjectGet(jsObj, 'canTrackingStock') ?? false,
@@ -220,7 +206,7 @@ VariantStock _variantStockDeserializeWeb(
         double.negativeInfinity,
     fbranchId: IsarNative.jsObjectGet(jsObj, 'fbranchId') ?? '',
     fvariantId: IsarNative.jsObjectGet(jsObj, 'fvariantId') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
     lowStock: IsarNative.jsObjectGet(jsObj, 'lowStock'),
     productName: IsarNative.jsObjectGet(jsObj, 'productName') ?? '',
     retailPrice:
@@ -247,8 +233,8 @@ P _variantStockDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'fvariantId':
       return (IsarNative.jsObjectGet(jsObj, 'fvariantId') ?? '') as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'lowStock':
       return (IsarNative.jsObjectGet(jsObj, 'lowStock')) as P;
     case 'productName':
@@ -275,7 +261,7 @@ P _variantStockDeserializePropWeb<P>(Object jsObj, String propertyName) {
 }
 
 void _variantStockAttachLinks(
-    IsarCollection col, int id, VariantStock object) {}
+    IsarCollection<dynamic> col, int id, VariantStock object) {}
 
 extension VariantStockQueryWhereSort
     on QueryBuilder<VariantStock, VariantStock, QWhere> {
@@ -347,8 +333,7 @@ extension VariantStockQueryFilter
     on QueryBuilder<VariantStock, VariantStock, QFilterCondition> {
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       canTrackingStockEqualTo(bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'canTrackingStock',
       value: value,
     ));
@@ -356,8 +341,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       currentStockGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'currentStock',
       value: value,
@@ -366,8 +350,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       currentStockLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'currentStock',
       value: value,
@@ -390,8 +373,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fbranchId',
       value: value,
       caseSensitive: caseSensitive,
@@ -404,8 +386,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fbranchId',
       value: value,
@@ -419,8 +400,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fbranchId',
       value: value,
@@ -451,8 +431,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'fbranchId',
       value: value,
       caseSensitive: caseSensitive,
@@ -464,8 +443,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'fbranchId',
       value: value,
       caseSensitive: caseSensitive,
@@ -474,8 +452,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       fbranchIdContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'fbranchId',
       value: value,
       caseSensitive: caseSensitive,
@@ -484,10 +461,9 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       fbranchIdMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'fbranchId',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -497,8 +473,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fvariantId',
       value: value,
       caseSensitive: caseSensitive,
@@ -511,8 +486,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fvariantId',
       value: value,
@@ -526,8 +500,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fvariantId',
       value: value,
@@ -558,8 +531,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'fvariantId',
       value: value,
       caseSensitive: caseSensitive,
@@ -571,8 +543,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'fvariantId',
       value: value,
       caseSensitive: caseSensitive,
@@ -581,8 +552,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       fvariantIdContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'fvariantId',
       value: value,
       caseSensitive: caseSensitive,
@@ -591,18 +561,16 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       fvariantIdMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'fvariantId',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition> idEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -612,8 +580,7 @@ extension VariantStockQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -624,8 +591,7 @@ extension VariantStockQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -649,17 +615,14 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       lowStockIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'lowStock',
-      value: null,
     ));
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       lowStockGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'lowStock',
       value: value,
@@ -668,8 +631,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       lowStockLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'lowStock',
       value: value,
@@ -692,8 +654,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'productName',
       value: value,
       caseSensitive: caseSensitive,
@@ -706,8 +667,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'productName',
       value: value,
@@ -721,8 +681,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'productName',
       value: value,
@@ -753,8 +712,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'productName',
       value: value,
       caseSensitive: caseSensitive,
@@ -766,8 +724,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'productName',
       value: value,
       caseSensitive: caseSensitive,
@@ -776,8 +733,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       productNameContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'productName',
       value: value,
       caseSensitive: caseSensitive,
@@ -786,18 +742,16 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       productNameMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'productName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       retailPriceGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'retailPrice',
       value: value,
@@ -806,8 +760,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       retailPriceLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'retailPrice',
       value: value,
@@ -829,8 +782,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'sku',
       value: value,
       caseSensitive: caseSensitive,
@@ -843,8 +795,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'sku',
       value: value,
@@ -857,8 +808,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'sku',
       value: value,
@@ -887,8 +837,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'sku',
       value: value,
       caseSensitive: caseSensitive,
@@ -899,8 +848,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'sku',
       value: value,
       caseSensitive: caseSensitive,
@@ -910,8 +858,7 @@ extension VariantStockQueryFilter
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition> skuContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'sku',
       value: value,
       caseSensitive: caseSensitive,
@@ -921,20 +868,17 @@ extension VariantStockQueryFilter
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition> skuMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'sku',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       taxNameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'taxName',
-      value: null,
     ));
   }
 
@@ -943,8 +887,7 @@ extension VariantStockQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'taxName',
       value: value,
       caseSensitive: caseSensitive,
@@ -957,8 +900,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'taxName',
       value: value,
@@ -972,8 +914,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'taxName',
       value: value,
@@ -1004,8 +945,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'taxName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1017,8 +957,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'taxName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1027,8 +966,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       taxNameContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'taxName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1037,27 +975,23 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       taxNameMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'taxName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       taxPercentageIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'taxPercentage',
-      value: null,
     ));
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       taxPercentageGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'taxPercentage',
       value: value,
@@ -1066,8 +1000,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       taxPercentageLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'taxPercentage',
       value: value,
@@ -1089,8 +1022,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'unit',
       value: value,
       caseSensitive: caseSensitive,
@@ -1103,8 +1035,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'unit',
       value: value,
@@ -1117,8 +1048,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'unit',
       value: value,
@@ -1148,8 +1078,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'unit',
       value: value,
       caseSensitive: caseSensitive,
@@ -1160,8 +1089,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'unit',
       value: value,
       caseSensitive: caseSensitive,
@@ -1171,8 +1099,7 @@ extension VariantStockQueryFilter
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition> unitContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'unit',
       value: value,
       caseSensitive: caseSensitive,
@@ -1182,18 +1109,16 @@ extension VariantStockQueryFilter
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition> unitMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'unit',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       valueGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'value',
       value: value,
@@ -1202,8 +1127,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition> valueLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'value',
       value: value,
@@ -1226,8 +1150,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'variantName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1240,8 +1163,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'variantName',
       value: value,
@@ -1255,8 +1177,7 @@ extension VariantStockQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'variantName',
       value: value,
@@ -1287,8 +1208,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'variantName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1300,8 +1220,7 @@ extension VariantStockQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'variantName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1310,8 +1229,7 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       variantNameContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'variantName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1320,10 +1238,9 @@ extension VariantStockQueryFilter
 
   QueryBuilder<VariantStock, VariantStock, QAfterFilterCondition>
       variantNameMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'variantName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1368,14 +1285,6 @@ extension VariantStockQueryWhereSortBy
   QueryBuilder<VariantStock, VariantStock, QAfterSortBy>
       sortByFvariantIdDesc() {
     return addSortByInternal('fvariantId', Sort.desc);
-  }
-
-  QueryBuilder<VariantStock, VariantStock, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<VariantStock, VariantStock, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<VariantStock, VariantStock, QAfterSortBy> sortByLowStock() {
@@ -1597,10 +1506,6 @@ extension VariantStockQueryWhereDistinct
   QueryBuilder<VariantStock, VariantStock, QDistinct> distinctByFvariantId(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('fvariantId', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<VariantStock, VariantStock, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<VariantStock, VariantStock, QDistinct> distinctByLowStock() {

@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetTenantSyncCollection on Isar {
   IsarCollection<TenantSync> get tenantSyncs => getCollection();
@@ -48,7 +49,7 @@ void _tenantSyncSetId(TenantSync object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _tenantSyncGetLinks(TenantSync object) {
+List<IsarLinkBase<dynamic>> _tenantSyncGetLinks(TenantSync object) {
   return [object.branches, object.permissions];
 }
 
@@ -59,25 +60,22 @@ void _tenantSyncSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.email;
-  final _email = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_email.length) as int;
-  final value1 = object.name;
-  final _name = IsarBinaryWriter.utf8Encoder.convert(value1);
-  dynamicSize += (_name.length) as int;
-  final value2 = object.phoneNumber;
-  final _phoneNumber = IsarBinaryWriter.utf8Encoder.convert(value2);
-  dynamicSize += (_phoneNumber.length) as int;
-  final size = staticSize + dynamicSize;
-
+  final email$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.email);
+  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
+  final phoneNumber$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.phoneNumber);
+  final size = staticSize +
+      (email$Bytes.length) +
+      (name$Bytes.length) +
+      (phoneNumber$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _email);
-  writer.writeBytes(offsets[1], _name);
-  writer.writeBytes(offsets[2], _phoneNumber);
+  writer.writeBytes(offsets[0], email$Bytes);
+  writer.writeBytes(offsets[1], name$Bytes);
+  writer.writeBytes(offsets[2], phoneNumber$Bytes);
 }
 
 TenantSync _tenantSyncDeserializeNative(IsarCollection<TenantSync> collection,
@@ -108,7 +106,7 @@ P _tenantSyncDeserializePropNative<P>(
   }
 }
 
-dynamic _tenantSyncSerializeWeb(
+Object _tenantSyncSerializeWeb(
     IsarCollection<TenantSync> collection, TenantSync object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'email', object.email);
@@ -119,15 +117,17 @@ dynamic _tenantSyncSerializeWeb(
 }
 
 TenantSync _tenantSyncDeserializeWeb(
-    IsarCollection<TenantSync> collection, dynamic jsObj) {
+    IsarCollection<TenantSync> collection, Object jsObj) {
   final object = TenantSync(
     email: IsarNative.jsObjectGet(jsObj, 'email') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
     name: IsarNative.jsObjectGet(jsObj, 'name') ?? '',
     phoneNumber: IsarNative.jsObjectGet(jsObj, 'phoneNumber') ?? '',
   );
-  _tenantSyncAttachLinks(collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity, object);
+  _tenantSyncAttachLinks(
+      collection,
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+      object);
   return object;
 }
 
@@ -136,8 +136,8 @@ P _tenantSyncDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'email':
       return (IsarNative.jsObjectGet(jsObj, 'email') ?? '') as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'name':
       return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
     case 'phoneNumber':
@@ -147,7 +147,8 @@ P _tenantSyncDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _tenantSyncAttachLinks(IsarCollection col, int id, TenantSync object) {
+void _tenantSyncAttachLinks(
+    IsarCollection<dynamic> col, int id, TenantSync object) {
   object.branches.attach(col, col.isar.branchs, 'branches', id);
   object.permissions.attach(col, col.isar.permissionsyncs, 'permissions', id);
 }
@@ -221,8 +222,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -234,8 +234,7 @@ extension TenantSyncQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'email',
       value: value,
@@ -248,8 +247,7 @@ extension TenantSyncQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'email',
       value: value,
@@ -278,8 +276,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -290,8 +287,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -301,8 +297,7 @@ extension TenantSyncQueryFilter
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition> emailContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -312,18 +307,16 @@ extension TenantSyncQueryFilter
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition> emailMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'email',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition> idEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -333,8 +326,7 @@ extension TenantSyncQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -345,8 +337,7 @@ extension TenantSyncQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -372,8 +363,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -385,8 +375,7 @@ extension TenantSyncQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -399,8 +388,7 @@ extension TenantSyncQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -429,8 +417,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -441,8 +428,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -452,8 +438,7 @@ extension TenantSyncQueryFilter
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -463,10 +448,9 @@ extension TenantSyncQueryFilter
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -476,8 +460,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -490,8 +473,7 @@ extension TenantSyncQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'phoneNumber',
       value: value,
@@ -505,8 +487,7 @@ extension TenantSyncQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'phoneNumber',
       value: value,
@@ -537,8 +518,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -550,8 +530,7 @@ extension TenantSyncQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -560,8 +539,7 @@ extension TenantSyncQueryFilter
 
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition>
       phoneNumberContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -570,10 +548,9 @@ extension TenantSyncQueryFilter
 
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition>
       phoneNumberMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'phoneNumber',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -608,14 +585,6 @@ extension TenantSyncQueryWhereSortBy
 
   QueryBuilder<TenantSync, TenantSync, QAfterSortBy> sortByEmailDesc() {
     return addSortByInternal('email', Sort.desc);
-  }
-
-  QueryBuilder<TenantSync, TenantSync, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<TenantSync, TenantSync, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<TenantSync, TenantSync, QAfterSortBy> sortByName() {
@@ -675,10 +644,6 @@ extension TenantSyncQueryWhereDistinct
   QueryBuilder<TenantSync, TenantSync, QDistinct> distinctByEmail(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('email', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<TenantSync, TenantSync, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<TenantSync, TenantSync, QDistinct> distinctByName(

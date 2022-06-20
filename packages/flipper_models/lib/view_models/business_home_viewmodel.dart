@@ -122,9 +122,11 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     ProxyService.isarApi.pendingOrderStream().listen((order) async {
       if (order != null && order.status == pendingStatus) {
         keypad.setOrder(order);
-        await order.orderItems.load();
-        if (order.orderItems.isNotEmpty) {
-          keypad.setItemsOnSale(count: order.orderItems.length);
+        List<OrderItem> items =
+            await ProxyService.isarApi.orderItems(orderId: order.id);
+
+        if (items.isNotEmpty) {
+          keypad.setItemsOnSale(count: items.length);
         }
         keypad.setTotalPayable(amount: order.subTotal);
       } else {
@@ -137,10 +139,13 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     // in case there is nothhing to listen to and we need to refresh itemOnSale
     Order? order = await ProxyService.keypad
         .getOrder(branchId: ProxyService.box.getBranchId() ?? 0);
+
     keypad.setOrder(order);
     if (order != null) {
-      await order.orderItems.load();
-      keypad.setItemsOnSale(count: order.orderItems.length);
+      List<OrderItem> items =
+          await ProxyService.isarApi.orderItems(orderId: order.id);
+
+      keypad.setItemsOnSale(count: items.length);
     } else {
       keypad.setItemsOnSale(count: 0);
     }
@@ -297,7 +302,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       item.price = amountTotal / quantity; // price of one unit
       pendingOrder!.subTotal = pendingOrder.subTotal + (amountTotal);
       ProxyService.isarApi.update(data: pendingOrder);
-      ProxyService.isarApi.updateOrderItem(order: pendingOrder, item: item);
+      ProxyService.isarApi.update(data: item);
       // return as have done update and we don't want to proceed.
       return;
     }
@@ -488,12 +493,13 @@ class BusinessHomeViewModel extends ReactiveViewModel {
 
     if (keypad.order == null) return 0.0;
 
-    num? totalPayable =
-        keypad.order!.orderItems.fold(0, (a, b) => a! + (b.price * b.qty));
-    await keypad.order!.orderItems.load();
+    List<OrderItem> items =
+        await ProxyService.isarApi.orderItems(orderId: keypad.order!.id);
 
-    num? totalDiscount = keypad.order!.orderItems
-        .fold(0, (a, b) => a! + (b.discount == null ? 0 : b.discount!.toInt()));
+    num? totalPayable = items.fold(0, (a, b) => a! + (b.price * b.qty));
+
+    num? totalDiscount = items.fold(
+        0, (a, b) => a! + (b.discount == null ? 0 : b.discount!.toInt()));
 
     keypad.setTotalPayable(
         amount: totalDiscount != 0.0
@@ -575,7 +581,6 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     Receipt? receipt =
         await ProxyService.isarApi.getReceipt(orderId: order!.id);
     // get time formatted like hhmmss
-
     Print print = Print();
     print.feed(items);
     print.print(

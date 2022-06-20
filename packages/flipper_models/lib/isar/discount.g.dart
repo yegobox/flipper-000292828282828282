@@ -6,7 +6,8 @@ part of 'discount.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetDiscountCollection on Isar {
   IsarCollection<Discount> get discounts => getCollection();
@@ -52,7 +53,7 @@ void _discountSetId(Discount object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _discountGetLinks(Discount object) {
+List<IsarLinkBase<dynamic>> _discountGetLinks(Discount object) {
   return [];
 }
 
@@ -63,23 +64,16 @@ void _discountSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.amount;
-  final _amount = value0;
-  final value1 = object.branchId;
-  final _branchId = value1;
-  final value2 = object.name;
-  final _name = IsarBinaryWriter.utf8Encoder.convert(value2);
-  dynamicSize += (_name.length) as int;
-  final size = staticSize + dynamicSize;
-
+  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
+  final size = staticSize + (name$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeDouble(offsets[0], _amount);
-  writer.writeLong(offsets[1], _branchId);
-  writer.writeBytes(offsets[2], _name);
+  writer.writeDouble(offsets[0], object.amount);
+  writer.writeLong(offsets[1], object.branchId);
+  writer.writeBytes(offsets[2], name$Bytes);
 }
 
 Discount _discountDeserializeNative(IsarCollection<Discount> collection, int id,
@@ -109,7 +103,7 @@ P _discountDeserializePropNative<P>(
   }
 }
 
-dynamic _discountSerializeWeb(
+Object _discountSerializeWeb(
     IsarCollection<Discount> collection, Discount object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'amount', object.amount);
@@ -120,12 +114,12 @@ dynamic _discountSerializeWeb(
 }
 
 Discount _discountDeserializeWeb(
-    IsarCollection<Discount> collection, dynamic jsObj) {
+    IsarCollection<Discount> collection, Object jsObj) {
   final object = Discount(
     amount: IsarNative.jsObjectGet(jsObj, 'amount'),
-    branchId:
-        IsarNative.jsObjectGet(jsObj, 'branchId') ?? double.negativeInfinity,
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
+    branchId: IsarNative.jsObjectGet(jsObj, 'branchId') ??
+        (double.negativeInfinity as int),
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
     name: IsarNative.jsObjectGet(jsObj, 'name') ?? '',
   );
   return object;
@@ -137,10 +131,10 @@ P _discountDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'amount')) as P;
     case 'branchId':
       return (IsarNative.jsObjectGet(jsObj, 'branchId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'name':
       return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
     default:
@@ -148,7 +142,8 @@ P _discountDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _discountAttachLinks(IsarCollection col, int id, Discount object) {}
+void _discountAttachLinks(
+    IsarCollection<dynamic> col, int id, Discount object) {}
 
 extension DiscountQueryWhereSort on QueryBuilder<Discount, Discount, QWhere> {
   QueryBuilder<Discount, Discount, QAfterWhere> anyId() {
@@ -289,17 +284,14 @@ extension DiscountQueryWhere on QueryBuilder<Discount, Discount, QWhereClause> {
 extension DiscountQueryFilter
     on QueryBuilder<Discount, Discount, QFilterCondition> {
   QueryBuilder<Discount, Discount, QAfterFilterCondition> amountIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'amount',
-      value: null,
     ));
   }
 
   QueryBuilder<Discount, Discount, QAfterFilterCondition> amountGreaterThan(
       double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'amount',
       value: value,
@@ -308,8 +300,7 @@ extension DiscountQueryFilter
 
   QueryBuilder<Discount, Discount, QAfterFilterCondition> amountLessThan(
       double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'amount',
       value: value,
@@ -329,8 +320,7 @@ extension DiscountQueryFilter
 
   QueryBuilder<Discount, Discount, QAfterFilterCondition> branchIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'branchId',
       value: value,
     ));
@@ -340,8 +330,7 @@ extension DiscountQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -352,8 +341,7 @@ extension DiscountQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -376,8 +364,7 @@ extension DiscountQueryFilter
   }
 
   QueryBuilder<Discount, Discount, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -387,8 +374,7 @@ extension DiscountQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -399,8 +385,7 @@ extension DiscountQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -426,8 +411,7 @@ extension DiscountQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -439,8 +423,7 @@ extension DiscountQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -453,8 +436,7 @@ extension DiscountQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -483,8 +465,7 @@ extension DiscountQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -495,8 +476,7 @@ extension DiscountQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -506,8 +486,7 @@ extension DiscountQueryFilter
   QueryBuilder<Discount, Discount, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -517,10 +496,9 @@ extension DiscountQueryFilter
   QueryBuilder<Discount, Discount, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -545,14 +523,6 @@ extension DiscountQueryWhereSortBy
 
   QueryBuilder<Discount, Discount, QAfterSortBy> sortByBranchIdDesc() {
     return addSortByInternal('branchId', Sort.desc);
-  }
-
-  QueryBuilder<Discount, Discount, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Discount, Discount, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Discount, Discount, QAfterSortBy> sortByName() {
@@ -607,10 +577,6 @@ extension DiscountQueryWhereDistinct
 
   QueryBuilder<Discount, Discount, QDistinct> distinctByBranchId() {
     return addDistinctByInternal('branchId');
-  }
-
-  QueryBuilder<Discount, Discount, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Discount, Discount, QDistinct> distinctByName(

@@ -6,7 +6,8 @@ part of 'payment.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetPaymentCollection on Isar {
   IsarCollection<Payment> get payments => getCollection();
@@ -58,7 +59,7 @@ void _paymentSetId(Payment object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _paymentGetLinks(Payment object) {
+List<IsarLinkBase<dynamic>> _paymentGetLinks(Payment object) {
   return [];
 }
 
@@ -69,45 +70,34 @@ void _paymentSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.amount;
-  final _amount = value0;
-  final value1 = object.createdAt;
-  final _createdAt = value1;
-  final value2 = object.interval;
-  final _interval = value2;
-  final value3 = object.itemName;
-  final _itemName = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_itemName.length) as int;
-  final value4 = object.note;
-  final _note = IsarBinaryWriter.utf8Encoder.convert(value4);
-  dynamicSize += (_note.length) as int;
-  final value5 = object.paymentType;
-  final _paymentType = IsarBinaryWriter.utf8Encoder.convert(value5);
-  dynamicSize += (_paymentType.length) as int;
-  final value6 = object.phoneNumber;
-  final _phoneNumber = IsarBinaryWriter.utf8Encoder.convert(value6);
-  dynamicSize += (_phoneNumber.length) as int;
-  final value7 = object.requestGuid;
-  final _requestGuid = IsarBinaryWriter.utf8Encoder.convert(value7);
-  dynamicSize += (_requestGuid.length) as int;
-  final value8 = object.userId;
-  final _userId = value8;
-  final size = staticSize + dynamicSize;
-
+  final itemName$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.itemName);
+  final note$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.note);
+  final paymentType$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.paymentType);
+  final phoneNumber$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.phoneNumber);
+  final requestGuid$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.requestGuid);
+  final size = staticSize +
+      (itemName$Bytes.length) +
+      (note$Bytes.length) +
+      (paymentType$Bytes.length) +
+      (phoneNumber$Bytes.length) +
+      (requestGuid$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], _amount);
-  writer.writeLong(offsets[1], _createdAt);
-  writer.writeLong(offsets[2], _interval);
-  writer.writeBytes(offsets[3], _itemName);
-  writer.writeBytes(offsets[4], _note);
-  writer.writeBytes(offsets[5], _paymentType);
-  writer.writeBytes(offsets[6], _phoneNumber);
-  writer.writeBytes(offsets[7], _requestGuid);
-  writer.writeLong(offsets[8], _userId);
+  writer.writeLong(offsets[0], object.amount);
+  writer.writeLong(offsets[1], object.createdAt);
+  writer.writeLong(offsets[2], object.interval);
+  writer.writeBytes(offsets[3], itemName$Bytes);
+  writer.writeBytes(offsets[4], note$Bytes);
+  writer.writeBytes(offsets[5], paymentType$Bytes);
+  writer.writeBytes(offsets[6], phoneNumber$Bytes);
+  writer.writeBytes(offsets[7], requestGuid$Bytes);
+  writer.writeLong(offsets[8], object.userId);
 }
 
 Payment _paymentDeserializeNative(IsarCollection<Payment> collection, int id,
@@ -155,7 +145,7 @@ P _paymentDeserializePropNative<P>(
   }
 }
 
-dynamic _paymentSerializeWeb(
+Object _paymentSerializeWeb(
     IsarCollection<Payment> collection, Payment object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'amount', object.amount);
@@ -172,20 +162,22 @@ dynamic _paymentSerializeWeb(
 }
 
 Payment _paymentDeserializeWeb(
-    IsarCollection<Payment> collection, dynamic jsObj) {
+    IsarCollection<Payment> collection, Object jsObj) {
   final object = Payment(
-    amount: IsarNative.jsObjectGet(jsObj, 'amount') ?? double.negativeInfinity,
-    createdAt:
-        IsarNative.jsObjectGet(jsObj, 'createdAt') ?? double.negativeInfinity,
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
-    interval:
-        IsarNative.jsObjectGet(jsObj, 'interval') ?? double.negativeInfinity,
+    amount: IsarNative.jsObjectGet(jsObj, 'amount') ??
+        (double.negativeInfinity as int),
+    createdAt: IsarNative.jsObjectGet(jsObj, 'createdAt') ??
+        (double.negativeInfinity as int),
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+    interval: IsarNative.jsObjectGet(jsObj, 'interval') ??
+        (double.negativeInfinity as int),
     itemName: IsarNative.jsObjectGet(jsObj, 'itemName') ?? '',
     note: IsarNative.jsObjectGet(jsObj, 'note') ?? '',
     paymentType: IsarNative.jsObjectGet(jsObj, 'paymentType') ?? '',
     phoneNumber: IsarNative.jsObjectGet(jsObj, 'phoneNumber') ?? '',
     requestGuid: IsarNative.jsObjectGet(jsObj, 'requestGuid') ?? '',
-    userId: IsarNative.jsObjectGet(jsObj, 'userId') ?? double.negativeInfinity,
+    userId: IsarNative.jsObjectGet(jsObj, 'userId') ??
+        (double.negativeInfinity as int),
   );
   return object;
 }
@@ -194,16 +186,16 @@ P _paymentDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'amount':
       return (IsarNative.jsObjectGet(jsObj, 'amount') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'createdAt':
       return (IsarNative.jsObjectGet(jsObj, 'createdAt') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'interval':
       return (IsarNative.jsObjectGet(jsObj, 'interval') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'itemName':
       return (IsarNative.jsObjectGet(jsObj, 'itemName') ?? '') as P;
     case 'note':
@@ -216,13 +208,13 @@ P _paymentDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'requestGuid') ?? '') as P;
     case 'userId':
       return (IsarNative.jsObjectGet(jsObj, 'userId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     default:
       throw 'Illegal propertyName';
   }
 }
 
-void _paymentAttachLinks(IsarCollection col, int id, Payment object) {}
+void _paymentAttachLinks(IsarCollection<dynamic> col, int id, Payment object) {}
 
 extension PaymentQueryWhereSort on QueryBuilder<Payment, Payment, QWhere> {
   QueryBuilder<Payment, Payment, QAfterWhere> anyId() {
@@ -289,8 +281,7 @@ extension PaymentQueryFilter
     on QueryBuilder<Payment, Payment, QFilterCondition> {
   QueryBuilder<Payment, Payment, QAfterFilterCondition> amountEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'amount',
       value: value,
     ));
@@ -300,8 +291,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'amount',
       value: value,
@@ -312,8 +302,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'amount',
       value: value,
@@ -337,8 +326,7 @@ extension PaymentQueryFilter
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> createdAtEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'createdAt',
       value: value,
     ));
@@ -348,8 +336,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -360,8 +347,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'createdAt',
       value: value,
@@ -384,8 +370,7 @@ extension PaymentQueryFilter
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -395,8 +380,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -407,8 +391,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -432,8 +415,7 @@ extension PaymentQueryFilter
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> intervalEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'interval',
       value: value,
     ));
@@ -443,8 +425,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'interval',
       value: value,
@@ -455,8 +436,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'interval',
       value: value,
@@ -482,8 +462,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'itemName',
       value: value,
       caseSensitive: caseSensitive,
@@ -495,8 +474,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'itemName',
       value: value,
@@ -509,8 +487,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'itemName',
       value: value,
@@ -539,8 +516,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'itemName',
       value: value,
       caseSensitive: caseSensitive,
@@ -551,8 +527,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'itemName',
       value: value,
       caseSensitive: caseSensitive,
@@ -562,8 +537,7 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'itemName',
       value: value,
       caseSensitive: caseSensitive,
@@ -573,10 +547,9 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'itemName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -585,8 +558,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -598,8 +570,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'note',
       value: value,
@@ -612,8 +583,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'note',
       value: value,
@@ -642,8 +612,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -654,8 +623,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -665,8 +633,7 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'note',
       value: value,
       caseSensitive: caseSensitive,
@@ -676,10 +643,9 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'note',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -688,8 +654,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -701,8 +666,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'paymentType',
       value: value,
@@ -715,8 +679,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'paymentType',
       value: value,
@@ -745,8 +708,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -757,8 +719,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -768,8 +729,7 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'paymentType',
       value: value,
       caseSensitive: caseSensitive,
@@ -779,10 +739,9 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'paymentType',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -791,8 +750,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -804,8 +762,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'phoneNumber',
       value: value,
@@ -818,8 +775,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'phoneNumber',
       value: value,
@@ -848,8 +804,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -860,8 +815,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -871,8 +825,7 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'phoneNumber',
       value: value,
       caseSensitive: caseSensitive,
@@ -882,10 +835,9 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'phoneNumber',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -894,8 +846,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'requestGuid',
       value: value,
       caseSensitive: caseSensitive,
@@ -907,8 +858,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'requestGuid',
       value: value,
@@ -921,8 +871,7 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'requestGuid',
       value: value,
@@ -951,8 +900,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'requestGuid',
       value: value,
       caseSensitive: caseSensitive,
@@ -963,8 +911,7 @@ extension PaymentQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'requestGuid',
       value: value,
       caseSensitive: caseSensitive,
@@ -974,8 +921,7 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'requestGuid',
       value: value,
       caseSensitive: caseSensitive,
@@ -985,18 +931,16 @@ extension PaymentQueryFilter
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'requestGuid',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> userIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'userId',
       value: value,
     ));
@@ -1006,8 +950,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'userId',
       value: value,
@@ -1018,8 +961,7 @@ extension PaymentQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'userId',
       value: value,
@@ -1060,14 +1002,6 @@ extension PaymentQueryWhereSortBy on QueryBuilder<Payment, Payment, QSortBy> {
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByCreatedAtDesc() {
     return addSortByInternal('createdAt', Sort.desc);
-  }
-
-  QueryBuilder<Payment, Payment, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Payment, Payment, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByInterval() {
@@ -1218,10 +1152,6 @@ extension PaymentQueryWhereDistinct
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByCreatedAt() {
     return addDistinctByInternal('createdAt');
-  }
-
-  QueryBuilder<Payment, Payment, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByInterval() {

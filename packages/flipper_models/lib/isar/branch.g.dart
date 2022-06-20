@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetBranchCollection on Isar {
   IsarCollection<Branch> get branchs => getCollection();
@@ -56,60 +57,55 @@ void _branchSetId(Branch object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _branchGetLinks(Branch object) {
+List<IsarLinkBase<dynamic>> _branchGetLinks(Branch object) {
   return [];
 }
 
 void _branchSerializeNative(IsarCollection<Branch> collection, IsarCObject cObj,
     Branch object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.active;
-  final _active = value0;
-  final value1 = object.description;
-  IsarUint8List? _description;
-  if (value1 != null) {
-    _description = IsarBinaryWriter.utf8Encoder.convert(value1);
+  IsarUint8List? description$Bytes;
+  final description$Value = object.description;
+  if (description$Value != null) {
+    description$Bytes = IsarBinaryWriter.utf8Encoder.convert(description$Value);
   }
-  dynamicSize += (_description?.length ?? 0) as int;
-  final value2 = object.fbusinessId;
-  final _fbusinessId = value2;
-  final value3 = object.latitude;
-  IsarUint8List? _latitude;
-  if (value3 != null) {
-    _latitude = IsarBinaryWriter.utf8Encoder.convert(value3);
+  IsarUint8List? latitude$Bytes;
+  final latitude$Value = object.latitude;
+  if (latitude$Value != null) {
+    latitude$Bytes = IsarBinaryWriter.utf8Encoder.convert(latitude$Value);
   }
-  dynamicSize += (_latitude?.length ?? 0) as int;
-  final value4 = object.longitude;
-  IsarUint8List? _longitude;
-  if (value4 != null) {
-    _longitude = IsarBinaryWriter.utf8Encoder.convert(value4);
+  IsarUint8List? longitude$Bytes;
+  final longitude$Value = object.longitude;
+  if (longitude$Value != null) {
+    longitude$Bytes = IsarBinaryWriter.utf8Encoder.convert(longitude$Value);
   }
-  dynamicSize += (_longitude?.length ?? 0) as int;
-  final value5 = object.name;
-  IsarUint8List? _name;
-  if (value5 != null) {
-    _name = IsarBinaryWriter.utf8Encoder.convert(value5);
+  IsarUint8List? name$Bytes;
+  final name$Value = object.name;
+  if (name$Value != null) {
+    name$Bytes = IsarBinaryWriter.utf8Encoder.convert(name$Value);
   }
-  dynamicSize += (_name?.length ?? 0) as int;
-  final value6 = object.table;
-  IsarUint8List? _table;
-  if (value6 != null) {
-    _table = IsarBinaryWriter.utf8Encoder.convert(value6);
+  IsarUint8List? table$Bytes;
+  final table$Value = object.table;
+  if (table$Value != null) {
+    table$Bytes = IsarBinaryWriter.utf8Encoder.convert(table$Value);
   }
-  dynamicSize += (_table?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
+  final size = staticSize +
+      (description$Bytes?.length ?? 0) +
+      (latitude$Bytes?.length ?? 0) +
+      (longitude$Bytes?.length ?? 0) +
+      (name$Bytes?.length ?? 0) +
+      (table$Bytes?.length ?? 0);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _active);
-  writer.writeBytes(offsets[1], _description);
-  writer.writeLong(offsets[2], _fbusinessId);
-  writer.writeBytes(offsets[3], _latitude);
-  writer.writeBytes(offsets[4], _longitude);
-  writer.writeBytes(offsets[5], _name);
-  writer.writeBytes(offsets[6], _table);
+  writer.writeBool(offsets[0], object.active);
+  writer.writeBytes(offsets[1], description$Bytes);
+  writer.writeLong(offsets[2], object.fbusinessId);
+  writer.writeBytes(offsets[3], latitude$Bytes);
+  writer.writeBytes(offsets[4], longitude$Bytes);
+  writer.writeBytes(offsets[5], name$Bytes);
+  writer.writeBytes(offsets[6], table$Bytes);
 }
 
 Branch _branchDeserializeNative(IsarCollection<Branch> collection, int id,
@@ -151,7 +147,7 @@ P _branchDeserializePropNative<P>(
   }
 }
 
-dynamic _branchSerializeWeb(IsarCollection<Branch> collection, Branch object) {
+Object _branchSerializeWeb(IsarCollection<Branch> collection, Branch object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
   IsarNative.jsObjectSet(jsObj, 'description', object.description);
@@ -164,7 +160,7 @@ dynamic _branchSerializeWeb(IsarCollection<Branch> collection, Branch object) {
   return jsObj;
 }
 
-Branch _branchDeserializeWeb(IsarCollection<Branch> collection, dynamic jsObj) {
+Branch _branchDeserializeWeb(IsarCollection<Branch> collection, Object jsObj) {
   final object = Branch(
     active: IsarNative.jsObjectGet(jsObj, 'active'),
     description: IsarNative.jsObjectGet(jsObj, 'description'),
@@ -201,7 +197,7 @@ P _branchDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _branchAttachLinks(IsarCollection col, int id, Branch object) {}
+void _branchAttachLinks(IsarCollection<dynamic> col, int id, Branch object) {}
 
 extension BranchQueryWhereSort on QueryBuilder<Branch, Branch, QWhere> {
   QueryBuilder<Branch, Branch, QAfterWhere> anyId() {
@@ -266,27 +262,22 @@ extension BranchQueryWhere on QueryBuilder<Branch, Branch, QWhereClause> {
 
 extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> activeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'active',
-      value: null,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> activeEqualTo(
       bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> descriptionIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'description',
-      value: null,
     ));
   }
 
@@ -294,8 +285,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'description',
       value: value,
       caseSensitive: caseSensitive,
@@ -307,8 +297,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'description',
       value: value,
@@ -321,8 +310,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'description',
       value: value,
@@ -351,8 +339,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'description',
       value: value,
       caseSensitive: caseSensitive,
@@ -363,8 +350,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'description',
       value: value,
       caseSensitive: caseSensitive,
@@ -374,8 +360,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> descriptionContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'description',
       value: value,
       caseSensitive: caseSensitive,
@@ -385,26 +370,22 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> descriptionMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'description',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> fbusinessIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'fbusinessId',
-      value: null,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> fbusinessIdEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'fbusinessId',
       value: value,
     ));
@@ -414,8 +395,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'fbusinessId',
       value: value,
@@ -426,8 +406,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'fbusinessId',
       value: value,
@@ -450,16 +429,13 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> idIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'id',
-      value: null,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -469,8 +445,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -481,8 +456,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -505,10 +479,8 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> latitudeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'latitude',
-      value: null,
     ));
   }
 
@@ -516,8 +488,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -529,8 +500,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'latitude',
       value: value,
@@ -543,8 +513,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'latitude',
       value: value,
@@ -573,8 +542,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -585,8 +553,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -596,8 +563,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> latitudeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'latitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -607,19 +573,16 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> latitudeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'latitude',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> longitudeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'longitude',
-      value: null,
     ));
   }
 
@@ -627,8 +590,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -640,8 +602,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'longitude',
       value: value,
@@ -654,8 +615,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'longitude',
       value: value,
@@ -684,8 +644,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -696,8 +655,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -707,8 +665,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> longitudeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'longitude',
       value: value,
       caseSensitive: caseSensitive,
@@ -718,19 +675,16 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> longitudeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'longitude',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> nameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'name',
-      value: null,
     ));
   }
 
@@ -738,8 +692,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -751,8 +704,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -765,8 +717,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -795,8 +746,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -807,8 +757,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -817,8 +766,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> nameContains(String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -828,19 +776,16 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Branch, Branch, QAfterFilterCondition> tableIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'table',
-      value: null,
     ));
   }
 
@@ -848,8 +793,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -861,8 +805,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'table',
       value: value,
@@ -875,8 +818,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'table',
       value: value,
@@ -905,8 +847,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -917,8 +858,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -928,8 +868,7 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> tableContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -939,10 +878,9 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
   QueryBuilder<Branch, Branch, QAfterFilterCondition> tableMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'table',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -973,14 +911,6 @@ extension BranchQueryWhereSortBy on QueryBuilder<Branch, Branch, QSortBy> {
 
   QueryBuilder<Branch, Branch, QAfterSortBy> sortByFbusinessIdDesc() {
     return addSortByInternal('fbusinessId', Sort.desc);
-  }
-
-  QueryBuilder<Branch, Branch, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Branch, Branch, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Branch, Branch, QAfterSortBy> sortByLatitude() {
@@ -1095,10 +1025,6 @@ extension BranchQueryWhereDistinct on QueryBuilder<Branch, Branch, QDistinct> {
 
   QueryBuilder<Branch, Branch, QDistinct> distinctByFbusinessId() {
     return addDistinctByInternal('fbusinessId');
-  }
-
-  QueryBuilder<Branch, Branch, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Branch, Branch, QDistinct> distinctByLatitude(

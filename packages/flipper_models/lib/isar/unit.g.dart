@@ -6,7 +6,8 @@ part of 'unit.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetUnitCollection on Isar {
   IsarCollection<Unit> get units => getCollection();
@@ -52,33 +53,24 @@ void _unitSetId(Unit object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _unitGetLinks(Unit object) {
+List<IsarLinkBase<dynamic>> _unitGetLinks(Unit object) {
   return [];
 }
 
 void _unitSerializeNative(IsarCollection<Unit> collection, IsarCObject cObj,
     Unit object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.active;
-  final _active = value0;
-  final value1 = object.branchId;
-  final _branchId = value1;
-  final value2 = object.name;
-  final _name = IsarBinaryWriter.utf8Encoder.convert(value2);
-  dynamicSize += (_name.length) as int;
-  final value3 = object.value;
-  final _value = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_value.length) as int;
-  final size = staticSize + dynamicSize;
-
+  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
+  final value$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.value);
+  final size = staticSize + (name$Bytes.length) + (value$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _active);
-  writer.writeLong(offsets[1], _branchId);
-  writer.writeBytes(offsets[2], _name);
-  writer.writeBytes(offsets[3], _value);
+  writer.writeBool(offsets[0], object.active);
+  writer.writeLong(offsets[1], object.branchId);
+  writer.writeBytes(offsets[2], name$Bytes);
+  writer.writeBytes(offsets[3], value$Bytes);
 }
 
 Unit _unitDeserializeNative(IsarCollection<Unit> collection, int id,
@@ -110,7 +102,7 @@ P _unitDeserializePropNative<P>(
   }
 }
 
-dynamic _unitSerializeWeb(IsarCollection<Unit> collection, Unit object) {
+Object _unitSerializeWeb(IsarCollection<Unit> collection, Unit object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
   IsarNative.jsObjectSet(jsObj, 'branchId', object.branchId);
@@ -120,12 +112,13 @@ dynamic _unitSerializeWeb(IsarCollection<Unit> collection, Unit object) {
   return jsObj;
 }
 
-Unit _unitDeserializeWeb(IsarCollection<Unit> collection, dynamic jsObj) {
+Unit _unitDeserializeWeb(IsarCollection<Unit> collection, Object jsObj) {
   final object = Unit();
   object.active = IsarNative.jsObjectGet(jsObj, 'active') ?? false;
-  object.branchId =
-      IsarNative.jsObjectGet(jsObj, 'branchId') ?? double.negativeInfinity;
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.branchId = IsarNative.jsObjectGet(jsObj, 'branchId') ??
+      (double.negativeInfinity as int);
+  object.id =
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
   object.value = IsarNative.jsObjectGet(jsObj, 'value') ?? '';
   return object;
@@ -137,10 +130,10 @@ P _unitDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'active') ?? false) as P;
     case 'branchId':
       return (IsarNative.jsObjectGet(jsObj, 'branchId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'name':
       return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
     case 'value':
@@ -150,7 +143,7 @@ P _unitDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _unitAttachLinks(IsarCollection col, int id, Unit object) {}
+void _unitAttachLinks(IsarCollection<dynamic> col, int id, Unit object) {}
 
 extension UnitQueryWhereSort on QueryBuilder<Unit, Unit, QWhere> {
   QueryBuilder<Unit, Unit, QAfterWhere> anyId() {
@@ -288,16 +281,14 @@ extension UnitQueryWhere on QueryBuilder<Unit, Unit, QWhereClause> {
 
 extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
   QueryBuilder<Unit, Unit, QAfterFilterCondition> activeEqualTo(bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
     ));
   }
 
   QueryBuilder<Unit, Unit, QAfterFilterCondition> branchIdEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'branchId',
       value: value,
     ));
@@ -307,8 +298,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -319,8 +309,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -343,8 +332,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
   }
 
   QueryBuilder<Unit, Unit, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -354,8 +342,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -366,8 +353,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -393,8 +379,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -406,8 +391,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -420,8 +404,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -450,8 +433,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -462,8 +444,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -472,8 +453,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
 
   QueryBuilder<Unit, Unit, QAfterFilterCondition> nameContains(String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -482,10 +462,9 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
 
   QueryBuilder<Unit, Unit, QAfterFilterCondition> nameMatches(String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -494,8 +473,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'value',
       value: value,
       caseSensitive: caseSensitive,
@@ -507,8 +485,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'value',
       value: value,
@@ -521,8 +498,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'value',
       value: value,
@@ -551,8 +527,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'value',
       value: value,
       caseSensitive: caseSensitive,
@@ -563,8 +538,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'value',
       value: value,
       caseSensitive: caseSensitive,
@@ -573,8 +547,7 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
 
   QueryBuilder<Unit, Unit, QAfterFilterCondition> valueContains(String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'value',
       value: value,
       caseSensitive: caseSensitive,
@@ -583,10 +556,9 @@ extension UnitQueryFilter on QueryBuilder<Unit, Unit, QFilterCondition> {
 
   QueryBuilder<Unit, Unit, QAfterFilterCondition> valueMatches(String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'value',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -609,14 +581,6 @@ extension UnitQueryWhereSortBy on QueryBuilder<Unit, Unit, QSortBy> {
 
   QueryBuilder<Unit, Unit, QAfterSortBy> sortByBranchIdDesc() {
     return addSortByInternal('branchId', Sort.desc);
-  }
-
-  QueryBuilder<Unit, Unit, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Unit, Unit, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Unit, Unit, QAfterSortBy> sortByName() {
@@ -685,10 +649,6 @@ extension UnitQueryWhereDistinct on QueryBuilder<Unit, Unit, QDistinct> {
 
   QueryBuilder<Unit, Unit, QDistinct> distinctByBranchId() {
     return addDistinctByInternal('branchId');
-  }
-
-  QueryBuilder<Unit, Unit, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Unit, Unit, QDistinct> distinctByName(

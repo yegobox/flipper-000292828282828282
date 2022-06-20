@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetProfileCollection on Isar {
   IsarCollection<Profile> get profiles => getCollection();
@@ -70,7 +71,7 @@ void _profileSetId(Profile object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _profileGetLinks(Profile object) {
+List<IsarLinkBase<dynamic>> _profileGetLinks(Profile object) {
   return [];
 }
 
@@ -81,101 +82,91 @@ void _profileSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.about;
-  IsarUint8List? _about;
-  if (value0 != null) {
-    _about = IsarBinaryWriter.utf8Encoder.convert(value0);
+  IsarUint8List? about$Bytes;
+  final about$Value = object.about;
+  if (about$Value != null) {
+    about$Bytes = IsarBinaryWriter.utf8Encoder.convert(about$Value);
   }
-  dynamicSize += (_about?.length ?? 0) as int;
-  final value1 = object.address;
-  IsarUint8List? _address;
-  if (value1 != null) {
-    _address = IsarBinaryWriter.utf8Encoder.convert(value1);
+  IsarUint8List? address$Bytes;
+  final address$Value = object.address;
+  if (address$Value != null) {
+    address$Bytes = IsarBinaryWriter.utf8Encoder.convert(address$Value);
   }
-  dynamicSize += (_address?.length ?? 0) as int;
-  final value2 = object.businessId;
-  final _businessId = value2;
-  final value3 = object.cell;
-  final _cell = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_cell.length) as int;
-  final value4 = object.city;
-  IsarUint8List? _city;
-  if (value4 != null) {
-    _city = IsarBinaryWriter.utf8Encoder.convert(value4);
+  final cell$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.cell);
+  IsarUint8List? city$Bytes;
+  final city$Value = object.city;
+  if (city$Value != null) {
+    city$Bytes = IsarBinaryWriter.utf8Encoder.convert(city$Value);
   }
-  dynamicSize += (_city?.length ?? 0) as int;
-  final value5 = object.country;
-  final _country = IsarBinaryWriter.utf8Encoder.convert(value5);
-  dynamicSize += (_country.length) as int;
-  final value6 = object.coverPic;
-  IsarUint8List? _coverPic;
-  if (value6 != null) {
-    _coverPic = IsarBinaryWriter.utf8Encoder.convert(value6);
+  final country$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.country);
+  IsarUint8List? coverPic$Bytes;
+  final coverPic$Value = object.coverPic;
+  if (coverPic$Value != null) {
+    coverPic$Bytes = IsarBinaryWriter.utf8Encoder.convert(coverPic$Value);
   }
-  dynamicSize += (_coverPic?.length ?? 0) as int;
-  final value7 = object.district;
-  final _district = IsarBinaryWriter.utf8Encoder.convert(value7);
-  dynamicSize += (_district.length) as int;
-  final value8 = object.email;
-  final _email = IsarBinaryWriter.utf8Encoder.convert(value8);
-  dynamicSize += (_email.length) as int;
-  final value9 = object.livingAt;
-  final _livingAt = IsarBinaryWriter.utf8Encoder.convert(value9);
-  dynamicSize += (_livingAt.length) as int;
-  final value10 = object.name;
-  final _name = IsarBinaryWriter.utf8Encoder.convert(value10);
-  dynamicSize += (_name.length) as int;
-  final value11 = object.nationalId;
-  final _nationalId = IsarBinaryWriter.utf8Encoder.convert(value11);
-  dynamicSize += (_nationalId.length) as int;
-  final value12 = object.phone;
-  final _phone = IsarBinaryWriter.utf8Encoder.convert(value12);
-  dynamicSize += (_phone.length) as int;
-  final value13 = object.pincode;
-  IsarUint8List? _pincode;
-  if (value13 != null) {
-    _pincode = IsarBinaryWriter.utf8Encoder.convert(value13);
+  final district$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.district);
+  final email$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.email);
+  final livingAt$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.livingAt);
+  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
+  final nationalId$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.nationalId);
+  final phone$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.phone);
+  IsarUint8List? pincode$Bytes;
+  final pincode$Value = object.pincode;
+  if (pincode$Value != null) {
+    pincode$Bytes = IsarBinaryWriter.utf8Encoder.convert(pincode$Value);
   }
-  dynamicSize += (_pincode?.length ?? 0) as int;
-  final value14 = object.profilePic;
-  IsarUint8List? _profilePic;
-  if (value14 != null) {
-    _profilePic = IsarBinaryWriter.utf8Encoder.convert(value14);
+  IsarUint8List? profilePic$Bytes;
+  final profilePic$Value = object.profilePic;
+  if (profilePic$Value != null) {
+    profilePic$Bytes = IsarBinaryWriter.utf8Encoder.convert(profilePic$Value);
   }
-  dynamicSize += (_profilePic?.length ?? 0) as int;
-  final value15 = object.state;
-  IsarUint8List? _state;
-  if (value15 != null) {
-    _state = IsarBinaryWriter.utf8Encoder.convert(value15);
+  IsarUint8List? state$Bytes;
+  final state$Value = object.state;
+  if (state$Value != null) {
+    state$Bytes = IsarBinaryWriter.utf8Encoder.convert(state$Value);
   }
-  dynamicSize += (_state?.length ?? 0) as int;
-  final value16 = object.vaccinationCode;
-  final _vaccinationCode = IsarBinaryWriter.utf8Encoder.convert(value16);
-  dynamicSize += (_vaccinationCode.length) as int;
-  final size = staticSize + dynamicSize;
-
+  final vaccinationCode$Bytes =
+      IsarBinaryWriter.utf8Encoder.convert(object.vaccinationCode);
+  final size = staticSize +
+      (about$Bytes?.length ?? 0) +
+      (address$Bytes?.length ?? 0) +
+      (cell$Bytes.length) +
+      (city$Bytes?.length ?? 0) +
+      (country$Bytes.length) +
+      (coverPic$Bytes?.length ?? 0) +
+      (district$Bytes.length) +
+      (email$Bytes.length) +
+      (livingAt$Bytes.length) +
+      (name$Bytes.length) +
+      (nationalId$Bytes.length) +
+      (phone$Bytes.length) +
+      (pincode$Bytes?.length ?? 0) +
+      (profilePic$Bytes?.length ?? 0) +
+      (state$Bytes?.length ?? 0) +
+      (vaccinationCode$Bytes.length);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _about);
-  writer.writeBytes(offsets[1], _address);
-  writer.writeLong(offsets[2], _businessId);
-  writer.writeBytes(offsets[3], _cell);
-  writer.writeBytes(offsets[4], _city);
-  writer.writeBytes(offsets[5], _country);
-  writer.writeBytes(offsets[6], _coverPic);
-  writer.writeBytes(offsets[7], _district);
-  writer.writeBytes(offsets[8], _email);
-  writer.writeBytes(offsets[9], _livingAt);
-  writer.writeBytes(offsets[10], _name);
-  writer.writeBytes(offsets[11], _nationalId);
-  writer.writeBytes(offsets[12], _phone);
-  writer.writeBytes(offsets[13], _pincode);
-  writer.writeBytes(offsets[14], _profilePic);
-  writer.writeBytes(offsets[15], _state);
-  writer.writeBytes(offsets[16], _vaccinationCode);
+  writer.writeBytes(offsets[0], about$Bytes);
+  writer.writeBytes(offsets[1], address$Bytes);
+  writer.writeLong(offsets[2], object.businessId);
+  writer.writeBytes(offsets[3], cell$Bytes);
+  writer.writeBytes(offsets[4], city$Bytes);
+  writer.writeBytes(offsets[5], country$Bytes);
+  writer.writeBytes(offsets[6], coverPic$Bytes);
+  writer.writeBytes(offsets[7], district$Bytes);
+  writer.writeBytes(offsets[8], email$Bytes);
+  writer.writeBytes(offsets[9], livingAt$Bytes);
+  writer.writeBytes(offsets[10], name$Bytes);
+  writer.writeBytes(offsets[11], nationalId$Bytes);
+  writer.writeBytes(offsets[12], phone$Bytes);
+  writer.writeBytes(offsets[13], pincode$Bytes);
+  writer.writeBytes(offsets[14], profilePic$Bytes);
+  writer.writeBytes(offsets[15], state$Bytes);
+  writer.writeBytes(offsets[16], vaccinationCode$Bytes);
 }
 
 Profile _profileDeserializeNative(IsarCollection<Profile> collection, int id,
@@ -247,7 +238,7 @@ P _profileDeserializePropNative<P>(
   }
 }
 
-dynamic _profileSerializeWeb(
+Object _profileSerializeWeb(
     IsarCollection<Profile> collection, Profile object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'about', object.about);
@@ -272,19 +263,19 @@ dynamic _profileSerializeWeb(
 }
 
 Profile _profileDeserializeWeb(
-    IsarCollection<Profile> collection, dynamic jsObj) {
+    IsarCollection<Profile> collection, Object jsObj) {
   final object = Profile(
     about: IsarNative.jsObjectGet(jsObj, 'about'),
     address: IsarNative.jsObjectGet(jsObj, 'address'),
-    businessId:
-        IsarNative.jsObjectGet(jsObj, 'businessId') ?? double.negativeInfinity,
+    businessId: IsarNative.jsObjectGet(jsObj, 'businessId') ??
+        (double.negativeInfinity as int),
     cell: IsarNative.jsObjectGet(jsObj, 'cell') ?? '',
     city: IsarNative.jsObjectGet(jsObj, 'city'),
     country: IsarNative.jsObjectGet(jsObj, 'country') ?? '',
     coverPic: IsarNative.jsObjectGet(jsObj, 'coverPic'),
     district: IsarNative.jsObjectGet(jsObj, 'district') ?? '',
     email: IsarNative.jsObjectGet(jsObj, 'email') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
     livingAt: IsarNative.jsObjectGet(jsObj, 'livingAt') ?? '',
     name: IsarNative.jsObjectGet(jsObj, 'name') ?? '',
     nationalId: IsarNative.jsObjectGet(jsObj, 'nationalId') ?? '',
@@ -305,7 +296,7 @@ P _profileDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'address')) as P;
     case 'businessId':
       return (IsarNative.jsObjectGet(jsObj, 'businessId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'cell':
       return (IsarNative.jsObjectGet(jsObj, 'cell') ?? '') as P;
     case 'city':
@@ -319,8 +310,8 @@ P _profileDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'email':
       return (IsarNative.jsObjectGet(jsObj, 'email') ?? '') as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'livingAt':
       return (IsarNative.jsObjectGet(jsObj, 'livingAt') ?? '') as P;
     case 'name':
@@ -342,7 +333,7 @@ P _profileDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _profileAttachLinks(IsarCollection col, int id, Profile object) {}
+void _profileAttachLinks(IsarCollection<dynamic> col, int id, Profile object) {}
 
 extension ProfileQueryWhereSort on QueryBuilder<Profile, Profile, QWhere> {
   QueryBuilder<Profile, Profile, QAfterWhere> anyId() {
@@ -483,10 +474,8 @@ extension ProfileQueryWhere on QueryBuilder<Profile, Profile, QWhereClause> {
 extension ProfileQueryFilter
     on QueryBuilder<Profile, Profile, QFilterCondition> {
   QueryBuilder<Profile, Profile, QAfterFilterCondition> aboutIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'about',
-      value: null,
     ));
   }
 
@@ -494,8 +483,7 @@ extension ProfileQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'about',
       value: value,
       caseSensitive: caseSensitive,
@@ -507,8 +495,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'about',
       value: value,
@@ -521,8 +508,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'about',
       value: value,
@@ -551,8 +537,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'about',
       value: value,
       caseSensitive: caseSensitive,
@@ -563,8 +548,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'about',
       value: value,
       caseSensitive: caseSensitive,
@@ -574,8 +558,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> aboutContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'about',
       value: value,
       caseSensitive: caseSensitive,
@@ -585,19 +568,16 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> aboutMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'about',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> addressIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'address',
-      value: null,
     ));
   }
 
@@ -605,8 +585,7 @@ extension ProfileQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'address',
       value: value,
       caseSensitive: caseSensitive,
@@ -618,8 +597,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'address',
       value: value,
@@ -632,8 +610,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'address',
       value: value,
@@ -662,8 +639,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'address',
       value: value,
       caseSensitive: caseSensitive,
@@ -674,8 +650,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'address',
       value: value,
       caseSensitive: caseSensitive,
@@ -685,8 +660,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> addressContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'address',
       value: value,
       caseSensitive: caseSensitive,
@@ -696,18 +670,16 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> addressMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'address',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> businessIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'businessId',
       value: value,
     ));
@@ -717,8 +689,7 @@ extension ProfileQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'businessId',
       value: value,
@@ -729,8 +700,7 @@ extension ProfileQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'businessId',
       value: value,
@@ -756,8 +726,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'cell',
       value: value,
       caseSensitive: caseSensitive,
@@ -769,8 +738,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'cell',
       value: value,
@@ -783,8 +751,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'cell',
       value: value,
@@ -813,8 +780,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'cell',
       value: value,
       caseSensitive: caseSensitive,
@@ -825,8 +791,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'cell',
       value: value,
       caseSensitive: caseSensitive,
@@ -836,8 +801,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> cellContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'cell',
       value: value,
       caseSensitive: caseSensitive,
@@ -847,19 +811,16 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> cellMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'cell',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> cityIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'city',
-      value: null,
     ));
   }
 
@@ -867,8 +828,7 @@ extension ProfileQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'city',
       value: value,
       caseSensitive: caseSensitive,
@@ -880,8 +840,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'city',
       value: value,
@@ -894,8 +853,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'city',
       value: value,
@@ -924,8 +882,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'city',
       value: value,
       caseSensitive: caseSensitive,
@@ -936,8 +893,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'city',
       value: value,
       caseSensitive: caseSensitive,
@@ -947,8 +903,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> cityContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'city',
       value: value,
       caseSensitive: caseSensitive,
@@ -958,10 +913,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> cityMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'city',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -970,8 +924,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -983,8 +936,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'country',
       value: value,
@@ -997,8 +949,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'country',
       value: value,
@@ -1027,8 +978,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -1039,8 +989,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -1050,8 +999,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> countryContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'country',
       value: value,
       caseSensitive: caseSensitive,
@@ -1061,19 +1009,16 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> countryMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'country',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> coverPicIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'coverPic',
-      value: null,
     ));
   }
 
@@ -1081,8 +1026,7 @@ extension ProfileQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'coverPic',
       value: value,
       caseSensitive: caseSensitive,
@@ -1094,8 +1038,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'coverPic',
       value: value,
@@ -1108,8 +1051,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'coverPic',
       value: value,
@@ -1138,8 +1080,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'coverPic',
       value: value,
       caseSensitive: caseSensitive,
@@ -1150,8 +1091,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'coverPic',
       value: value,
       caseSensitive: caseSensitive,
@@ -1161,8 +1101,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> coverPicContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'coverPic',
       value: value,
       caseSensitive: caseSensitive,
@@ -1172,10 +1111,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> coverPicMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'coverPic',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1184,8 +1122,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'district',
       value: value,
       caseSensitive: caseSensitive,
@@ -1197,8 +1134,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'district',
       value: value,
@@ -1211,8 +1147,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'district',
       value: value,
@@ -1241,8 +1176,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'district',
       value: value,
       caseSensitive: caseSensitive,
@@ -1253,8 +1187,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'district',
       value: value,
       caseSensitive: caseSensitive,
@@ -1264,8 +1197,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> districtContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'district',
       value: value,
       caseSensitive: caseSensitive,
@@ -1275,10 +1207,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> districtMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'district',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1287,8 +1218,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -1300,8 +1230,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'email',
       value: value,
@@ -1314,8 +1243,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'email',
       value: value,
@@ -1344,8 +1272,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -1356,8 +1283,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -1367,8 +1293,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> emailContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'email',
       value: value,
       caseSensitive: caseSensitive,
@@ -1378,17 +1303,15 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> emailMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'email',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -1398,8 +1321,7 @@ extension ProfileQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -1410,8 +1332,7 @@ extension ProfileQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -1437,8 +1358,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'livingAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1450,8 +1370,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'livingAt',
       value: value,
@@ -1464,8 +1383,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'livingAt',
       value: value,
@@ -1494,8 +1412,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'livingAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1506,8 +1423,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'livingAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1517,8 +1433,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> livingAtContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'livingAt',
       value: value,
       caseSensitive: caseSensitive,
@@ -1528,10 +1443,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> livingAtMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'livingAt',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1540,8 +1454,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -1553,8 +1466,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -1567,8 +1479,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -1597,8 +1508,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -1609,8 +1519,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -1620,8 +1529,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -1631,10 +1539,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1643,8 +1550,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'nationalId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1656,8 +1562,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'nationalId',
       value: value,
@@ -1670,8 +1575,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'nationalId',
       value: value,
@@ -1700,8 +1604,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'nationalId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1712,8 +1615,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'nationalId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1723,8 +1625,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> nationalIdContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'nationalId',
       value: value,
       caseSensitive: caseSensitive,
@@ -1734,10 +1635,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> nationalIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'nationalId',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1746,8 +1646,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'phone',
       value: value,
       caseSensitive: caseSensitive,
@@ -1759,8 +1658,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'phone',
       value: value,
@@ -1773,8 +1671,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'phone',
       value: value,
@@ -1803,8 +1700,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'phone',
       value: value,
       caseSensitive: caseSensitive,
@@ -1815,8 +1711,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'phone',
       value: value,
       caseSensitive: caseSensitive,
@@ -1826,8 +1721,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> phoneContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'phone',
       value: value,
       caseSensitive: caseSensitive,
@@ -1837,19 +1731,16 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> phoneMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'phone',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> pincodeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'pincode',
-      value: null,
     ));
   }
 
@@ -1857,8 +1748,7 @@ extension ProfileQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'pincode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1870,8 +1760,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'pincode',
       value: value,
@@ -1884,8 +1773,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'pincode',
       value: value,
@@ -1914,8 +1802,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'pincode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1926,8 +1813,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'pincode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1937,8 +1823,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> pincodeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'pincode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1948,19 +1833,16 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> pincodeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'pincode',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> profilePicIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'profilePic',
-      value: null,
     ));
   }
 
@@ -1968,8 +1850,7 @@ extension ProfileQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'profilePic',
       value: value,
       caseSensitive: caseSensitive,
@@ -1981,8 +1862,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'profilePic',
       value: value,
@@ -1995,8 +1875,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'profilePic',
       value: value,
@@ -2025,8 +1904,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'profilePic',
       value: value,
       caseSensitive: caseSensitive,
@@ -2037,8 +1915,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'profilePic',
       value: value,
       caseSensitive: caseSensitive,
@@ -2048,8 +1925,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> profilePicContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'profilePic',
       value: value,
       caseSensitive: caseSensitive,
@@ -2059,19 +1935,16 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> profilePicMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'profilePic',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Profile, Profile, QAfterFilterCondition> stateIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'state',
-      value: null,
     ));
   }
 
@@ -2079,8 +1952,7 @@ extension ProfileQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'state',
       value: value,
       caseSensitive: caseSensitive,
@@ -2092,8 +1964,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'state',
       value: value,
@@ -2106,8 +1977,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'state',
       value: value,
@@ -2136,8 +2006,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'state',
       value: value,
       caseSensitive: caseSensitive,
@@ -2148,8 +2017,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'state',
       value: value,
       caseSensitive: caseSensitive,
@@ -2159,8 +2027,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> stateContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'state',
       value: value,
       caseSensitive: caseSensitive,
@@ -2170,10 +2037,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> stateMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'state',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -2182,8 +2048,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'vaccinationCode',
       value: value,
       caseSensitive: caseSensitive,
@@ -2196,8 +2061,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'vaccinationCode',
       value: value,
@@ -2210,8 +2074,7 @@ extension ProfileQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'vaccinationCode',
       value: value,
@@ -2241,8 +2104,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'vaccinationCode',
       value: value,
       caseSensitive: caseSensitive,
@@ -2253,8 +2115,7 @@ extension ProfileQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'vaccinationCode',
       value: value,
       caseSensitive: caseSensitive,
@@ -2264,8 +2125,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> vaccinationCodeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'vaccinationCode',
       value: value,
       caseSensitive: caseSensitive,
@@ -2275,10 +2135,9 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> vaccinationCodeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'vaccinationCode',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -2358,14 +2217,6 @@ extension ProfileQueryWhereSortBy on QueryBuilder<Profile, Profile, QSortBy> {
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByEmailDesc() {
     return addSortByInternal('email', Sort.desc);
-  }
-
-  QueryBuilder<Profile, Profile, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Profile, Profile, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByLivingAt() {
@@ -2624,10 +2475,6 @@ extension ProfileQueryWhereDistinct
   QueryBuilder<Profile, Profile, QDistinct> distinctByEmail(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('email', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<Profile, Profile, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByLivingAt(

@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetPointsCollection on Isar {
   IsarCollection<Points> get pointss => getCollection();
@@ -52,25 +53,20 @@ void _pointsSetId(Points object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _pointsGetLinks(Points object) {
+List<IsarLinkBase<dynamic>> _pointsGetLinks(Points object) {
   return [];
 }
 
 void _pointsSerializeNative(IsarCollection<Points> collection, IsarCObject cObj,
     Points object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.userId;
-  final _userId = value0;
-  final value1 = object.value;
-  final _value = value1;
-  final size = staticSize + dynamicSize;
-
+  final size = staticSize;
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], _userId);
-  writer.writeLong(offsets[1], _value);
+  writer.writeLong(offsets[0], object.userId);
+  writer.writeLong(offsets[1], object.value);
 }
 
 Points _pointsDeserializeNative(IsarCollection<Points> collection, int id,
@@ -97,7 +93,7 @@ P _pointsDeserializePropNative<P>(
   }
 }
 
-dynamic _pointsSerializeWeb(IsarCollection<Points> collection, Points object) {
+Object _pointsSerializeWeb(IsarCollection<Points> collection, Points object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'userId', object.userId);
@@ -105,11 +101,13 @@ dynamic _pointsSerializeWeb(IsarCollection<Points> collection, Points object) {
   return jsObj;
 }
 
-Points _pointsDeserializeWeb(IsarCollection<Points> collection, dynamic jsObj) {
+Points _pointsDeserializeWeb(IsarCollection<Points> collection, Object jsObj) {
   final object = Points(
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
-    userId: IsarNative.jsObjectGet(jsObj, 'userId') ?? double.negativeInfinity,
-    value: IsarNative.jsObjectGet(jsObj, 'value') ?? double.negativeInfinity,
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+    userId: IsarNative.jsObjectGet(jsObj, 'userId') ??
+        (double.negativeInfinity as int),
+    value: IsarNative.jsObjectGet(jsObj, 'value') ??
+        (double.negativeInfinity as int),
   );
   return object;
 }
@@ -117,20 +115,20 @@ Points _pointsDeserializeWeb(IsarCollection<Points> collection, dynamic jsObj) {
 P _pointsDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'userId':
       return (IsarNative.jsObjectGet(jsObj, 'userId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'value':
-      return (IsarNative.jsObjectGet(jsObj, 'value') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'value') ??
+          (double.negativeInfinity as int)) as P;
     default:
       throw 'Illegal propertyName';
   }
 }
 
-void _pointsAttachLinks(IsarCollection col, int id, Points object) {}
+void _pointsAttachLinks(IsarCollection<dynamic> col, int id, Points object) {}
 
 extension PointsQueryWhereSort on QueryBuilder<Points, Points, QWhere> {
   QueryBuilder<Points, Points, QAfterWhere> anyId() {
@@ -268,8 +266,7 @@ extension PointsQueryWhere on QueryBuilder<Points, Points, QWhereClause> {
 
 extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
   QueryBuilder<Points, Points, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -279,8 +276,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -291,8 +287,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -315,8 +310,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
   }
 
   QueryBuilder<Points, Points, QAfterFilterCondition> userIdEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'userId',
       value: value,
     ));
@@ -326,8 +320,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'userId',
       value: value,
@@ -338,8 +331,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'userId',
       value: value,
@@ -362,8 +354,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
   }
 
   QueryBuilder<Points, Points, QAfterFilterCondition> valueEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'value',
       value: value,
     ));
@@ -373,8 +364,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'value',
       value: value,
@@ -385,8 +375,7 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'value',
       value: value,
@@ -412,14 +401,6 @@ extension PointsQueryFilter on QueryBuilder<Points, Points, QFilterCondition> {
 extension PointsQueryLinks on QueryBuilder<Points, Points, QFilterCondition> {}
 
 extension PointsQueryWhereSortBy on QueryBuilder<Points, Points, QSortBy> {
-  QueryBuilder<Points, Points, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Points, Points, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
-  }
-
   QueryBuilder<Points, Points, QAfterSortBy> sortByUserId() {
     return addSortByInternal('userId', Sort.asc);
   }
@@ -465,10 +446,6 @@ extension PointsQueryWhereSortThenBy
 }
 
 extension PointsQueryWhereDistinct on QueryBuilder<Points, Points, QDistinct> {
-  QueryBuilder<Points, Points, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
-  }
-
   QueryBuilder<Points, Points, QDistinct> distinctByUserId() {
     return addDistinctByInternal('userId');
   }

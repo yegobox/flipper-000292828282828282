@@ -6,7 +6,8 @@ part of flipper_models;
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetPColorCollection on Isar {
   IsarCollection<PColor> get pColors => getCollection();
@@ -55,65 +56,60 @@ void _pColorSetId(PColor object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _pColorGetLinks(PColor object) {
+List<IsarLinkBase<dynamic>> _pColorGetLinks(PColor object) {
   return [];
 }
 
 void _pColorSerializeNative(IsarCollection<PColor> collection, IsarCObject cObj,
     PColor object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.active;
-  final _active = value0;
-  final value1 = object.branchId;
-  final _branchId = value1;
-  final value2 = object.channels;
-  dynamicSize += (value2?.length ?? 0) * 8;
-  List<IsarUint8List?>? bytesList2;
-  if (value2 != null) {
-    bytesList2 = [];
-    for (var str in value2) {
+  var channels$BytesCount = (object.channels?.length ?? 0) * 8;
+  List<IsarUint8List?>? channels$BytesList;
+  final channels$Value = object.channels;
+  if (channels$Value != null) {
+    channels$BytesList = [];
+    for (var str in channels$Value) {
       final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-      bytesList2.add(bytes);
-      dynamicSize += bytes.length as int;
+      channels$BytesList.add(bytes);
+      channels$BytesCount += bytes.length;
     }
   }
-  final _channels = bytesList2;
-  final value3 = object.colors;
-  dynamicSize += (value3?.length ?? 0) * 8;
-  List<IsarUint8List?>? bytesList3;
-  if (value3 != null) {
-    bytesList3 = [];
-    for (var str in value3) {
+  var colors$BytesCount = (object.colors?.length ?? 0) * 8;
+  List<IsarUint8List?>? colors$BytesList;
+  final colors$Value = object.colors;
+  if (colors$Value != null) {
+    colors$BytesList = [];
+    for (var str in colors$Value) {
       final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-      bytesList3.add(bytes);
-      dynamicSize += bytes.length as int;
+      colors$BytesList.add(bytes);
+      colors$BytesCount += bytes.length;
     }
   }
-  final _colors = bytesList3;
-  final value4 = object.name;
-  IsarUint8List? _name;
-  if (value4 != null) {
-    _name = IsarBinaryWriter.utf8Encoder.convert(value4);
+  IsarUint8List? name$Bytes;
+  final name$Value = object.name;
+  if (name$Value != null) {
+    name$Bytes = IsarBinaryWriter.utf8Encoder.convert(name$Value);
   }
-  dynamicSize += (_name?.length ?? 0) as int;
-  final value5 = object.table;
-  IsarUint8List? _table;
-  if (value5 != null) {
-    _table = IsarBinaryWriter.utf8Encoder.convert(value5);
+  IsarUint8List? table$Bytes;
+  final table$Value = object.table;
+  if (table$Value != null) {
+    table$Bytes = IsarBinaryWriter.utf8Encoder.convert(table$Value);
   }
-  dynamicSize += (_table?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
+  final size = staticSize +
+      channels$BytesCount +
+      colors$BytesCount +
+      (name$Bytes?.length ?? 0) +
+      (table$Bytes?.length ?? 0);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], _active);
-  writer.writeLong(offsets[1], _branchId);
-  writer.writeStringList(offsets[2], _channels);
-  writer.writeStringList(offsets[3], _colors);
-  writer.writeBytes(offsets[4], _name);
-  writer.writeBytes(offsets[5], _table);
+  writer.writeBool(offsets[0], object.active);
+  writer.writeLong(offsets[1], object.branchId);
+  writer.writeStringList(offsets[2], channels$BytesList);
+  writer.writeStringList(offsets[3], colors$BytesList);
+  writer.writeBytes(offsets[4], name$Bytes);
+  writer.writeBytes(offsets[5], table$Bytes);
 }
 
 PColor _pColorDeserializeNative(IsarCollection<PColor> collection, int id,
@@ -151,7 +147,7 @@ P _pColorDeserializePropNative<P>(
   }
 }
 
-dynamic _pColorSerializeWeb(IsarCollection<PColor> collection, PColor object) {
+Object _pColorSerializeWeb(IsarCollection<PColor> collection, PColor object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
   IsarNative.jsObjectSet(jsObj, 'branchId', object.branchId);
@@ -163,7 +159,7 @@ dynamic _pColorSerializeWeb(IsarCollection<PColor> collection, PColor object) {
   return jsObj;
 }
 
-PColor _pColorDeserializeWeb(IsarCollection<PColor> collection, dynamic jsObj) {
+PColor _pColorDeserializeWeb(IsarCollection<PColor> collection, Object jsObj) {
   final object = PColor();
   object.active = IsarNative.jsObjectGet(jsObj, 'active') ?? false;
   object.branchId = IsarNative.jsObjectGet(jsObj, 'branchId');
@@ -175,7 +171,8 @@ PColor _pColorDeserializeWeb(IsarCollection<PColor> collection, dynamic jsObj) {
       ?.map((e) => e ?? '')
       .toList()
       .cast<String>();
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.id =
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.name = IsarNative.jsObjectGet(jsObj, 'name');
   object.table = IsarNative.jsObjectGet(jsObj, 'table');
   return object;
@@ -198,8 +195,8 @@ P _pColorDeserializePropWeb<P>(Object jsObj, String propertyName) {
           .toList()
           .cast<String>()) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'name':
       return (IsarNative.jsObjectGet(jsObj, 'name')) as P;
     case 'table':
@@ -209,7 +206,7 @@ P _pColorDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _pColorAttachLinks(IsarCollection col, int id, PColor object) {}
+void _pColorAttachLinks(IsarCollection<dynamic> col, int id, PColor object) {}
 
 extension PColorQueryWhereSort on QueryBuilder<PColor, PColor, QWhere> {
   QueryBuilder<PColor, PColor, QAfterWhere> anyId() {
@@ -275,25 +272,21 @@ extension PColorQueryWhere on QueryBuilder<PColor, PColor, QWhereClause> {
 extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> activeEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
     ));
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> branchIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'branchId',
-      value: null,
     ));
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> branchIdEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'branchId',
       value: value,
     ));
@@ -303,8 +296,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -315,8 +307,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'branchId',
       value: value,
@@ -339,16 +330,13 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> channelsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'channels',
-      value: null,
     ));
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> channelsAnyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(const FilterCondition.equalTo(
       property: 'channels',
       value: null,
     ));
@@ -358,8 +346,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -371,8 +358,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'channels',
       value: value,
@@ -385,8 +371,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'channels',
       value: value,
@@ -415,8 +400,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -427,8 +411,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -438,8 +421,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> channelsAnyContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'channels',
       value: value,
       caseSensitive: caseSensitive,
@@ -449,25 +431,21 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> channelsAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'channels',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> colorsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'colors',
-      value: null,
     ));
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> colorsAnyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(const FilterCondition.equalTo(
       property: 'colors',
       value: null,
     ));
@@ -477,8 +455,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'colors',
       value: value,
       caseSensitive: caseSensitive,
@@ -490,8 +467,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'colors',
       value: value,
@@ -504,8 +480,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'colors',
       value: value,
@@ -534,8 +509,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'colors',
       value: value,
       caseSensitive: caseSensitive,
@@ -546,8 +520,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'colors',
       value: value,
       caseSensitive: caseSensitive,
@@ -557,8 +530,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> colorsAnyContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'colors',
       value: value,
       caseSensitive: caseSensitive,
@@ -568,17 +540,15 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> colorsAnyMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'colors',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -588,8 +558,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -600,8 +569,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -624,10 +592,8 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> nameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'name',
-      value: null,
     ));
   }
 
@@ -635,8 +601,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -648,8 +613,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'name',
       value: value,
@@ -662,8 +626,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'name',
       value: value,
@@ -692,8 +655,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -704,8 +666,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -714,8 +675,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> nameContains(String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'name',
       value: value,
       caseSensitive: caseSensitive,
@@ -725,19 +685,16 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'name',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<PColor, PColor, QAfterFilterCondition> tableIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'table',
-      value: null,
     ));
   }
 
@@ -745,8 +702,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -758,8 +714,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'table',
       value: value,
@@ -772,8 +727,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'table',
       value: value,
@@ -802,8 +756,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -814,8 +767,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -825,8 +777,7 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> tableContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'table',
       value: value,
       caseSensitive: caseSensitive,
@@ -836,10 +787,9 @@ extension PColorQueryFilter on QueryBuilder<PColor, PColor, QFilterCondition> {
   QueryBuilder<PColor, PColor, QAfterFilterCondition> tableMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'table',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -862,14 +812,6 @@ extension PColorQueryWhereSortBy on QueryBuilder<PColor, PColor, QSortBy> {
 
   QueryBuilder<PColor, PColor, QAfterSortBy> sortByBranchIdDesc() {
     return addSortByInternal('branchId', Sort.desc);
-  }
-
-  QueryBuilder<PColor, PColor, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<PColor, PColor, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<PColor, PColor, QAfterSortBy> sortByName() {
@@ -939,10 +881,6 @@ extension PColorQueryWhereDistinct on QueryBuilder<PColor, PColor, QDistinct> {
 
   QueryBuilder<PColor, PColor, QDistinct> distinctByBranchId() {
     return addDistinctByInternal('branchId');
-  }
-
-  QueryBuilder<PColor, PColor, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<PColor, PColor, QDistinct> distinctByName(

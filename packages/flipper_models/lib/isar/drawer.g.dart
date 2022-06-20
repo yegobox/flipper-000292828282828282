@@ -6,7 +6,8 @@ part of 'drawer.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
 extension GetDrawersCollection on Isar {
   IsarCollection<Drawers> get drawerss => getCollection();
@@ -74,7 +75,7 @@ void _drawersSetId(Drawers object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _drawersGetLinks(Drawers object) {
+List<IsarLinkBase<dynamic>> _drawersGetLinks(Drawers object) {
   return [];
 }
 
@@ -85,80 +86,55 @@ void _drawersSerializeNative(
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.cashierId;
-  final _cashierId = value0;
-  final value1 = object.closingBalance;
-  final _closingBalance = value1;
-  final value2 = object.closingDateTime;
-  IsarUint8List? _closingDateTime;
-  if (value2 != null) {
-    _closingDateTime = IsarBinaryWriter.utf8Encoder.convert(value2);
+  IsarUint8List? closingDateTime$Bytes;
+  final closingDateTime$Value = object.closingDateTime;
+  if (closingDateTime$Value != null) {
+    closingDateTime$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(closingDateTime$Value);
   }
-  dynamicSize += (_closingDateTime?.length ?? 0) as int;
-  final value3 = object.csSaleCount;
-  final _csSaleCount = value3;
-  final value4 = object.incompleteSale;
-  final _incompleteSale = value4;
-  final value5 = object.nrSaleCount;
-  final _nrSaleCount = value5;
-  final value6 = object.nsSaleCount;
-  final _nsSaleCount = value6;
-  final value7 = object.open;
-  final _open = value7;
-  final value8 = object.openingBalance;
-  final _openingBalance = value8;
-  final value9 = object.openingDateTime;
-  IsarUint8List? _openingDateTime;
-  if (value9 != null) {
-    _openingDateTime = IsarBinaryWriter.utf8Encoder.convert(value9);
+  IsarUint8List? openingDateTime$Bytes;
+  final openingDateTime$Value = object.openingDateTime;
+  if (openingDateTime$Value != null) {
+    openingDateTime$Bytes =
+        IsarBinaryWriter.utf8Encoder.convert(openingDateTime$Value);
   }
-  dynamicSize += (_openingDateTime?.length ?? 0) as int;
-  final value10 = object.otherTransactions;
-  final _otherTransactions = value10;
-  final value11 = object.paymentMode;
-  IsarUint8List? _paymentMode;
-  if (value11 != null) {
-    _paymentMode = IsarBinaryWriter.utf8Encoder.convert(value11);
+  IsarUint8List? paymentMode$Bytes;
+  final paymentMode$Value = object.paymentMode;
+  if (paymentMode$Value != null) {
+    paymentMode$Bytes = IsarBinaryWriter.utf8Encoder.convert(paymentMode$Value);
   }
-  dynamicSize += (_paymentMode?.length ?? 0) as int;
-  final value12 = object.psSaleCount;
-  final _psSaleCount = value12;
-  final value13 = object.totalCsSaleIncome;
-  final _totalCsSaleIncome = value13;
-  final value14 = object.totalNsSaleIncome;
-  final _totalNsSaleIncome = value14;
-  final value15 = object.trSaleCount;
-  final _trSaleCount = value15;
-  final value16 = object.tradeName;
-  IsarUint8List? _tradeName;
-  if (value16 != null) {
-    _tradeName = IsarBinaryWriter.utf8Encoder.convert(value16);
+  IsarUint8List? tradeName$Bytes;
+  final tradeName$Value = object.tradeName;
+  if (tradeName$Value != null) {
+    tradeName$Bytes = IsarBinaryWriter.utf8Encoder.convert(tradeName$Value);
   }
-  dynamicSize += (_tradeName?.length ?? 0) as int;
-  final size = staticSize + dynamicSize;
-
+  final size = staticSize +
+      (closingDateTime$Bytes?.length ?? 0) +
+      (openingDateTime$Bytes?.length ?? 0) +
+      (paymentMode$Bytes?.length ?? 0) +
+      (tradeName$Bytes?.length ?? 0);
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
+
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], _cashierId);
-  writer.writeDouble(offsets[1], _closingBalance);
-  writer.writeBytes(offsets[2], _closingDateTime);
-  writer.writeLong(offsets[3], _csSaleCount);
-  writer.writeLong(offsets[4], _incompleteSale);
-  writer.writeLong(offsets[5], _nrSaleCount);
-  writer.writeLong(offsets[6], _nsSaleCount);
-  writer.writeBool(offsets[7], _open);
-  writer.writeDouble(offsets[8], _openingBalance);
-  writer.writeBytes(offsets[9], _openingDateTime);
-  writer.writeLong(offsets[10], _otherTransactions);
-  writer.writeBytes(offsets[11], _paymentMode);
-  writer.writeLong(offsets[12], _psSaleCount);
-  writer.writeDouble(offsets[13], _totalCsSaleIncome);
-  writer.writeDouble(offsets[14], _totalNsSaleIncome);
-  writer.writeLong(offsets[15], _trSaleCount);
-  writer.writeBytes(offsets[16], _tradeName);
+  writer.writeLong(offsets[0], object.cashierId);
+  writer.writeDouble(offsets[1], object.closingBalance);
+  writer.writeBytes(offsets[2], closingDateTime$Bytes);
+  writer.writeLong(offsets[3], object.csSaleCount);
+  writer.writeLong(offsets[4], object.incompleteSale);
+  writer.writeLong(offsets[5], object.nrSaleCount);
+  writer.writeLong(offsets[6], object.nsSaleCount);
+  writer.writeBool(offsets[7], object.open);
+  writer.writeDouble(offsets[8], object.openingBalance);
+  writer.writeBytes(offsets[9], openingDateTime$Bytes);
+  writer.writeLong(offsets[10], object.otherTransactions);
+  writer.writeBytes(offsets[11], paymentMode$Bytes);
+  writer.writeLong(offsets[12], object.psSaleCount);
+  writer.writeDouble(offsets[13], object.totalCsSaleIncome);
+  writer.writeDouble(offsets[14], object.totalNsSaleIncome);
+  writer.writeLong(offsets[15], object.trSaleCount);
+  writer.writeBytes(offsets[16], tradeName$Bytes);
 }
 
 Drawers _drawersDeserializeNative(IsarCollection<Drawers> collection, int id,
@@ -229,7 +205,7 @@ P _drawersDeserializePropNative<P>(
   }
 }
 
-dynamic _drawersSerializeWeb(
+Object _drawersSerializeWeb(
     IsarCollection<Drawers> collection, Drawers object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'cashierId', object.cashierId);
@@ -254,15 +230,16 @@ dynamic _drawersSerializeWeb(
 }
 
 Drawers _drawersDeserializeWeb(
-    IsarCollection<Drawers> collection, dynamic jsObj) {
+    IsarCollection<Drawers> collection, Object jsObj) {
   final object = Drawers();
-  object.cashierId =
-      IsarNative.jsObjectGet(jsObj, 'cashierId') ?? double.negativeInfinity;
+  object.cashierId = IsarNative.jsObjectGet(jsObj, 'cashierId') ??
+      (double.negativeInfinity as int);
   object.closingBalance = IsarNative.jsObjectGet(jsObj, 'closingBalance') ??
       double.negativeInfinity;
   object.closingDateTime = IsarNative.jsObjectGet(jsObj, 'closingDateTime');
   object.csSaleCount = IsarNative.jsObjectGet(jsObj, 'csSaleCount');
-  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.id =
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.incompleteSale = IsarNative.jsObjectGet(jsObj, 'incompleteSale');
   object.nrSaleCount = IsarNative.jsObjectGet(jsObj, 'nrSaleCount');
   object.nsSaleCount = IsarNative.jsObjectGet(jsObj, 'nsSaleCount');
@@ -284,7 +261,7 @@ P _drawersDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'cashierId':
       return (IsarNative.jsObjectGet(jsObj, 'cashierId') ??
-          double.negativeInfinity) as P;
+          (double.negativeInfinity as int)) as P;
     case 'closingBalance':
       return (IsarNative.jsObjectGet(jsObj, 'closingBalance') ??
           double.negativeInfinity) as P;
@@ -293,8 +270,8 @@ P _drawersDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'csSaleCount':
       return (IsarNative.jsObjectGet(jsObj, 'csSaleCount')) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
     case 'incompleteSale':
       return (IsarNative.jsObjectGet(jsObj, 'incompleteSale')) as P;
     case 'nrSaleCount':
@@ -327,7 +304,7 @@ P _drawersDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _drawersAttachLinks(IsarCollection col, int id, Drawers object) {}
+void _drawersAttachLinks(IsarCollection<dynamic> col, int id, Drawers object) {}
 
 extension DrawersQueryWhereSort on QueryBuilder<Drawers, Drawers, QWhere> {
   QueryBuilder<Drawers, Drawers, QAfterWhere> anyId() {
@@ -580,8 +557,7 @@ extension DrawersQueryFilter
     on QueryBuilder<Drawers, Drawers, QFilterCondition> {
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> cashierIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'cashierId',
       value: value,
     ));
@@ -591,8 +567,7 @@ extension DrawersQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'cashierId',
       value: value,
@@ -603,8 +578,7 @@ extension DrawersQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'cashierId',
       value: value,
@@ -628,8 +602,7 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       closingBalanceGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'closingBalance',
       value: value,
@@ -638,8 +611,7 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingBalanceLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'closingBalance',
       value: value,
@@ -659,10 +631,8 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       closingDateTimeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'closingDateTime',
-      value: null,
     ));
   }
 
@@ -670,8 +640,7 @@ extension DrawersQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'closingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -684,8 +653,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'closingDateTime',
       value: value,
@@ -698,8 +666,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'closingDateTime',
       value: value,
@@ -729,8 +696,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'closingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -741,8 +707,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'closingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -752,8 +717,7 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'closingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -763,26 +727,22 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'closingDateTime',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> csSaleCountIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'csSaleCount',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> csSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'csSaleCount',
       value: value,
     ));
@@ -792,8 +752,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'csSaleCount',
       value: value,
@@ -804,8 +763,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'csSaleCount',
       value: value,
@@ -828,8 +786,7 @@ extension DrawersQueryFilter
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'id',
       value: value,
     ));
@@ -839,8 +796,7 @@ extension DrawersQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'id',
       value: value,
@@ -851,8 +807,7 @@ extension DrawersQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'id',
       value: value,
@@ -875,17 +830,14 @@ extension DrawersQueryFilter
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> incompleteSaleIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'incompleteSale',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> incompleteSaleEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'incompleteSale',
       value: value,
     ));
@@ -896,8 +848,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'incompleteSale',
       value: value,
@@ -908,8 +859,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'incompleteSale',
       value: value,
@@ -932,17 +882,14 @@ extension DrawersQueryFilter
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nrSaleCountIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'nrSaleCount',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nrSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'nrSaleCount',
       value: value,
     ));
@@ -952,8 +899,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'nrSaleCount',
       value: value,
@@ -964,8 +910,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'nrSaleCount',
       value: value,
@@ -988,17 +933,14 @@ extension DrawersQueryFilter
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nsSaleCountIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'nsSaleCount',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nsSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'nsSaleCount',
       value: value,
     ));
@@ -1008,8 +950,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'nsSaleCount',
       value: value,
@@ -1020,8 +961,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'nsSaleCount',
       value: value,
@@ -1045,8 +985,7 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'open',
       value: value,
     ));
@@ -1054,8 +993,7 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       openingBalanceGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'openingBalance',
       value: value,
@@ -1064,8 +1002,7 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingBalanceLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'openingBalance',
       value: value,
@@ -1085,10 +1022,8 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       openingDateTimeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'openingDateTime',
-      value: null,
     ));
   }
 
@@ -1096,8 +1031,7 @@ extension DrawersQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'openingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -1110,8 +1044,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'openingDateTime',
       value: value,
@@ -1124,8 +1057,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'openingDateTime',
       value: value,
@@ -1155,8 +1087,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'openingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -1167,8 +1098,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'openingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -1178,8 +1108,7 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'openingDateTime',
       value: value,
       caseSensitive: caseSensitive,
@@ -1189,27 +1118,23 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'openingDateTime',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       otherTransactionsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'otherTransactions',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       otherTransactionsEqualTo(int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'otherTransactions',
       value: value,
     ));
@@ -1220,8 +1145,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'otherTransactions',
       value: value,
@@ -1233,8 +1157,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'otherTransactions',
       value: value,
@@ -1258,10 +1181,8 @@ extension DrawersQueryFilter
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'paymentMode',
-      value: null,
     ));
   }
 
@@ -1269,8 +1190,7 @@ extension DrawersQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'paymentMode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1282,8 +1202,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'paymentMode',
       value: value,
@@ -1296,8 +1215,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'paymentMode',
       value: value,
@@ -1326,8 +1244,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'paymentMode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1338,8 +1255,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'paymentMode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1349,8 +1265,7 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'paymentMode',
       value: value,
       caseSensitive: caseSensitive,
@@ -1360,26 +1275,22 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'paymentMode',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> psSaleCountIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'psSaleCount',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> psSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'psSaleCount',
       value: value,
     ));
@@ -1389,8 +1300,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'psSaleCount',
       value: value,
@@ -1401,8 +1311,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'psSaleCount',
       value: value,
@@ -1426,17 +1335,14 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalCsSaleIncomeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'totalCsSaleIncome',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalCsSaleIncomeGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'totalCsSaleIncome',
       value: value,
@@ -1445,8 +1351,7 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalCsSaleIncomeLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'totalCsSaleIncome',
       value: value,
@@ -1466,17 +1371,14 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalNsSaleIncomeIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'totalNsSaleIncome',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalNsSaleIncomeGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: false,
       property: 'totalNsSaleIncome',
       value: value,
@@ -1485,8 +1387,7 @@ extension DrawersQueryFilter
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalNsSaleIncomeLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: false,
       property: 'totalNsSaleIncome',
       value: value,
@@ -1505,17 +1406,14 @@ extension DrawersQueryFilter
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> trSaleCountIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'trSaleCount',
-      value: null,
     ));
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> trSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'trSaleCount',
       value: value,
     ));
@@ -1525,8 +1423,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'trSaleCount',
       value: value,
@@ -1537,8 +1434,7 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'trSaleCount',
       value: value,
@@ -1561,10 +1457,8 @@ extension DrawersQueryFilter
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
+    return addFilterConditionInternal(const FilterCondition.isNull(
       property: 'tradeName',
-      value: null,
     ));
   }
 
@@ -1572,8 +1466,7 @@ extension DrawersQueryFilter
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
+    return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'tradeName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1585,8 +1478,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
+    return addFilterConditionInternal(FilterCondition.greaterThan(
       include: include,
       property: 'tradeName',
       value: value,
@@ -1599,8 +1491,7 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
+    return addFilterConditionInternal(FilterCondition.lessThan(
       include: include,
       property: 'tradeName',
       value: value,
@@ -1629,8 +1520,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
+    return addFilterConditionInternal(FilterCondition.startsWith(
       property: 'tradeName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1641,8 +1531,7 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
+    return addFilterConditionInternal(FilterCondition.endsWith(
       property: 'tradeName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1652,8 +1541,7 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
+    return addFilterConditionInternal(FilterCondition.contains(
       property: 'tradeName',
       value: value,
       caseSensitive: caseSensitive,
@@ -1663,10 +1551,9 @@ extension DrawersQueryFilter
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
+    return addFilterConditionInternal(FilterCondition.matches(
       property: 'tradeName',
-      value: pattern,
+      wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
   }
@@ -1706,14 +1593,6 @@ extension DrawersQueryWhereSortBy on QueryBuilder<Drawers, Drawers, QSortBy> {
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByCsSaleCountDesc() {
     return addSortByInternal('csSaleCount', Sort.desc);
-  }
-
-  QueryBuilder<Drawers, Drawers, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByIncompleteSale() {
@@ -1986,10 +1865,6 @@ extension DrawersQueryWhereDistinct
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByCsSaleCount() {
     return addDistinctByInternal('csSaleCount');
-  }
-
-  QueryBuilder<Drawers, Drawers, QDistinct> distinctById() {
-    return addDistinctByInternal('id');
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByIncompleteSale() {
