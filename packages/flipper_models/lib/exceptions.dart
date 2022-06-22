@@ -22,6 +22,22 @@ class SessionException implements Exception {
   SessionException({required this.term});
 }
 
+class ErrorReadingFromYBServer implements Exception {
+  String term;
+
+  String errMsg() => 'General error: $term';
+
+  ErrorReadingFromYBServer({required this.term});
+}
+
+class BranchLoadingException implements Exception {
+  String term;
+
+  String errMsg() => 'Branch error: $term';
+
+  BranchLoadingException({required this.term});
+}
+
 class NoDrawerOpen implements Exception {
   String term;
 

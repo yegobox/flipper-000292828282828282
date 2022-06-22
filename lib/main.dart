@@ -291,7 +291,7 @@ void main() async {
           name: 'summary',
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
-            child: OrderSummary(),
+            child: const OrderSummary(),
           ),
         ),
         GoRoute(

@@ -97,6 +97,27 @@ class AppService with ReactiveServiceMixin {
     });
   }
 
+  Future<isar.Business> appInit() async {
+    try {
+      String? userId = ProxyService.box.getUserId();
+      log.e("userId::$userId");
+      isar.Business business =
+          await ProxyService.isarApi.getLocalOrOnlineBusiness(userId: userId!);
+      log.i(business);
+      ProxyService.appService.setBusiness(business: business);
+      // get local or online branches
+      List<isar.Branch> branches =
+          await ProxyService.isarApi.getLocalBranches(businessId: business.id);
+
+      ProxyService.box.write(key: 'branchId', value: branches[0].id);
+      ProxyService.box.write(key: 'businessId', value: business.id);
+
+      return business;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   AppService() {
     listenToReactiveValues(
         [_categories, _units, _colors, _currentColor, _business, _contacts]);

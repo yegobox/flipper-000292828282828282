@@ -249,3 +249,6 @@ class AppSetup {
 
 // TODO:automate ios deployment
 // https://dev.to/samadipour/flutter-automate-ios-deployment-5ghc?utm_source=dormosheio&utm_campaign=dormosheio
+
+// TODO:ios CID
+// https://medium.com/mindful-engineering/github-actions-ci-cd-and-automate-beta-deployments-for-your-flutter-ios-apps-c9cdc8dcf097

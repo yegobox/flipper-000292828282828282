@@ -841,28 +841,29 @@ class IsarAPI implements IsarApiInterface {
 
     if (response.statusCode == 401) {
       throw SessionException(term: "session expired");
-    }
-    if (response.statusCode == 404) {
+    } else if (response.statusCode == 404) {
       throw NotFoundException(term: "Business not found");
-    }
-
-    Business? business = await isar.writeTxn(() {
-      return isar.businesss.get(fromJson(response.body).id);
-    });
-
-    if (business == null) {
-      await isar.writeTxn(() async {
-        return isar.businesss.put(fromJson(response.body));
+    } else if (response.statusCode == 500) {
+      throw ErrorReadingFromYBServer(term: "Business not found");
+    } else {
+      Business? business = await isar.writeTxn(() {
+        return isar.businesss.get(fromJson(response.body).id);
       });
-      business = await isar.writeTxn(() {
-        return isar.businesss.filter().userIdEqualTo(userId).findFirst();
-      });
+
+      if (business == null) {
+        await isar.writeTxn(() async {
+          return isar.businesss.put(fromJson(response.body));
+        });
+        business = await isar.writeTxn(() {
+          return isar.businesss.filter().userIdEqualTo(userId).findFirst();
+        });
+      }
+      ProxyService.box.write(key: 'businessId', value: business!.id);
+      if (await isDrawerOpen(cashierId: business.id) == null) {
+        throw NoDrawerOpen(term: "Business Drawer is not open");
+      }
+      return business;
     }
-    ProxyService.box.write(key: 'businessId', value: business!.id);
-    if (await isDrawerOpen(cashierId: business.id) == null) {
-      throw NoDrawerOpen(term: "Business Drawer is not open");
-    }
-    return business;
   }
 
   @override
@@ -893,7 +894,7 @@ class IsarAPI implements IsarApiInterface {
     if (response.statusCode == 200) {
       return pinFromMap(response.body);
     }
-    throw Exception('Failed to load pin');
+    throw ErrorReadingFromYBServer(term: 'Failed to load pin');
   }
 
   @override

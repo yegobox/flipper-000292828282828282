@@ -6,7 +6,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus_windows
   desktop_webview_auth
   flutter_acrylic
-  flutter_secure_storage_windows
   geolocator_windows
   isar_flutter_libs
   objectbox_sync_flutter_libs

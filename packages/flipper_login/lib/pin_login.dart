@@ -60,7 +60,7 @@ class PinLogin extends StatelessWidget {
                                           const SnackBar(
                                             backgroundColor: Colors.red,
                                             content: Text(
-                                                "Failed to log in try again"),
+                                                "Failed to authenticate try again"),
                                           ),
                                         );
                                         model.setIsprocessing(value: false);
