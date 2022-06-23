@@ -568,7 +568,7 @@ extension TenantSyncQueryLinks
   }
 
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition> permissions(
-      FilterQuery<Permissionsync> q) {
+      FilterQuery<Permission> q) {
     return linkInternal(
       isar.permissionsyncs,
       q,

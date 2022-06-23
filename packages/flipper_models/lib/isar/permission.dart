@@ -5,8 +5,8 @@ import 'package:isar/isar.dart';
 part 'permission.g.dart';
 
 @Collection()
-class Permissionsync {
-  Permissionsync({
+class Permission {
+  Permission({
     this.id = 0,
     required this.name,
   });
@@ -14,7 +14,7 @@ class Permissionsync {
   late String name;
 
   static fromJson(Map<String, dynamic> json) =>
-      Permissionsync(id: json["id"], name: json["name"]);
+      Permission(id: json["id"], name: json["name"]);
 
   Map<String, dynamic> toJson() => {
         "id": id.toString(),

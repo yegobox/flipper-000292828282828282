@@ -31,7 +31,7 @@ class StartUpView extends StatelessWidget {
                 );
                 GoRouter.of(context).go("/login");
               }
-              if (nav == "needOpenDrawer") {
+              if (nav == "drawer") {
                 GoRouter.of(context).push("/drawer/open");
               }
               if (nav == "home") {

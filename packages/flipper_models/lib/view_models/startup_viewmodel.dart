@@ -31,6 +31,11 @@ class StartUpViewModel extends BaseViewModel {
       // we are logged in but there is a chance that this number is a tenant
       // that is given access to this business's branch
       // TODOtenant's is not useful when sync is not supported.
+      if (await ProxyService.isarApi
+              .isDrawerOpen(cashierId: ProxyService.box.getBusinessId()!) ==
+          null) {
+        throw NoDrawerOpen(term: "Business Drawer is not open");
+      }
     } catch (e) {
       if (e is SessionException) {
         log.e("session expired");
@@ -47,7 +52,7 @@ class StartUpViewModel extends BaseViewModel {
         loginInfo.needSignUp = true;
         rethrow;
       } else if (e is NoDrawerOpen) {
-        navigationCallback("needOpenDrawer");
+        navigationCallback("drawer");
         rethrow;
       } else if (e is ErrorReadingFromYBServer) {
         loginInfo.isLoggedIn = false;

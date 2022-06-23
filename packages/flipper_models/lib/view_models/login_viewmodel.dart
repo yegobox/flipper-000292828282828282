@@ -59,6 +59,11 @@ class LoginViewModel extends FormViewModel {
     notifyListeners();
     Pin? pin = await ProxyService.isarApi.getPin(pin: pinCode);
     if (pin != null) {
+      log.i(pin.userId);
+      ProxyService.box.write(key: 'businessId', value: pin.businessId);
+      ProxyService.box.write(key: 'branchId', value: pin.branchId);
+      ProxyService.box.write(key: 'userId', value: pin.userId);
+      ProxyService.box.write(key: 'userPhone', value: pin.phoneNumber);
       await ProxyService.isarApi.login(
         userPhone: pin.phoneNumber,
       );
@@ -66,11 +71,6 @@ class LoginViewModel extends FormViewModel {
       await FirebaseAuth.instance.signInAnonymously();
       final auth = FirebaseAuth.instance;
       if (auth.currentUser != null) {
-        ProxyService.box.write(key: 'businessId', value: pin.businessId);
-        ProxyService.box.write(key: 'branchId', value: pin.branchId);
-        ProxyService.box.write(key: 'userId', value: pin.userId);
-        ProxyService.box.write(key: 'userPhone', value: pin.phoneNumber);
-
         loginInfo.isLoggedIn = true;
         // we are logged in but there is a chance that this number is a tenant
         // that is given access to this business's branch

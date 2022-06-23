@@ -120,7 +120,7 @@ abstract class IsarApiInterface {
   Future<List<Discount>> getDiscounts({required int branchId});
 
   Future<void> addOrderItem({required Order order, OrderItem? item});
-  
+
   // Conversation createConversation({required Conversation conversation});
 
   // Conversation? getConversationByContactId({required int contactId});
@@ -183,4 +183,6 @@ abstract class IsarApiInterface {
   Future<void> refund({required int itemId});
   Future<Drawers?> isDrawerOpen({required int cashierId});
   Future<Drawers?> openDrawer({required Drawers drawer});
+
+  Future<int> size<T>({required T object});
 }

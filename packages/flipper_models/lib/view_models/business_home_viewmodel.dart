@@ -100,9 +100,9 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         Variant? variation = await ProxyService.isarApi.getCustomVariant();
 
         double amount = double.parse(ProxyService.keypad.key);
-
+        log.i(variation!.toJson());
         await saveOrder(
-            amountTotal: amount, variationId: variation!.id, customItem: true);
+            amountTotal: amount, variationId: variation.id, customItem: true);
 
         ProxyService.keypad.reset();
       }
@@ -246,7 +246,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         await ProxyService.isarApi.variant(variantId: variationId);
     Stock? stock =
         await ProxyService.isarApi.stockByVariantId(variantId: variation!.id);
-
+    log.i(stock);
     String name = '';
 
     if (variation.productName != 'Custom Amount') {
@@ -269,7 +269,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       pendingOrder: pendingOrder,
       name: name,
       variation: variation,
-      stock: stock,
+      stock: stock!,
       amountTotal: amountTotal,
       isCustom: customItem,
       item: existOrderItem,
@@ -289,7 +289,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       required Order? pendingOrder,
       required String name,
       required Variant variation,
-      Stock? stock,
+      required Stock stock,
       required double amountTotal,
       required bool isCustom,
       OrderItem? item}) async {
@@ -355,7 +355,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         ..modrId = variation.modrId
         ..modrNm = variation.modrNm
         // end of fields twakuye muri variants
-        ..remainingStock = stock!.currentStock - quantity;
+        ..remainingStock = stock.currentStock - quantity;
       pendingOrder.subTotal = pendingOrder.subTotal + amountTotal;
       ProxyService.isarApi.update(data: pendingOrder);
 

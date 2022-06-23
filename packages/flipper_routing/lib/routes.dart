@@ -252,3 +252,8 @@ class AppSetup {
 
 // TODO:ios CID
 // https://medium.com/mindful-engineering/github-actions-ci-cd-and-automate-beta-deployments-for-your-flutter-ios-apps-c9cdc8dcf097
+// Need to upgrade:
+// stacked_themes
+// fl_chart
+// flutter_form_bloc
+// scrollable_positioned_list

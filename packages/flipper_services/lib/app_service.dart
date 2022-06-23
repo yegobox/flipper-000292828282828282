@@ -97,13 +97,15 @@ class AppService with ReactiveServiceMixin {
     });
   }
 
+  /// check the default business/branch
+  /// set the env the current user is operating in.
+
   Future<isar.Business> appInit() async {
     try {
       String? userId = ProxyService.box.getUserId();
-      log.e("userId::$userId");
       isar.Business business =
           await ProxyService.isarApi.getLocalOrOnlineBusiness(userId: userId!);
-      log.i(business);
+
       ProxyService.appService.setBusiness(business: business);
       // get local or online branches
       List<isar.Branch> branches =
@@ -115,6 +117,17 @@ class AppService with ReactiveServiceMixin {
       return business;
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<void> bootstraper() async {
+    if (await ProxyService.isarApi.size(object: Product()) == 0) {
+      await ProxyService.isarApi.createProduct(
+          product: Product()
+            ..name = "Custom Amount"
+            ..color = "#5A2328"
+            ..branchId = ProxyService.box.getBranchId()!
+            ..businessId = ProxyService.box.getBusinessId()!);
     }
   }
 

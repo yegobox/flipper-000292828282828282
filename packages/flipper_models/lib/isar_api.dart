@@ -29,7 +29,8 @@ class ExtendedClient extends http.BaseClient {
 class IsarAPI implements IsarApiInterface {
   final log = getLogger('IsarAPI');
   ExtendedClient client = ExtendedClient(http.Client());
-  String apihub = "https://apihub.yegobox.com";
+  // String apihub = "https://apihub.yegobox.com";
+  String apihub = "http://localhost:8082";
 
   IsarAPI();
   static instance({required Isar isarRef}) {
@@ -827,15 +828,13 @@ class IsarAPI implements IsarApiInterface {
       log.e("fetching business from server");
       return await getOnlineBusiness(userId: userId);
     }
-    if (await isDrawerOpen(cashierId: kBusiness.id) == null) {
-      throw NoDrawerOpen(term: "Business Drawer is not open");
-    }
 
     return kBusiness;
   }
 
   @override
   Future<Business> getOnlineBusiness({required String userId}) async {
+    log.i(userId);
     final response =
         await client.get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
 
@@ -859,9 +858,7 @@ class IsarAPI implements IsarApiInterface {
         });
       }
       ProxyService.box.write(key: 'businessId', value: business!.id);
-      if (await isDrawerOpen(cashierId: business.id) == null) {
-        throw NoDrawerOpen(term: "Business Drawer is not open");
-      }
+
       return business;
     }
   }
@@ -1031,19 +1028,28 @@ class IsarAPI implements IsarApiInterface {
     );
     log.d(response.body);
     if (response.statusCode == 200) {
+      await isar.writeTxn(() async {
+        return isar.businesss
+            .putAll(syncFFromJson(response.body).tenants.first.businesses);
+      });
+      await isar.writeTxn(() async {
+        return isar.branchs
+            .putAll(syncFFromJson(response.body).tenants.first.branches);
+      });
+      //save business
       ProxyService.box.write(
         key: 'bearerToken',
-        value: syncFromJson(response.body).token,
+        value: syncFFromJson(response.body).token,
       );
       ProxyService.box.write(
         key: 'userId',
-        value: syncFromJson(response.body).id.toString(),
+        value: syncFFromJson(response.body).id.toString(),
       );
       ProxyService.box.write(
         key: 'userPhone',
         value: userPhone,
       );
-      return syncFromJson(response.body);
+      return syncFFromJson(response.body);
     } else {
       log.e('error');
       throw Exception('403 Error');
@@ -1488,5 +1494,13 @@ class IsarAPI implements IsarApiInterface {
       int id = await isar.drawerss.put(drawer);
       return isar.drawerss.get(id);
     });
+  }
+
+  @override
+  Future<int> size<T>({required T object}) async {
+    if (object is Product) {
+      return isar.products.getSize(includeIndexes: true, includeLinks: true);
+    }
+    return 0;
   }
 }
