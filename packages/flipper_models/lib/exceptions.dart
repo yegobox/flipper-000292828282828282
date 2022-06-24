@@ -6,6 +6,14 @@ class VoucherException implements Exception {
   VoucherException({required this.term});
 }
 
+class LoginChoicesException implements Exception {
+  String term;
+
+  String errMsg() => 'You need to choose: $term';
+
+  LoginChoicesException({required this.term});
+}
+
 class InternalServerException implements Exception {
   String term;
 
@@ -38,12 +46,12 @@ class BranchLoadingException implements Exception {
   BranchLoadingException({required this.term});
 }
 
-class NoDrawerOpen implements Exception {
+class NoDrawerOpenException implements Exception {
   String term;
 
   String errMsg() => 'NoDrawerOpen: $term';
 
-  NoDrawerOpen({required this.term});
+  NoDrawerOpenException({required this.term});
 }
 
 class InternalServerError implements Exception {

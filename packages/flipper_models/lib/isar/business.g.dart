@@ -16,7 +16,7 @@ extension GetBusinessCollection on Isar {
 const BusinessSchema = CollectionSchema(
   name: 'Business',
   schema:
-      '{"name":"Business","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"adrs","type":"String"},{"name":"backUpEnabled","type":"Bool"},{"name":"backupFileId","type":"String"},{"name":"bhfId","type":"String"},{"name":"businessUrl","type":"String"},{"name":"channels","type":"StringList"},{"name":"chatUid","type":"String"},{"name":"country","type":"String"},{"name":"createdAt","type":"String"},{"name":"currency","type":"String"},{"name":"deviceToken","type":"String"},{"name":"dvcSrlNo","type":"String"},{"name":"email","type":"String"},{"name":"fcategoryId","type":"Long"},{"name":"firstName","type":"String"},{"name":"fullName","type":"String"},{"name":"hexColor","type":"String"},{"name":"imageUrl","type":"String"},{"name":"isLastSubscriptionPaymentSucceeded","type":"Bool"},{"name":"lastDbBackup","type":"String"},{"name":"lastName","type":"String"},{"name":"lastSeen","type":"Long"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"metadata","type":"String"},{"name":"name","type":"String"},{"name":"nextBillingDate","type":"String"},{"name":"previousBillingDate","type":"String"},{"name":"role","type":"String"},{"name":"subscriptionPlan","type":"String"},{"name":"table","type":"String"},{"name":"taxEnabled","type":"Bool"},{"name":"taxServerUrl","type":"String"},{"name":"timeZone","type":"String"},{"name":"tinNumber","type":"Long"},{"name":"type","type":"String"},{"name":"typeId","type":"String"},{"name":"userId","type":"String"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Hash","caseSensitive":true}]}],"links":[]}',
+      '{"name":"Business","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"adrs","type":"String"},{"name":"backUpEnabled","type":"Bool"},{"name":"backupFileId","type":"String"},{"name":"bhfId","type":"String"},{"name":"businessUrl","type":"String"},{"name":"categoryId","type":"String"},{"name":"channels","type":"StringList"},{"name":"chatUid","type":"String"},{"name":"country","type":"String"},{"name":"createdAt","type":"String"},{"name":"currency","type":"String"},{"name":"deviceToken","type":"String"},{"name":"dvcSrlNo","type":"String"},{"name":"email","type":"String"},{"name":"firstName","type":"String"},{"name":"fullName","type":"String"},{"name":"hexColor","type":"String"},{"name":"imageUrl","type":"String"},{"name":"isLastSubscriptionPaymentSucceeded","type":"Bool"},{"name":"lastDbBackup","type":"String"},{"name":"lastName","type":"String"},{"name":"lastSeen","type":"Long"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"metadata","type":"String"},{"name":"name","type":"String"},{"name":"nextBillingDate","type":"String"},{"name":"previousBillingDate","type":"String"},{"name":"role","type":"String"},{"name":"subscriptionPlan","type":"String"},{"name":"table","type":"String"},{"name":"taxEnabled","type":"Bool"},{"name":"taxServerUrl","type":"String"},{"name":"timeZone","type":"String"},{"name":"tinNumber","type":"Long"},{"name":"type","type":"String"},{"name":"typeId","type":"String"},{"name":"userId","type":"String"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Hash","caseSensitive":true}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'active': 0,
@@ -25,15 +25,15 @@ const BusinessSchema = CollectionSchema(
     'backupFileId': 3,
     'bhfId': 4,
     'businessUrl': 5,
-    'channels': 6,
-    'chatUid': 7,
-    'country': 8,
-    'createdAt': 9,
-    'currency': 10,
-    'deviceToken': 11,
-    'dvcSrlNo': 12,
-    'email': 13,
-    'fcategoryId': 14,
+    'categoryId': 6,
+    'channels': 7,
+    'chatUid': 8,
+    'country': 9,
+    'createdAt': 10,
+    'currency': 11,
+    'deviceToken': 12,
+    'dvcSrlNo': 13,
+    'email': 14,
     'firstName': 15,
     'fullName': 16,
     'hexColor': 17,
@@ -124,6 +124,11 @@ void _businessSerializeNative(
   final businessUrl$Value = object.businessUrl;
   if (businessUrl$Value != null) {
     businessUrl$Bytes = IsarBinaryWriter.utf8Encoder.convert(businessUrl$Value);
+  }
+  IsarUint8List? categoryId$Bytes;
+  final categoryId$Value = object.categoryId;
+  if (categoryId$Value != null) {
+    categoryId$Bytes = IsarBinaryWriter.utf8Encoder.convert(categoryId$Value);
   }
   var channels$BytesCount = (object.channels?.length ?? 0) * 8;
   List<IsarUint8List?>? channels$BytesList;
@@ -281,6 +286,7 @@ void _businessSerializeNative(
       (backupFileId$Bytes?.length ?? 0) +
       (bhfId$Bytes?.length ?? 0) +
       (businessUrl$Bytes?.length ?? 0) +
+      (categoryId$Bytes?.length ?? 0) +
       channels$BytesCount +
       (chatUid$Bytes?.length ?? 0) +
       (country$Bytes?.length ?? 0) +
@@ -320,15 +326,15 @@ void _businessSerializeNative(
   writer.writeBytes(offsets[3], backupFileId$Bytes);
   writer.writeBytes(offsets[4], bhfId$Bytes);
   writer.writeBytes(offsets[5], businessUrl$Bytes);
-  writer.writeStringList(offsets[6], channels$BytesList);
-  writer.writeBytes(offsets[7], chatUid$Bytes);
-  writer.writeBytes(offsets[8], country$Bytes);
-  writer.writeBytes(offsets[9], createdAt$Bytes);
-  writer.writeBytes(offsets[10], currency$Bytes);
-  writer.writeBytes(offsets[11], deviceToken$Bytes);
-  writer.writeBytes(offsets[12], dvcSrlNo$Bytes);
-  writer.writeBytes(offsets[13], email$Bytes);
-  writer.writeLong(offsets[14], object.fcategoryId);
+  writer.writeBytes(offsets[6], categoryId$Bytes);
+  writer.writeStringList(offsets[7], channels$BytesList);
+  writer.writeBytes(offsets[8], chatUid$Bytes);
+  writer.writeBytes(offsets[9], country$Bytes);
+  writer.writeBytes(offsets[10], createdAt$Bytes);
+  writer.writeBytes(offsets[11], currency$Bytes);
+  writer.writeBytes(offsets[12], deviceToken$Bytes);
+  writer.writeBytes(offsets[13], dvcSrlNo$Bytes);
+  writer.writeBytes(offsets[14], email$Bytes);
   writer.writeBytes(offsets[15], firstName$Bytes);
   writer.writeBytes(offsets[16], fullName$Bytes);
   writer.writeBytes(offsets[17], hexColor$Bytes);
@@ -364,14 +370,14 @@ Business _businessDeserializeNative(IsarCollection<Business> collection, int id,
     backupFileId: reader.readStringOrNull(offsets[3]),
     bhfId: reader.readStringOrNull(offsets[4]),
     businessUrl: reader.readStringOrNull(offsets[5]),
-    channels: reader.readStringList(offsets[6]),
-    chatUid: reader.readStringOrNull(offsets[7]),
-    country: reader.readStringOrNull(offsets[8]),
-    currency: reader.readStringOrNull(offsets[10]),
-    deviceToken: reader.readStringOrNull(offsets[11]),
-    dvcSrlNo: reader.readStringOrNull(offsets[12]),
-    email: reader.readStringOrNull(offsets[13]),
-    fcategoryId: reader.readLongOrNull(offsets[14]),
+    categoryId: reader.readStringOrNull(offsets[6]),
+    channels: reader.readStringList(offsets[7]),
+    chatUid: reader.readStringOrNull(offsets[8]),
+    country: reader.readStringOrNull(offsets[9]),
+    currency: reader.readStringOrNull(offsets[11]),
+    deviceToken: reader.readStringOrNull(offsets[12]),
+    dvcSrlNo: reader.readStringOrNull(offsets[13]),
+    email: reader.readStringOrNull(offsets[14]),
     firstName: reader.readStringOrNull(offsets[15]),
     fullName: reader.readStringOrNull(offsets[16]),
     hexColor: reader.readStringOrNull(offsets[17]),
@@ -397,7 +403,7 @@ Business _businessDeserializeNative(IsarCollection<Business> collection, int id,
     typeId: reader.readStringOrNull(offsets[37]),
     userId: reader.readStringOrNull(offsets[38]),
   );
-  object.createdAt = reader.readStringOrNull(offsets[9]);
+  object.createdAt = reader.readStringOrNull(offsets[10]);
   object.id = id;
   return object;
 }
@@ -420,9 +426,9 @@ P _businessDeserializePropNative<P>(
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readStringList(offset)) as P;
-    case 7:
       return (reader.readStringOrNull(offset)) as P;
+    case 7:
+      return (reader.readStringList(offset)) as P;
     case 8:
       return (reader.readStringOrNull(offset)) as P;
     case 9:
@@ -436,7 +442,7 @@ P _businessDeserializePropNative<P>(
     case 13:
       return (reader.readStringOrNull(offset)) as P;
     case 14:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 15:
       return (reader.readStringOrNull(offset)) as P;
     case 16:
@@ -499,6 +505,7 @@ Object _businessSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'backupFileId', object.backupFileId);
   IsarNative.jsObjectSet(jsObj, 'bhfId', object.bhfId);
   IsarNative.jsObjectSet(jsObj, 'businessUrl', object.businessUrl);
+  IsarNative.jsObjectSet(jsObj, 'categoryId', object.categoryId);
   IsarNative.jsObjectSet(jsObj, 'channels', object.channels);
   IsarNative.jsObjectSet(jsObj, 'chatUid', object.chatUid);
   IsarNative.jsObjectSet(jsObj, 'country', object.country);
@@ -507,7 +514,6 @@ Object _businessSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'deviceToken', object.deviceToken);
   IsarNative.jsObjectSet(jsObj, 'dvcSrlNo', object.dvcSrlNo);
   IsarNative.jsObjectSet(jsObj, 'email', object.email);
-  IsarNative.jsObjectSet(jsObj, 'fcategoryId', object.fcategoryId);
   IsarNative.jsObjectSet(jsObj, 'firstName', object.firstName);
   IsarNative.jsObjectSet(jsObj, 'fullName', object.fullName);
   IsarNative.jsObjectSet(jsObj, 'hexColor', object.hexColor);
@@ -547,6 +553,7 @@ Business _businessDeserializeWeb(
     backupFileId: IsarNative.jsObjectGet(jsObj, 'backupFileId'),
     bhfId: IsarNative.jsObjectGet(jsObj, 'bhfId'),
     businessUrl: IsarNative.jsObjectGet(jsObj, 'businessUrl'),
+    categoryId: IsarNative.jsObjectGet(jsObj, 'categoryId'),
     channels: (IsarNative.jsObjectGet(jsObj, 'channels') as List?)
         ?.map((e) => e ?? '')
         .toList()
@@ -557,7 +564,6 @@ Business _businessDeserializeWeb(
     deviceToken: IsarNative.jsObjectGet(jsObj, 'deviceToken'),
     dvcSrlNo: IsarNative.jsObjectGet(jsObj, 'dvcSrlNo'),
     email: IsarNative.jsObjectGet(jsObj, 'email'),
-    fcategoryId: IsarNative.jsObjectGet(jsObj, 'fcategoryId'),
     firstName: IsarNative.jsObjectGet(jsObj, 'firstName'),
     fullName: IsarNative.jsObjectGet(jsObj, 'fullName'),
     hexColor: IsarNative.jsObjectGet(jsObj, 'hexColor'),
@@ -604,6 +610,8 @@ P _businessDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'bhfId')) as P;
     case 'businessUrl':
       return (IsarNative.jsObjectGet(jsObj, 'businessUrl')) as P;
+    case 'categoryId':
+      return (IsarNative.jsObjectGet(jsObj, 'categoryId')) as P;
     case 'channels':
       return ((IsarNative.jsObjectGet(jsObj, 'channels') as List?)
           ?.map((e) => e ?? '')
@@ -623,8 +631,6 @@ P _businessDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'dvcSrlNo')) as P;
     case 'email':
       return (IsarNative.jsObjectGet(jsObj, 'email')) as P;
-    case 'fcategoryId':
-      return (IsarNative.jsObjectGet(jsObj, 'fcategoryId')) as P;
     case 'firstName':
       return (IsarNative.jsObjectGet(jsObj, 'firstName')) as P;
     case 'fullName':
@@ -1236,6 +1242,108 @@ extension BusinessQueryFilter
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition.matches(
       property: 'businessUrl',
+      wildcard: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdIsNull() {
+    return addFilterConditionInternal(const FilterCondition.isNull(
+      property: 'categoryId',
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.equalTo(
+      property: 'categoryId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition.greaterThan(
+      include: include,
+      property: 'categoryId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition.lessThan(
+      include: include,
+      property: 'categoryId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'categoryId',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.startsWith(
+      property: 'categoryId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.endsWith(
+      property: 'categoryId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition.contains(
+      property: 'categoryId',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> categoryIdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition.matches(
+      property: 'categoryId',
       wildcard: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -2063,58 +2171,6 @@ extension BusinessQueryFilter
       property: 'email',
       wildcard: pattern,
       caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Business, Business, QAfterFilterCondition> fcategoryIdIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'fcategoryId',
-    ));
-  }
-
-  QueryBuilder<Business, Business, QAfterFilterCondition> fcategoryIdEqualTo(
-      int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'fcategoryId',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<Business, Business, QAfterFilterCondition>
-      fcategoryIdGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'fcategoryId',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<Business, Business, QAfterFilterCondition> fcategoryIdLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'fcategoryId',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<Business, Business, QAfterFilterCondition> fcategoryIdBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'fcategoryId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
     ));
   }
 
@@ -4406,6 +4462,14 @@ extension BusinessQueryWhereSortBy
     return addSortByInternal('businessUrl', Sort.desc);
   }
 
+  QueryBuilder<Business, Business, QAfterSortBy> sortByCategoryId() {
+    return addSortByInternal('categoryId', Sort.asc);
+  }
+
+  QueryBuilder<Business, Business, QAfterSortBy> sortByCategoryIdDesc() {
+    return addSortByInternal('categoryId', Sort.desc);
+  }
+
   QueryBuilder<Business, Business, QAfterSortBy> sortByChatUid() {
     return addSortByInternal('chatUid', Sort.asc);
   }
@@ -4460,14 +4524,6 @@ extension BusinessQueryWhereSortBy
 
   QueryBuilder<Business, Business, QAfterSortBy> sortByEmailDesc() {
     return addSortByInternal('email', Sort.desc);
-  }
-
-  QueryBuilder<Business, Business, QAfterSortBy> sortByFcategoryId() {
-    return addSortByInternal('fcategoryId', Sort.asc);
-  }
-
-  QueryBuilder<Business, Business, QAfterSortBy> sortByFcategoryIdDesc() {
-    return addSortByInternal('fcategoryId', Sort.desc);
   }
 
   QueryBuilder<Business, Business, QAfterSortBy> sortByFirstName() {
@@ -4716,6 +4772,14 @@ extension BusinessQueryWhereSortThenBy
     return addSortByInternal('businessUrl', Sort.desc);
   }
 
+  QueryBuilder<Business, Business, QAfterSortBy> thenByCategoryId() {
+    return addSortByInternal('categoryId', Sort.asc);
+  }
+
+  QueryBuilder<Business, Business, QAfterSortBy> thenByCategoryIdDesc() {
+    return addSortByInternal('categoryId', Sort.desc);
+  }
+
   QueryBuilder<Business, Business, QAfterSortBy> thenByChatUid() {
     return addSortByInternal('chatUid', Sort.asc);
   }
@@ -4770,14 +4834,6 @@ extension BusinessQueryWhereSortThenBy
 
   QueryBuilder<Business, Business, QAfterSortBy> thenByEmailDesc() {
     return addSortByInternal('email', Sort.desc);
-  }
-
-  QueryBuilder<Business, Business, QAfterSortBy> thenByFcategoryId() {
-    return addSortByInternal('fcategoryId', Sort.asc);
-  }
-
-  QueryBuilder<Business, Business, QAfterSortBy> thenByFcategoryIdDesc() {
-    return addSortByInternal('fcategoryId', Sort.desc);
   }
 
   QueryBuilder<Business, Business, QAfterSortBy> thenByFirstName() {
@@ -5014,6 +5070,11 @@ extension BusinessQueryWhereDistinct
     return addDistinctByInternal('businessUrl', caseSensitive: caseSensitive);
   }
 
+  QueryBuilder<Business, Business, QDistinct> distinctByCategoryId(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('categoryId', caseSensitive: caseSensitive);
+  }
+
   QueryBuilder<Business, Business, QDistinct> distinctByChatUid(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('chatUid', caseSensitive: caseSensitive);
@@ -5047,10 +5108,6 @@ extension BusinessQueryWhereDistinct
   QueryBuilder<Business, Business, QDistinct> distinctByEmail(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('email', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<Business, Business, QDistinct> distinctByFcategoryId() {
-    return addDistinctByInternal('fcategoryId');
   }
 
   QueryBuilder<Business, Business, QDistinct> distinctByFirstName(
@@ -5200,6 +5257,10 @@ extension BusinessQueryProperty
     return addPropertyNameInternal('businessUrl');
   }
 
+  QueryBuilder<Business, String?, QQueryOperations> categoryIdProperty() {
+    return addPropertyNameInternal('categoryId');
+  }
+
   QueryBuilder<Business, List<String>?, QQueryOperations> channelsProperty() {
     return addPropertyNameInternal('channels');
   }
@@ -5230,10 +5291,6 @@ extension BusinessQueryProperty
 
   QueryBuilder<Business, String?, QQueryOperations> emailProperty() {
     return addPropertyNameInternal('email');
-  }
-
-  QueryBuilder<Business, int?, QQueryOperations> fcategoryIdProperty() {
-    return addPropertyNameInternal('fcategoryId');
   }
 
   QueryBuilder<Business, String?, QQueryOperations> firstNameProperty() {

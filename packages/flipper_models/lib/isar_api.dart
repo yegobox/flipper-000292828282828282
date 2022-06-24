@@ -255,34 +255,9 @@ class IsarAPI implements IsarApiInterface {
 
   @override
   Future<List<Branch>> branches({required int businessId}) async {
-    final response =
-        await client.get(Uri.parse("$apihub/v2/api/branches/$businessId"));
-    if (response.statusCode == 200) {
-      await isar.writeTxn(() async {
-        for (Branch branch in branchsFromJson(response.body)) {
-          final b = Branch()
-            ..active = branch.active
-            ..id = branch.id
-            ..description = branch.description
-            ..latitude = branch.latitude.toString()
-            ..name = branch.name
-            ..table = 'banches'
-            ..longitude = branch.longitude.toString()
-            ..description = branch.description
-            ..fbusinessId = branch.fbusinessId;
-
-          await isar.branchs.put(b);
-        }
-      });
-      // return all branches from db
-      /// right now the the branch business Id is empty return here id is in this range
-      /// instead, will fix later.
-      List<Branch> bb =
-          await isar.branchs.filter().tableEqualTo('banches').findAll();
-
-      return bb;
-    }
-    throw Exception('Failed to load branch');
+    List<Branch> kBranches =
+        await isar.branchs.filter().businessIdEqualTo(businessId).findAll();
+    return kBranches;
   }
 
   @override
@@ -806,61 +781,43 @@ class IsarAPI implements IsarApiInterface {
     return isar.discounts.filter().branchIdEqualTo(branchId).findAll();
   }
 
-  @override
-  Future<List<Branch>> getLocalBranches({required int businessId}) async {
-    // clean all branches from db
-    // get all branch from isar db
-    List<Branch> kBranches =
-        await isar.branchs.filter().tableEqualTo('banches').findAll();
-    if (kBranches.isEmpty) {
-      return await branches(businessId: businessId);
-    }
-    return kBranches;
-  }
-
   // get list of Business from isar where userId = userId
   // if list is empty then get list from online
   @override
-  Future<Business> getLocalOrOnlineBusiness({required String userId}) async {
-    Business? kBusiness =
-        await isar.businesss.filter().userIdEqualTo(userId).findFirst();
-    if (kBusiness == null) {
-      log.e("fetching business from server");
-      return await getOnlineBusiness(userId: userId);
-    }
+  Future<List<Business>> businesses({required String userId}) async {
+    List<Business> businesses =
+        await isar.businesss.filter().userIdEqualTo(userId).findAll();
 
-    return kBusiness;
+    return businesses;
   }
 
   @override
   Future<Business> getOnlineBusiness({required String userId}) async {
-    log.i(userId);
     final response =
         await client.get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
 
     if (response.statusCode == 401) {
       throw SessionException(term: "session expired");
-    } else if (response.statusCode == 404) {
-      throw NotFoundException(term: "Business not found");
-    } else if (response.statusCode == 500) {
-      throw ErrorReadingFromYBServer(term: "Business not found");
-    } else {
-      Business? business = await isar.writeTxn(() {
-        return isar.businesss.get(fromJson(response.body).id);
-      });
-
-      if (business == null) {
-        await isar.writeTxn(() async {
-          return isar.businesss.put(fromJson(response.body));
-        });
-        business = await isar.writeTxn(() {
-          return isar.businesss.filter().userIdEqualTo(userId).findFirst();
-        });
-      }
-      ProxyService.box.write(key: 'businessId', value: business!.id);
-
-      return business;
     }
+    if (response.statusCode == 404) {
+      throw NotFoundException(term: "Business not found");
+    }
+
+    Business? business = await isar.writeTxn(() {
+      return isar.businesss.get(fromJson(response.body).id);
+    });
+
+    if (business == null) {
+      await isar.writeTxn(() async {
+        return isar.businesss.put(fromJson(response.body));
+      });
+      business = await isar.writeTxn(() {
+        return isar.businesss.filter().userIdEqualTo(userId).findFirst();
+      });
+    }
+    ProxyService.box.write(key: 'businessId', value: business!.id);
+
+    return business;
   }
 
   @override
@@ -1026,8 +983,11 @@ class IsarAPI implements IsarApiInterface {
         <String, String>{'phoneNumber': userPhone},
       ),
     );
-    log.d(response.body);
     if (response.statusCode == 200) {
+      for (Business business
+          in syncFFromJson(response.body).tenants.first.businesses) {
+        log.i(business.toJson());
+      }
       await isar.writeTxn(() async {
         return isar.businesss
             .putAll(syncFFromJson(response.body).tenants.first.businesses);
@@ -1050,17 +1010,16 @@ class IsarAPI implements IsarApiInterface {
         value: userPhone,
       );
       return syncFFromJson(response.body);
+    } else if (response.statusCode == 401) {
+      throw SessionException(term: "session expired");
+    } else if (response.statusCode == 404) {
+      throw NotFoundException(term: "Not found");
+    } else if (response.statusCode == 500) {
+      throw ErrorReadingFromYBServer(term: "Not found");
     } else {
-      log.e('error');
       throw Exception('403 Error');
     }
   }
-
-  // @override
-  // Stream<List<Message>> messages({required int conversationId}) {
-  //   // TODO: implement messages
-  //   throw UnimplementedError();
-  // }
 
   @override
   void migrateToSync() {

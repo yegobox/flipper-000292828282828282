@@ -703,6 +703,15 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     ProxyService.isarApi.delete(id: id, endPoint: 'customer');
   }
 
+  void setDefaultBusiness({required Business business}) {
+    app.setBusiness(business: business);
+    ProxyService.box.write(key: 'businessId', value: business.id);
+  }
+
+  void setDefaultBranch({required Branch branch}) {
+    ProxyService.box.write(key: 'branchId', value: branch.id);
+  }
+
   @override
   List<ReactiveServiceMixin> get reactiveServices =>
       [keypad, app, productService, settingService, languageService];

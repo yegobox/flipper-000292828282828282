@@ -1,5 +1,6 @@
 library flipper_models;
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_routing/routes.locator.dart';
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:flipper_models/isar_models.dart';
@@ -23,52 +24,38 @@ class StartUpViewModel extends BaseViewModel {
     required Function navigationCallback,
   }) async {
     loginInfo.redirecting = true;
-
     try {
+      /// an event should be trigered from mobile not desktop as desktop is anonmous and login() func might have been called.
+      if (invokeLogin && !ProxyService.box.isAnonymous()) {
+        User? user = FirebaseAuth.instance.currentUser;
+        if (user != null && !appService.isLoggedIn()) {
+          await ProxyService.isarApi.login(
+            userPhone: user.phoneNumber ?? user.email!,
+          );
+        }
+      }
       await appService.appInit();
-      loginInfo.isLoggedIn = true;
-      navigationCallback("home");
-      // we are logged in but there is a chance that this number is a tenant
-      // that is given access to this business's branch
-      // TODOtenant's is not useful when sync is not supported.
+      //if we reached this far then it means we have a default business/branch make sence to check drawer
       if (await ProxyService.isarApi
               .isDrawerOpen(cashierId: ProxyService.box.getBusinessId()!) ==
           null) {
-        throw NoDrawerOpen(term: "Business Drawer is not open");
+        throw NoDrawerOpenException(term: "Business Drawer is not open");
       }
+      loginInfo.isLoggedIn = true;
+      navigationCallback("home");
     } catch (e) {
-      if (e is SessionException) {
-        log.e("session expired");
-        loginInfo.isLoggedIn = false;
-        loginInfo.redirecting = false;
-        ProxyService.isarApi.logOut();
-        navigationCallback("login");
-        rethrow;
-      } else if (e is NotFoundException) {
-        String? countryName = await ProxyService.country.getCountryName();
-        loginInfo.country = countryName!;
-        loginInfo.isLoggedIn = false;
-        loginInfo.redirecting = false;
-        loginInfo.needSignUp = true;
-        rethrow;
-      } else if (e is NoDrawerOpen) {
+      if (e is LoginChoicesException) {
+        loginInfo.isLoggedIn = true;
+        navigationCallback("login_choices");
+      } else if (e is NoDrawerOpenException) {
         navigationCallback("drawer");
-        rethrow;
-      } else if (e is ErrorReadingFromYBServer) {
+      } else if (e is SessionException || e is ErrorReadingFromYBServer) {
         loginInfo.isLoggedIn = false;
         navigationCallback("login");
-        rethrow;
-      } else if (e is BranchLoadingException) {
-        log.i('failed to load the branch');
-        ProxyService.isarApi.logOut();
-        loginInfo.isLoggedIn = false;
-        navigationCallback("login");
-        rethrow;
       } else {
         log.i(e.toString());
         loginInfo.isLoggedIn = false;
         navigationCallback("login");
-        rethrow;
       }
     }
   }

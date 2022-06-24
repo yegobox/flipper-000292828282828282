@@ -7,10 +7,9 @@ abstract class IsarApiInterface {
   Future<int> signup({required Map business});
   Future<Order?> pendingOrder({required int branchId});
   Future<SyncF> login({required String userPhone});
+  Future<List<Business>> businesses({required String userId});
   Future<Business> getOnlineBusiness({required String userId});
-  Future<Business> getLocalOrOnlineBusiness({required String userId});
   Future<List<Branch>> branches({required int businessId});
-  Future<List<Branch>> getLocalBranches({required int businessId});
   Future<List<Stock?>> stocks({required int productId});
   Stream<Stock> stockByVariantIdStream({required int variantId});
   Stream<List<Product>> productStreams({required int branchId});

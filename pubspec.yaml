@@ -46,7 +46,6 @@ dependencies:
   stacked: ^2.3.8
   firebase_messaging: ^11.2.8
   overlay_support: ^2.0.0-beta.0
-  stacked_themes: ^0.3.8+1
   flex_color_scheme: ^4.2.0
   path_provider: ^2.0.8
   firebase_messaging_platform_interface: ^3.2.1

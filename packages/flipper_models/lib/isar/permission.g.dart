@@ -9,14 +9,14 @@ part of flipper_models;
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
 
-extension GetPermissionsyncCollection on Isar {
-  IsarCollection<Permission> get permissionsyncs => getCollection();
+extension GetPermissionCollection on Isar {
+  IsarCollection<Permission> get permissions => getCollection();
 }
 
-const PermissionsyncSchema = CollectionSchema(
-  name: 'Permissionsync',
+const PermissionSchema = CollectionSchema(
+  name: 'Permission',
   schema:
-      '{"name":"Permissionsync","idName":"id","properties":[{"name":"name","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"Permission","idName":"id","properties":[{"name":"name","type":"String"}],"indexes":[],"links":[]}',
   idName: 'id',
   propertyIds: {'name': 0},
   listProperties: {},
@@ -24,20 +24,20 @@ const PermissionsyncSchema = CollectionSchema(
   indexValueTypes: {},
   linkIds: {},
   backlinkLinkNames: {},
-  getId: _permissionsyncGetId,
-  setId: _permissionsyncSetId,
-  getLinks: _permissionsyncGetLinks,
-  attachLinks: _permissionsyncAttachLinks,
-  serializeNative: _permissionsyncSerializeNative,
-  deserializeNative: _permissionsyncDeserializeNative,
-  deserializePropNative: _permissionsyncDeserializePropNative,
-  serializeWeb: _permissionsyncSerializeWeb,
-  deserializeWeb: _permissionsyncDeserializeWeb,
-  deserializePropWeb: _permissionsyncDeserializePropWeb,
+  getId: _permissionGetId,
+  setId: _permissionSetId,
+  getLinks: _permissionGetLinks,
+  attachLinks: _permissionAttachLinks,
+  serializeNative: _permissionSerializeNative,
+  deserializeNative: _permissionDeserializeNative,
+  deserializePropNative: _permissionDeserializePropNative,
+  serializeWeb: _permissionSerializeWeb,
+  deserializeWeb: _permissionDeserializeWeb,
+  deserializePropWeb: _permissionDeserializePropWeb,
   version: 4,
 );
 
-int? _permissionsyncGetId(Permission object) {
+int? _permissionGetId(Permission object) {
   if (object.id == Isar.autoIncrement) {
     return null;
   } else {
@@ -45,15 +45,15 @@ int? _permissionsyncGetId(Permission object) {
   }
 }
 
-void _permissionsyncSetId(Permission object, int id) {
+void _permissionSetId(Permission object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase<dynamic>> _permissionsyncGetLinks(Permission object) {
+List<IsarLinkBase<dynamic>> _permissionGetLinks(Permission object) {
   return [];
 }
 
-void _permissionsyncSerializeNative(
+void _permissionSerializeNative(
     IsarCollection<Permission> collection,
     IsarCObject cObj,
     Permission object,
@@ -70,11 +70,8 @@ void _permissionsyncSerializeNative(
   writer.writeBytes(offsets[0], name$Bytes);
 }
 
-Permission _permissionsyncDeserializeNative(
-    IsarCollection<Permission> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
+Permission _permissionDeserializeNative(IsarCollection<Permission> collection,
+    int id, IsarBinaryReader reader, List<int> offsets) {
   final object = Permission(
     id: id,
     name: reader.readString(offsets[0]),
@@ -82,7 +79,7 @@ Permission _permissionsyncDeserializeNative(
   return object;
 }
 
-P _permissionsyncDeserializePropNative<P>(
+P _permissionDeserializePropNative<P>(
     int id, IsarBinaryReader reader, int propertyIndex, int offset) {
   switch (propertyIndex) {
     case -1:
@@ -94,7 +91,7 @@ P _permissionsyncDeserializePropNative<P>(
   }
 }
 
-Object _permissionsyncSerializeWeb(
+Object _permissionSerializeWeb(
     IsarCollection<Permission> collection, Permission object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
@@ -102,7 +99,7 @@ Object _permissionsyncSerializeWeb(
   return jsObj;
 }
 
-Permission _permissionsyncDeserializeWeb(
+Permission _permissionDeserializeWeb(
     IsarCollection<Permission> collection, Object jsObj) {
   final object = Permission(
     id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
@@ -111,7 +108,7 @@ Permission _permissionsyncDeserializeWeb(
   return object;
 }
 
-P _permissionsyncDeserializePropWeb<P>(Object jsObj, String propertyName) {
+P _permissionDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id') ??
@@ -123,17 +120,17 @@ P _permissionsyncDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _permissionsyncAttachLinks(
+void _permissionAttachLinks(
     IsarCollection<dynamic> col, int id, Permission object) {}
 
-extension PermissionsyncQueryWhereSort
+extension PermissionQueryWhereSort
     on QueryBuilder<Permission, Permission, QWhere> {
   QueryBuilder<Permission, Permission, QAfterWhere> anyId() {
     return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
-extension PermissionsyncQueryWhere
+extension PermissionQueryWhere
     on QueryBuilder<Permission, Permission, QWhereClause> {
   QueryBuilder<Permission, Permission, QAfterWhereClause> idEqualTo(int id) {
     return addWhereClauseInternal(IdWhereClause.between(
@@ -189,7 +186,7 @@ extension PermissionsyncQueryWhere
   }
 }
 
-extension PermissionsyncQueryFilter
+extension PermissionQueryFilter
     on QueryBuilder<Permission, Permission, QFilterCondition> {
   QueryBuilder<Permission, Permission, QAfterFilterCondition> idEqualTo(
       int value) {
@@ -333,10 +330,10 @@ extension PermissionsyncQueryFilter
   }
 }
 
-extension PermissionsyncQueryLinks
+extension PermissionQueryLinks
     on QueryBuilder<Permission, Permission, QFilterCondition> {}
 
-extension PermissionsyncQueryWhereSortBy
+extension PermissionQueryWhereSortBy
     on QueryBuilder<Permission, Permission, QSortBy> {
   QueryBuilder<Permission, Permission, QAfterSortBy> sortByName() {
     return addSortByInternal('name', Sort.asc);
@@ -347,7 +344,7 @@ extension PermissionsyncQueryWhereSortBy
   }
 }
 
-extension PermissionsyncQueryWhereSortThenBy
+extension PermissionQueryWhereSortThenBy
     on QueryBuilder<Permission, Permission, QSortThenBy> {
   QueryBuilder<Permission, Permission, QAfterSortBy> thenById() {
     return addSortByInternal('id', Sort.asc);
@@ -366,7 +363,7 @@ extension PermissionsyncQueryWhereSortThenBy
   }
 }
 
-extension PermissionsyncQueryWhereDistinct
+extension PermissionQueryWhereDistinct
     on QueryBuilder<Permission, Permission, QDistinct> {
   QueryBuilder<Permission, Permission, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
@@ -374,7 +371,7 @@ extension PermissionsyncQueryWhereDistinct
   }
 }
 
-extension PermissionsyncQueryProperty
+extension PermissionQueryProperty
     on QueryBuilder<Permission, Permission, QQueryProperty> {
   QueryBuilder<Permission, int, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');

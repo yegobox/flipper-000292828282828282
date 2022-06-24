@@ -57,7 +57,7 @@ class PinLogin extends StatelessWidget {
                                           context: context,
                                         );
                                       } catch (e) {
-                                        log(e.toString());
+                                        log("PinLogin" + e.toString());
                                         if (e is NotFoundException) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(

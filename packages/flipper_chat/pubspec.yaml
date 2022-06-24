@@ -17,7 +17,7 @@ dependencies:
   flutter_chat_ui: ^1.5.5
   flutter_firebase_chat_core: ^1.5.0
   timeago: ^3.2.1
-  stacked_themes: ^0.3.8+1
+
   mime: ^1.0.1
   open_file: ^3.2.1
   image_picker: ^0.8.0+4

@@ -64,6 +64,7 @@ class LoginViewModel extends FormViewModel {
       ProxyService.box.write(key: 'branchId', value: pin.branchId);
       ProxyService.box.write(key: 'userId', value: pin.userId);
       ProxyService.box.write(key: 'userPhone', value: pin.phoneNumber);
+      ProxyService.box.write(key: 'isAnonymous', value: true);
       await ProxyService.isarApi.login(
         userPhone: pin.phoneNumber,
       );

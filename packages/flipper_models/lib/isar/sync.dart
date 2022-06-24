@@ -25,7 +25,7 @@ class SyncF {
   List<String> channels;
   int points;
 
-  factory SyncF.fromJson(Map<String, dynamic> json) => SyncF(
+  factory SyncF.fromJson(Map<dynamic, dynamic> json) => SyncF(
         id: json["id"],
         phoneNumber: json["phoneNumber"],
         token: json["token"],
@@ -35,7 +35,7 @@ class SyncF {
         points: json["points"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
         "id": id,
         "phoneNumber": phoneNumber,
         "token": token,
@@ -64,7 +64,7 @@ class Tenant {
   List<Branch> branches;
   List<Business> businesses;
 
-  factory Tenant.fromJson(Map<String, dynamic> json) => Tenant(
+  factory Tenant.fromJson(Map<dynamic, dynamic> json) => Tenant(
         id: json["id"],
         name: json["name"],
         phoneNumber: json["phoneNumber"],
@@ -77,7 +77,7 @@ class Tenant {
             json["businesses"].map((x) => Business.fromJson(x))),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
         "id": id,
         "name": name,
         "phoneNumber": phoneNumber,

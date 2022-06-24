@@ -13,7 +13,7 @@ class Permission {
   late int id = Isar.autoIncrement;
   late String name;
 
-  static fromJson(Map<String, dynamic> json) =>
+  static fromJson(Map<dynamic, dynamic> json) =>
       Permission(id: json["id"], name: json["name"]);
 
   Map<String, dynamic> toJson() => {

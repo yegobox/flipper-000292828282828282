@@ -16,12 +16,12 @@ extension GetBranchCollection on Isar {
 const BranchSchema = CollectionSchema(
   name: 'Branch',
   schema:
-      '{"name":"Branch","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"description","type":"String"},{"name":"fbusinessId","type":"Long"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"name","type":"String"},{"name":"table","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"Branch","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"businessId","type":"Long"},{"name":"description","type":"String"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"name","type":"String"},{"name":"table","type":"String"}],"indexes":[],"links":[]}',
   idName: 'id',
   propertyIds: {
     'active': 0,
-    'description': 1,
-    'fbusinessId': 2,
+    'businessId': 1,
+    'description': 2,
     'latitude': 3,
     'longitude': 4,
     'name': 5,
@@ -100,8 +100,8 @@ void _branchSerializeNative(IsarCollection<Branch> collection, IsarCObject cObj,
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBool(offsets[0], object.active);
-  writer.writeBytes(offsets[1], description$Bytes);
-  writer.writeLong(offsets[2], object.fbusinessId);
+  writer.writeLong(offsets[1], object.businessId);
+  writer.writeBytes(offsets[2], description$Bytes);
   writer.writeBytes(offsets[3], latitude$Bytes);
   writer.writeBytes(offsets[4], longitude$Bytes);
   writer.writeBytes(offsets[5], name$Bytes);
@@ -112,8 +112,8 @@ Branch _branchDeserializeNative(IsarCollection<Branch> collection, int id,
     IsarBinaryReader reader, List<int> offsets) {
   final object = Branch(
     active: reader.readBoolOrNull(offsets[0]),
-    description: reader.readStringOrNull(offsets[1]),
-    fbusinessId: reader.readLongOrNull(offsets[2]),
+    businessId: reader.readLongOrNull(offsets[1]),
+    description: reader.readStringOrNull(offsets[2]),
     id: id,
     latitude: reader.readStringOrNull(offsets[3]),
     longitude: reader.readStringOrNull(offsets[4]),
@@ -131,9 +131,9 @@ P _branchDeserializePropNative<P>(
     case 0:
       return (reader.readBoolOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
-    case 2:
       return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (reader.readStringOrNull(offset)) as P;
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
@@ -150,8 +150,8 @@ P _branchDeserializePropNative<P>(
 Object _branchSerializeWeb(IsarCollection<Branch> collection, Branch object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'active', object.active);
+  IsarNative.jsObjectSet(jsObj, 'businessId', object.businessId);
   IsarNative.jsObjectSet(jsObj, 'description', object.description);
-  IsarNative.jsObjectSet(jsObj, 'fbusinessId', object.fbusinessId);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'latitude', object.latitude);
   IsarNative.jsObjectSet(jsObj, 'longitude', object.longitude);
@@ -163,8 +163,8 @@ Object _branchSerializeWeb(IsarCollection<Branch> collection, Branch object) {
 Branch _branchDeserializeWeb(IsarCollection<Branch> collection, Object jsObj) {
   final object = Branch(
     active: IsarNative.jsObjectGet(jsObj, 'active'),
+    businessId: IsarNative.jsObjectGet(jsObj, 'businessId'),
     description: IsarNative.jsObjectGet(jsObj, 'description'),
-    fbusinessId: IsarNative.jsObjectGet(jsObj, 'fbusinessId'),
     id: IsarNative.jsObjectGet(jsObj, 'id'),
     latitude: IsarNative.jsObjectGet(jsObj, 'latitude'),
     longitude: IsarNative.jsObjectGet(jsObj, 'longitude'),
@@ -178,10 +178,10 @@ P _branchDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'active':
       return (IsarNative.jsObjectGet(jsObj, 'active')) as P;
+    case 'businessId':
+      return (IsarNative.jsObjectGet(jsObj, 'businessId')) as P;
     case 'description':
       return (IsarNative.jsObjectGet(jsObj, 'description')) as P;
-    case 'fbusinessId':
-      return (IsarNative.jsObjectGet(jsObj, 'fbusinessId')) as P;
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
     case 'latitude':
@@ -272,6 +272,57 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition.equalTo(
       property: 'active',
       value: value,
+    ));
+  }
+
+  QueryBuilder<Branch, Branch, QAfterFilterCondition> businessIdIsNull() {
+    return addFilterConditionInternal(const FilterCondition.isNull(
+      property: 'businessId',
+    ));
+  }
+
+  QueryBuilder<Branch, Branch, QAfterFilterCondition> businessIdEqualTo(
+      int? value) {
+    return addFilterConditionInternal(FilterCondition.equalTo(
+      property: 'businessId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Branch, Branch, QAfterFilterCondition> businessIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition.greaterThan(
+      include: include,
+      property: 'businessId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Branch, Branch, QAfterFilterCondition> businessIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition.lessThan(
+      include: include,
+      property: 'businessId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Branch, Branch, QAfterFilterCondition> businessIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'businessId',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
     ));
   }
 
@@ -374,57 +425,6 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
       property: 'description',
       wildcard: pattern,
       caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Branch, Branch, QAfterFilterCondition> fbusinessIdIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'fbusinessId',
-    ));
-  }
-
-  QueryBuilder<Branch, Branch, QAfterFilterCondition> fbusinessIdEqualTo(
-      int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'fbusinessId',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<Branch, Branch, QAfterFilterCondition> fbusinessIdGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'fbusinessId',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<Branch, Branch, QAfterFilterCondition> fbusinessIdLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'fbusinessId',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<Branch, Branch, QAfterFilterCondition> fbusinessIdBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'fbusinessId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
     ));
   }
 
@@ -897,20 +897,20 @@ extension BranchQueryWhereSortBy on QueryBuilder<Branch, Branch, QSortBy> {
     return addSortByInternal('active', Sort.desc);
   }
 
+  QueryBuilder<Branch, Branch, QAfterSortBy> sortByBusinessId() {
+    return addSortByInternal('businessId', Sort.asc);
+  }
+
+  QueryBuilder<Branch, Branch, QAfterSortBy> sortByBusinessIdDesc() {
+    return addSortByInternal('businessId', Sort.desc);
+  }
+
   QueryBuilder<Branch, Branch, QAfterSortBy> sortByDescription() {
     return addSortByInternal('description', Sort.asc);
   }
 
   QueryBuilder<Branch, Branch, QAfterSortBy> sortByDescriptionDesc() {
     return addSortByInternal('description', Sort.desc);
-  }
-
-  QueryBuilder<Branch, Branch, QAfterSortBy> sortByFbusinessId() {
-    return addSortByInternal('fbusinessId', Sort.asc);
-  }
-
-  QueryBuilder<Branch, Branch, QAfterSortBy> sortByFbusinessIdDesc() {
-    return addSortByInternal('fbusinessId', Sort.desc);
   }
 
   QueryBuilder<Branch, Branch, QAfterSortBy> sortByLatitude() {
@@ -956,20 +956,20 @@ extension BranchQueryWhereSortThenBy
     return addSortByInternal('active', Sort.desc);
   }
 
+  QueryBuilder<Branch, Branch, QAfterSortBy> thenByBusinessId() {
+    return addSortByInternal('businessId', Sort.asc);
+  }
+
+  QueryBuilder<Branch, Branch, QAfterSortBy> thenByBusinessIdDesc() {
+    return addSortByInternal('businessId', Sort.desc);
+  }
+
   QueryBuilder<Branch, Branch, QAfterSortBy> thenByDescription() {
     return addSortByInternal('description', Sort.asc);
   }
 
   QueryBuilder<Branch, Branch, QAfterSortBy> thenByDescriptionDesc() {
     return addSortByInternal('description', Sort.desc);
-  }
-
-  QueryBuilder<Branch, Branch, QAfterSortBy> thenByFbusinessId() {
-    return addSortByInternal('fbusinessId', Sort.asc);
-  }
-
-  QueryBuilder<Branch, Branch, QAfterSortBy> thenByFbusinessIdDesc() {
-    return addSortByInternal('fbusinessId', Sort.desc);
   }
 
   QueryBuilder<Branch, Branch, QAfterSortBy> thenById() {
@@ -1018,13 +1018,13 @@ extension BranchQueryWhereDistinct on QueryBuilder<Branch, Branch, QDistinct> {
     return addDistinctByInternal('active');
   }
 
+  QueryBuilder<Branch, Branch, QDistinct> distinctByBusinessId() {
+    return addDistinctByInternal('businessId');
+  }
+
   QueryBuilder<Branch, Branch, QDistinct> distinctByDescription(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('description', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<Branch, Branch, QDistinct> distinctByFbusinessId() {
-    return addDistinctByInternal('fbusinessId');
   }
 
   QueryBuilder<Branch, Branch, QDistinct> distinctByLatitude(
@@ -1053,12 +1053,12 @@ extension BranchQueryProperty on QueryBuilder<Branch, Branch, QQueryProperty> {
     return addPropertyNameInternal('active');
   }
 
-  QueryBuilder<Branch, String?, QQueryOperations> descriptionProperty() {
-    return addPropertyNameInternal('description');
+  QueryBuilder<Branch, int?, QQueryOperations> businessIdProperty() {
+    return addPropertyNameInternal('businessId');
   }
 
-  QueryBuilder<Branch, int?, QQueryOperations> fbusinessIdProperty() {
-    return addPropertyNameInternal('fbusinessId');
+  QueryBuilder<Branch, String?, QQueryOperations> descriptionProperty() {
+    return addPropertyNameInternal('description');
   }
 
   QueryBuilder<Branch, int?, QQueryOperations> idProperty() {

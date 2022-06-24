@@ -16,7 +16,7 @@ extension GetTenantSyncCollection on Isar {
 const TenantSyncSchema = CollectionSchema(
   name: 'TenantSync',
   schema:
-      '{"name":"TenantSync","idName":"id","properties":[{"name":"email","type":"String"},{"name":"name","type":"String"},{"name":"phoneNumber","type":"String"}],"indexes":[],"links":[{"name":"branches","target":"Branch"},{"name":"permissions","target":"Permissionsync"}]}',
+      '{"name":"TenantSync","idName":"id","properties":[{"name":"email","type":"String"},{"name":"name","type":"String"},{"name":"phoneNumber","type":"String"}],"indexes":[],"links":[{"name":"branches","target":"Branch"},{"name":"permissions","target":"Permission"}]}',
   idName: 'id',
   propertyIds: {'email': 0, 'name': 1, 'phoneNumber': 2},
   listProperties: {},
@@ -150,7 +150,7 @@ P _tenantSyncDeserializePropWeb<P>(Object jsObj, String propertyName) {
 void _tenantSyncAttachLinks(
     IsarCollection<dynamic> col, int id, TenantSync object) {
   object.branches.attach(col, col.isar.branchs, 'branches', id);
-  object.permissions.attach(col, col.isar.permissionsyncs, 'permissions', id);
+  object.permissions.attach(col, col.isar.permissions, 'permissions', id);
 }
 
 extension TenantSyncQueryWhereSort
@@ -570,7 +570,7 @@ extension TenantSyncQueryLinks
   QueryBuilder<TenantSync, TenantSync, QAfterFilterCondition> permissions(
       FilterQuery<Permission> q) {
     return linkInternal(
-      isar.permissionsyncs,
+      isar.permissions,
       q,
       'permissions',
     );

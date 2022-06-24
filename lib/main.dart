@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flipper_dashboard/login_choices.dart';
 import 'package:flipper_dashboard/printing.dart';
 import 'package:flipper_dashboard/backup.dart';
 import 'package:flipper_dashboard/tax_configuration.dart';
@@ -43,7 +44,6 @@ import 'package:flipper_models/isar_models.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:stacked_themes/stacked_themes.dart';
 import 'package:flipper_services/locator.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
@@ -87,8 +87,6 @@ void main() async {
   // done init in mobile.//done separation.
   setupLocator();
   await initDb();
-
-  await ThemeManager.initialise();
 
   (!isWindows) ? FirebaseMessaging.onBackgroundMessage(backgroundHandler) : '';
   runZonedGuarded<Future<void>>(() async {
@@ -475,6 +473,14 @@ void main() async {
             ),
           ),
         ),
+        GoRoute(
+          path: '/tenants',
+          name: 'tenants',
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: const LoginChoices(),
+          ),
+        )
       ],
     );
 

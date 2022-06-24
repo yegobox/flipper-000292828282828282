@@ -100,23 +100,22 @@ class AppService with ReactiveServiceMixin {
   /// check the default business/branch
   /// set the env the current user is operating in.
 
-  Future<isar.Business> appInit() async {
-    try {
-      String? userId = ProxyService.box.getUserId();
-      isar.Business business =
-          await ProxyService.isarApi.getLocalOrOnlineBusiness(userId: userId!);
-
-      ProxyService.appService.setBusiness(business: business);
-      // get local or online branches
+  Future<void> appInit() async {
+    String? userId = ProxyService.box.getUserId();
+    List<isar.Business> business =
+        await ProxyService.isarApi.businesses(userId: userId!);
+    log.i("AAAA::" + business.length.toString());
+    if (business.length == 1) {
+      ProxyService.appService.setBusiness(business: business.first);
       List<isar.Branch> branches =
-          await ProxyService.isarApi.getLocalBranches(businessId: business.id);
-
-      ProxyService.box.write(key: 'branchId', value: branches[0].id);
-      ProxyService.box.write(key: 'businessId', value: business.id);
-
-      return business;
-    } catch (e) {
-      rethrow;
+          await ProxyService.isarApi.branches(businessId: business.first.id);
+      if (branches.length > 1) {
+        throw LoginChoicesException(term: "choose where to go");
+      }
+      ProxyService.box.write(key: 'branchId', value: branches.first.id);
+      ProxyService.box.write(key: 'businessId', value: business.first.id);
+    } else {
+      throw LoginChoicesException(term: "choose where to go");
     }
   }
 
