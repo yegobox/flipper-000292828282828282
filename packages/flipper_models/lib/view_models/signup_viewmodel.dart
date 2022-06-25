@@ -113,7 +113,7 @@ class SignupViewModel extends FormViewModel {
       ProxyService.box.write(key: 'businessId', value: businesses.id);
       ProxyService.appService.setBusiness(business: businesses);
       List<Branch> branches =
-          await ProxyService.isarApi.branches(businessId: businesses.id);
+          await ProxyService.isarApi.branches(businessId: businesses.id!);
 
       ProxyService.box.write(key: 'branchId', value: branches[0].id);
 

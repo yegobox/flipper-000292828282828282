@@ -7,7 +7,11 @@ part of 'payment.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
+// constant_identifier_names, invalid_use_of_protected_member,
+// unnecessary_cast, unused_local_variable,
+// no_leading_underscores_for_local_identifiers,
+// inference_failure_on_function_invocation, prefer_const_constructors
 
 extension GetPaymentCollection on Isar {
   IsarCollection<Payment> get payments => getCollection();
@@ -78,12 +82,12 @@ void _paymentSerializeNative(
       IsarBinaryWriter.utf8Encoder.convert(object.phoneNumber);
   final requestGuid$Bytes =
       IsarBinaryWriter.utf8Encoder.convert(object.requestGuid);
-  final size = staticSize +
+  final size = (staticSize +
       (itemName$Bytes.length) +
       (note$Bytes.length) +
       (paymentType$Bytes.length) +
       (phoneNumber$Bytes.length) +
-      (requestGuid$Bytes.length);
+      (requestGuid$Bytes.length)) as int;
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
 
@@ -218,48 +222,62 @@ void _paymentAttachLinks(IsarCollection<dynamic> col, int id, Payment object) {}
 
 extension PaymentQueryWhereSort on QueryBuilder<Payment, Payment, QWhere> {
   QueryBuilder<Payment, Payment, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension PaymentQueryWhere on QueryBuilder<Payment, Payment, QWhereClause> {
   QueryBuilder<Payment, Payment, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        includeLower: true,
+        upper: id,
+        includeUpper: true,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterWhereClause> idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      );
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterWhereClause> idGreaterThan(int id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterWhereClause> idLessThan(int id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterWhereClause> idBetween(
@@ -268,12 +286,14 @@ extension PaymentQueryWhere on QueryBuilder<Payment, Payment, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -281,32 +301,38 @@ extension PaymentQueryFilter
     on QueryBuilder<Payment, Payment, QFilterCondition> {
   QueryBuilder<Payment, Payment, QAfterFilterCondition> amountEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'amount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'amount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> amountGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'amount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'amount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> amountLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'amount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'amount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> amountBetween(
@@ -315,43 +341,51 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'amount',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'amount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> createdAtEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'createdAt',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'createdAt',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> createdAtGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'createdAt',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'createdAt',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> createdAtLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'createdAt',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'createdAt',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> createdAtBetween(
@@ -360,42 +394,50 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'createdAt',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> idGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> idLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> idBetween(
@@ -404,43 +446,51 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> intervalEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'interval',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'interval',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> intervalGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'interval',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'interval',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> intervalLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'interval',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'interval',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> intervalBetween(
@@ -449,24 +499,28 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'interval',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'interval',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'itemName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'itemName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameGreaterThan(
@@ -474,12 +528,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'itemName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'itemName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameLessThan(
@@ -487,12 +543,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'itemName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'itemName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameBetween(
@@ -502,67 +560,79 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'itemName',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'itemName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'itemName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'itemName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'itemName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'itemName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'itemName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'itemName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> itemNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'itemName',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'itemName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'note',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteGreaterThan(
@@ -570,12 +640,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'note',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteLessThan(
@@ -583,12 +655,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'note',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteBetween(
@@ -598,67 +672,79 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'note',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'note',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'note',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'note',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'note',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> noteMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'note',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'note',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'paymentType',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'paymentType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeGreaterThan(
@@ -666,12 +752,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'paymentType',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'paymentType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeLessThan(
@@ -679,12 +767,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'paymentType',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'paymentType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeBetween(
@@ -694,67 +784,79 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'paymentType',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'paymentType',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'paymentType',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'paymentType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'paymentType',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'paymentType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'paymentType',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'paymentType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> paymentTypeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'paymentType',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'paymentType',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'phoneNumber',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'phoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberGreaterThan(
@@ -762,12 +864,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'phoneNumber',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'phoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberLessThan(
@@ -775,12 +879,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'phoneNumber',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'phoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberBetween(
@@ -790,67 +896,79 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'phoneNumber',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'phoneNumber',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'phoneNumber',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'phoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'phoneNumber',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'phoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'phoneNumber',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'phoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> phoneNumberMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'phoneNumber',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'phoneNumber',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'requestGuid',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'requestGuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidGreaterThan(
@@ -858,12 +976,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'requestGuid',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'requestGuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidLessThan(
@@ -871,12 +991,14 @@ extension PaymentQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'requestGuid',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'requestGuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidBetween(
@@ -886,86 +1008,102 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'requestGuid',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'requestGuid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'requestGuid',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'requestGuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'requestGuid',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'requestGuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'requestGuid',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'requestGuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> requestGuidMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'requestGuid',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'requestGuid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> userIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'userId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'userId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> userIdGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'userId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'userId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> userIdLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'userId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'userId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterFilterCondition> userIdBetween(
@@ -974,13 +1112,15 @@ extension PaymentQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'userId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'userId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -989,244 +1129,358 @@ extension PaymentQueryLinks
 
 extension PaymentQueryWhereSortBy on QueryBuilder<Payment, Payment, QSortBy> {
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByAmount() {
-    return addSortByInternal('amount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('amount', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByAmountDesc() {
-    return addSortByInternal('amount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('amount', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByCreatedAt() {
-    return addSortByInternal('createdAt', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('createdAt', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByCreatedAtDesc() {
-    return addSortByInternal('createdAt', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('createdAt', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByInterval() {
-    return addSortByInternal('interval', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByIntervalDesc() {
-    return addSortByInternal('interval', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByItemName() {
-    return addSortByInternal('itemName', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('itemName', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByItemNameDesc() {
-    return addSortByInternal('itemName', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('itemName', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByNote() {
-    return addSortByInternal('note', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('note', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByNoteDesc() {
-    return addSortByInternal('note', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('note', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByPaymentType() {
-    return addSortByInternal('paymentType', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentType', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByPaymentTypeDesc() {
-    return addSortByInternal('paymentType', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentType', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByPhoneNumber() {
-    return addSortByInternal('phoneNumber', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('phoneNumber', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByPhoneNumberDesc() {
-    return addSortByInternal('phoneNumber', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('phoneNumber', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByRequestGuid() {
-    return addSortByInternal('requestGuid', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('requestGuid', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByRequestGuidDesc() {
-    return addSortByInternal('requestGuid', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('requestGuid', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByUserId() {
-    return addSortByInternal('userId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> sortByUserIdDesc() {
-    return addSortByInternal('userId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.desc);
+    });
   }
 }
 
 extension PaymentQueryWhereSortThenBy
     on QueryBuilder<Payment, Payment, QSortThenBy> {
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByAmount() {
-    return addSortByInternal('amount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('amount', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByAmountDesc() {
-    return addSortByInternal('amount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('amount', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByCreatedAt() {
-    return addSortByInternal('createdAt', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('createdAt', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByCreatedAtDesc() {
-    return addSortByInternal('createdAt', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('createdAt', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByInterval() {
-    return addSortByInternal('interval', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByIntervalDesc() {
-    return addSortByInternal('interval', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByItemName() {
-    return addSortByInternal('itemName', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('itemName', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByItemNameDesc() {
-    return addSortByInternal('itemName', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('itemName', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByNote() {
-    return addSortByInternal('note', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('note', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByNoteDesc() {
-    return addSortByInternal('note', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('note', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByPaymentType() {
-    return addSortByInternal('paymentType', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentType', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByPaymentTypeDesc() {
-    return addSortByInternal('paymentType', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentType', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByPhoneNumber() {
-    return addSortByInternal('phoneNumber', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('phoneNumber', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByPhoneNumberDesc() {
-    return addSortByInternal('phoneNumber', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('phoneNumber', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByRequestGuid() {
-    return addSortByInternal('requestGuid', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('requestGuid', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByRequestGuidDesc() {
-    return addSortByInternal('requestGuid', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('requestGuid', Sort.desc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByUserId() {
-    return addSortByInternal('userId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.asc);
+    });
   }
 
   QueryBuilder<Payment, Payment, QAfterSortBy> thenByUserIdDesc() {
-    return addSortByInternal('userId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.desc);
+    });
   }
 }
 
 extension PaymentQueryWhereDistinct
     on QueryBuilder<Payment, Payment, QDistinct> {
   QueryBuilder<Payment, Payment, QDistinct> distinctByAmount() {
-    return addDistinctByInternal('amount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('amount');
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByCreatedAt() {
-    return addDistinctByInternal('createdAt');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('createdAt');
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByInterval() {
-    return addDistinctByInternal('interval');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('interval');
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByItemName(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('itemName', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('itemName', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByNote(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('note', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('note', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByPaymentType(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('paymentType', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('paymentType', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByPhoneNumber(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('phoneNumber', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('phoneNumber', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByRequestGuid(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('requestGuid', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('requestGuid', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Payment, Payment, QDistinct> distinctByUserId() {
-    return addDistinctByInternal('userId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('userId');
+    });
   }
 }
 
 extension PaymentQueryProperty
     on QueryBuilder<Payment, Payment, QQueryProperty> {
   QueryBuilder<Payment, int, QQueryOperations> amountProperty() {
-    return addPropertyNameInternal('amount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('amount');
+    });
   }
 
   QueryBuilder<Payment, int, QQueryOperations> createdAtProperty() {
-    return addPropertyNameInternal('createdAt');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('createdAt');
+    });
   }
 
   QueryBuilder<Payment, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('id');
+    });
   }
 
   QueryBuilder<Payment, int, QQueryOperations> intervalProperty() {
-    return addPropertyNameInternal('interval');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('interval');
+    });
   }
 
   QueryBuilder<Payment, String, QQueryOperations> itemNameProperty() {
-    return addPropertyNameInternal('itemName');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('itemName');
+    });
   }
 
   QueryBuilder<Payment, String, QQueryOperations> noteProperty() {
-    return addPropertyNameInternal('note');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('note');
+    });
   }
 
   QueryBuilder<Payment, String, QQueryOperations> paymentTypeProperty() {
-    return addPropertyNameInternal('paymentType');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('paymentType');
+    });
   }
 
   QueryBuilder<Payment, String, QQueryOperations> phoneNumberProperty() {
-    return addPropertyNameInternal('phoneNumber');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('phoneNumber');
+    });
   }
 
   QueryBuilder<Payment, String, QQueryOperations> requestGuidProperty() {
-    return addPropertyNameInternal('requestGuid');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('requestGuid');
+    });
   }
 
   QueryBuilder<Payment, int, QQueryOperations> userIdProperty() {
-    return addPropertyNameInternal('userId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('userId');
+    });
   }
 }

@@ -7,7 +7,11 @@ part of 'drawer.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
+// constant_identifier_names, invalid_use_of_protected_member,
+// unnecessary_cast, unused_local_variable,
+// no_leading_underscores_for_local_identifiers,
+// inference_failure_on_function_invocation, prefer_const_constructors
 
 extension GetDrawersCollection on Isar {
   IsarCollection<Drawers> get drawerss => getCollection();
@@ -108,11 +112,11 @@ void _drawersSerializeNative(
   if (tradeName$Value != null) {
     tradeName$Bytes = IsarBinaryWriter.utf8Encoder.convert(tradeName$Value);
   }
-  final size = staticSize +
+  final size = (staticSize +
       (closingDateTime$Bytes?.length ?? 0) +
       (openingDateTime$Bytes?.length ?? 0) +
       (paymentMode$Bytes?.length ?? 0) +
-      (tradeName$Bytes?.length ?? 0);
+      (tradeName$Bytes?.length ?? 0)) as int;
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
 
@@ -308,58 +312,78 @@ void _drawersAttachLinks(IsarCollection<dynamic> col, int id, Drawers object) {}
 
 extension DrawersQueryWhereSort on QueryBuilder<Drawers, Drawers, QWhere> {
   QueryBuilder<Drawers, Drawers, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhere> anyCashierId() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'cashierId'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: 'cashierId'),
+      );
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhere> anyOpenCashierId() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'open_cashierId'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: 'open_cashierId'),
+      );
+    });
   }
 }
 
 extension DrawersQueryWhere on QueryBuilder<Drawers, Drawers, QWhereClause> {
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        includeLower: true,
+        upper: id,
+        includeUpper: true,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      );
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> idGreaterThan(int id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> idLessThan(int id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> idBetween(
@@ -368,67 +392,93 @@ extension DrawersQueryWhere on QueryBuilder<Drawers, Drawers, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> cashierIdEqualTo(
       int cashierId) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'cashierId',
-      value: [cashierId],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: 'cashierId',
+        value: [cashierId],
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> cashierIdNotEqualTo(
       int cashierId) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'cashierId',
-        upper: [cashierId],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'cashierId',
-        lower: [cashierId],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'cashierId',
-        lower: [cashierId],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'cashierId',
-        upper: [cashierId],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'cashierId',
+              lower: [],
+              includeLower: true,
+              upper: [cashierId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'cashierId',
+              lower: [cashierId],
+              includeLower: false,
+              upper: [],
+              includeUpper: true,
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'cashierId',
+              lower: [cashierId],
+              includeLower: false,
+              upper: [],
+              includeUpper: true,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'cashierId',
+              lower: [],
+              includeLower: true,
+              upper: [cashierId],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> cashierIdGreaterThan(
     int cashierId, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.greaterThan(
-      indexName: 'cashierId',
-      lower: [cashierId],
-      includeLower: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'cashierId',
+        lower: [cashierId],
+        includeLower: include,
+        upper: [],
+        includeUpper: true,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> cashierIdLessThan(
     int cashierId, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.lessThan(
-      indexName: 'cashierId',
-      upper: [cashierId],
-      includeUpper: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'cashierId',
+        lower: [],
+        includeLower: true,
+        upper: [cashierId],
+        includeUpper: include,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> cashierIdBetween(
@@ -437,77 +487,113 @@ extension DrawersQueryWhere on QueryBuilder<Drawers, Drawers, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.between(
-      indexName: 'cashierId',
-      lower: [lowerCashierId],
-      includeLower: includeLower,
-      upper: [upperCashierId],
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'cashierId',
+        lower: [lowerCashierId],
+        includeLower: includeLower,
+        upper: [upperCashierId],
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
-  QueryBuilder<Drawers, Drawers, QAfterWhereClause> openEqualTo(bool open) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'open_cashierId',
-      value: [open],
-    ));
+  QueryBuilder<Drawers, Drawers, QAfterWhereClause> openEqualToAnyCashierId(
+      bool open) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: 'open_cashierId',
+        value: [open],
+      ));
+    });
   }
 
-  QueryBuilder<Drawers, Drawers, QAfterWhereClause> openNotEqualTo(bool open) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'open_cashierId',
-        upper: [open],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'open_cashierId',
-        lower: [open],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'open_cashierId',
-        lower: [open],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'open_cashierId',
-        upper: [open],
-        includeUpper: false,
-      ));
-    }
+  QueryBuilder<Drawers, Drawers, QAfterWhereClause> openNotEqualToAnyCashierId(
+      bool open) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [],
+              includeLower: true,
+              upper: [open],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [open],
+              includeLower: false,
+              upper: [],
+              includeUpper: true,
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [open],
+              includeLower: false,
+              upper: [],
+              includeUpper: true,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [],
+              includeLower: true,
+              upper: [open],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> openCashierIdEqualTo(
       bool open, int cashierId) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'open_cashierId',
-      value: [open, cashierId],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: 'open_cashierId',
+        value: [open, cashierId],
+      ));
+    });
   }
 
-  QueryBuilder<Drawers, Drawers, QAfterWhereClause> openCashierIdNotEqualTo(
-      bool open, int cashierId) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'open_cashierId',
-        upper: [open, cashierId],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'open_cashierId',
-        lower: [open, cashierId],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'open_cashierId',
-        lower: [open, cashierId],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'open_cashierId',
-        upper: [open, cashierId],
-        includeUpper: false,
-      ));
-    }
+  QueryBuilder<Drawers, Drawers, QAfterWhereClause>
+      openEqualToCashierIdNotEqualTo(bool open, int cashierId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [open],
+              includeLower: true,
+              upper: [open, cashierId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [open, cashierId],
+              includeLower: false,
+              upper: [open],
+              includeUpper: true,
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [open, cashierId],
+              includeLower: false,
+              upper: [open],
+              includeUpper: true,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'open_cashierId',
+              lower: [open],
+              includeLower: true,
+              upper: [open, cashierId],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause>
@@ -516,11 +602,15 @@ extension DrawersQueryWhere on QueryBuilder<Drawers, Drawers, QWhereClause> {
     int cashierId, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.greaterThan(
-      indexName: 'open_cashierId',
-      lower: [open, cashierId],
-      includeLower: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'open_cashierId',
+        lower: [open, cashierId],
+        includeLower: include,
+        upper: [open],
+        includeUpper: true,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause>
@@ -529,11 +619,15 @@ extension DrawersQueryWhere on QueryBuilder<Drawers, Drawers, QWhereClause> {
     int cashierId, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.lessThan(
-      indexName: 'open_cashierId',
-      upper: [open, cashierId],
-      includeUpper: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'open_cashierId',
+        lower: [open],
+        includeLower: true,
+        upper: [open, cashierId],
+        includeUpper: include,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterWhereClause> openEqualToCashierIdBetween(
@@ -543,13 +637,15 @@ extension DrawersQueryWhere on QueryBuilder<Drawers, Drawers, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.between(
-      indexName: 'open_cashierId',
-      lower: [open, lowerCashierId],
-      includeLower: includeLower,
-      upper: [open, upperCashierId],
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'open_cashierId',
+        lower: [open, lowerCashierId],
+        includeLower: includeLower,
+        upper: [open, upperCashierId],
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -557,32 +653,38 @@ extension DrawersQueryFilter
     on QueryBuilder<Drawers, Drawers, QFilterCondition> {
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> cashierIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'cashierId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'cashierId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> cashierIdGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'cashierId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'cashierId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> cashierIdLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'cashierId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'cashierId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> cashierIdBetween(
@@ -591,60 +693,72 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'cashierId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'cashierId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       closingBalanceGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: false,
-      property: 'closingBalance',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: false,
+        property: 'closingBalance',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingBalanceLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: false,
-      property: 'closingBalance',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: false,
+        property: 'closingBalance',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingBalanceBetween(
       double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'closingBalance',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'closingBalance',
+        lower: lower,
+        includeLower: false,
+        upper: upper,
+        includeUpper: false,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       closingDateTimeIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'closingDateTime',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'closingDateTime',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'closingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'closingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -653,12 +767,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'closingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'closingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeLessThan(
@@ -666,12 +782,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'closingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'closingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeBetween(
@@ -681,14 +799,16 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'closingDateTime',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'closingDateTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -696,78 +816,94 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'closingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'closingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'closingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'closingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'closingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'closingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> closingDateTimeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'closingDateTime',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'closingDateTime',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> csSaleCountIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'csSaleCount',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'csSaleCount',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> csSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'csSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'csSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> csSaleCountGreaterThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'csSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'csSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> csSaleCountLessThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'csSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'csSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> csSaleCountBetween(
@@ -776,42 +912,50 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'csSaleCount',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'csSaleCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> idGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> idLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> idBetween(
@@ -820,27 +964,33 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> incompleteSaleIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'incompleteSale',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'incompleteSale',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> incompleteSaleEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'incompleteSale',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'incompleteSale',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -848,22 +998,26 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'incompleteSale',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'incompleteSale',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> incompleteSaleLessThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'incompleteSale',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'incompleteSale',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> incompleteSaleBetween(
@@ -872,49 +1026,59 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'incompleteSale',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'incompleteSale',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nrSaleCountIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'nrSaleCount',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'nrSaleCount',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nrSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'nrSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'nrSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nrSaleCountGreaterThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'nrSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'nrSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nrSaleCountLessThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'nrSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'nrSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nrSaleCountBetween(
@@ -923,49 +1087,59 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'nrSaleCount',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'nrSaleCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nsSaleCountIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'nsSaleCount',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'nsSaleCount',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nsSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'nsSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'nsSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nsSaleCountGreaterThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'nsSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'nsSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nsSaleCountLessThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'nsSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'nsSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> nsSaleCountBetween(
@@ -974,68 +1148,82 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'nsSaleCount',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'nsSaleCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'open',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'open',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       openingBalanceGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: false,
-      property: 'openingBalance',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: false,
+        property: 'openingBalance',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingBalanceLessThan(
       double value) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: false,
-      property: 'openingBalance',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: false,
+        property: 'openingBalance',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingBalanceBetween(
       double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'openingBalance',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'openingBalance',
+        lower: lower,
+        includeLower: false,
+        upper: upper,
+        includeUpper: false,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       openingDateTimeIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'openingDateTime',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'openingDateTime',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'openingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'openingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -1044,12 +1232,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'openingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'openingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeLessThan(
@@ -1057,12 +1247,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'openingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'openingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeBetween(
@@ -1072,14 +1264,16 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'openingDateTime',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'openingDateTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -1087,57 +1281,69 @@ extension DrawersQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'openingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'openingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'openingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'openingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'openingDateTime',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'openingDateTime',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> openingDateTimeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'openingDateTime',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'openingDateTime',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       otherTransactionsIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'otherTransactions',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'otherTransactions',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       otherTransactionsEqualTo(int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'otherTransactions',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'otherTransactions',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -1145,11 +1351,13 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'otherTransactions',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'otherTransactions',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -1157,11 +1365,13 @@ extension DrawersQueryFilter
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'otherTransactions',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'otherTransactions',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
@@ -1171,30 +1381,36 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'otherTransactions',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'otherTransactions',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'paymentMode',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'paymentMode',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'paymentMode',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'paymentMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeGreaterThan(
@@ -1202,12 +1418,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'paymentMode',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'paymentMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeLessThan(
@@ -1215,12 +1433,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'paymentMode',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'paymentMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeBetween(
@@ -1230,92 +1450,110 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'paymentMode',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'paymentMode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'paymentMode',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'paymentMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'paymentMode',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'paymentMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'paymentMode',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'paymentMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> paymentModeMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'paymentMode',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'paymentMode',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> psSaleCountIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'psSaleCount',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'psSaleCount',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> psSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'psSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'psSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> psSaleCountGreaterThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'psSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'psSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> psSaleCountLessThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'psSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'psSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> psSaleCountBetween(
@@ -1324,121 +1562,147 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'psSaleCount',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'psSaleCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalCsSaleIncomeIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'totalCsSaleIncome',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'totalCsSaleIncome',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalCsSaleIncomeGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: false,
-      property: 'totalCsSaleIncome',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: false,
+        property: 'totalCsSaleIncome',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalCsSaleIncomeLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: false,
-      property: 'totalCsSaleIncome',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: false,
+        property: 'totalCsSaleIncome',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalCsSaleIncomeBetween(double? lower, double? upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'totalCsSaleIncome',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'totalCsSaleIncome',
+        lower: lower,
+        includeLower: false,
+        upper: upper,
+        includeUpper: false,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalNsSaleIncomeIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'totalNsSaleIncome',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'totalNsSaleIncome',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalNsSaleIncomeGreaterThan(double? value) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: false,
-      property: 'totalNsSaleIncome',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: false,
+        property: 'totalNsSaleIncome',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalNsSaleIncomeLessThan(double? value) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: false,
-      property: 'totalNsSaleIncome',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: false,
+        property: 'totalNsSaleIncome',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition>
       totalNsSaleIncomeBetween(double? lower, double? upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'totalNsSaleIncome',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'totalNsSaleIncome',
+        lower: lower,
+        includeLower: false,
+        upper: upper,
+        includeUpper: false,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> trSaleCountIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'trSaleCount',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'trSaleCount',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> trSaleCountEqualTo(
       int? value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'trSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'trSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> trSaleCountGreaterThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'trSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'trSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> trSaleCountLessThan(
     int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'trSaleCount',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'trSaleCount',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> trSaleCountBetween(
@@ -1447,30 +1711,36 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'trSaleCount',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'trSaleCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameIsNull() {
-    return addFilterConditionInternal(const FilterCondition.isNull(
-      property: 'tradeName',
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'tradeName',
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'tradeName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'tradeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameGreaterThan(
@@ -1478,12 +1748,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'tradeName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'tradeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameLessThan(
@@ -1491,12 +1763,14 @@ extension DrawersQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'tradeName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'tradeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameBetween(
@@ -1506,56 +1780,66 @@ extension DrawersQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'tradeName',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'tradeName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'tradeName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'tradeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'tradeName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'tradeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'tradeName',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'tradeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterFilterCondition> tradeNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'tradeName',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'tradeName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 }
 
@@ -1564,437 +1848,647 @@ extension DrawersQueryLinks
 
 extension DrawersQueryWhereSortBy on QueryBuilder<Drawers, Drawers, QSortBy> {
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByCashierId() {
-    return addSortByInternal('cashierId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('cashierId', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByCashierIdDesc() {
-    return addSortByInternal('cashierId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('cashierId', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByClosingBalance() {
-    return addSortByInternal('closingBalance', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingBalance', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByClosingBalanceDesc() {
-    return addSortByInternal('closingBalance', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingBalance', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByClosingDateTime() {
-    return addSortByInternal('closingDateTime', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingDateTime', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByClosingDateTimeDesc() {
-    return addSortByInternal('closingDateTime', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingDateTime', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByCsSaleCount() {
-    return addSortByInternal('csSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('csSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByCsSaleCountDesc() {
-    return addSortByInternal('csSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('csSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByIncompleteSale() {
-    return addSortByInternal('incompleteSale', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('incompleteSale', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByIncompleteSaleDesc() {
-    return addSortByInternal('incompleteSale', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('incompleteSale', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByNrSaleCount() {
-    return addSortByInternal('nrSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nrSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByNrSaleCountDesc() {
-    return addSortByInternal('nrSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nrSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByNsSaleCount() {
-    return addSortByInternal('nsSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nsSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByNsSaleCountDesc() {
-    return addSortByInternal('nsSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nsSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOpen() {
-    return addSortByInternal('open', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('open', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOpenDesc() {
-    return addSortByInternal('open', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('open', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOpeningBalance() {
-    return addSortByInternal('openingBalance', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingBalance', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOpeningBalanceDesc() {
-    return addSortByInternal('openingBalance', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingBalance', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOpeningDateTime() {
-    return addSortByInternal('openingDateTime', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingDateTime', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOpeningDateTimeDesc() {
-    return addSortByInternal('openingDateTime', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingDateTime', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOtherTransactions() {
-    return addSortByInternal('otherTransactions', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('otherTransactions', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByOtherTransactionsDesc() {
-    return addSortByInternal('otherTransactions', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('otherTransactions', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByPaymentMode() {
-    return addSortByInternal('paymentMode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentMode', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByPaymentModeDesc() {
-    return addSortByInternal('paymentMode', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentMode', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByPsSaleCount() {
-    return addSortByInternal('psSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('psSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByPsSaleCountDesc() {
-    return addSortByInternal('psSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('psSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTotalCsSaleIncome() {
-    return addSortByInternal('totalCsSaleIncome', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalCsSaleIncome', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTotalCsSaleIncomeDesc() {
-    return addSortByInternal('totalCsSaleIncome', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalCsSaleIncome', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTotalNsSaleIncome() {
-    return addSortByInternal('totalNsSaleIncome', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalNsSaleIncome', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTotalNsSaleIncomeDesc() {
-    return addSortByInternal('totalNsSaleIncome', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalNsSaleIncome', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTrSaleCount() {
-    return addSortByInternal('trSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('trSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTrSaleCountDesc() {
-    return addSortByInternal('trSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('trSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTradeName() {
-    return addSortByInternal('tradeName', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('tradeName', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> sortByTradeNameDesc() {
-    return addSortByInternal('tradeName', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('tradeName', Sort.desc);
+    });
   }
 }
 
 extension DrawersQueryWhereSortThenBy
     on QueryBuilder<Drawers, Drawers, QSortThenBy> {
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByCashierId() {
-    return addSortByInternal('cashierId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('cashierId', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByCashierIdDesc() {
-    return addSortByInternal('cashierId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('cashierId', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByClosingBalance() {
-    return addSortByInternal('closingBalance', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingBalance', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByClosingBalanceDesc() {
-    return addSortByInternal('closingBalance', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingBalance', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByClosingDateTime() {
-    return addSortByInternal('closingDateTime', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingDateTime', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByClosingDateTimeDesc() {
-    return addSortByInternal('closingDateTime', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('closingDateTime', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByCsSaleCount() {
-    return addSortByInternal('csSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('csSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByCsSaleCountDesc() {
-    return addSortByInternal('csSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('csSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByIncompleteSale() {
-    return addSortByInternal('incompleteSale', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('incompleteSale', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByIncompleteSaleDesc() {
-    return addSortByInternal('incompleteSale', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('incompleteSale', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByNrSaleCount() {
-    return addSortByInternal('nrSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nrSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByNrSaleCountDesc() {
-    return addSortByInternal('nrSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nrSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByNsSaleCount() {
-    return addSortByInternal('nsSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nsSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByNsSaleCountDesc() {
-    return addSortByInternal('nsSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nsSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOpen() {
-    return addSortByInternal('open', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('open', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOpenDesc() {
-    return addSortByInternal('open', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('open', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOpeningBalance() {
-    return addSortByInternal('openingBalance', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingBalance', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOpeningBalanceDesc() {
-    return addSortByInternal('openingBalance', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingBalance', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOpeningDateTime() {
-    return addSortByInternal('openingDateTime', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingDateTime', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOpeningDateTimeDesc() {
-    return addSortByInternal('openingDateTime', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('openingDateTime', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOtherTransactions() {
-    return addSortByInternal('otherTransactions', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('otherTransactions', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByOtherTransactionsDesc() {
-    return addSortByInternal('otherTransactions', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('otherTransactions', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByPaymentMode() {
-    return addSortByInternal('paymentMode', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentMode', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByPaymentModeDesc() {
-    return addSortByInternal('paymentMode', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('paymentMode', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByPsSaleCount() {
-    return addSortByInternal('psSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('psSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByPsSaleCountDesc() {
-    return addSortByInternal('psSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('psSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTotalCsSaleIncome() {
-    return addSortByInternal('totalCsSaleIncome', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalCsSaleIncome', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTotalCsSaleIncomeDesc() {
-    return addSortByInternal('totalCsSaleIncome', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalCsSaleIncome', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTotalNsSaleIncome() {
-    return addSortByInternal('totalNsSaleIncome', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalNsSaleIncome', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTotalNsSaleIncomeDesc() {
-    return addSortByInternal('totalNsSaleIncome', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totalNsSaleIncome', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTrSaleCount() {
-    return addSortByInternal('trSaleCount', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('trSaleCount', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTrSaleCountDesc() {
-    return addSortByInternal('trSaleCount', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('trSaleCount', Sort.desc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTradeName() {
-    return addSortByInternal('tradeName', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('tradeName', Sort.asc);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QAfterSortBy> thenByTradeNameDesc() {
-    return addSortByInternal('tradeName', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('tradeName', Sort.desc);
+    });
   }
 }
 
 extension DrawersQueryWhereDistinct
     on QueryBuilder<Drawers, Drawers, QDistinct> {
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByCashierId() {
-    return addDistinctByInternal('cashierId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('cashierId');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByClosingBalance() {
-    return addDistinctByInternal('closingBalance');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('closingBalance');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByClosingDateTime(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('closingDateTime',
-        caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('closingDateTime',
+          caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByCsSaleCount() {
-    return addDistinctByInternal('csSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('csSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByIncompleteSale() {
-    return addDistinctByInternal('incompleteSale');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('incompleteSale');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByNrSaleCount() {
-    return addDistinctByInternal('nrSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('nrSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByNsSaleCount() {
-    return addDistinctByInternal('nsSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('nsSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByOpen() {
-    return addDistinctByInternal('open');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('open');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByOpeningBalance() {
-    return addDistinctByInternal('openingBalance');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('openingBalance');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByOpeningDateTime(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('openingDateTime',
-        caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('openingDateTime',
+          caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByOtherTransactions() {
-    return addDistinctByInternal('otherTransactions');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('otherTransactions');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByPaymentMode(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('paymentMode', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('paymentMode', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByPsSaleCount() {
-    return addDistinctByInternal('psSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('psSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByTotalCsSaleIncome() {
-    return addDistinctByInternal('totalCsSaleIncome');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('totalCsSaleIncome');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByTotalNsSaleIncome() {
-    return addDistinctByInternal('totalNsSaleIncome');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('totalNsSaleIncome');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByTrSaleCount() {
-    return addDistinctByInternal('trSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('trSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, Drawers, QDistinct> distinctByTradeName(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('tradeName', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('tradeName', caseSensitive: caseSensitive);
+    });
   }
 }
 
 extension DrawersQueryProperty
     on QueryBuilder<Drawers, Drawers, QQueryProperty> {
   QueryBuilder<Drawers, int, QQueryOperations> cashierIdProperty() {
-    return addPropertyNameInternal('cashierId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('cashierId');
+    });
   }
 
   QueryBuilder<Drawers, double, QQueryOperations> closingBalanceProperty() {
-    return addPropertyNameInternal('closingBalance');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('closingBalance');
+    });
   }
 
   QueryBuilder<Drawers, String?, QQueryOperations> closingDateTimeProperty() {
-    return addPropertyNameInternal('closingDateTime');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('closingDateTime');
+    });
   }
 
   QueryBuilder<Drawers, int?, QQueryOperations> csSaleCountProperty() {
-    return addPropertyNameInternal('csSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('csSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('id');
+    });
   }
 
   QueryBuilder<Drawers, int?, QQueryOperations> incompleteSaleProperty() {
-    return addPropertyNameInternal('incompleteSale');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('incompleteSale');
+    });
   }
 
   QueryBuilder<Drawers, int?, QQueryOperations> nrSaleCountProperty() {
-    return addPropertyNameInternal('nrSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('nrSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, int?, QQueryOperations> nsSaleCountProperty() {
-    return addPropertyNameInternal('nsSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('nsSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, bool, QQueryOperations> openProperty() {
-    return addPropertyNameInternal('open');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('open');
+    });
   }
 
   QueryBuilder<Drawers, double, QQueryOperations> openingBalanceProperty() {
-    return addPropertyNameInternal('openingBalance');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('openingBalance');
+    });
   }
 
   QueryBuilder<Drawers, String?, QQueryOperations> openingDateTimeProperty() {
-    return addPropertyNameInternal('openingDateTime');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('openingDateTime');
+    });
   }
 
   QueryBuilder<Drawers, int?, QQueryOperations> otherTransactionsProperty() {
-    return addPropertyNameInternal('otherTransactions');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('otherTransactions');
+    });
   }
 
   QueryBuilder<Drawers, String?, QQueryOperations> paymentModeProperty() {
-    return addPropertyNameInternal('paymentMode');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('paymentMode');
+    });
   }
 
   QueryBuilder<Drawers, int?, QQueryOperations> psSaleCountProperty() {
-    return addPropertyNameInternal('psSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('psSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, double?, QQueryOperations> totalCsSaleIncomeProperty() {
-    return addPropertyNameInternal('totalCsSaleIncome');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('totalCsSaleIncome');
+    });
   }
 
   QueryBuilder<Drawers, double?, QQueryOperations> totalNsSaleIncomeProperty() {
-    return addPropertyNameInternal('totalNsSaleIncome');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('totalNsSaleIncome');
+    });
   }
 
   QueryBuilder<Drawers, int?, QQueryOperations> trSaleCountProperty() {
-    return addPropertyNameInternal('trSaleCount');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('trSaleCount');
+    });
   }
 
   QueryBuilder<Drawers, String?, QQueryOperations> tradeNameProperty() {
-    return addPropertyNameInternal('tradeName');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('tradeName');
+    });
   }
 }

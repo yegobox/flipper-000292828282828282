@@ -7,7 +7,11 @@ part of flipper_models;
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers, inference_failure_on_function_invocation
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
+// constant_identifier_names, invalid_use_of_protected_member,
+// unnecessary_cast, unused_local_variable,
+// no_leading_underscores_for_local_identifiers,
+// inference_failure_on_function_invocation, prefer_const_constructors
 
 extension GetSubscriptionCollection on Isar {
   IsarCollection<Subscription> get subscriptions => getCollection();
@@ -77,10 +81,10 @@ void _subscriptionSerializeNative(
       IsarBinaryWriter.utf8Encoder.convert(object.lastBillingDate);
   final nextBillingDate$Bytes =
       IsarBinaryWriter.utf8Encoder.convert(object.nextBillingDate);
-  final size = staticSize +
+  final size = (staticSize +
       (descriptor$Bytes.length) +
       (lastBillingDate$Bytes.length) +
-      (nextBillingDate$Bytes.length);
+      (nextBillingDate$Bytes.length)) as int;
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
 
@@ -201,12 +205,17 @@ void _subscriptionAttachLinks(
 extension SubscriptionQueryWhereSort
     on QueryBuilder<Subscription, Subscription, QWhere> {
   QueryBuilder<Subscription, Subscription, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhere> anyUserId() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'userId'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: 'userId'),
+      );
+    });
   }
 }
 
@@ -214,44 +223,56 @@ extension SubscriptionQueryWhere
     on QueryBuilder<Subscription, Subscription, QWhereClause> {
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> idEqualTo(
       int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        includeLower: true,
+        upper: id,
+        includeUpper: true,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> idNotEqualTo(
       int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      );
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> idGreaterThan(
       int id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> idLessThan(int id,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> idBetween(
@@ -260,67 +281,93 @@ extension SubscriptionQueryWhere
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> userIdEqualTo(
       int userId) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'userId',
-      value: [userId],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: 'userId',
+        value: [userId],
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> userIdNotEqualTo(
       int userId) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'userId',
-        upper: [userId],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'userId',
-        lower: [userId],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'userId',
-        lower: [userId],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'userId',
-        upper: [userId],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'userId',
+              lower: [],
+              includeLower: true,
+              upper: [userId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+              includeUpper: true,
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+              includeUpper: true,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: 'userId',
+              lower: [],
+              includeLower: true,
+              upper: [userId],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> userIdGreaterThan(
     int userId, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.greaterThan(
-      indexName: 'userId',
-      lower: [userId],
-      includeLower: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'userId',
+        lower: [userId],
+        includeLower: include,
+        upper: [],
+        includeUpper: true,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> userIdLessThan(
     int userId, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.lessThan(
-      indexName: 'userId',
-      upper: [userId],
-      includeUpper: include,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'userId',
+        lower: [],
+        includeLower: true,
+        upper: [userId],
+        includeUpper: include,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterWhereClause> userIdBetween(
@@ -329,13 +376,15 @@ extension SubscriptionQueryWhere
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IndexWhereClause.between(
-      indexName: 'userId',
-      lower: [lowerUserId],
-      includeLower: includeLower,
-      upper: [upperUserId],
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: 'userId',
+        lower: [lowerUserId],
+        includeLower: includeLower,
+        upper: [upperUserId],
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -346,11 +395,13 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'descriptor',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'descriptor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -359,12 +410,14 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'descriptor',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'descriptor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -373,12 +426,14 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'descriptor',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'descriptor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -389,14 +444,16 @@ extension SubscriptionQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'descriptor',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'descriptor',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -404,11 +461,13 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'descriptor',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'descriptor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -416,59 +475,71 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'descriptor',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'descriptor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       descriptorContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'descriptor',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'descriptor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       descriptorMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'descriptor',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'descriptor',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> idEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> idGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> idLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> idBetween(
@@ -477,21 +548,25 @@ extension SubscriptionQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       intervalEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'interval',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'interval',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -499,11 +574,13 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'interval',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'interval',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -511,11 +588,13 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'interval',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'interval',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -525,13 +604,15 @@ extension SubscriptionQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'interval',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'interval',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -539,11 +620,13 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'lastBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'lastBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -552,12 +635,14 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'lastBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'lastBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -566,12 +651,14 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'lastBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'lastBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -582,14 +669,16 @@ extension SubscriptionQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'lastBillingDate',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'lastBillingDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -597,11 +686,13 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'lastBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'lastBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -609,29 +700,35 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'lastBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'lastBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       lastBillingDateContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'lastBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'lastBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       lastBillingDateMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'lastBillingDate',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'lastBillingDate',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -639,11 +736,13 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'nextBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'nextBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -652,12 +751,14 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'nextBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'nextBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -666,12 +767,14 @@ extension SubscriptionQueryFilter
     bool caseSensitive = true,
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'nextBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'nextBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -682,14 +785,16 @@ extension SubscriptionQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'nextBillingDate',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'nextBillingDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -697,11 +802,13 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.startsWith(
-      property: 'nextBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'nextBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -709,66 +816,80 @@ extension SubscriptionQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.endsWith(
-      property: 'nextBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'nextBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       nextBillingDateContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.contains(
-      property: 'nextBillingDate',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'nextBillingDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       nextBillingDateMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition.matches(
-      property: 'nextBillingDate',
-      wildcard: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'nextBillingDate',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       recurringGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: false,
-      property: 'recurring',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: false,
+        property: 'recurring',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       recurringLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: false,
-      property: 'recurring',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: false,
+        property: 'recurring',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
       recurringBetween(double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'recurring',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'recurring',
+        lower: lower,
+        includeLower: false,
+        upper: upper,
+        includeUpper: false,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> userIdEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition.equalTo(
-      property: 'userId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'userId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -776,11 +897,13 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.greaterThan(
-      include: include,
-      property: 'userId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'userId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition>
@@ -788,11 +911,13 @@ extension SubscriptionQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition.lessThan(
-      include: include,
-      property: 'userId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'userId',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> userIdBetween(
@@ -801,13 +926,15 @@ extension SubscriptionQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'userId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'userId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -815,131 +942,185 @@ extension SubscriptionQueryLinks
     on QueryBuilder<Subscription, Subscription, QFilterCondition> {
   QueryBuilder<Subscription, Subscription, QAfterFilterCondition> features(
       FilterQuery<Feature> q) {
-    return linkInternal(
-      isar.features,
-      q,
-      'features',
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.link(
+        query.collection.isar.features,
+        q,
+        'features',
+      );
+    });
   }
 }
 
 extension SubscriptionQueryWhereSortBy
     on QueryBuilder<Subscription, Subscription, QSortBy> {
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByDescriptor() {
-    return addSortByInternal('descriptor', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('descriptor', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       sortByDescriptorDesc() {
-    return addSortByInternal('descriptor', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('descriptor', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByInterval() {
-    return addSortByInternal('interval', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByIntervalDesc() {
-    return addSortByInternal('interval', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       sortByLastBillingDate() {
-    return addSortByInternal('lastBillingDate', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('lastBillingDate', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       sortByLastBillingDateDesc() {
-    return addSortByInternal('lastBillingDate', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('lastBillingDate', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       sortByNextBillingDate() {
-    return addSortByInternal('nextBillingDate', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nextBillingDate', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       sortByNextBillingDateDesc() {
-    return addSortByInternal('nextBillingDate', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nextBillingDate', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByRecurring() {
-    return addSortByInternal('recurring', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('recurring', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByRecurringDesc() {
-    return addSortByInternal('recurring', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('recurring', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByUserId() {
-    return addSortByInternal('userId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> sortByUserIdDesc() {
-    return addSortByInternal('userId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.desc);
+    });
   }
 }
 
 extension SubscriptionQueryWhereSortThenBy
     on QueryBuilder<Subscription, Subscription, QSortThenBy> {
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByDescriptor() {
-    return addSortByInternal('descriptor', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('descriptor', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       thenByDescriptorDesc() {
-    return addSortByInternal('descriptor', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('descriptor', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByInterval() {
-    return addSortByInternal('interval', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByIntervalDesc() {
-    return addSortByInternal('interval', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('interval', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       thenByLastBillingDate() {
-    return addSortByInternal('lastBillingDate', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('lastBillingDate', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       thenByLastBillingDateDesc() {
-    return addSortByInternal('lastBillingDate', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('lastBillingDate', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       thenByNextBillingDate() {
-    return addSortByInternal('nextBillingDate', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nextBillingDate', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy>
       thenByNextBillingDateDesc() {
-    return addSortByInternal('nextBillingDate', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('nextBillingDate', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByRecurring() {
-    return addSortByInternal('recurring', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('recurring', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByRecurringDesc() {
-    return addSortByInternal('recurring', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('recurring', Sort.desc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByUserId() {
-    return addSortByInternal('userId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.asc);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QAfterSortBy> thenByUserIdDesc() {
-    return addSortByInternal('userId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('userId', Sort.desc);
+    });
   }
 }
 
@@ -947,63 +1128,89 @@ extension SubscriptionQueryWhereDistinct
     on QueryBuilder<Subscription, Subscription, QDistinct> {
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByDescriptor(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('descriptor', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('descriptor', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByInterval() {
-    return addDistinctByInternal('interval');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('interval');
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByLastBillingDate(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('lastBillingDate',
-        caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('lastBillingDate',
+          caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByNextBillingDate(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('nextBillingDate',
-        caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('nextBillingDate',
+          caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByRecurring() {
-    return addDistinctByInternal('recurring');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('recurring');
+    });
   }
 
   QueryBuilder<Subscription, Subscription, QDistinct> distinctByUserId() {
-    return addDistinctByInternal('userId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('userId');
+    });
   }
 }
 
 extension SubscriptionQueryProperty
     on QueryBuilder<Subscription, Subscription, QQueryProperty> {
   QueryBuilder<Subscription, String, QQueryOperations> descriptorProperty() {
-    return addPropertyNameInternal('descriptor');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('descriptor');
+    });
   }
 
   QueryBuilder<Subscription, int, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('id');
+    });
   }
 
   QueryBuilder<Subscription, int, QQueryOperations> intervalProperty() {
-    return addPropertyNameInternal('interval');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('interval');
+    });
   }
 
   QueryBuilder<Subscription, String, QQueryOperations>
       lastBillingDateProperty() {
-    return addPropertyNameInternal('lastBillingDate');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('lastBillingDate');
+    });
   }
 
   QueryBuilder<Subscription, String, QQueryOperations>
       nextBillingDateProperty() {
-    return addPropertyNameInternal('nextBillingDate');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('nextBillingDate');
+    });
   }
 
   QueryBuilder<Subscription, double, QQueryOperations> recurringProperty() {
-    return addPropertyNameInternal('recurring');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('recurring');
+    });
   }
 
   QueryBuilder<Subscription, int, QQueryOperations> userIdProperty() {
-    return addPropertyNameInternal('userId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('userId');
+    });
   }
 }

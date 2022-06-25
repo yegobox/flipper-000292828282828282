@@ -804,7 +804,7 @@ class IsarAPI implements IsarApiInterface {
     }
 
     Business? business = await isar.writeTxn(() {
-      return isar.businesss.get(fromJson(response.body).id);
+      return isar.businesss.get(fromJson(response.body).id!);
     });
 
     if (business == null) {
@@ -968,6 +968,7 @@ class IsarAPI implements IsarApiInterface {
     ProxyService.box.remove(key: 'businessId');
     loginInfo.isLoggedIn = false;
     loginInfo.needSignUp = false;
+
     FirebaseAuth.instance.signOut();
     return await Future.value(true);
   }
@@ -984,14 +985,12 @@ class IsarAPI implements IsarApiInterface {
       ),
     );
     if (response.statusCode == 200) {
-      for (Business business
-          in syncFFromJson(response.body).tenants.first.businesses) {
-        log.i(business.toJson());
-      }
+      log.i(syncFFromJson(response.body).tenants.first.businesses.length);
       await isar.writeTxn(() async {
         return isar.businesss
             .putAll(syncFFromJson(response.body).tenants.first.businesses);
       });
+      log.i(syncFFromJson(response.body).tenants.first.branches.length);
       await isar.writeTxn(() async {
         return isar.branchs
             .putAll(syncFFromJson(response.body).tenants.first.branches);
@@ -1173,7 +1172,11 @@ class IsarAPI implements IsarApiInterface {
   @override
   Future<List<Order>> tickets() async {
     return isar.writeTxn(() {
-      return isar.orders.where().statusEqualTo(parkedStatus).build().findAll();
+      return isar.orders
+          .where()
+          .statusBranchIdEqualTo(parkedStatus, ProxyService.box.getBranchId()!)
+          .build()
+          .findAll();
     });
   }
 

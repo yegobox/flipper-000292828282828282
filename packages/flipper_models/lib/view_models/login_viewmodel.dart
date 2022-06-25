@@ -68,7 +68,7 @@ class LoginViewModel extends FormViewModel {
       await ProxyService.isarApi.login(
         userPhone: pin.phoneNumber,
       );
-      await appService.appInit();
+      // await appService.appInit();
       await FirebaseAuth.instance.signInAnonymously();
       final auth = FirebaseAuth.instance;
       if (auth.currentUser != null) {

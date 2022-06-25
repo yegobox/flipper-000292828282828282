@@ -63,7 +63,7 @@ class Business {
     this.taxEnabled,
     this.taxServerUrl,
   });
-  late int id = Isar.autoIncrement;
+  int? id;
   String? name;
   String? currency;
   String? categoryId;

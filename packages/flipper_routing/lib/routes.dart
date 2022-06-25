@@ -260,3 +260,7 @@ class AppSetup {
 
 // TODO:will use this for data mining etc..
 // https://www.elastic.co/webinars/getting-started-elasticsearch
+// To add platforms, run `flutter create -t plugin --platforms <platforms> .` under aurora.
+
+//TODO:this bellow helped me to understand use of c++ in flutter using ffi
+// https://levelup.gitconnected.com/port-an-existing-c-c-app-to-flutter-with-dart-ffi-8dc401a69fd7

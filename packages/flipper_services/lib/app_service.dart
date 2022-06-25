@@ -105,10 +105,11 @@ class AppService with ReactiveServiceMixin {
     List<isar.Business> business =
         await ProxyService.isarApi.businesses(userId: userId!);
     log.i("AAAA::" + business.length.toString());
+    log.i("AAAA::" + business.first.id.toString());
     if (business.length == 1) {
       ProxyService.appService.setBusiness(business: business.first);
       List<isar.Branch> branches =
-          await ProxyService.isarApi.branches(businessId: business.first.id);
+          await ProxyService.isarApi.branches(businessId: business.first.id!);
       if (branches.length > 1) {
         throw LoginChoicesException(term: "choose where to go");
       }
