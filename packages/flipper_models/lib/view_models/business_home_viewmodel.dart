@@ -705,10 +705,12 @@ class BusinessHomeViewModel extends ReactiveViewModel {
 
   void setDefaultBusiness({required Business business}) {
     app.setBusiness(business: business);
+    ProxyService.isarApi.update(data: business..isDefault = true);
     ProxyService.box.write(key: 'businessId', value: business.id);
   }
 
   void setDefaultBranch({required Branch branch}) {
+    ProxyService.isarApi.update(data: branch..isDefault = true);
     ProxyService.box.write(key: 'branchId', value: branch.id);
   }
 

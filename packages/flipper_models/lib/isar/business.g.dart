@@ -20,7 +20,7 @@ extension GetBusinessCollection on Isar {
 const BusinessSchema = CollectionSchema(
   name: 'Business',
   schema:
-      '{"name":"Business","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"adrs","type":"String"},{"name":"backUpEnabled","type":"Bool"},{"name":"backupFileId","type":"String"},{"name":"bhfId","type":"String"},{"name":"businessUrl","type":"String"},{"name":"categoryId","type":"String"},{"name":"channels","type":"StringList"},{"name":"chatUid","type":"String"},{"name":"country","type":"String"},{"name":"createdAt","type":"String"},{"name":"currency","type":"String"},{"name":"deviceToken","type":"String"},{"name":"dvcSrlNo","type":"String"},{"name":"email","type":"String"},{"name":"firstName","type":"String"},{"name":"fullName","type":"String"},{"name":"hexColor","type":"String"},{"name":"imageUrl","type":"String"},{"name":"isLastSubscriptionPaymentSucceeded","type":"Bool"},{"name":"lastDbBackup","type":"String"},{"name":"lastName","type":"String"},{"name":"lastSeen","type":"Long"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"metadata","type":"String"},{"name":"name","type":"String"},{"name":"nextBillingDate","type":"String"},{"name":"previousBillingDate","type":"String"},{"name":"role","type":"String"},{"name":"subscriptionPlan","type":"String"},{"name":"table","type":"String"},{"name":"taxEnabled","type":"Bool"},{"name":"taxServerUrl","type":"String"},{"name":"timeZone","type":"String"},{"name":"tinNumber","type":"Long"},{"name":"type","type":"String"},{"name":"typeId","type":"String"},{"name":"userId","type":"String"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Hash","caseSensitive":true}]}],"links":[]}',
+      '{"name":"Business","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"adrs","type":"String"},{"name":"backUpEnabled","type":"Bool"},{"name":"backupFileId","type":"String"},{"name":"bhfId","type":"String"},{"name":"businessUrl","type":"String"},{"name":"categoryId","type":"String"},{"name":"channels","type":"StringList"},{"name":"chatUid","type":"String"},{"name":"country","type":"String"},{"name":"createdAt","type":"String"},{"name":"currency","type":"String"},{"name":"deviceToken","type":"String"},{"name":"dvcSrlNo","type":"String"},{"name":"email","type":"String"},{"name":"firstName","type":"String"},{"name":"fullName","type":"String"},{"name":"hexColor","type":"String"},{"name":"imageUrl","type":"String"},{"name":"isDefault","type":"Bool"},{"name":"isLastSubscriptionPaymentSucceeded","type":"Bool"},{"name":"lastDbBackup","type":"String"},{"name":"lastName","type":"String"},{"name":"lastSeen","type":"Long"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"metadata","type":"String"},{"name":"name","type":"String"},{"name":"nextBillingDate","type":"String"},{"name":"previousBillingDate","type":"String"},{"name":"role","type":"String"},{"name":"subscriptionPlan","type":"String"},{"name":"table","type":"String"},{"name":"taxEnabled","type":"Bool"},{"name":"taxServerUrl","type":"String"},{"name":"timeZone","type":"String"},{"name":"tinNumber","type":"Long"},{"name":"type","type":"String"},{"name":"typeId","type":"String"},{"name":"userId","type":"String"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Hash","caseSensitive":true}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'active': 0,
@@ -42,26 +42,27 @@ const BusinessSchema = CollectionSchema(
     'fullName': 16,
     'hexColor': 17,
     'imageUrl': 18,
-    'isLastSubscriptionPaymentSucceeded': 19,
-    'lastDbBackup': 20,
-    'lastName': 21,
-    'lastSeen': 22,
-    'latitude': 23,
-    'longitude': 24,
-    'metadata': 25,
-    'name': 26,
-    'nextBillingDate': 27,
-    'previousBillingDate': 28,
-    'role': 29,
-    'subscriptionPlan': 30,
-    'table': 31,
-    'taxEnabled': 32,
-    'taxServerUrl': 33,
-    'timeZone': 34,
-    'tinNumber': 35,
-    'type': 36,
-    'typeId': 37,
-    'userId': 38
+    'isDefault': 19,
+    'isLastSubscriptionPaymentSucceeded': 20,
+    'lastDbBackup': 21,
+    'lastName': 22,
+    'lastSeen': 23,
+    'latitude': 24,
+    'longitude': 25,
+    'metadata': 26,
+    'name': 27,
+    'nextBillingDate': 28,
+    'previousBillingDate': 29,
+    'role': 30,
+    'subscriptionPlan': 31,
+    'table': 32,
+    'taxEnabled': 33,
+    'taxServerUrl': 34,
+    'timeZone': 35,
+    'tinNumber': 36,
+    'type': 37,
+    'typeId': 38,
+    'userId': 39
   },
   listProperties: {'channels'},
   indexIds: {'userId': 0},
@@ -343,26 +344,27 @@ void _businessSerializeNative(
   writer.writeBytes(offsets[16], fullName$Bytes);
   writer.writeBytes(offsets[17], hexColor$Bytes);
   writer.writeBytes(offsets[18], imageUrl$Bytes);
-  writer.writeBool(offsets[19], object.isLastSubscriptionPaymentSucceeded);
-  writer.writeBytes(offsets[20], lastDbBackup$Bytes);
-  writer.writeBytes(offsets[21], lastName$Bytes);
-  writer.writeLong(offsets[22], object.lastSeen);
-  writer.writeBytes(offsets[23], latitude$Bytes);
-  writer.writeBytes(offsets[24], longitude$Bytes);
-  writer.writeBytes(offsets[25], metadata$Bytes);
-  writer.writeBytes(offsets[26], name$Bytes);
-  writer.writeBytes(offsets[27], nextBillingDate$Bytes);
-  writer.writeBytes(offsets[28], previousBillingDate$Bytes);
-  writer.writeBytes(offsets[29], role$Bytes);
-  writer.writeBytes(offsets[30], subscriptionPlan$Bytes);
-  writer.writeBytes(offsets[31], table$Bytes);
-  writer.writeBool(offsets[32], object.taxEnabled);
-  writer.writeBytes(offsets[33], taxServerUrl$Bytes);
-  writer.writeBytes(offsets[34], timeZone$Bytes);
-  writer.writeLong(offsets[35], object.tinNumber);
-  writer.writeBytes(offsets[36], type$Bytes);
-  writer.writeBytes(offsets[37], typeId$Bytes);
-  writer.writeBytes(offsets[38], userId$Bytes);
+  writer.writeBool(offsets[19], object.isDefault);
+  writer.writeBool(offsets[20], object.isLastSubscriptionPaymentSucceeded);
+  writer.writeBytes(offsets[21], lastDbBackup$Bytes);
+  writer.writeBytes(offsets[22], lastName$Bytes);
+  writer.writeLong(offsets[23], object.lastSeen);
+  writer.writeBytes(offsets[24], latitude$Bytes);
+  writer.writeBytes(offsets[25], longitude$Bytes);
+  writer.writeBytes(offsets[26], metadata$Bytes);
+  writer.writeBytes(offsets[27], name$Bytes);
+  writer.writeBytes(offsets[28], nextBillingDate$Bytes);
+  writer.writeBytes(offsets[29], previousBillingDate$Bytes);
+  writer.writeBytes(offsets[30], role$Bytes);
+  writer.writeBytes(offsets[31], subscriptionPlan$Bytes);
+  writer.writeBytes(offsets[32], table$Bytes);
+  writer.writeBool(offsets[33], object.taxEnabled);
+  writer.writeBytes(offsets[34], taxServerUrl$Bytes);
+  writer.writeBytes(offsets[35], timeZone$Bytes);
+  writer.writeLong(offsets[36], object.tinNumber);
+  writer.writeBytes(offsets[37], type$Bytes);
+  writer.writeBytes(offsets[38], typeId$Bytes);
+  writer.writeBytes(offsets[39], userId$Bytes);
 }
 
 Business _businessDeserializeNative(IsarCollection<Business> collection, int id,
@@ -386,26 +388,27 @@ Business _businessDeserializeNative(IsarCollection<Business> collection, int id,
     fullName: reader.readStringOrNull(offsets[16]),
     hexColor: reader.readStringOrNull(offsets[17]),
     imageUrl: reader.readStringOrNull(offsets[18]),
-    isLastSubscriptionPaymentSucceeded: reader.readBoolOrNull(offsets[19]),
-    lastDbBackup: reader.readStringOrNull(offsets[20]),
-    lastName: reader.readStringOrNull(offsets[21]),
-    lastSeen: reader.readLongOrNull(offsets[22]),
-    latitude: reader.readStringOrNull(offsets[23]),
-    longitude: reader.readStringOrNull(offsets[24]),
-    metadata: reader.readStringOrNull(offsets[25]),
-    name: reader.readStringOrNull(offsets[26]),
-    nextBillingDate: reader.readStringOrNull(offsets[27]),
-    previousBillingDate: reader.readStringOrNull(offsets[28]),
-    role: reader.readStringOrNull(offsets[29]),
-    subscriptionPlan: reader.readStringOrNull(offsets[30]),
-    table: reader.readStringOrNull(offsets[31]),
-    taxEnabled: reader.readBoolOrNull(offsets[32]),
-    taxServerUrl: reader.readStringOrNull(offsets[33]),
-    timeZone: reader.readStringOrNull(offsets[34]),
-    tinNumber: reader.readLongOrNull(offsets[35]),
-    type: reader.readStringOrNull(offsets[36]),
-    typeId: reader.readStringOrNull(offsets[37]),
-    userId: reader.readStringOrNull(offsets[38]),
+    isDefault: reader.readBoolOrNull(offsets[19]),
+    isLastSubscriptionPaymentSucceeded: reader.readBoolOrNull(offsets[20]),
+    lastDbBackup: reader.readStringOrNull(offsets[21]),
+    lastName: reader.readStringOrNull(offsets[22]),
+    lastSeen: reader.readLongOrNull(offsets[23]),
+    latitude: reader.readStringOrNull(offsets[24]),
+    longitude: reader.readStringOrNull(offsets[25]),
+    metadata: reader.readStringOrNull(offsets[26]),
+    name: reader.readStringOrNull(offsets[27]),
+    nextBillingDate: reader.readStringOrNull(offsets[28]),
+    previousBillingDate: reader.readStringOrNull(offsets[29]),
+    role: reader.readStringOrNull(offsets[30]),
+    subscriptionPlan: reader.readStringOrNull(offsets[31]),
+    table: reader.readStringOrNull(offsets[32]),
+    taxEnabled: reader.readBoolOrNull(offsets[33]),
+    taxServerUrl: reader.readStringOrNull(offsets[34]),
+    timeZone: reader.readStringOrNull(offsets[35]),
+    tinNumber: reader.readLongOrNull(offsets[36]),
+    type: reader.readStringOrNull(offsets[37]),
+    typeId: reader.readStringOrNull(offsets[38]),
+    userId: reader.readStringOrNull(offsets[39]),
   );
   object.createdAt = reader.readStringOrNull(offsets[10]);
   object.id = id;
@@ -458,13 +461,13 @@ P _businessDeserializePropNative<P>(
     case 19:
       return (reader.readBoolOrNull(offset)) as P;
     case 20:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 21:
       return (reader.readStringOrNull(offset)) as P;
     case 22:
-      return (reader.readLongOrNull(offset)) as P;
-    case 23:
       return (reader.readStringOrNull(offset)) as P;
+    case 23:
+      return (reader.readLongOrNull(offset)) as P;
     case 24:
       return (reader.readStringOrNull(offset)) as P;
     case 25:
@@ -482,18 +485,20 @@ P _businessDeserializePropNative<P>(
     case 31:
       return (reader.readStringOrNull(offset)) as P;
     case 32:
-      return (reader.readBoolOrNull(offset)) as P;
-    case 33:
       return (reader.readStringOrNull(offset)) as P;
+    case 33:
+      return (reader.readBoolOrNull(offset)) as P;
     case 34:
       return (reader.readStringOrNull(offset)) as P;
     case 35:
-      return (reader.readLongOrNull(offset)) as P;
-    case 36:
       return (reader.readStringOrNull(offset)) as P;
+    case 36:
+      return (reader.readLongOrNull(offset)) as P;
     case 37:
       return (reader.readStringOrNull(offset)) as P;
     case 38:
+      return (reader.readStringOrNull(offset)) as P;
+    case 39:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
@@ -523,6 +528,7 @@ Object _businessSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'hexColor', object.hexColor);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'imageUrl', object.imageUrl);
+  IsarNative.jsObjectSet(jsObj, 'isDefault', object.isDefault);
   IsarNative.jsObjectSet(jsObj, 'isLastSubscriptionPaymentSucceeded',
       object.isLastSubscriptionPaymentSucceeded);
   IsarNative.jsObjectSet(jsObj, 'lastDbBackup', object.lastDbBackup);
@@ -572,6 +578,7 @@ Business _businessDeserializeWeb(
     fullName: IsarNative.jsObjectGet(jsObj, 'fullName'),
     hexColor: IsarNative.jsObjectGet(jsObj, 'hexColor'),
     imageUrl: IsarNative.jsObjectGet(jsObj, 'imageUrl'),
+    isDefault: IsarNative.jsObjectGet(jsObj, 'isDefault'),
     isLastSubscriptionPaymentSucceeded:
         IsarNative.jsObjectGet(jsObj, 'isLastSubscriptionPaymentSucceeded'),
     lastDbBackup: IsarNative.jsObjectGet(jsObj, 'lastDbBackup'),
@@ -644,6 +651,8 @@ P _businessDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
     case 'imageUrl':
       return (IsarNative.jsObjectGet(jsObj, 'imageUrl')) as P;
+    case 'isDefault':
+      return (IsarNative.jsObjectGet(jsObj, 'isDefault')) as P;
     case 'isLastSubscriptionPaymentSucceeded':
       return (IsarNative.jsObjectGet(
           jsObj, 'isLastSubscriptionPaymentSucceeded')) as P;
@@ -3005,6 +3014,24 @@ extension BusinessQueryFilter
     });
   }
 
+  QueryBuilder<Business, Business, QAfterFilterCondition> isDefaultIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: 'isDefault',
+      ));
+    });
+  }
+
+  QueryBuilder<Business, Business, QAfterFilterCondition> isDefaultEqualTo(
+      bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'isDefault',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<Business, Business, QAfterFilterCondition>
       isLastSubscriptionPaymentSucceededIsNull() {
     return QueryBuilder.apply(this, (query) {
@@ -5325,6 +5352,18 @@ extension BusinessQueryWhereSortBy
     });
   }
 
+  QueryBuilder<Business, Business, QAfterSortBy> sortByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Business, Business, QAfterSortBy> sortByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Business, Business, QAfterSortBy>
       sortByIsLastSubscriptionPaymentSucceeded() {
     return QueryBuilder.apply(this, (query) {
@@ -5799,6 +5838,18 @@ extension BusinessQueryWhereSortThenBy
     });
   }
 
+  QueryBuilder<Business, Business, QAfterSortBy> thenByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Business, Business, QAfterSortBy> thenByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Business, Business, QAfterSortBy>
       thenByIsLastSubscriptionPaymentSucceeded() {
     return QueryBuilder.apply(this, (query) {
@@ -6175,6 +6226,12 @@ extension BusinessQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Business, Business, QDistinct> distinctByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('isDefault');
+    });
+  }
+
   QueryBuilder<Business, Business, QDistinct>
       distinctByIsLastSubscriptionPaymentSucceeded() {
     return QueryBuilder.apply(this, (query) {
@@ -6435,6 +6492,12 @@ extension BusinessQueryProperty
   QueryBuilder<Business, String?, QQueryOperations> imageUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName('imageUrl');
+    });
+  }
+
+  QueryBuilder<Business, bool?, QQueryOperations> isDefaultProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('isDefault');
     });
   }
 

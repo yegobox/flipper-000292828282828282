@@ -1,4 +1,5 @@
 import 'package:flipper_models/isar_models.dart';
+import 'package:flipper_models/view_models/gate.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class _LoginChoicesState extends State<LoginChoices> {
   late List<Branch> _branches = [];
   bool _isNext = false;
   bool _businessChoosen = false;
-  bool _chooseBranch = false;
+  final bool _chooseBranch = false;
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<BusinessHomeViewModel>.reactive(
@@ -61,11 +63,9 @@ class _LoginChoicesState extends State<LoginChoices> {
                                               const SizedBox(width: 300),
                                               Checkbox(
                                                 value: _chooseBranch,
-                                                onChanged: (value) {
-                                                  setState(() async {
-                                                    await chooseBusiness(
-                                                        value, model, e);
-                                                  });
+                                                onChanged: (value) async {
+                                                  await chooseBusiness(
+                                                      value, model, e);
                                                 },
                                               ),
                                             ],
@@ -101,12 +101,10 @@ class _LoginChoicesState extends State<LoginChoices> {
                                                 ), //Text
                                                 const SizedBox(width: 300),
                                                 Checkbox(
-                                                  value: _businessChoosen,
-                                                  onChanged: (value) {
-                                                    setState(() async {
-                                                      await chooseBranch(value,
-                                                          model, e, context);
-                                                    });
+                                                  value: _chooseBranch,
+                                                  onChanged: (value) async {
+                                                    await chooseBranch(value,
+                                                        model, e, context);
                                                   },
                                                 ),
                                               ],
@@ -133,15 +131,16 @@ class _LoginChoicesState extends State<LoginChoices> {
     }
   }
 
-  Future<void> chooseBranch(bool? value, BusinessHomeViewModel model, Branch e,
-      BuildContext context) async {
-    _chooseBranch = value!;
-    model.setDefaultBranch(branch: e);
+  Future<void> chooseBranch(bool? value, BusinessHomeViewModel model,
+      Branch branch, BuildContext context) async {
+    model.setDefaultBranch(branch: branch);
     if (await ProxyService.isarApi
             .isDrawerOpen(cashierId: ProxyService.box.getBusinessId()!) ==
         null) {
       GoRouter.of(context).push("/drawer/open");
     }
-    GoRouter.of(context).go(Routes.home);
+    loginInfo.isLoggedIn = true;
+
+    GoRouter.of(context).push(Routes.home);
   }
 }

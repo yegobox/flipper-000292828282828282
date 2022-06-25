@@ -62,6 +62,7 @@ class Business {
     this.adrs,
     this.taxEnabled,
     this.taxServerUrl,
+    this.isDefault,
   });
   int? id;
   String? name;
@@ -105,6 +106,7 @@ class Business {
   String? adrs;
   bool? taxEnabled;
   String? taxServerUrl;
+  bool? isDefault;
   Map<String, dynamic> toJson() => {
         "id": int.parse(id.toString()),
         "name": name,
@@ -145,6 +147,7 @@ class Business {
         "adrs": adrs,
         "taxEnabled": taxEnabled,
         "taxServerUrl": taxServerUrl,
+        "isDefault": isDefault
       };
   Business.fromJson(Map<dynamic, dynamic> json)
       : id = json["id"],
@@ -184,5 +187,6 @@ class Business {
         dvcSrlNo = json["dvcSrlNo"],
         adrs = json["adrs"],
         taxEnabled = json["taxEnabled"],
-        taxServerUrl = json["taxServerUrl"];
+        taxServerUrl = json["taxServerUrl"],
+        isDefault = json["isDefault"];
 }

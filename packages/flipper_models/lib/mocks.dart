@@ -138,4 +138,5 @@ final branchMock = Branch(
   longitude: '2',
   name: 'name',
   table: 'branches',
+  isDefault: false,
 );

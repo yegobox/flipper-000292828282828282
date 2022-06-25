@@ -20,16 +20,17 @@ extension GetBranchCollection on Isar {
 const BranchSchema = CollectionSchema(
   name: 'Branch',
   schema:
-      '{"name":"Branch","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"businessId","type":"Long"},{"name":"description","type":"String"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"name","type":"String"},{"name":"table","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"Branch","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"businessId","type":"Long"},{"name":"description","type":"String"},{"name":"isDefault","type":"Bool"},{"name":"latitude","type":"String"},{"name":"longitude","type":"String"},{"name":"name","type":"String"},{"name":"table","type":"String"}],"indexes":[],"links":[]}',
   idName: 'id',
   propertyIds: {
     'active': 0,
     'businessId': 1,
     'description': 2,
-    'latitude': 3,
-    'longitude': 4,
-    'name': 5,
-    'table': 6
+    'isDefault': 3,
+    'latitude': 4,
+    'longitude': 5,
+    'name': 6,
+    'table': 7
   },
   listProperties: {},
   indexIds: {},
@@ -106,10 +107,11 @@ void _branchSerializeNative(IsarCollection<Branch> collection, IsarCObject cObj,
   writer.writeBool(offsets[0], object.active);
   writer.writeLong(offsets[1], object.businessId);
   writer.writeBytes(offsets[2], description$Bytes);
-  writer.writeBytes(offsets[3], latitude$Bytes);
-  writer.writeBytes(offsets[4], longitude$Bytes);
-  writer.writeBytes(offsets[5], name$Bytes);
-  writer.writeBytes(offsets[6], table$Bytes);
+  writer.writeBool(offsets[3], object.isDefault);
+  writer.writeBytes(offsets[4], latitude$Bytes);
+  writer.writeBytes(offsets[5], longitude$Bytes);
+  writer.writeBytes(offsets[6], name$Bytes);
+  writer.writeBytes(offsets[7], table$Bytes);
 }
 
 Branch _branchDeserializeNative(IsarCollection<Branch> collection, int id,
@@ -119,10 +121,11 @@ Branch _branchDeserializeNative(IsarCollection<Branch> collection, int id,
     businessId: reader.readLongOrNull(offsets[1]),
     description: reader.readStringOrNull(offsets[2]),
     id: id,
-    latitude: reader.readStringOrNull(offsets[3]),
-    longitude: reader.readStringOrNull(offsets[4]),
-    name: reader.readStringOrNull(offsets[5]),
-    table: reader.readStringOrNull(offsets[6]),
+    isDefault: reader.readBool(offsets[3]),
+    latitude: reader.readStringOrNull(offsets[4]),
+    longitude: reader.readStringOrNull(offsets[5]),
+    name: reader.readStringOrNull(offsets[6]),
+    table: reader.readStringOrNull(offsets[7]),
   );
   return object;
 }
@@ -139,12 +142,14 @@ P _branchDeserializePropNative<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
+      return (reader.readStringOrNull(offset)) as P;
+    case 7:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
@@ -157,6 +162,7 @@ Object _branchSerializeWeb(IsarCollection<Branch> collection, Branch object) {
   IsarNative.jsObjectSet(jsObj, 'businessId', object.businessId);
   IsarNative.jsObjectSet(jsObj, 'description', object.description);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'isDefault', object.isDefault);
   IsarNative.jsObjectSet(jsObj, 'latitude', object.latitude);
   IsarNative.jsObjectSet(jsObj, 'longitude', object.longitude);
   IsarNative.jsObjectSet(jsObj, 'name', object.name);
@@ -170,6 +176,7 @@ Branch _branchDeserializeWeb(IsarCollection<Branch> collection, Object jsObj) {
     businessId: IsarNative.jsObjectGet(jsObj, 'businessId'),
     description: IsarNative.jsObjectGet(jsObj, 'description'),
     id: IsarNative.jsObjectGet(jsObj, 'id'),
+    isDefault: IsarNative.jsObjectGet(jsObj, 'isDefault') ?? false,
     latitude: IsarNative.jsObjectGet(jsObj, 'latitude'),
     longitude: IsarNative.jsObjectGet(jsObj, 'longitude'),
     name: IsarNative.jsObjectGet(jsObj, 'name'),
@@ -188,6 +195,8 @@ P _branchDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'description')) as P;
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
+    case 'isDefault':
+      return (IsarNative.jsObjectGet(jsObj, 'isDefault') ?? false) as P;
     case 'latitude':
       return (IsarNative.jsObjectGet(jsObj, 'latitude')) as P;
     case 'longitude':
@@ -536,6 +545,16 @@ extension BranchQueryFilter on QueryBuilder<Branch, Branch, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Branch, Branch, QAfterFilterCondition> isDefaultEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'isDefault',
+        value: value,
       ));
     });
   }
@@ -1059,6 +1078,18 @@ extension BranchQueryWhereSortBy on QueryBuilder<Branch, Branch, QSortBy> {
     });
   }
 
+  QueryBuilder<Branch, Branch, QAfterSortBy> sortByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Branch, Branch, QAfterSortBy> sortByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Branch, Branch, QAfterSortBy> sortByLatitude() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy('latitude', Sort.asc);
@@ -1158,6 +1189,18 @@ extension BranchQueryWhereSortThenBy
     });
   }
 
+  QueryBuilder<Branch, Branch, QAfterSortBy> thenByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Branch, Branch, QAfterSortBy> thenByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Branch, Branch, QAfterSortBy> thenByLatitude() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy('latitude', Sort.asc);
@@ -1227,6 +1270,12 @@ extension BranchQueryWhereDistinct on QueryBuilder<Branch, Branch, QDistinct> {
     });
   }
 
+  QueryBuilder<Branch, Branch, QDistinct> distinctByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('isDefault');
+    });
+  }
+
   QueryBuilder<Branch, Branch, QDistinct> distinctByLatitude(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1278,6 +1327,12 @@ extension BranchQueryProperty on QueryBuilder<Branch, Branch, QQueryProperty> {
   QueryBuilder<Branch, int?, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName('id');
+    });
+  }
+
+  QueryBuilder<Branch, bool, QQueryOperations> isDefaultProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('isDefault');
     });
   }
 

@@ -1265,6 +1265,18 @@ class IsarAPI implements IsarApiInterface {
         log.e(e);
       }
     }
+    if (data is Branch) {
+      isar.writeTxn(() async {
+        return await isar.branchs.put(data);
+      });
+      try {
+        await client.patch(Uri.parse("$apihub/v2/api/branch/${data.id}"),
+            body: jsonEncode(data.toJson()),
+            headers: {'Content-Type': 'application/json'});
+      } catch (e) {
+        log.e(e);
+      }
+    }
     if (data is Drawers) {
       final drawer = data;
       await isar.writeTxn(() async {
