@@ -35,7 +35,7 @@ Future<Isar> tOpen({
 }) {
   if (_testSync) {
     final isar = Isar.openSync(
-      schemas: schemas,
+      schemas,
       directory: directory,
       name: name,
       relaxedDurability: relaxedDurability,
@@ -43,7 +43,7 @@ Future<Isar> tOpen({
     return SynchronousFuture(isar);
   } else {
     return Isar.open(
-      schemas: schemas,
+      schemas,
       directory: directory,
       name: name,
       relaxedDurability: relaxedDurability,

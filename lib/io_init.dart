@@ -12,8 +12,7 @@ Future<void> initDb() async {
   Directory dir = await getApplicationDocumentsDirectory();
   late Isar isar;
   isar = await Isar.open(
-    directory: "${dir.path}/db",
-    schemas: [
+    [
       OrderSchema,
       BusinessSchema,
       BranchSchema,
@@ -36,6 +35,7 @@ Future<void> initDb() async {
       ReceiptSchema,
       DrawersSchema
     ],
+    directory: "${dir.path}/db",
   );
   IsarAPI.instance(isarRef: isar);
   if (Platform.isIOS || Platform.isMacOS || Platform.isAndroid) {

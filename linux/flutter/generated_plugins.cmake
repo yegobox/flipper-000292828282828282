@@ -6,7 +6,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_auth
   flutter_acrylic
   isar_flutter_libs
-  objectbox_sync_flutter_libs
   printing
   sentry_flutter
   url_launcher_linux

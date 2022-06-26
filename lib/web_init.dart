@@ -5,8 +5,7 @@ import 'package:flipper_models/isar_models.dart';
 Future<void> initDb() async {
   late Isar isar;
   isar = await Isar.open(
-    directory: 'db',
-    schemas: [
+    [
       OrderSchema,
       BusinessSchema,
       BranchSchema,
@@ -29,6 +28,7 @@ Future<void> initDb() async {
       ReceiptSchema,
       DrawersSchema
     ],
+    directory: 'db',
   );
   IsarAPI.instance(isarRef: isar);
   await Firebase.initializeApp();

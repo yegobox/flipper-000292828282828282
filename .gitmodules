@@ -58,3 +58,18 @@
 [submodule "open-sources/flutter.widgets"]
 	path = open-sources/flutter.widgets
 	url = https://github.com/yegobox/flutter.widgets.git
+[submodule "open-sources/win32"]
+	path = open-sources/win32
+	url = https://github.com/yegobox/win32.git
+[submodule "open-sources/upgrader"]
+	path = open-sources/upgrader
+	url = https://github.com/yegobox/upgrader.git
+[submodule "open-sources/dart_console"]
+	path = open-sources/dart_console
+	url = https://github.com/yegobox/dart_console.git
+[submodule "open-sources/cli_dialog"]
+	path = open-sources/cli_dialog
+	url = https://github.com/yegobox/cli_dialog.git
+[submodule "open-sources/msix"]
+	path = open-sources/msix
+	url = https://github.com/yegobox/msix.git
