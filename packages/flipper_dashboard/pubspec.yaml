@@ -71,8 +71,7 @@ dependencies:
   flutter_native_splash: ^2.2.2
   downloads_path_provider_28: ^0.1.2
   permission_handler: ^8.3.0
-dependency_overrides:
-  ffi: ^2.0.1
+
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

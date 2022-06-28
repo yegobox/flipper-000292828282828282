@@ -39,8 +39,7 @@ dependencies:
   path_provider: ^2.0.8
   flutter_svg: ^1.0.3
   qr: ^3.0.0
-dependency_overrides:
-  ffi: ^2.0.1
+
 flutter:
   uses-material-design: true
   assets:
