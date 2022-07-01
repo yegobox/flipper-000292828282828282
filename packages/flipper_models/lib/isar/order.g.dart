@@ -7,52 +7,48 @@ part of 'order.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetOrderCollection on Isar {
   IsarCollection<Order> get orders => getCollection();
 }
 
 const OrderSchema = CollectionSchema(
-  name: 'Order',
+  name: r'Order',
   schema:
-      '{"name":"Order","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"branchId","type":"Long"},{"name":"cashReceived","type":"Double"},{"name":"createdAt","type":"String"},{"name":"customerChangeDue","type":"Double"},{"name":"customerId","type":"Long"},{"name":"draft","type":"Bool"},{"name":"note","type":"String"},{"name":"orderNumber","type":"String"},{"name":"orderType","type":"String"},{"name":"paymentType","type":"String"},{"name":"receiptType","type":"String"},{"name":"reference","type":"String"},{"name":"reported","type":"Bool"},{"name":"status","type":"String"},{"name":"subTotal","type":"Double"},{"name":"updatedAt","type":"String"}],"indexes":[{"name":"branchId","unique":false,"replace":false,"properties":[{"name":"branchId","type":"Value","caseSensitive":false}]},{"name":"status_branchId","unique":false,"replace":false,"properties":[{"name":"status","type":"Hash","caseSensitive":true},{"name":"branchId","type":"Value","caseSensitive":false}]}],"links":[{"name":"discounts","target":"Discount"},{"name":"orderItems","target":"OrderItem"}]}',
-  idName: 'id',
+      r'{"name":"Order","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"branchId","type":"Long"},{"name":"cashReceived","type":"Double"},{"name":"createdAt","type":"String"},{"name":"customerChangeDue","type":"Double"},{"name":"customerId","type":"Long"},{"name":"draft","type":"Bool"},{"name":"note","type":"String"},{"name":"orderNumber","type":"String"},{"name":"orderType","type":"String"},{"name":"paymentType","type":"String"},{"name":"receiptType","type":"String"},{"name":"reference","type":"String"},{"name":"reported","type":"Bool"},{"name":"status","type":"String"},{"name":"subTotal","type":"Double"},{"name":"updatedAt","type":"String"}],"indexes":[{"name":"branchId","unique":false,"replace":false,"properties":[{"name":"branchId","type":"Value","caseSensitive":false}]},{"name":"status_branchId","unique":false,"replace":false,"properties":[{"name":"status","type":"Hash","caseSensitive":true},{"name":"branchId","type":"Value","caseSensitive":false}]}],"links":[{"name":"discounts","target":"Discount"},{"name":"orderItems","target":"OrderItem"}]}',
+  idName: r'id',
   propertyIds: {
-    'active': 0,
-    'branchId': 1,
-    'cashReceived': 2,
-    'createdAt': 3,
-    'customerChangeDue': 4,
-    'customerId': 5,
-    'draft': 6,
-    'note': 7,
-    'orderNumber': 8,
-    'orderType': 9,
-    'paymentType': 10,
-    'receiptType': 11,
-    'reference': 12,
-    'reported': 13,
-    'status': 14,
-    'subTotal': 15,
-    'updatedAt': 16
+    r'active': 0,
+    r'branchId': 1,
+    r'cashReceived': 2,
+    r'createdAt': 3,
+    r'customerChangeDue': 4,
+    r'customerId': 5,
+    r'draft': 6,
+    r'note': 7,
+    r'orderNumber': 8,
+    r'orderType': 9,
+    r'paymentType': 10,
+    r'receiptType': 11,
+    r'reference': 12,
+    r'reported': 13,
+    r'status': 14,
+    r'subTotal': 15,
+    r'updatedAt': 16
   },
   listProperties: {},
-  indexIds: {'branchId': 0, 'status_branchId': 1},
+  indexIds: {r'branchId': 0, r'status_branchId': 1},
   indexValueTypes: {
-    'branchId': [
+    r'branchId': [
       IndexValueType.long,
     ],
-    'status_branchId': [
+    r'status_branchId': [
       IndexValueType.stringHash,
       IndexValueType.long,
     ]
   },
-  linkIds: {'discounts': 0, 'orderItems': 1},
+  linkIds: {r'discounts': 0, r'orderItems': 1},
   backlinkLinkNames: {},
   getId: _orderGetId,
   setId: _orderSetId,
@@ -126,6 +122,7 @@ void _orderSerializeNative(IsarCollection<Order> collection, IsarCObject cObj,
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeBool(offsets[0], object.active);
   writer.writeLong(offsets[1], object.branchId);
   writer.writeDouble(offsets[2], object.cashReceived);
@@ -210,117 +207,117 @@ P _orderDeserializePropNative<P>(
     case 16:
       return (reader.readStringOrNull(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
 Object _orderSerializeWeb(IsarCollection<Order> collection, Order object) {
   final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'active', object.active);
-  IsarNative.jsObjectSet(jsObj, 'branchId', object.branchId);
-  IsarNative.jsObjectSet(jsObj, 'cashReceived', object.cashReceived);
-  IsarNative.jsObjectSet(jsObj, 'createdAt', object.createdAt);
-  IsarNative.jsObjectSet(jsObj, 'customerChangeDue', object.customerChangeDue);
-  IsarNative.jsObjectSet(jsObj, 'customerId', object.customerId);
-  IsarNative.jsObjectSet(jsObj, 'draft', object.draft);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'note', object.note);
-  IsarNative.jsObjectSet(jsObj, 'orderNumber', object.orderNumber);
-  IsarNative.jsObjectSet(jsObj, 'orderType', object.orderType);
-  IsarNative.jsObjectSet(jsObj, 'paymentType', object.paymentType);
-  IsarNative.jsObjectSet(jsObj, 'receiptType', object.receiptType);
-  IsarNative.jsObjectSet(jsObj, 'reference', object.reference);
-  IsarNative.jsObjectSet(jsObj, 'reported', object.reported);
-  IsarNative.jsObjectSet(jsObj, 'status', object.status);
-  IsarNative.jsObjectSet(jsObj, 'subTotal', object.subTotal);
-  IsarNative.jsObjectSet(jsObj, 'updatedAt', object.updatedAt);
+  IsarNative.jsObjectSet(jsObj, r'active', object.active);
+  IsarNative.jsObjectSet(jsObj, r'branchId', object.branchId);
+  IsarNative.jsObjectSet(jsObj, r'cashReceived', object.cashReceived);
+  IsarNative.jsObjectSet(jsObj, r'createdAt', object.createdAt);
+  IsarNative.jsObjectSet(jsObj, r'customerChangeDue', object.customerChangeDue);
+  IsarNative.jsObjectSet(jsObj, r'customerId', object.customerId);
+  IsarNative.jsObjectSet(jsObj, r'draft', object.draft);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
+  IsarNative.jsObjectSet(jsObj, r'note', object.note);
+  IsarNative.jsObjectSet(jsObj, r'orderNumber', object.orderNumber);
+  IsarNative.jsObjectSet(jsObj, r'orderType', object.orderType);
+  IsarNative.jsObjectSet(jsObj, r'paymentType', object.paymentType);
+  IsarNative.jsObjectSet(jsObj, r'receiptType', object.receiptType);
+  IsarNative.jsObjectSet(jsObj, r'reference', object.reference);
+  IsarNative.jsObjectSet(jsObj, r'reported', object.reported);
+  IsarNative.jsObjectSet(jsObj, r'status', object.status);
+  IsarNative.jsObjectSet(jsObj, r'subTotal', object.subTotal);
+  IsarNative.jsObjectSet(jsObj, r'updatedAt', object.updatedAt);
   return jsObj;
 }
 
 Order _orderDeserializeWeb(IsarCollection<Order> collection, Object jsObj) {
   final object = Order();
-  object.active = IsarNative.jsObjectGet(jsObj, 'active') ?? false;
-  object.branchId = IsarNative.jsObjectGet(jsObj, 'branchId') ??
+  object.active = IsarNative.jsObjectGet(jsObj, r'active') ?? false;
+  object.branchId = IsarNative.jsObjectGet(jsObj, r'branchId') ??
       (double.negativeInfinity as int);
   object.cashReceived =
-      IsarNative.jsObjectGet(jsObj, 'cashReceived') ?? double.negativeInfinity;
-  object.createdAt = IsarNative.jsObjectGet(jsObj, 'createdAt') ?? '';
+      IsarNative.jsObjectGet(jsObj, r'cashReceived') ?? double.negativeInfinity;
+  object.createdAt = IsarNative.jsObjectGet(jsObj, r'createdAt') ?? '';
   object.customerChangeDue =
-      IsarNative.jsObjectGet(jsObj, 'customerChangeDue') ??
+      IsarNative.jsObjectGet(jsObj, r'customerChangeDue') ??
           double.negativeInfinity;
-  object.customerId = IsarNative.jsObjectGet(jsObj, 'customerId');
-  object.draft = IsarNative.jsObjectGet(jsObj, 'draft') ?? false;
+  object.customerId = IsarNative.jsObjectGet(jsObj, r'customerId');
+  object.draft = IsarNative.jsObjectGet(jsObj, r'draft') ?? false;
   object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
-  object.note = IsarNative.jsObjectGet(jsObj, 'note');
-  object.orderNumber = IsarNative.jsObjectGet(jsObj, 'orderNumber') ?? '';
-  object.orderType = IsarNative.jsObjectGet(jsObj, 'orderType') ?? '';
-  object.paymentType = IsarNative.jsObjectGet(jsObj, 'paymentType') ?? '';
-  object.receiptType = IsarNative.jsObjectGet(jsObj, 'receiptType');
-  object.reference = IsarNative.jsObjectGet(jsObj, 'reference') ?? '';
-  object.reported = IsarNative.jsObjectGet(jsObj, 'reported');
-  object.status = IsarNative.jsObjectGet(jsObj, 'status') ?? '';
+      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int);
+  object.note = IsarNative.jsObjectGet(jsObj, r'note');
+  object.orderNumber = IsarNative.jsObjectGet(jsObj, r'orderNumber') ?? '';
+  object.orderType = IsarNative.jsObjectGet(jsObj, r'orderType') ?? '';
+  object.paymentType = IsarNative.jsObjectGet(jsObj, r'paymentType') ?? '';
+  object.receiptType = IsarNative.jsObjectGet(jsObj, r'receiptType');
+  object.reference = IsarNative.jsObjectGet(jsObj, r'reference') ?? '';
+  object.reported = IsarNative.jsObjectGet(jsObj, r'reported');
+  object.status = IsarNative.jsObjectGet(jsObj, r'status') ?? '';
   object.subTotal =
-      IsarNative.jsObjectGet(jsObj, 'subTotal') ?? double.negativeInfinity;
-  object.updatedAt = IsarNative.jsObjectGet(jsObj, 'updatedAt');
+      IsarNative.jsObjectGet(jsObj, r'subTotal') ?? double.negativeInfinity;
+  object.updatedAt = IsarNative.jsObjectGet(jsObj, r'updatedAt');
   _orderAttachLinks(
       collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int),
       object);
   return object;
 }
 
 P _orderDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'active':
-      return (IsarNative.jsObjectGet(jsObj, 'active') ?? false) as P;
-    case 'branchId':
-      return (IsarNative.jsObjectGet(jsObj, 'branchId') ??
+    case r'active':
+      return (IsarNative.jsObjectGet(jsObj, r'active') ?? false) as P;
+    case r'branchId':
+      return (IsarNative.jsObjectGet(jsObj, r'branchId') ??
           (double.negativeInfinity as int)) as P;
-    case 'cashReceived':
-      return (IsarNative.jsObjectGet(jsObj, 'cashReceived') ??
+    case r'cashReceived':
+      return (IsarNative.jsObjectGet(jsObj, r'cashReceived') ??
           double.negativeInfinity) as P;
-    case 'createdAt':
-      return (IsarNative.jsObjectGet(jsObj, 'createdAt') ?? '') as P;
-    case 'customerChangeDue':
-      return (IsarNative.jsObjectGet(jsObj, 'customerChangeDue') ??
+    case r'createdAt':
+      return (IsarNative.jsObjectGet(jsObj, r'createdAt') ?? '') as P;
+    case r'customerChangeDue':
+      return (IsarNative.jsObjectGet(jsObj, r'customerChangeDue') ??
           double.negativeInfinity) as P;
-    case 'customerId':
-      return (IsarNative.jsObjectGet(jsObj, 'customerId')) as P;
-    case 'draft':
-      return (IsarNative.jsObjectGet(jsObj, 'draft') ?? false) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+    case r'customerId':
+      return (IsarNative.jsObjectGet(jsObj, r'customerId')) as P;
+    case r'draft':
+      return (IsarNative.jsObjectGet(jsObj, r'draft') ?? false) as P;
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id') ??
           (double.negativeInfinity as int)) as P;
-    case 'note':
-      return (IsarNative.jsObjectGet(jsObj, 'note')) as P;
-    case 'orderNumber':
-      return (IsarNative.jsObjectGet(jsObj, 'orderNumber') ?? '') as P;
-    case 'orderType':
-      return (IsarNative.jsObjectGet(jsObj, 'orderType') ?? '') as P;
-    case 'paymentType':
-      return (IsarNative.jsObjectGet(jsObj, 'paymentType') ?? '') as P;
-    case 'receiptType':
-      return (IsarNative.jsObjectGet(jsObj, 'receiptType')) as P;
-    case 'reference':
-      return (IsarNative.jsObjectGet(jsObj, 'reference') ?? '') as P;
-    case 'reported':
-      return (IsarNative.jsObjectGet(jsObj, 'reported')) as P;
-    case 'status':
-      return (IsarNative.jsObjectGet(jsObj, 'status') ?? '') as P;
-    case 'subTotal':
-      return (IsarNative.jsObjectGet(jsObj, 'subTotal') ??
+    case r'note':
+      return (IsarNative.jsObjectGet(jsObj, r'note')) as P;
+    case r'orderNumber':
+      return (IsarNative.jsObjectGet(jsObj, r'orderNumber') ?? '') as P;
+    case r'orderType':
+      return (IsarNative.jsObjectGet(jsObj, r'orderType') ?? '') as P;
+    case r'paymentType':
+      return (IsarNative.jsObjectGet(jsObj, r'paymentType') ?? '') as P;
+    case r'receiptType':
+      return (IsarNative.jsObjectGet(jsObj, r'receiptType')) as P;
+    case r'reference':
+      return (IsarNative.jsObjectGet(jsObj, r'reference') ?? '') as P;
+    case r'reported':
+      return (IsarNative.jsObjectGet(jsObj, r'reported')) as P;
+    case r'status':
+      return (IsarNative.jsObjectGet(jsObj, r'status') ?? '') as P;
+    case r'subTotal':
+      return (IsarNative.jsObjectGet(jsObj, r'subTotal') ??
           double.negativeInfinity) as P;
-    case 'updatedAt':
-      return (IsarNative.jsObjectGet(jsObj, 'updatedAt')) as P;
+    case r'updatedAt':
+      return (IsarNative.jsObjectGet(jsObj, r'updatedAt')) as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
 void _orderAttachLinks(IsarCollection<dynamic> col, int id, Order object) {
-  object.discounts.attach(col, col.isar.discounts, 'discounts', id);
-  object.orderItems.attach(col, col.isar.orderItems, 'orderItems', id);
+  object.discounts.attach(col, col.isar.discounts, r'discounts', id);
+  object.orderItems.attach(col, col.isar.orderItems, r'orderItems', id);
 }
 
 extension OrderQueryWhereSort on QueryBuilder<Order, Order, QWhere> {
@@ -333,7 +330,7 @@ extension OrderQueryWhereSort on QueryBuilder<Order, Order, QWhere> {
   QueryBuilder<Order, Order, QAfterWhere> anyBranchId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: 'branchId'),
+        const IndexWhereClause.any(indexName: r'branchId'),
       );
     });
   }
@@ -341,7 +338,7 @@ extension OrderQueryWhereSort on QueryBuilder<Order, Order, QWhere> {
   QueryBuilder<Order, Order, QAfterWhere> anyStatusBranchId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: 'status_branchId'),
+        const IndexWhereClause.any(indexName: r'status_branchId'),
       );
     });
   }
@@ -352,9 +349,7 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -418,7 +413,7 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
   QueryBuilder<Order, Order, QAfterWhereClause> branchIdEqualTo(int branchId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: 'branchId',
+        indexName: r'branchId',
         value: [branchId],
       ));
     });
@@ -430,32 +425,28 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [],
-              includeLower: true,
               upper: [branchId],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [branchId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [branchId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [],
-              includeLower: true,
               upper: [branchId],
               includeUpper: false,
             ));
@@ -469,11 +460,10 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'branchId',
+        indexName: r'branchId',
         lower: [branchId],
         includeLower: include,
         upper: [],
-        includeUpper: true,
       ));
     });
   }
@@ -484,9 +474,8 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'branchId',
+        indexName: r'branchId',
         lower: [],
-        includeLower: true,
         upper: [branchId],
         includeUpper: include,
       ));
@@ -501,7 +490,7 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'branchId',
+        indexName: r'branchId',
         lower: [lowerBranchId],
         includeLower: includeLower,
         upper: [upperBranchId],
@@ -514,7 +503,7 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
       String status) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: 'status_branchId',
+        indexName: r'status_branchId',
         value: [status],
       ));
     });
@@ -526,32 +515,28 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [],
-              includeLower: true,
               upper: [status],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [status],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [status],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [],
-              includeLower: true,
               upper: [status],
               includeUpper: false,
             ));
@@ -563,7 +548,7 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
       String status, int branchId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: 'status_branchId',
+        indexName: r'status_branchId',
         value: [status, branchId],
       ));
     });
@@ -575,32 +560,28 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [status],
-              includeLower: true,
               upper: [status, branchId],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [status, branchId],
               includeLower: false,
               upper: [status],
-              includeUpper: true,
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [status, branchId],
               includeLower: false,
               upper: [status],
-              includeUpper: true,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'status_branchId',
+              indexName: r'status_branchId',
               lower: [status],
-              includeLower: true,
               upper: [status, branchId],
               includeUpper: false,
             ));
@@ -616,11 +597,10 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'status_branchId',
+        indexName: r'status_branchId',
         lower: [status, branchId],
         includeLower: include,
         upper: [status],
-        includeUpper: true,
       ));
     });
   }
@@ -632,9 +612,8 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'status_branchId',
+        indexName: r'status_branchId',
         lower: [status],
-        includeLower: true,
         upper: [status, branchId],
         includeUpper: include,
       ));
@@ -650,7 +629,7 @@ extension OrderQueryWhere on QueryBuilder<Order, Order, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'status_branchId',
+        indexName: r'status_branchId',
         lower: [status, lowerBranchId],
         includeLower: includeLower,
         upper: [status, upperBranchId],
@@ -664,7 +643,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> activeEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'active',
+        property: r'active',
         value: value,
       ));
     });
@@ -673,7 +652,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> branchIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -686,7 +665,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -699,7 +678,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -713,7 +692,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'branchId',
+        property: r'branchId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -726,8 +705,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        include: false,
-        property: 'cashReceived',
+        property: r'cashReceived',
         value: value,
       ));
     });
@@ -737,8 +715,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
-        include: false,
-        property: 'cashReceived',
+        property: r'cashReceived',
         value: value,
       ));
     });
@@ -748,7 +725,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double lower, double upper) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'cashReceived',
+        property: r'cashReceived',
         lower: lower,
         includeLower: false,
         upper: upper,
@@ -763,7 +740,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -778,7 +755,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -793,7 +770,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -809,7 +786,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'createdAt',
+        property: r'createdAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -825,7 +802,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -838,7 +815,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -850,7 +827,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -862,7 +839,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'createdAt',
+        property: r'createdAt',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -873,8 +850,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       customerChangeDueGreaterThan(double value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        include: false,
-        property: 'customerChangeDue',
+        property: r'customerChangeDue',
         value: value,
       ));
     });
@@ -884,8 +860,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
-        include: false,
-        property: 'customerChangeDue',
+        property: r'customerChangeDue',
         value: value,
       ));
     });
@@ -895,7 +870,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double lower, double upper) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'customerChangeDue',
+        property: r'customerChangeDue',
         lower: lower,
         includeLower: false,
         upper: upper,
@@ -907,7 +882,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> customerIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'customerId',
+        property: r'customerId',
       ));
     });
   }
@@ -916,7 +891,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'customerId',
+        property: r'customerId',
         value: value,
       ));
     });
@@ -929,7 +904,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'customerId',
+        property: r'customerId',
         value: value,
       ));
     });
@@ -942,7 +917,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'customerId',
+        property: r'customerId',
         value: value,
       ));
     });
@@ -956,7 +931,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'customerId',
+        property: r'customerId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -968,7 +943,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> draftEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'draft',
+        property: r'draft',
         value: value,
       ));
     });
@@ -977,7 +952,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -990,7 +965,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -1003,7 +978,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -1017,7 +992,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1029,7 +1004,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> noteIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'note',
+        property: r'note',
       ));
     });
   }
@@ -1040,7 +1015,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'note',
+        property: r'note',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1055,7 +1030,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'note',
+        property: r'note',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1070,7 +1045,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'note',
+        property: r'note',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1086,7 +1061,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'note',
+        property: r'note',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1102,7 +1077,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'note',
+        property: r'note',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1115,7 +1090,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'note',
+        property: r'note',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1126,7 +1101,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'note',
+        property: r'note',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1137,7 +1112,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'note',
+        property: r'note',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1150,7 +1125,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'orderNumber',
+        property: r'orderNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1165,7 +1140,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'orderNumber',
+        property: r'orderNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1180,7 +1155,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'orderNumber',
+        property: r'orderNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1196,7 +1171,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'orderNumber',
+        property: r'orderNumber',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1212,7 +1187,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'orderNumber',
+        property: r'orderNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1225,7 +1200,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'orderNumber',
+        property: r'orderNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1237,7 +1212,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'orderNumber',
+        property: r'orderNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1249,7 +1224,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'orderNumber',
+        property: r'orderNumber',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1262,7 +1237,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'orderType',
+        property: r'orderType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1277,7 +1252,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'orderType',
+        property: r'orderType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1292,7 +1267,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'orderType',
+        property: r'orderType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1308,7 +1283,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'orderType',
+        property: r'orderType',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1324,7 +1299,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'orderType',
+        property: r'orderType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1337,7 +1312,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'orderType',
+        property: r'orderType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1349,7 +1324,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'orderType',
+        property: r'orderType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1361,7 +1336,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'orderType',
+        property: r'orderType',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1374,7 +1349,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'paymentType',
+        property: r'paymentType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1389,7 +1364,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'paymentType',
+        property: r'paymentType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1404,7 +1379,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'paymentType',
+        property: r'paymentType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1420,7 +1395,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'paymentType',
+        property: r'paymentType',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1436,7 +1411,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'paymentType',
+        property: r'paymentType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1449,7 +1424,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'paymentType',
+        property: r'paymentType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1461,7 +1436,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'paymentType',
+        property: r'paymentType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1473,7 +1448,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'paymentType',
+        property: r'paymentType',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1483,7 +1458,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> receiptTypeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'receiptType',
+        property: r'receiptType',
       ));
     });
   }
@@ -1494,7 +1469,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1509,7 +1484,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1524,7 +1499,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1540,7 +1515,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'receiptType',
+        property: r'receiptType',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1556,7 +1531,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1569,7 +1544,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1581,7 +1556,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1593,7 +1568,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'receiptType',
+        property: r'receiptType',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1606,7 +1581,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'reference',
+        property: r'reference',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1621,7 +1596,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'reference',
+        property: r'reference',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1636,7 +1611,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'reference',
+        property: r'reference',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1652,7 +1627,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'reference',
+        property: r'reference',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1668,7 +1643,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'reference',
+        property: r'reference',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1681,7 +1656,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'reference',
+        property: r'reference',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1693,7 +1668,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'reference',
+        property: r'reference',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1705,7 +1680,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'reference',
+        property: r'reference',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1715,7 +1690,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> reportedIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'reported',
+        property: r'reported',
       ));
     });
   }
@@ -1724,7 +1699,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'reported',
+        property: r'reported',
         value: value,
       ));
     });
@@ -1736,7 +1711,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1751,7 +1726,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1766,7 +1741,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1782,7 +1757,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'status',
+        property: r'status',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1798,7 +1773,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1811,7 +1786,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1822,7 +1797,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1834,7 +1809,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'status',
+        property: r'status',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1845,8 +1820,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        include: false,
-        property: 'subTotal',
+        property: r'subTotal',
         value: value,
       ));
     });
@@ -1856,8 +1830,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
-        include: false,
-        property: 'subTotal',
+        property: r'subTotal',
         value: value,
       ));
     });
@@ -1867,7 +1840,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       double lower, double upper) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'subTotal',
+        property: r'subTotal',
         lower: lower,
         includeLower: false,
         upper: upper,
@@ -1879,7 +1852,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   QueryBuilder<Order, Order, QAfterFilterCondition> updatedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'updatedAt',
+        property: r'updatedAt',
       ));
     });
   }
@@ -1890,7 +1863,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'updatedAt',
+        property: r'updatedAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1905,7 +1878,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'updatedAt',
+        property: r'updatedAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1920,7 +1893,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'updatedAt',
+        property: r'updatedAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1936,7 +1909,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'updatedAt',
+        property: r'updatedAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1952,7 +1925,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'updatedAt',
+        property: r'updatedAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1965,7 +1938,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'updatedAt',
+        property: r'updatedAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1977,7 +1950,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'updatedAt',
+        property: r'updatedAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1989,7 +1962,7 @@ extension OrderQueryFilter on QueryBuilder<Order, Order, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'updatedAt',
+        property: r'updatedAt',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -2004,7 +1977,7 @@ extension OrderQueryLinks on QueryBuilder<Order, Order, QFilterCondition> {
       return query.link(
         query.collection.isar.discounts,
         q,
-        'discounts',
+        r'discounts',
       );
     });
   }
@@ -2015,7 +1988,7 @@ extension OrderQueryLinks on QueryBuilder<Order, Order, QFilterCondition> {
       return query.link(
         query.collection.isar.orderItems,
         q,
-        'orderItems',
+        r'orderItems',
       );
     });
   }
@@ -2024,205 +1997,205 @@ extension OrderQueryLinks on QueryBuilder<Order, Order, QFilterCondition> {
 extension OrderQueryWhereSortBy on QueryBuilder<Order, Order, QSortBy> {
   QueryBuilder<Order, Order, QAfterSortBy> sortByActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.asc);
+      return query.addSortBy(r'active', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByActiveDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.desc);
+      return query.addSortBy(r'active', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.asc);
+      return query.addSortBy(r'branchId', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.desc);
+      return query.addSortBy(r'branchId', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCashReceived() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cashReceived', Sort.asc);
+      return query.addSortBy(r'cashReceived', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCashReceivedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cashReceived', Sort.desc);
+      return query.addSortBy(r'cashReceived', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.asc);
+      return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.desc);
+      return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCustomerChangeDue() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerChangeDue', Sort.asc);
+      return query.addSortBy(r'customerChangeDue', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCustomerChangeDueDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerChangeDue', Sort.desc);
+      return query.addSortBy(r'customerChangeDue', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCustomerId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerId', Sort.asc);
+      return query.addSortBy(r'customerId', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByCustomerIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerId', Sort.desc);
+      return query.addSortBy(r'customerId', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByDraft() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('draft', Sort.asc);
+      return query.addSortBy(r'draft', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByDraftDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('draft', Sort.desc);
+      return query.addSortBy(r'draft', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByNote() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('note', Sort.asc);
+      return query.addSortBy(r'note', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByNoteDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('note', Sort.desc);
+      return query.addSortBy(r'note', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByOrderNumber() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderNumber', Sort.asc);
+      return query.addSortBy(r'orderNumber', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByOrderNumberDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderNumber', Sort.desc);
+      return query.addSortBy(r'orderNumber', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByOrderType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderType', Sort.asc);
+      return query.addSortBy(r'orderType', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByOrderTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderType', Sort.desc);
+      return query.addSortBy(r'orderType', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByPaymentType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('paymentType', Sort.asc);
+      return query.addSortBy(r'paymentType', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByPaymentTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('paymentType', Sort.desc);
+      return query.addSortBy(r'paymentType', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByReceiptType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.asc);
+      return query.addSortBy(r'receiptType', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByReceiptTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.desc);
+      return query.addSortBy(r'receiptType', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByReference() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reference', Sort.asc);
+      return query.addSortBy(r'reference', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByReferenceDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reference', Sort.desc);
+      return query.addSortBy(r'reference', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByReported() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reported', Sort.asc);
+      return query.addSortBy(r'reported', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByReportedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reported', Sort.desc);
+      return query.addSortBy(r'reported', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByStatus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.asc);
+      return query.addSortBy(r'status', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.desc);
+      return query.addSortBy(r'status', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortBySubTotal() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('subTotal', Sort.asc);
+      return query.addSortBy(r'subTotal', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortBySubTotalDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('subTotal', Sort.desc);
+      return query.addSortBy(r'subTotal', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('updatedAt', Sort.asc);
+      return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> sortByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('updatedAt', Sort.desc);
+      return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 }
@@ -2230,217 +2203,217 @@ extension OrderQueryWhereSortBy on QueryBuilder<Order, Order, QSortBy> {
 extension OrderQueryWhereSortThenBy on QueryBuilder<Order, Order, QSortThenBy> {
   QueryBuilder<Order, Order, QAfterSortBy> thenByActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.asc);
+      return query.addSortBy(r'active', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByActiveDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.desc);
+      return query.addSortBy(r'active', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.asc);
+      return query.addSortBy(r'branchId', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.desc);
+      return query.addSortBy(r'branchId', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCashReceived() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cashReceived', Sort.asc);
+      return query.addSortBy(r'cashReceived', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCashReceivedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cashReceived', Sort.desc);
+      return query.addSortBy(r'cashReceived', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.asc);
+      return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.desc);
+      return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCustomerChangeDue() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerChangeDue', Sort.asc);
+      return query.addSortBy(r'customerChangeDue', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCustomerChangeDueDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerChangeDue', Sort.desc);
+      return query.addSortBy(r'customerChangeDue', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCustomerId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerId', Sort.asc);
+      return query.addSortBy(r'customerId', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByCustomerIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('customerId', Sort.desc);
+      return query.addSortBy(r'customerId', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByDraft() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('draft', Sort.asc);
+      return query.addSortBy(r'draft', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByDraftDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('draft', Sort.desc);
+      return query.addSortBy(r'draft', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByNote() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('note', Sort.asc);
+      return query.addSortBy(r'note', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByNoteDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('note', Sort.desc);
+      return query.addSortBy(r'note', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByOrderNumber() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderNumber', Sort.asc);
+      return query.addSortBy(r'orderNumber', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByOrderNumberDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderNumber', Sort.desc);
+      return query.addSortBy(r'orderNumber', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByOrderType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderType', Sort.asc);
+      return query.addSortBy(r'orderType', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByOrderTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderType', Sort.desc);
+      return query.addSortBy(r'orderType', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByPaymentType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('paymentType', Sort.asc);
+      return query.addSortBy(r'paymentType', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByPaymentTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('paymentType', Sort.desc);
+      return query.addSortBy(r'paymentType', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByReceiptType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.asc);
+      return query.addSortBy(r'receiptType', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByReceiptTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.desc);
+      return query.addSortBy(r'receiptType', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByReference() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reference', Sort.asc);
+      return query.addSortBy(r'reference', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByReferenceDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reference', Sort.desc);
+      return query.addSortBy(r'reference', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByReported() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reported', Sort.asc);
+      return query.addSortBy(r'reported', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByReportedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('reported', Sort.desc);
+      return query.addSortBy(r'reported', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByStatus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.asc);
+      return query.addSortBy(r'status', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.desc);
+      return query.addSortBy(r'status', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenBySubTotal() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('subTotal', Sort.asc);
+      return query.addSortBy(r'subTotal', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenBySubTotalDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('subTotal', Sort.desc);
+      return query.addSortBy(r'subTotal', Sort.desc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('updatedAt', Sort.asc);
+      return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<Order, Order, QAfterSortBy> thenByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('updatedAt', Sort.desc);
+      return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 }
@@ -2448,112 +2421,112 @@ extension OrderQueryWhereSortThenBy on QueryBuilder<Order, Order, QSortThenBy> {
 extension OrderQueryWhereDistinct on QueryBuilder<Order, Order, QDistinct> {
   QueryBuilder<Order, Order, QDistinct> distinctByActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('active');
+      return query.addDistinctBy(r'active');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('branchId');
+      return query.addDistinctBy(r'branchId');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByCashReceived() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('cashReceived');
+      return query.addDistinctBy(r'cashReceived');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByCreatedAt(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('createdAt', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'createdAt', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByCustomerChangeDue() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('customerChangeDue');
+      return query.addDistinctBy(r'customerChangeDue');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByCustomerId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('customerId');
+      return query.addDistinctBy(r'customerId');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByDraft() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('draft');
+      return query.addDistinctBy(r'draft');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByNote(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('note', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'note', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByOrderNumber(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('orderNumber', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'orderNumber', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByOrderType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('orderType', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'orderType', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByPaymentType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('paymentType', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'paymentType', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByReceiptType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('receiptType', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'receiptType', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByReference(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('reference', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'reference', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByReported() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('reported');
+      return query.addDistinctBy(r'reported');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByStatus(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('status', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctBySubTotal() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('subTotal');
+      return query.addDistinctBy(r'subTotal');
     });
   }
 
   QueryBuilder<Order, Order, QDistinct> distinctByUpdatedAt(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('updatedAt', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'updatedAt', caseSensitive: caseSensitive);
     });
   }
 }
@@ -2561,109 +2534,109 @@ extension OrderQueryWhereDistinct on QueryBuilder<Order, Order, QDistinct> {
 extension OrderQueryProperty on QueryBuilder<Order, Order, QQueryProperty> {
   QueryBuilder<Order, bool, QQueryOperations> activeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('active');
+      return query.addPropertyName(r'active');
     });
   }
 
   QueryBuilder<Order, int, QQueryOperations> branchIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('branchId');
+      return query.addPropertyName(r'branchId');
     });
   }
 
   QueryBuilder<Order, double, QQueryOperations> cashReceivedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('cashReceived');
+      return query.addPropertyName(r'cashReceived');
     });
   }
 
   QueryBuilder<Order, String, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('createdAt');
+      return query.addPropertyName(r'createdAt');
     });
   }
 
   QueryBuilder<Order, double, QQueryOperations> customerChangeDueProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('customerChangeDue');
+      return query.addPropertyName(r'customerChangeDue');
     });
   }
 
   QueryBuilder<Order, int?, QQueryOperations> customerIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('customerId');
+      return query.addPropertyName(r'customerId');
     });
   }
 
   QueryBuilder<Order, bool, QQueryOperations> draftProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('draft');
+      return query.addPropertyName(r'draft');
     });
   }
 
   QueryBuilder<Order, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Order, String?, QQueryOperations> noteProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('note');
+      return query.addPropertyName(r'note');
     });
   }
 
   QueryBuilder<Order, String, QQueryOperations> orderNumberProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('orderNumber');
+      return query.addPropertyName(r'orderNumber');
     });
   }
 
   QueryBuilder<Order, String, QQueryOperations> orderTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('orderType');
+      return query.addPropertyName(r'orderType');
     });
   }
 
   QueryBuilder<Order, String, QQueryOperations> paymentTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('paymentType');
+      return query.addPropertyName(r'paymentType');
     });
   }
 
   QueryBuilder<Order, String?, QQueryOperations> receiptTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('receiptType');
+      return query.addPropertyName(r'receiptType');
     });
   }
 
   QueryBuilder<Order, String, QQueryOperations> referenceProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('reference');
+      return query.addPropertyName(r'reference');
     });
   }
 
   QueryBuilder<Order, bool?, QQueryOperations> reportedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('reported');
+      return query.addPropertyName(r'reported');
     });
   }
 
   QueryBuilder<Order, String, QQueryOperations> statusProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('status');
+      return query.addPropertyName(r'status');
     });
   }
 
   QueryBuilder<Order, double, QQueryOperations> subTotalProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('subTotal');
+      return query.addPropertyName(r'subTotal');
     });
   }
 
   QueryBuilder<Order, String?, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('updatedAt');
+      return query.addPropertyName(r'updatedAt');
     });
   }
 }

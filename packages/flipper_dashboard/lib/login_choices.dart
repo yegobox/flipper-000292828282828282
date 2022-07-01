@@ -34,77 +34,44 @@ class _LoginChoicesState extends State<LoginChoices> {
         },
         builder: (context, model, child) {
           return Scaffold(
-            body: Center(
-                child: !_isNext
-                    ? Column(
-                        children: [
-                          Text(_isNext
-                              ? "Choose a Branch"
-                              : "Choose a business"),
-                          ListView(
-                            shrinkWrap: true,
-                            children: _businesses
-                                .map((e) => Card(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          120.0, 20, 120, 0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: <Widget>[
-                                              Text(
-                                                e.name!,
-                                                style: const TextStyle(
-                                                    fontSize: 17.0),
-                                              ), //Text
-                                              const SizedBox(width: 300),
-                                              Checkbox(
-                                                value: _chooseBranch,
-                                                onChanged: (value) async {
-                                                  await chooseBusiness(
-                                                      value, model, e);
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ))
-                                .toList(),
-                          )
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          const Text("Choose a branch"),
-                          ListView(
+            body: SafeArea(
+              child: Center(
+                  child: !_isNext
+                      ? Column(
+                          children: [
+                            Text(_isNext
+                                ? "Choose a Branch"
+                                : "Choose a business"),
+                            ListView(
                               shrinkWrap: true,
-                              children: _branches
+                              children: _businesses
                                   .map((e) => Card(
                                         margin: const EdgeInsets.fromLTRB(
-                                            120.0, 20, 120, 0),
+                                          8.0,
+                                          20,
+                                          8,
+                                          0,
+                                        ),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: <Widget>[
                                                 Text(
                                                   e.name!,
                                                   style: const TextStyle(
                                                       fontSize: 17.0),
                                                 ), //Text
-                                                const SizedBox(width: 300),
+
                                                 Checkbox(
                                                   value: _chooseBranch,
                                                   onChanged: (value) async {
-                                                    await chooseBranch(value,
-                                                        model, e, context);
+                                                    await chooseBusiness(
+                                                        value, model, e);
                                                   },
                                                 ),
                                               ],
@@ -112,9 +79,50 @@ class _LoginChoicesState extends State<LoginChoices> {
                                           ],
                                         ),
                                       ))
-                                  .toList()),
-                        ],
-                      )),
+                                  .toList(),
+                            )
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            const Text("Choose a branch"),
+                            ListView(
+                                shrinkWrap: true,
+                                children: _branches
+                                    .map((e) => Card(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              120.0, 20, 120, 0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: <Widget>[
+                                                  Text(
+                                                    e.name!,
+                                                    style: const TextStyle(
+                                                        fontSize: 17.0),
+                                                  ), //Text
+
+                                                  Checkbox(
+                                                    value: _chooseBranch,
+                                                    onChanged: (value) async {
+                                                      await chooseBranch(value,
+                                                          model, e, context);
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ))
+                                    .toList()),
+                          ],
+                        )),
+            ),
           );
         });
   }
@@ -125,6 +133,7 @@ class _LoginChoicesState extends State<LoginChoices> {
     if (_businessChoosen) {
       model.setDefaultBusiness(business: e);
       _branches = await ProxyService.isarApi.branches(businessId: e.id!);
+      await ProxyService.isarApi.tenantsFromOnline(businessId: e.id!);
       setState(() {
         _isNext = true;
       });

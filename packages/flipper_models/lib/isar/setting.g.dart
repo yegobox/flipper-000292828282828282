@@ -7,37 +7,33 @@ part of 'setting.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetSettingCollection on Isar {
   IsarCollection<Setting> get settings => getCollection();
 }
 
 const SettingSchema = CollectionSchema(
-  name: 'Setting',
+  name: r'Setting',
   schema:
-      '{"name":"Setting","idName":"id","properties":[{"name":"attendnaceDocCreated","type":"Bool"},{"name":"autoPrint","type":"Bool"},{"name":"defaultLanguage","type":"String"},{"name":"email","type":"String"},{"name":"googleSheetDocCreated","type":"Bool"},{"name":"hasPin","type":"String"},{"name":"isAttendanceEnabled","type":"Bool"},{"name":"openReceiptFileOSaleComplete","type":"Bool"},{"name":"sendDailyReport","type":"Bool"},{"name":"userId","type":"Long"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Value","caseSensitive":false}]}],"links":[]}',
-  idName: 'id',
+      r'{"name":"Setting","idName":"id","properties":[{"name":"attendnaceDocCreated","type":"Bool"},{"name":"autoPrint","type":"Bool"},{"name":"defaultLanguage","type":"String"},{"name":"email","type":"String"},{"name":"googleSheetDocCreated","type":"Bool"},{"name":"hasPin","type":"String"},{"name":"isAttendanceEnabled","type":"Bool"},{"name":"openReceiptFileOSaleComplete","type":"Bool"},{"name":"sendDailyReport","type":"Bool"},{"name":"userId","type":"Long"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Value","caseSensitive":false}]}],"links":[]}',
+  idName: r'id',
   propertyIds: {
-    'attendnaceDocCreated': 0,
-    'autoPrint': 1,
-    'defaultLanguage': 2,
-    'email': 3,
-    'googleSheetDocCreated': 4,
-    'hasPin': 5,
-    'isAttendanceEnabled': 6,
-    'openReceiptFileOSaleComplete': 7,
-    'sendDailyReport': 8,
-    'userId': 9
+    r'attendnaceDocCreated': 0,
+    r'autoPrint': 1,
+    r'defaultLanguage': 2,
+    r'email': 3,
+    r'googleSheetDocCreated': 4,
+    r'hasPin': 5,
+    r'isAttendanceEnabled': 6,
+    r'openReceiptFileOSaleComplete': 7,
+    r'sendDailyReport': 8,
+    r'userId': 9
   },
   listProperties: {},
-  indexIds: {'userId': 0},
+  indexIds: {r'userId': 0},
   indexValueTypes: {
-    'userId': [
+    r'userId': [
       IndexValueType.long,
     ]
   },
@@ -96,6 +92,7 @@ void _settingSerializeNative(
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeBool(offsets[0], object.attendnaceDocCreated);
   writer.writeBool(offsets[1], object.autoPrint);
   writer.writeBytes(offsets[2], defaultLanguage$Bytes);
@@ -152,7 +149,7 @@ P _settingDeserializePropNative<P>(
     case 9:
       return (reader.readLong(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
@@ -160,39 +157,41 @@ Object _settingSerializeWeb(
     IsarCollection<Setting> collection, Setting object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(
-      jsObj, 'attendnaceDocCreated', object.attendnaceDocCreated);
-  IsarNative.jsObjectSet(jsObj, 'autoPrint', object.autoPrint);
-  IsarNative.jsObjectSet(jsObj, 'defaultLanguage', object.defaultLanguage);
-  IsarNative.jsObjectSet(jsObj, 'email', object.email);
+      jsObj, r'attendnaceDocCreated', object.attendnaceDocCreated);
+  IsarNative.jsObjectSet(jsObj, r'autoPrint', object.autoPrint);
+  IsarNative.jsObjectSet(jsObj, r'defaultLanguage', object.defaultLanguage);
+  IsarNative.jsObjectSet(jsObj, r'email', object.email);
   IsarNative.jsObjectSet(
-      jsObj, 'googleSheetDocCreated', object.googleSheetDocCreated);
-  IsarNative.jsObjectSet(jsObj, 'hasPin', object.hasPin);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
+      jsObj, r'googleSheetDocCreated', object.googleSheetDocCreated);
+  IsarNative.jsObjectSet(jsObj, r'hasPin', object.hasPin);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
   IsarNative.jsObjectSet(
-      jsObj, 'isAttendanceEnabled', object.isAttendanceEnabled);
-  IsarNative.jsObjectSet(jsObj, 'openReceiptFileOSaleComplete',
+      jsObj, r'isAttendanceEnabled', object.isAttendanceEnabled);
+  IsarNative.jsObjectSet(jsObj, r'openReceiptFileOSaleComplete',
       object.openReceiptFileOSaleComplete);
-  IsarNative.jsObjectSet(jsObj, 'sendDailyReport', object.sendDailyReport);
-  IsarNative.jsObjectSet(jsObj, 'userId', object.userId);
+  IsarNative.jsObjectSet(jsObj, r'sendDailyReport', object.sendDailyReport);
+  IsarNative.jsObjectSet(jsObj, r'userId', object.userId);
   return jsObj;
 }
 
 Setting _settingDeserializeWeb(
     IsarCollection<Setting> collection, Object jsObj) {
   final object = Setting(
-    attendnaceDocCreated: IsarNative.jsObjectGet(jsObj, 'attendnaceDocCreated'),
-    autoPrint: IsarNative.jsObjectGet(jsObj, 'autoPrint'),
-    defaultLanguage: IsarNative.jsObjectGet(jsObj, 'defaultLanguage'),
-    email: IsarNative.jsObjectGet(jsObj, 'email') ?? '',
+    attendnaceDocCreated:
+        IsarNative.jsObjectGet(jsObj, r'attendnaceDocCreated'),
+    autoPrint: IsarNative.jsObjectGet(jsObj, r'autoPrint'),
+    defaultLanguage: IsarNative.jsObjectGet(jsObj, r'defaultLanguage'),
+    email: IsarNative.jsObjectGet(jsObj, r'email') ?? '',
     googleSheetDocCreated:
-        IsarNative.jsObjectGet(jsObj, 'googleSheetDocCreated'),
-    hasPin: IsarNative.jsObjectGet(jsObj, 'hasPin') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
-    isAttendanceEnabled: IsarNative.jsObjectGet(jsObj, 'isAttendanceEnabled'),
+        IsarNative.jsObjectGet(jsObj, r'googleSheetDocCreated'),
+    hasPin: IsarNative.jsObjectGet(jsObj, r'hasPin') ?? '',
+    id: IsarNative.jsObjectGet(jsObj, r'id') ??
+        (double.negativeInfinity as int),
+    isAttendanceEnabled: IsarNative.jsObjectGet(jsObj, r'isAttendanceEnabled'),
     openReceiptFileOSaleComplete:
-        IsarNative.jsObjectGet(jsObj, 'openReceiptFileOSaleComplete'),
-    sendDailyReport: IsarNative.jsObjectGet(jsObj, 'sendDailyReport'),
-    userId: IsarNative.jsObjectGet(jsObj, 'userId') ??
+        IsarNative.jsObjectGet(jsObj, r'openReceiptFileOSaleComplete'),
+    sendDailyReport: IsarNative.jsObjectGet(jsObj, r'sendDailyReport'),
+    userId: IsarNative.jsObjectGet(jsObj, r'userId') ??
         (double.negativeInfinity as int),
   );
   return object;
@@ -200,33 +199,33 @@ Setting _settingDeserializeWeb(
 
 P _settingDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'attendnaceDocCreated':
-      return (IsarNative.jsObjectGet(jsObj, 'attendnaceDocCreated')) as P;
-    case 'autoPrint':
-      return (IsarNative.jsObjectGet(jsObj, 'autoPrint')) as P;
-    case 'defaultLanguage':
-      return (IsarNative.jsObjectGet(jsObj, 'defaultLanguage')) as P;
-    case 'email':
-      return (IsarNative.jsObjectGet(jsObj, 'email') ?? '') as P;
-    case 'googleSheetDocCreated':
-      return (IsarNative.jsObjectGet(jsObj, 'googleSheetDocCreated')) as P;
-    case 'hasPin':
-      return (IsarNative.jsObjectGet(jsObj, 'hasPin') ?? '') as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+    case r'attendnaceDocCreated':
+      return (IsarNative.jsObjectGet(jsObj, r'attendnaceDocCreated')) as P;
+    case r'autoPrint':
+      return (IsarNative.jsObjectGet(jsObj, r'autoPrint')) as P;
+    case r'defaultLanguage':
+      return (IsarNative.jsObjectGet(jsObj, r'defaultLanguage')) as P;
+    case r'email':
+      return (IsarNative.jsObjectGet(jsObj, r'email') ?? '') as P;
+    case r'googleSheetDocCreated':
+      return (IsarNative.jsObjectGet(jsObj, r'googleSheetDocCreated')) as P;
+    case r'hasPin':
+      return (IsarNative.jsObjectGet(jsObj, r'hasPin') ?? '') as P;
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id') ??
           (double.negativeInfinity as int)) as P;
-    case 'isAttendanceEnabled':
-      return (IsarNative.jsObjectGet(jsObj, 'isAttendanceEnabled')) as P;
-    case 'openReceiptFileOSaleComplete':
-      return (IsarNative.jsObjectGet(jsObj, 'openReceiptFileOSaleComplete'))
+    case r'isAttendanceEnabled':
+      return (IsarNative.jsObjectGet(jsObj, r'isAttendanceEnabled')) as P;
+    case r'openReceiptFileOSaleComplete':
+      return (IsarNative.jsObjectGet(jsObj, r'openReceiptFileOSaleComplete'))
           as P;
-    case 'sendDailyReport':
-      return (IsarNative.jsObjectGet(jsObj, 'sendDailyReport')) as P;
-    case 'userId':
-      return (IsarNative.jsObjectGet(jsObj, 'userId') ??
+    case r'sendDailyReport':
+      return (IsarNative.jsObjectGet(jsObj, r'sendDailyReport')) as P;
+    case r'userId':
+      return (IsarNative.jsObjectGet(jsObj, r'userId') ??
           (double.negativeInfinity as int)) as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
@@ -242,7 +241,7 @@ extension SettingQueryWhereSort on QueryBuilder<Setting, Setting, QWhere> {
   QueryBuilder<Setting, Setting, QAfterWhere> anyUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: 'userId'),
+        const IndexWhereClause.any(indexName: r'userId'),
       );
     });
   }
@@ -253,9 +252,7 @@ extension SettingQueryWhere on QueryBuilder<Setting, Setting, QWhereClause> {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -319,7 +316,7 @@ extension SettingQueryWhere on QueryBuilder<Setting, Setting, QWhereClause> {
   QueryBuilder<Setting, Setting, QAfterWhereClause> userIdEqualTo(int userId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: 'userId',
+        indexName: r'userId',
         value: [userId],
       ));
     });
@@ -331,32 +328,28 @@ extension SettingQueryWhere on QueryBuilder<Setting, Setting, QWhereClause> {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'userId',
+              indexName: r'userId',
               lower: [],
-              includeLower: true,
               upper: [userId],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'userId',
+              indexName: r'userId',
               lower: [userId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'userId',
+              indexName: r'userId',
               lower: [userId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'userId',
+              indexName: r'userId',
               lower: [],
-              includeLower: true,
               upper: [userId],
               includeUpper: false,
             ));
@@ -370,11 +363,10 @@ extension SettingQueryWhere on QueryBuilder<Setting, Setting, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'userId',
+        indexName: r'userId',
         lower: [userId],
         includeLower: include,
         upper: [],
-        includeUpper: true,
       ));
     });
   }
@@ -385,9 +377,8 @@ extension SettingQueryWhere on QueryBuilder<Setting, Setting, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'userId',
+        indexName: r'userId',
         lower: [],
-        includeLower: true,
         upper: [userId],
         includeUpper: include,
       ));
@@ -402,7 +393,7 @@ extension SettingQueryWhere on QueryBuilder<Setting, Setting, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'userId',
+        indexName: r'userId',
         lower: [lowerUserId],
         includeLower: includeLower,
         upper: [upperUserId],
@@ -418,7 +409,7 @@ extension SettingQueryFilter
       attendnaceDocCreatedIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'attendnaceDocCreated',
+        property: r'attendnaceDocCreated',
       ));
     });
   }
@@ -427,7 +418,7 @@ extension SettingQueryFilter
       attendnaceDocCreatedEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'attendnaceDocCreated',
+        property: r'attendnaceDocCreated',
         value: value,
       ));
     });
@@ -436,7 +427,7 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> autoPrintIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'autoPrint',
+        property: r'autoPrint',
       ));
     });
   }
@@ -445,7 +436,7 @@ extension SettingQueryFilter
       bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'autoPrint',
+        property: r'autoPrint',
         value: value,
       ));
     });
@@ -455,7 +446,7 @@ extension SettingQueryFilter
       defaultLanguageIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
       ));
     });
   }
@@ -466,7 +457,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -482,7 +473,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -497,7 +488,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -513,7 +504,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -530,7 +521,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -543,7 +534,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -555,7 +546,7 @@ extension SettingQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -567,7 +558,7 @@ extension SettingQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'defaultLanguage',
+        property: r'defaultLanguage',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -580,7 +571,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -595,7 +586,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -610,7 +601,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -626,7 +617,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'email',
+        property: r'email',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -642,7 +633,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -655,7 +646,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -667,7 +658,7 @@ extension SettingQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -679,7 +670,7 @@ extension SettingQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'email',
+        property: r'email',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -690,7 +681,7 @@ extension SettingQueryFilter
       googleSheetDocCreatedIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'googleSheetDocCreated',
+        property: r'googleSheetDocCreated',
       ));
     });
   }
@@ -699,7 +690,7 @@ extension SettingQueryFilter
       googleSheetDocCreatedEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'googleSheetDocCreated',
+        property: r'googleSheetDocCreated',
         value: value,
       ));
     });
@@ -711,7 +702,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'hasPin',
+        property: r'hasPin',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -726,7 +717,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'hasPin',
+        property: r'hasPin',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -741,7 +732,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'hasPin',
+        property: r'hasPin',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -757,7 +748,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'hasPin',
+        property: r'hasPin',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -773,7 +764,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'hasPin',
+        property: r'hasPin',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -786,7 +777,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'hasPin',
+        property: r'hasPin',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -798,7 +789,7 @@ extension SettingQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'hasPin',
+        property: r'hasPin',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -810,7 +801,7 @@ extension SettingQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'hasPin',
+        property: r'hasPin',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -820,7 +811,7 @@ extension SettingQueryFilter
   QueryBuilder<Setting, Setting, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -833,7 +824,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -846,7 +837,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -860,7 +851,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -873,7 +864,7 @@ extension SettingQueryFilter
       isAttendanceEnabledIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'isAttendanceEnabled',
+        property: r'isAttendanceEnabled',
       ));
     });
   }
@@ -882,7 +873,7 @@ extension SettingQueryFilter
       isAttendanceEnabledEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'isAttendanceEnabled',
+        property: r'isAttendanceEnabled',
         value: value,
       ));
     });
@@ -892,7 +883,7 @@ extension SettingQueryFilter
       openReceiptFileOSaleCompleteIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'openReceiptFileOSaleComplete',
+        property: r'openReceiptFileOSaleComplete',
       ));
     });
   }
@@ -901,7 +892,7 @@ extension SettingQueryFilter
       openReceiptFileOSaleCompleteEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'openReceiptFileOSaleComplete',
+        property: r'openReceiptFileOSaleComplete',
         value: value,
       ));
     });
@@ -911,7 +902,7 @@ extension SettingQueryFilter
       sendDailyReportIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'sendDailyReport',
+        property: r'sendDailyReport',
       ));
     });
   }
@@ -920,7 +911,7 @@ extension SettingQueryFilter
       bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'sendDailyReport',
+        property: r'sendDailyReport',
         value: value,
       ));
     });
@@ -930,7 +921,7 @@ extension SettingQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'userId',
+        property: r'userId',
         value: value,
       ));
     });
@@ -943,7 +934,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'userId',
+        property: r'userId',
         value: value,
       ));
     });
@@ -956,7 +947,7 @@ extension SettingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'userId',
+        property: r'userId',
         value: value,
       ));
     });
@@ -970,7 +961,7 @@ extension SettingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'userId',
+        property: r'userId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -986,125 +977,125 @@ extension SettingQueryLinks
 extension SettingQueryWhereSortBy on QueryBuilder<Setting, Setting, QSortBy> {
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByAttendnaceDocCreated() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('attendnaceDocCreated', Sort.asc);
+      return query.addSortBy(r'attendnaceDocCreated', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       sortByAttendnaceDocCreatedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('attendnaceDocCreated', Sort.desc);
+      return query.addSortBy(r'attendnaceDocCreated', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByAutoPrint() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('autoPrint', Sort.asc);
+      return query.addSortBy(r'autoPrint', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByAutoPrintDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('autoPrint', Sort.desc);
+      return query.addSortBy(r'autoPrint', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByDefaultLanguage() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('defaultLanguage', Sort.asc);
+      return query.addSortBy(r'defaultLanguage', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByDefaultLanguageDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('defaultLanguage', Sort.desc);
+      return query.addSortBy(r'defaultLanguage', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByEmail() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.asc);
+      return query.addSortBy(r'email', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByEmailDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.desc);
+      return query.addSortBy(r'email', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByGoogleSheetDocCreated() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('googleSheetDocCreated', Sort.asc);
+      return query.addSortBy(r'googleSheetDocCreated', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       sortByGoogleSheetDocCreatedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('googleSheetDocCreated', Sort.desc);
+      return query.addSortBy(r'googleSheetDocCreated', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByHasPin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('hasPin', Sort.asc);
+      return query.addSortBy(r'hasPin', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByHasPinDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('hasPin', Sort.desc);
+      return query.addSortBy(r'hasPin', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByIsAttendanceEnabled() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('isAttendanceEnabled', Sort.asc);
+      return query.addSortBy(r'isAttendanceEnabled', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByIsAttendanceEnabledDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('isAttendanceEnabled', Sort.desc);
+      return query.addSortBy(r'isAttendanceEnabled', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       sortByOpenReceiptFileOSaleComplete() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('openReceiptFileOSaleComplete', Sort.asc);
+      return query.addSortBy(r'openReceiptFileOSaleComplete', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       sortByOpenReceiptFileOSaleCompleteDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('openReceiptFileOSaleComplete', Sort.desc);
+      return query.addSortBy(r'openReceiptFileOSaleComplete', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortBySendDailyReport() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sendDailyReport', Sort.asc);
+      return query.addSortBy(r'sendDailyReport', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortBySendDailyReportDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sendDailyReport', Sort.desc);
+      return query.addSortBy(r'sendDailyReport', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByUserId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.asc);
+      return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> sortByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.desc);
+      return query.addSortBy(r'userId', Sort.desc);
     });
   }
 }
@@ -1113,137 +1104,137 @@ extension SettingQueryWhereSortThenBy
     on QueryBuilder<Setting, Setting, QSortThenBy> {
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByAttendnaceDocCreated() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('attendnaceDocCreated', Sort.asc);
+      return query.addSortBy(r'attendnaceDocCreated', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       thenByAttendnaceDocCreatedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('attendnaceDocCreated', Sort.desc);
+      return query.addSortBy(r'attendnaceDocCreated', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByAutoPrint() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('autoPrint', Sort.asc);
+      return query.addSortBy(r'autoPrint', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByAutoPrintDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('autoPrint', Sort.desc);
+      return query.addSortBy(r'autoPrint', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByDefaultLanguage() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('defaultLanguage', Sort.asc);
+      return query.addSortBy(r'defaultLanguage', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByDefaultLanguageDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('defaultLanguage', Sort.desc);
+      return query.addSortBy(r'defaultLanguage', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByEmail() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.asc);
+      return query.addSortBy(r'email', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByEmailDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.desc);
+      return query.addSortBy(r'email', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByGoogleSheetDocCreated() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('googleSheetDocCreated', Sort.asc);
+      return query.addSortBy(r'googleSheetDocCreated', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       thenByGoogleSheetDocCreatedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('googleSheetDocCreated', Sort.desc);
+      return query.addSortBy(r'googleSheetDocCreated', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByHasPin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('hasPin', Sort.asc);
+      return query.addSortBy(r'hasPin', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByHasPinDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('hasPin', Sort.desc);
+      return query.addSortBy(r'hasPin', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByIsAttendanceEnabled() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('isAttendanceEnabled', Sort.asc);
+      return query.addSortBy(r'isAttendanceEnabled', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByIsAttendanceEnabledDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('isAttendanceEnabled', Sort.desc);
+      return query.addSortBy(r'isAttendanceEnabled', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       thenByOpenReceiptFileOSaleComplete() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('openReceiptFileOSaleComplete', Sort.asc);
+      return query.addSortBy(r'openReceiptFileOSaleComplete', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy>
       thenByOpenReceiptFileOSaleCompleteDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('openReceiptFileOSaleComplete', Sort.desc);
+      return query.addSortBy(r'openReceiptFileOSaleComplete', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenBySendDailyReport() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sendDailyReport', Sort.asc);
+      return query.addSortBy(r'sendDailyReport', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenBySendDailyReportDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sendDailyReport', Sort.desc);
+      return query.addSortBy(r'sendDailyReport', Sort.desc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByUserId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.asc);
+      return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<Setting, Setting, QAfterSortBy> thenByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.desc);
+      return query.addSortBy(r'userId', Sort.desc);
     });
   }
 }
@@ -1252,20 +1243,20 @@ extension SettingQueryWhereDistinct
     on QueryBuilder<Setting, Setting, QDistinct> {
   QueryBuilder<Setting, Setting, QDistinct> distinctByAttendnaceDocCreated() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('attendnaceDocCreated');
+      return query.addDistinctBy(r'attendnaceDocCreated');
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctByAutoPrint() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('autoPrint');
+      return query.addDistinctBy(r'autoPrint');
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctByDefaultLanguage(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('defaultLanguage',
+      return query.addDistinctBy(r'defaultLanguage',
           caseSensitive: caseSensitive);
     });
   }
@@ -1273,45 +1264,45 @@ extension SettingQueryWhereDistinct
   QueryBuilder<Setting, Setting, QDistinct> distinctByEmail(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('email', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'email', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctByGoogleSheetDocCreated() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('googleSheetDocCreated');
+      return query.addDistinctBy(r'googleSheetDocCreated');
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctByHasPin(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('hasPin', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'hasPin', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctByIsAttendanceEnabled() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('isAttendanceEnabled');
+      return query.addDistinctBy(r'isAttendanceEnabled');
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct>
       distinctByOpenReceiptFileOSaleComplete() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('openReceiptFileOSaleComplete');
+      return query.addDistinctBy(r'openReceiptFileOSaleComplete');
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctBySendDailyReport() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('sendDailyReport');
+      return query.addDistinctBy(r'sendDailyReport');
     });
   }
 
   QueryBuilder<Setting, Setting, QDistinct> distinctByUserId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('userId');
+      return query.addDistinctBy(r'userId');
     });
   }
 }
@@ -1321,69 +1312,69 @@ extension SettingQueryProperty
   QueryBuilder<Setting, bool?, QQueryOperations>
       attendnaceDocCreatedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('attendnaceDocCreated');
+      return query.addPropertyName(r'attendnaceDocCreated');
     });
   }
 
   QueryBuilder<Setting, bool?, QQueryOperations> autoPrintProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('autoPrint');
+      return query.addPropertyName(r'autoPrint');
     });
   }
 
   QueryBuilder<Setting, String?, QQueryOperations> defaultLanguageProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('defaultLanguage');
+      return query.addPropertyName(r'defaultLanguage');
     });
   }
 
   QueryBuilder<Setting, String, QQueryOperations> emailProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('email');
+      return query.addPropertyName(r'email');
     });
   }
 
   QueryBuilder<Setting, bool?, QQueryOperations>
       googleSheetDocCreatedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('googleSheetDocCreated');
+      return query.addPropertyName(r'googleSheetDocCreated');
     });
   }
 
   QueryBuilder<Setting, String, QQueryOperations> hasPinProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('hasPin');
+      return query.addPropertyName(r'hasPin');
     });
   }
 
   QueryBuilder<Setting, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Setting, bool?, QQueryOperations> isAttendanceEnabledProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('isAttendanceEnabled');
+      return query.addPropertyName(r'isAttendanceEnabled');
     });
   }
 
   QueryBuilder<Setting, bool?, QQueryOperations>
       openReceiptFileOSaleCompleteProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('openReceiptFileOSaleComplete');
+      return query.addPropertyName(r'openReceiptFileOSaleComplete');
     });
   }
 
   QueryBuilder<Setting, bool?, QQueryOperations> sendDailyReportProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('sendDailyReport');
+      return query.addPropertyName(r'sendDailyReport');
     });
   }
 
   QueryBuilder<Setting, int, QQueryOperations> userIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('userId');
+      return query.addPropertyName(r'userId');
     });
   }
 }

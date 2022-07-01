@@ -24,7 +24,6 @@ class StartUpViewModel extends BaseViewModel {
     required Function navigationCallback,
   }) async {
     loginInfo.redirecting = true;
-    // ProxyService.isarApi.logOut();
     try {
       /// an event should be trigered from mobile not desktop as desktop is anonmous and login() func might have been called.
       if (invokeLogin && !ProxyService.box.isAnonymous()) {
@@ -53,6 +52,8 @@ class StartUpViewModel extends BaseViewModel {
       } else if (e is SessionException || e is ErrorReadingFromYBServer) {
         loginInfo.isLoggedIn = false;
         navigationCallback("login");
+      } else if (e is NotFoundException) {
+        navigationCallback("signup");
       } else {
         log.i(e.toString());
         loginInfo.isLoggedIn = false;

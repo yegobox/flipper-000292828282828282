@@ -7,40 +7,36 @@ part of 'receipt.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetReceiptCollection on Isar {
   IsarCollection<Receipt> get receipts => getCollection();
 }
 
 const ReceiptSchema = CollectionSchema(
-  name: 'Receipt',
+  name: r'Receipt',
   schema:
-      '{"name":"Receipt","idName":"id","properties":[{"name":"intrlData","type":"String"},{"name":"mrcNo","type":"String"},{"name":"orderId","type":"Long"},{"name":"qrCode","type":"String"},{"name":"rcptNo","type":"Long"},{"name":"rcptSign","type":"String"},{"name":"receiptType","type":"String"},{"name":"resultCd","type":"String"},{"name":"resultDt","type":"String"},{"name":"resultMsg","type":"String"},{"name":"sdcId","type":"String"},{"name":"totRcptNo","type":"Long"},{"name":"vsdcRcptPbctDate","type":"String"}],"indexes":[{"name":"orderId","unique":false,"replace":false,"properties":[{"name":"orderId","type":"Value","caseSensitive":false}]}],"links":[]}',
-  idName: 'id',
+      r'{"name":"Receipt","idName":"id","properties":[{"name":"intrlData","type":"String"},{"name":"mrcNo","type":"String"},{"name":"orderId","type":"Long"},{"name":"qrCode","type":"String"},{"name":"rcptNo","type":"Long"},{"name":"rcptSign","type":"String"},{"name":"receiptType","type":"String"},{"name":"resultCd","type":"String"},{"name":"resultDt","type":"String"},{"name":"resultMsg","type":"String"},{"name":"sdcId","type":"String"},{"name":"totRcptNo","type":"Long"},{"name":"vsdcRcptPbctDate","type":"String"}],"indexes":[{"name":"orderId","unique":false,"replace":false,"properties":[{"name":"orderId","type":"Value","caseSensitive":false}]}],"links":[]}',
+  idName: r'id',
   propertyIds: {
-    'intrlData': 0,
-    'mrcNo': 1,
-    'orderId': 2,
-    'qrCode': 3,
-    'rcptNo': 4,
-    'rcptSign': 5,
-    'receiptType': 6,
-    'resultCd': 7,
-    'resultDt': 8,
-    'resultMsg': 9,
-    'sdcId': 10,
-    'totRcptNo': 11,
-    'vsdcRcptPbctDate': 12
+    r'intrlData': 0,
+    r'mrcNo': 1,
+    r'orderId': 2,
+    r'qrCode': 3,
+    r'rcptNo': 4,
+    r'rcptSign': 5,
+    r'receiptType': 6,
+    r'resultCd': 7,
+    r'resultDt': 8,
+    r'resultMsg': 9,
+    r'sdcId': 10,
+    r'totRcptNo': 11,
+    r'vsdcRcptPbctDate': 12
   },
   listProperties: {},
-  indexIds: {'orderId': 0},
+  indexIds: {r'orderId': 0},
   indexValueTypes: {
-    'orderId': [
+    r'orderId': [
       IndexValueType.long,
     ]
   },
@@ -112,6 +108,7 @@ void _receiptSerializeNative(
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeBytes(offsets[0], intrlData$Bytes);
   writer.writeBytes(offsets[1], mrcNo$Bytes);
   writer.writeLong(offsets[2], object.orderId);
@@ -179,89 +176,89 @@ P _receiptDeserializePropNative<P>(
     case 12:
       return (reader.readString(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
 Object _receiptSerializeWeb(
     IsarCollection<Receipt> collection, Receipt object) {
   final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'intrlData', object.intrlData);
-  IsarNative.jsObjectSet(jsObj, 'mrcNo', object.mrcNo);
-  IsarNative.jsObjectSet(jsObj, 'orderId', object.orderId);
-  IsarNative.jsObjectSet(jsObj, 'qrCode', object.qrCode);
-  IsarNative.jsObjectSet(jsObj, 'rcptNo', object.rcptNo);
-  IsarNative.jsObjectSet(jsObj, 'rcptSign', object.rcptSign);
-  IsarNative.jsObjectSet(jsObj, 'receiptType', object.receiptType);
-  IsarNative.jsObjectSet(jsObj, 'resultCd', object.resultCd);
-  IsarNative.jsObjectSet(jsObj, 'resultDt', object.resultDt);
-  IsarNative.jsObjectSet(jsObj, 'resultMsg', object.resultMsg);
-  IsarNative.jsObjectSet(jsObj, 'sdcId', object.sdcId);
-  IsarNative.jsObjectSet(jsObj, 'totRcptNo', object.totRcptNo);
-  IsarNative.jsObjectSet(jsObj, 'vsdcRcptPbctDate', object.vsdcRcptPbctDate);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
+  IsarNative.jsObjectSet(jsObj, r'intrlData', object.intrlData);
+  IsarNative.jsObjectSet(jsObj, r'mrcNo', object.mrcNo);
+  IsarNative.jsObjectSet(jsObj, r'orderId', object.orderId);
+  IsarNative.jsObjectSet(jsObj, r'qrCode', object.qrCode);
+  IsarNative.jsObjectSet(jsObj, r'rcptNo', object.rcptNo);
+  IsarNative.jsObjectSet(jsObj, r'rcptSign', object.rcptSign);
+  IsarNative.jsObjectSet(jsObj, r'receiptType', object.receiptType);
+  IsarNative.jsObjectSet(jsObj, r'resultCd', object.resultCd);
+  IsarNative.jsObjectSet(jsObj, r'resultDt', object.resultDt);
+  IsarNative.jsObjectSet(jsObj, r'resultMsg', object.resultMsg);
+  IsarNative.jsObjectSet(jsObj, r'sdcId', object.sdcId);
+  IsarNative.jsObjectSet(jsObj, r'totRcptNo', object.totRcptNo);
+  IsarNative.jsObjectSet(jsObj, r'vsdcRcptPbctDate', object.vsdcRcptPbctDate);
   return jsObj;
 }
 
 Receipt _receiptDeserializeWeb(
     IsarCollection<Receipt> collection, Object jsObj) {
   final object = Receipt();
-  object.id = IsarNative.jsObjectGet(jsObj, 'id');
-  object.intrlData = IsarNative.jsObjectGet(jsObj, 'intrlData') ?? '';
-  object.mrcNo = IsarNative.jsObjectGet(jsObj, 'mrcNo') ?? '';
-  object.orderId = IsarNative.jsObjectGet(jsObj, 'orderId') ??
+  object.id = IsarNative.jsObjectGet(jsObj, r'id');
+  object.intrlData = IsarNative.jsObjectGet(jsObj, r'intrlData') ?? '';
+  object.mrcNo = IsarNative.jsObjectGet(jsObj, r'mrcNo') ?? '';
+  object.orderId = IsarNative.jsObjectGet(jsObj, r'orderId') ??
       (double.negativeInfinity as int);
-  object.qrCode = IsarNative.jsObjectGet(jsObj, 'qrCode') ?? '';
-  object.rcptNo = IsarNative.jsObjectGet(jsObj, 'rcptNo') ??
+  object.qrCode = IsarNative.jsObjectGet(jsObj, r'qrCode') ?? '';
+  object.rcptNo = IsarNative.jsObjectGet(jsObj, r'rcptNo') ??
       (double.negativeInfinity as int);
-  object.rcptSign = IsarNative.jsObjectGet(jsObj, 'rcptSign') ?? '';
-  object.receiptType = IsarNative.jsObjectGet(jsObj, 'receiptType') ?? '';
-  object.resultCd = IsarNative.jsObjectGet(jsObj, 'resultCd') ?? '';
-  object.resultDt = IsarNative.jsObjectGet(jsObj, 'resultDt') ?? '';
-  object.resultMsg = IsarNative.jsObjectGet(jsObj, 'resultMsg') ?? '';
-  object.sdcId = IsarNative.jsObjectGet(jsObj, 'sdcId') ?? '';
-  object.totRcptNo = IsarNative.jsObjectGet(jsObj, 'totRcptNo') ??
+  object.rcptSign = IsarNative.jsObjectGet(jsObj, r'rcptSign') ?? '';
+  object.receiptType = IsarNative.jsObjectGet(jsObj, r'receiptType') ?? '';
+  object.resultCd = IsarNative.jsObjectGet(jsObj, r'resultCd') ?? '';
+  object.resultDt = IsarNative.jsObjectGet(jsObj, r'resultDt') ?? '';
+  object.resultMsg = IsarNative.jsObjectGet(jsObj, r'resultMsg') ?? '';
+  object.sdcId = IsarNative.jsObjectGet(jsObj, r'sdcId') ?? '';
+  object.totRcptNo = IsarNative.jsObjectGet(jsObj, r'totRcptNo') ??
       (double.negativeInfinity as int);
   object.vsdcRcptPbctDate =
-      IsarNative.jsObjectGet(jsObj, 'vsdcRcptPbctDate') ?? '';
+      IsarNative.jsObjectGet(jsObj, r'vsdcRcptPbctDate') ?? '';
   return object;
 }
 
 P _receiptDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
-    case 'intrlData':
-      return (IsarNative.jsObjectGet(jsObj, 'intrlData') ?? '') as P;
-    case 'mrcNo':
-      return (IsarNative.jsObjectGet(jsObj, 'mrcNo') ?? '') as P;
-    case 'orderId':
-      return (IsarNative.jsObjectGet(jsObj, 'orderId') ??
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id')) as P;
+    case r'intrlData':
+      return (IsarNative.jsObjectGet(jsObj, r'intrlData') ?? '') as P;
+    case r'mrcNo':
+      return (IsarNative.jsObjectGet(jsObj, r'mrcNo') ?? '') as P;
+    case r'orderId':
+      return (IsarNative.jsObjectGet(jsObj, r'orderId') ??
           (double.negativeInfinity as int)) as P;
-    case 'qrCode':
-      return (IsarNative.jsObjectGet(jsObj, 'qrCode') ?? '') as P;
-    case 'rcptNo':
-      return (IsarNative.jsObjectGet(jsObj, 'rcptNo') ??
+    case r'qrCode':
+      return (IsarNative.jsObjectGet(jsObj, r'qrCode') ?? '') as P;
+    case r'rcptNo':
+      return (IsarNative.jsObjectGet(jsObj, r'rcptNo') ??
           (double.negativeInfinity as int)) as P;
-    case 'rcptSign':
-      return (IsarNative.jsObjectGet(jsObj, 'rcptSign') ?? '') as P;
-    case 'receiptType':
-      return (IsarNative.jsObjectGet(jsObj, 'receiptType') ?? '') as P;
-    case 'resultCd':
-      return (IsarNative.jsObjectGet(jsObj, 'resultCd') ?? '') as P;
-    case 'resultDt':
-      return (IsarNative.jsObjectGet(jsObj, 'resultDt') ?? '') as P;
-    case 'resultMsg':
-      return (IsarNative.jsObjectGet(jsObj, 'resultMsg') ?? '') as P;
-    case 'sdcId':
-      return (IsarNative.jsObjectGet(jsObj, 'sdcId') ?? '') as P;
-    case 'totRcptNo':
-      return (IsarNative.jsObjectGet(jsObj, 'totRcptNo') ??
+    case r'rcptSign':
+      return (IsarNative.jsObjectGet(jsObj, r'rcptSign') ?? '') as P;
+    case r'receiptType':
+      return (IsarNative.jsObjectGet(jsObj, r'receiptType') ?? '') as P;
+    case r'resultCd':
+      return (IsarNative.jsObjectGet(jsObj, r'resultCd') ?? '') as P;
+    case r'resultDt':
+      return (IsarNative.jsObjectGet(jsObj, r'resultDt') ?? '') as P;
+    case r'resultMsg':
+      return (IsarNative.jsObjectGet(jsObj, r'resultMsg') ?? '') as P;
+    case r'sdcId':
+      return (IsarNative.jsObjectGet(jsObj, r'sdcId') ?? '') as P;
+    case r'totRcptNo':
+      return (IsarNative.jsObjectGet(jsObj, r'totRcptNo') ??
           (double.negativeInfinity as int)) as P;
-    case 'vsdcRcptPbctDate':
-      return (IsarNative.jsObjectGet(jsObj, 'vsdcRcptPbctDate') ?? '') as P;
+    case r'vsdcRcptPbctDate':
+      return (IsarNative.jsObjectGet(jsObj, r'vsdcRcptPbctDate') ?? '') as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
@@ -277,7 +274,7 @@ extension ReceiptQueryWhereSort on QueryBuilder<Receipt, Receipt, QWhere> {
   QueryBuilder<Receipt, Receipt, QAfterWhere> anyOrderId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: 'orderId'),
+        const IndexWhereClause.any(indexName: r'orderId'),
       );
     });
   }
@@ -288,9 +285,7 @@ extension ReceiptQueryWhere on QueryBuilder<Receipt, Receipt, QWhereClause> {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -355,7 +350,7 @@ extension ReceiptQueryWhere on QueryBuilder<Receipt, Receipt, QWhereClause> {
       int orderId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: 'orderId',
+        indexName: r'orderId',
         value: [orderId],
       ));
     });
@@ -367,32 +362,28 @@ extension ReceiptQueryWhere on QueryBuilder<Receipt, Receipt, QWhereClause> {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'orderId',
+              indexName: r'orderId',
               lower: [],
-              includeLower: true,
               upper: [orderId],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'orderId',
+              indexName: r'orderId',
               lower: [orderId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'orderId',
+              indexName: r'orderId',
               lower: [orderId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'orderId',
+              indexName: r'orderId',
               lower: [],
-              includeLower: true,
               upper: [orderId],
               includeUpper: false,
             ));
@@ -406,11 +397,10 @@ extension ReceiptQueryWhere on QueryBuilder<Receipt, Receipt, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'orderId',
+        indexName: r'orderId',
         lower: [orderId],
         includeLower: include,
         upper: [],
-        includeUpper: true,
       ));
     });
   }
@@ -421,9 +411,8 @@ extension ReceiptQueryWhere on QueryBuilder<Receipt, Receipt, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'orderId',
+        indexName: r'orderId',
         lower: [],
-        includeLower: true,
         upper: [orderId],
         includeUpper: include,
       ));
@@ -438,7 +427,7 @@ extension ReceiptQueryWhere on QueryBuilder<Receipt, Receipt, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'orderId',
+        indexName: r'orderId',
         lower: [lowerOrderId],
         includeLower: includeLower,
         upper: [upperOrderId],
@@ -453,7 +442,7 @@ extension ReceiptQueryFilter
   QueryBuilder<Receipt, Receipt, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'id',
+        property: r'id',
       ));
     });
   }
@@ -461,7 +450,7 @@ extension ReceiptQueryFilter
   QueryBuilder<Receipt, Receipt, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -474,7 +463,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -487,7 +476,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -501,7 +490,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -516,7 +505,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'intrlData',
+        property: r'intrlData',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -531,7 +520,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'intrlData',
+        property: r'intrlData',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -546,7 +535,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'intrlData',
+        property: r'intrlData',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -562,7 +551,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'intrlData',
+        property: r'intrlData',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -578,7 +567,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'intrlData',
+        property: r'intrlData',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -591,7 +580,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'intrlData',
+        property: r'intrlData',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -603,7 +592,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'intrlData',
+        property: r'intrlData',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -615,7 +604,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'intrlData',
+        property: r'intrlData',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -628,7 +617,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'mrcNo',
+        property: r'mrcNo',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -643,7 +632,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'mrcNo',
+        property: r'mrcNo',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -658,7 +647,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'mrcNo',
+        property: r'mrcNo',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -674,7 +663,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'mrcNo',
+        property: r'mrcNo',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -690,7 +679,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'mrcNo',
+        property: r'mrcNo',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -703,7 +692,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'mrcNo',
+        property: r'mrcNo',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -715,7 +704,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'mrcNo',
+        property: r'mrcNo',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -727,7 +716,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'mrcNo',
+        property: r'mrcNo',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -738,7 +727,7 @@ extension ReceiptQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'orderId',
+        property: r'orderId',
         value: value,
       ));
     });
@@ -751,7 +740,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'orderId',
+        property: r'orderId',
         value: value,
       ));
     });
@@ -764,7 +753,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'orderId',
+        property: r'orderId',
         value: value,
       ));
     });
@@ -778,7 +767,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'orderId',
+        property: r'orderId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -793,7 +782,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'qrCode',
+        property: r'qrCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -808,7 +797,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'qrCode',
+        property: r'qrCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -823,7 +812,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'qrCode',
+        property: r'qrCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -839,7 +828,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'qrCode',
+        property: r'qrCode',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -855,7 +844,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'qrCode',
+        property: r'qrCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -868,7 +857,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'qrCode',
+        property: r'qrCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -880,7 +869,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'qrCode',
+        property: r'qrCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -892,7 +881,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'qrCode',
+        property: r'qrCode',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -903,7 +892,7 @@ extension ReceiptQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'rcptNo',
+        property: r'rcptNo',
         value: value,
       ));
     });
@@ -916,7 +905,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'rcptNo',
+        property: r'rcptNo',
         value: value,
       ));
     });
@@ -929,7 +918,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'rcptNo',
+        property: r'rcptNo',
         value: value,
       ));
     });
@@ -943,7 +932,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'rcptNo',
+        property: r'rcptNo',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -958,7 +947,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'rcptSign',
+        property: r'rcptSign',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -973,7 +962,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'rcptSign',
+        property: r'rcptSign',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -988,7 +977,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'rcptSign',
+        property: r'rcptSign',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1004,7 +993,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'rcptSign',
+        property: r'rcptSign',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1020,7 +1009,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'rcptSign',
+        property: r'rcptSign',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1033,7 +1022,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'rcptSign',
+        property: r'rcptSign',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1045,7 +1034,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'rcptSign',
+        property: r'rcptSign',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1057,7 +1046,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'rcptSign',
+        property: r'rcptSign',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1070,7 +1059,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1085,7 +1074,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1100,7 +1089,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1116,7 +1105,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'receiptType',
+        property: r'receiptType',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1132,7 +1121,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1145,7 +1134,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1157,7 +1146,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'receiptType',
+        property: r'receiptType',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1169,7 +1158,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'receiptType',
+        property: r'receiptType',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1182,7 +1171,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'resultCd',
+        property: r'resultCd',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1197,7 +1186,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'resultCd',
+        property: r'resultCd',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1212,7 +1201,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'resultCd',
+        property: r'resultCd',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1228,7 +1217,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'resultCd',
+        property: r'resultCd',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1244,7 +1233,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'resultCd',
+        property: r'resultCd',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1257,7 +1246,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'resultCd',
+        property: r'resultCd',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1269,7 +1258,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'resultCd',
+        property: r'resultCd',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1281,7 +1270,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'resultCd',
+        property: r'resultCd',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1294,7 +1283,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'resultDt',
+        property: r'resultDt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1309,7 +1298,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'resultDt',
+        property: r'resultDt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1324,7 +1313,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'resultDt',
+        property: r'resultDt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1340,7 +1329,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'resultDt',
+        property: r'resultDt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1356,7 +1345,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'resultDt',
+        property: r'resultDt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1369,7 +1358,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'resultDt',
+        property: r'resultDt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1381,7 +1370,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'resultDt',
+        property: r'resultDt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1393,7 +1382,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'resultDt',
+        property: r'resultDt',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1406,7 +1395,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'resultMsg',
+        property: r'resultMsg',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1421,7 +1410,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'resultMsg',
+        property: r'resultMsg',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1436,7 +1425,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'resultMsg',
+        property: r'resultMsg',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1452,7 +1441,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'resultMsg',
+        property: r'resultMsg',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1468,7 +1457,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'resultMsg',
+        property: r'resultMsg',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1481,7 +1470,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'resultMsg',
+        property: r'resultMsg',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1493,7 +1482,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'resultMsg',
+        property: r'resultMsg',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1505,7 +1494,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'resultMsg',
+        property: r'resultMsg',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1518,7 +1507,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'sdcId',
+        property: r'sdcId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1533,7 +1522,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'sdcId',
+        property: r'sdcId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1548,7 +1537,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'sdcId',
+        property: r'sdcId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1564,7 +1553,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'sdcId',
+        property: r'sdcId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1580,7 +1569,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'sdcId',
+        property: r'sdcId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1593,7 +1582,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'sdcId',
+        property: r'sdcId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1605,7 +1594,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'sdcId',
+        property: r'sdcId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1617,7 +1606,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'sdcId',
+        property: r'sdcId',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1628,7 +1617,7 @@ extension ReceiptQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'totRcptNo',
+        property: r'totRcptNo',
         value: value,
       ));
     });
@@ -1641,7 +1630,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'totRcptNo',
+        property: r'totRcptNo',
         value: value,
       ));
     });
@@ -1654,7 +1643,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'totRcptNo',
+        property: r'totRcptNo',
         value: value,
       ));
     });
@@ -1668,7 +1657,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'totRcptNo',
+        property: r'totRcptNo',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1683,7 +1672,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1699,7 +1688,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1715,7 +1704,7 @@ extension ReceiptQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1731,7 +1720,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1748,7 +1737,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1762,7 +1751,7 @@ extension ReceiptQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1773,7 +1762,7 @@ extension ReceiptQueryFilter
       vsdcRcptPbctDateContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1785,7 +1774,7 @@ extension ReceiptQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'vsdcRcptPbctDate',
+        property: r'vsdcRcptPbctDate',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1799,157 +1788,157 @@ extension ReceiptQueryLinks
 extension ReceiptQueryWhereSortBy on QueryBuilder<Receipt, Receipt, QSortBy> {
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByIntrlData() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('intrlData', Sort.asc);
+      return query.addSortBy(r'intrlData', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByIntrlDataDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('intrlData', Sort.desc);
+      return query.addSortBy(r'intrlData', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByMrcNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('mrcNo', Sort.asc);
+      return query.addSortBy(r'mrcNo', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByMrcNoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('mrcNo', Sort.desc);
+      return query.addSortBy(r'mrcNo', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByOrderId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderId', Sort.asc);
+      return query.addSortBy(r'orderId', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByOrderIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderId', Sort.desc);
+      return query.addSortBy(r'orderId', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByQrCode() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('qrCode', Sort.asc);
+      return query.addSortBy(r'qrCode', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByQrCodeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('qrCode', Sort.desc);
+      return query.addSortBy(r'qrCode', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByRcptNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptNo', Sort.asc);
+      return query.addSortBy(r'rcptNo', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByRcptNoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptNo', Sort.desc);
+      return query.addSortBy(r'rcptNo', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByRcptSign() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptSign', Sort.asc);
+      return query.addSortBy(r'rcptSign', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByRcptSignDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptSign', Sort.desc);
+      return query.addSortBy(r'rcptSign', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByReceiptType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.asc);
+      return query.addSortBy(r'receiptType', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByReceiptTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.desc);
+      return query.addSortBy(r'receiptType', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByResultCd() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultCd', Sort.asc);
+      return query.addSortBy(r'resultCd', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByResultCdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultCd', Sort.desc);
+      return query.addSortBy(r'resultCd', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByResultDt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultDt', Sort.asc);
+      return query.addSortBy(r'resultDt', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByResultDtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultDt', Sort.desc);
+      return query.addSortBy(r'resultDt', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByResultMsg() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultMsg', Sort.asc);
+      return query.addSortBy(r'resultMsg', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByResultMsgDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultMsg', Sort.desc);
+      return query.addSortBy(r'resultMsg', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortBySdcId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sdcId', Sort.asc);
+      return query.addSortBy(r'sdcId', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortBySdcIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sdcId', Sort.desc);
+      return query.addSortBy(r'sdcId', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByTotRcptNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totRcptNo', Sort.asc);
+      return query.addSortBy(r'totRcptNo', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByTotRcptNoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totRcptNo', Sort.desc);
+      return query.addSortBy(r'totRcptNo', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByVsdcRcptPbctDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vsdcRcptPbctDate', Sort.asc);
+      return query.addSortBy(r'vsdcRcptPbctDate', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> sortByVsdcRcptPbctDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vsdcRcptPbctDate', Sort.desc);
+      return query.addSortBy(r'vsdcRcptPbctDate', Sort.desc);
     });
   }
 }
@@ -1958,169 +1947,169 @@ extension ReceiptQueryWhereSortThenBy
     on QueryBuilder<Receipt, Receipt, QSortThenBy> {
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByIntrlData() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('intrlData', Sort.asc);
+      return query.addSortBy(r'intrlData', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByIntrlDataDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('intrlData', Sort.desc);
+      return query.addSortBy(r'intrlData', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByMrcNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('mrcNo', Sort.asc);
+      return query.addSortBy(r'mrcNo', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByMrcNoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('mrcNo', Sort.desc);
+      return query.addSortBy(r'mrcNo', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByOrderId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderId', Sort.asc);
+      return query.addSortBy(r'orderId', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByOrderIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('orderId', Sort.desc);
+      return query.addSortBy(r'orderId', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByQrCode() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('qrCode', Sort.asc);
+      return query.addSortBy(r'qrCode', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByQrCodeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('qrCode', Sort.desc);
+      return query.addSortBy(r'qrCode', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByRcptNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptNo', Sort.asc);
+      return query.addSortBy(r'rcptNo', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByRcptNoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptNo', Sort.desc);
+      return query.addSortBy(r'rcptNo', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByRcptSign() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptSign', Sort.asc);
+      return query.addSortBy(r'rcptSign', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByRcptSignDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('rcptSign', Sort.desc);
+      return query.addSortBy(r'rcptSign', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByReceiptType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.asc);
+      return query.addSortBy(r'receiptType', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByReceiptTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiptType', Sort.desc);
+      return query.addSortBy(r'receiptType', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByResultCd() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultCd', Sort.asc);
+      return query.addSortBy(r'resultCd', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByResultCdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultCd', Sort.desc);
+      return query.addSortBy(r'resultCd', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByResultDt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultDt', Sort.asc);
+      return query.addSortBy(r'resultDt', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByResultDtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultDt', Sort.desc);
+      return query.addSortBy(r'resultDt', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByResultMsg() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultMsg', Sort.asc);
+      return query.addSortBy(r'resultMsg', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByResultMsgDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('resultMsg', Sort.desc);
+      return query.addSortBy(r'resultMsg', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenBySdcId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sdcId', Sort.asc);
+      return query.addSortBy(r'sdcId', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenBySdcIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('sdcId', Sort.desc);
+      return query.addSortBy(r'sdcId', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByTotRcptNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totRcptNo', Sort.asc);
+      return query.addSortBy(r'totRcptNo', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByTotRcptNoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totRcptNo', Sort.desc);
+      return query.addSortBy(r'totRcptNo', Sort.desc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByVsdcRcptPbctDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vsdcRcptPbctDate', Sort.asc);
+      return query.addSortBy(r'vsdcRcptPbctDate', Sort.asc);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QAfterSortBy> thenByVsdcRcptPbctDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vsdcRcptPbctDate', Sort.desc);
+      return query.addSortBy(r'vsdcRcptPbctDate', Sort.desc);
     });
   }
 }
@@ -2130,88 +2119,88 @@ extension ReceiptQueryWhereDistinct
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByIntrlData(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('intrlData', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'intrlData', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByMrcNo(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('mrcNo', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'mrcNo', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByOrderId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('orderId');
+      return query.addDistinctBy(r'orderId');
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByQrCode(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('qrCode', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'qrCode', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByRcptNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('rcptNo');
+      return query.addDistinctBy(r'rcptNo');
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByRcptSign(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('rcptSign', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'rcptSign', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByReceiptType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('receiptType', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'receiptType', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByResultCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('resultCd', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'resultCd', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByResultDt(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('resultDt', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'resultDt', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByResultMsg(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('resultMsg', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'resultMsg', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctBySdcId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('sdcId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'sdcId', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByTotRcptNo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('totRcptNo');
+      return query.addDistinctBy(r'totRcptNo');
     });
   }
 
   QueryBuilder<Receipt, Receipt, QDistinct> distinctByVsdcRcptPbctDate(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('vsdcRcptPbctDate',
+      return query.addDistinctBy(r'vsdcRcptPbctDate',
           caseSensitive: caseSensitive);
     });
   }
@@ -2221,85 +2210,85 @@ extension ReceiptQueryProperty
     on QueryBuilder<Receipt, Receipt, QQueryProperty> {
   QueryBuilder<Receipt, int?, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> intrlDataProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('intrlData');
+      return query.addPropertyName(r'intrlData');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> mrcNoProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('mrcNo');
+      return query.addPropertyName(r'mrcNo');
     });
   }
 
   QueryBuilder<Receipt, int, QQueryOperations> orderIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('orderId');
+      return query.addPropertyName(r'orderId');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> qrCodeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('qrCode');
+      return query.addPropertyName(r'qrCode');
     });
   }
 
   QueryBuilder<Receipt, int, QQueryOperations> rcptNoProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('rcptNo');
+      return query.addPropertyName(r'rcptNo');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> rcptSignProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('rcptSign');
+      return query.addPropertyName(r'rcptSign');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> receiptTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('receiptType');
+      return query.addPropertyName(r'receiptType');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> resultCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('resultCd');
+      return query.addPropertyName(r'resultCd');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> resultDtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('resultDt');
+      return query.addPropertyName(r'resultDt');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> resultMsgProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('resultMsg');
+      return query.addPropertyName(r'resultMsg');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> sdcIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('sdcId');
+      return query.addPropertyName(r'sdcId');
     });
   }
 
   QueryBuilder<Receipt, int, QQueryOperations> totRcptNoProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('totRcptNo');
+      return query.addPropertyName(r'totRcptNo');
     });
   }
 
   QueryBuilder<Receipt, String, QQueryOperations> vsdcRcptPbctDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('vsdcRcptPbctDate');
+      return query.addPropertyName(r'vsdcRcptPbctDate');
     });
   }
 }

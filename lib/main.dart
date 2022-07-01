@@ -33,6 +33,7 @@ import 'package:flipper_dashboard/setting_secreen.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_dashboard/switch_branch_view.dart';
 import 'package:flipper_dashboard/transactions_details.dart';
+import 'package:flipper_dashboard/user_add.dart';
 import 'package:flipper_login/pin_login.dart';
 import 'package:flipper_login/signup_form_view.dart';
 import 'package:flipper_models/view_models/gate.dart';
@@ -479,6 +480,14 @@ void main() async {
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
             child: const LoginChoices(),
+          ),
+        ),
+        GoRoute(
+          path: '/user_add',
+          name: 'user_add',
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: const UserAdd(),
           ),
         )
       ],

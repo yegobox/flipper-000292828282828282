@@ -7,33 +7,29 @@ part of 'voucher.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetVoucherCollection on Isar {
   IsarCollection<Voucher> get vouchers => getCollection();
 }
 
 const VoucherSchema = CollectionSchema(
-  name: 'Voucher',
+  name: r'Voucher',
   schema:
-      '{"name":"Voucher","idName":"id","properties":[{"name":"createdAt","type":"Long"},{"name":"descriptor","type":"String"},{"name":"interval","type":"Long"},{"name":"used","type":"Bool"},{"name":"usedAt","type":"Long"},{"name":"value","type":"Long"}],"indexes":[],"links":[{"name":"features","target":"Feature"}]}',
-  idName: 'id',
+      r'{"name":"Voucher","idName":"id","properties":[{"name":"createdAt","type":"Long"},{"name":"descriptor","type":"String"},{"name":"interval","type":"Long"},{"name":"used","type":"Bool"},{"name":"usedAt","type":"Long"},{"name":"value","type":"Long"}],"indexes":[],"links":[{"name":"features","target":"Feature"}]}',
+  idName: r'id',
   propertyIds: {
-    'createdAt': 0,
-    'descriptor': 1,
-    'interval': 2,
-    'used': 3,
-    'usedAt': 4,
-    'value': 5
+    r'createdAt': 0,
+    r'descriptor': 1,
+    r'interval': 2,
+    r'used': 3,
+    r'usedAt': 4,
+    r'value': 5
   },
   listProperties: {},
   indexIds: {},
   indexValueTypes: {},
-  linkIds: {'features': 0},
+  linkIds: {r'features': 0},
   backlinkLinkNames: {},
   getId: _voucherGetId,
   setId: _voucherSetId,
@@ -79,6 +75,7 @@ void _voucherSerializeNative(
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeLong(offsets[0], object.createdAt);
   writer.writeBytes(offsets[1], descriptor$Bytes);
   writer.writeLong(offsets[2], object.interval);
@@ -119,73 +116,73 @@ P _voucherDeserializePropNative<P>(
     case 5:
       return (reader.readLong(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
 Object _voucherSerializeWeb(
     IsarCollection<Voucher> collection, Voucher object) {
   final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'createdAt', object.createdAt);
-  IsarNative.jsObjectSet(jsObj, 'descriptor', object.descriptor);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'interval', object.interval);
-  IsarNative.jsObjectSet(jsObj, 'used', object.used);
-  IsarNative.jsObjectSet(jsObj, 'usedAt', object.usedAt);
-  IsarNative.jsObjectSet(jsObj, 'value', object.value);
+  IsarNative.jsObjectSet(jsObj, r'createdAt', object.createdAt);
+  IsarNative.jsObjectSet(jsObj, r'descriptor', object.descriptor);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
+  IsarNative.jsObjectSet(jsObj, r'interval', object.interval);
+  IsarNative.jsObjectSet(jsObj, r'used', object.used);
+  IsarNative.jsObjectSet(jsObj, r'usedAt', object.usedAt);
+  IsarNative.jsObjectSet(jsObj, r'value', object.value);
   return jsObj;
 }
 
 Voucher _voucherDeserializeWeb(
     IsarCollection<Voucher> collection, Object jsObj) {
   final object = Voucher();
-  object.createdAt = IsarNative.jsObjectGet(jsObj, 'createdAt') ??
+  object.createdAt = IsarNative.jsObjectGet(jsObj, r'createdAt') ??
       (double.negativeInfinity as int);
-  object.descriptor = IsarNative.jsObjectGet(jsObj, 'descriptor') ?? '';
+  object.descriptor = IsarNative.jsObjectGet(jsObj, r'descriptor') ?? '';
   object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
-  object.interval = IsarNative.jsObjectGet(jsObj, 'interval') ??
+      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int);
+  object.interval = IsarNative.jsObjectGet(jsObj, r'interval') ??
       (double.negativeInfinity as int);
-  object.used = IsarNative.jsObjectGet(jsObj, 'used') ?? false;
-  object.usedAt = IsarNative.jsObjectGet(jsObj, 'usedAt') ??
+  object.used = IsarNative.jsObjectGet(jsObj, r'used') ?? false;
+  object.usedAt = IsarNative.jsObjectGet(jsObj, r'usedAt') ??
       (double.negativeInfinity as int);
-  object.value = IsarNative.jsObjectGet(jsObj, 'value') ??
+  object.value = IsarNative.jsObjectGet(jsObj, r'value') ??
       (double.negativeInfinity as int);
   _voucherAttachLinks(
       collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int),
       object);
   return object;
 }
 
 P _voucherDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'createdAt':
-      return (IsarNative.jsObjectGet(jsObj, 'createdAt') ??
+    case r'createdAt':
+      return (IsarNative.jsObjectGet(jsObj, r'createdAt') ??
           (double.negativeInfinity as int)) as P;
-    case 'descriptor':
-      return (IsarNative.jsObjectGet(jsObj, 'descriptor') ?? '') as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+    case r'descriptor':
+      return (IsarNative.jsObjectGet(jsObj, r'descriptor') ?? '') as P;
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id') ??
           (double.negativeInfinity as int)) as P;
-    case 'interval':
-      return (IsarNative.jsObjectGet(jsObj, 'interval') ??
+    case r'interval':
+      return (IsarNative.jsObjectGet(jsObj, r'interval') ??
           (double.negativeInfinity as int)) as P;
-    case 'used':
-      return (IsarNative.jsObjectGet(jsObj, 'used') ?? false) as P;
-    case 'usedAt':
-      return (IsarNative.jsObjectGet(jsObj, 'usedAt') ??
+    case r'used':
+      return (IsarNative.jsObjectGet(jsObj, r'used') ?? false) as P;
+    case r'usedAt':
+      return (IsarNative.jsObjectGet(jsObj, r'usedAt') ??
           (double.negativeInfinity as int)) as P;
-    case 'value':
-      return (IsarNative.jsObjectGet(jsObj, 'value') ??
+    case r'value':
+      return (IsarNative.jsObjectGet(jsObj, r'value') ??
           (double.negativeInfinity as int)) as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
 void _voucherAttachLinks(IsarCollection<dynamic> col, int id, Voucher object) {
-  object.features.attach(col, col.isar.features, 'features', id);
+  object.features.attach(col, col.isar.features, r'features', id);
 }
 
 extension VoucherQueryWhereSort on QueryBuilder<Voucher, Voucher, QWhere> {
@@ -201,9 +198,7 @@ extension VoucherQueryWhere on QueryBuilder<Voucher, Voucher, QWhereClause> {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -271,7 +266,7 @@ extension VoucherQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
       ));
     });
@@ -284,7 +279,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
       ));
     });
@@ -297,7 +292,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
       ));
     });
@@ -311,7 +306,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'createdAt',
+        property: r'createdAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -326,7 +321,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'descriptor',
+        property: r'descriptor',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -341,7 +336,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'descriptor',
+        property: r'descriptor',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -356,7 +351,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'descriptor',
+        property: r'descriptor',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -372,7 +367,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'descriptor',
+        property: r'descriptor',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -388,7 +383,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'descriptor',
+        property: r'descriptor',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -401,7 +396,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'descriptor',
+        property: r'descriptor',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -413,7 +408,7 @@ extension VoucherQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'descriptor',
+        property: r'descriptor',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -425,7 +420,7 @@ extension VoucherQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'descriptor',
+        property: r'descriptor',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -435,7 +430,7 @@ extension VoucherQueryFilter
   QueryBuilder<Voucher, Voucher, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -448,7 +443,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -461,7 +456,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -475,7 +470,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -488,7 +483,7 @@ extension VoucherQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'interval',
+        property: r'interval',
         value: value,
       ));
     });
@@ -501,7 +496,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'interval',
+        property: r'interval',
         value: value,
       ));
     });
@@ -514,7 +509,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'interval',
+        property: r'interval',
         value: value,
       ));
     });
@@ -528,7 +523,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'interval',
+        property: r'interval',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -541,7 +536,7 @@ extension VoucherQueryFilter
       bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'used',
+        property: r'used',
         value: value,
       ));
     });
@@ -551,7 +546,7 @@ extension VoucherQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'usedAt',
+        property: r'usedAt',
         value: value,
       ));
     });
@@ -564,7 +559,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'usedAt',
+        property: r'usedAt',
         value: value,
       ));
     });
@@ -577,7 +572,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'usedAt',
+        property: r'usedAt',
         value: value,
       ));
     });
@@ -591,7 +586,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'usedAt',
+        property: r'usedAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -604,7 +599,7 @@ extension VoucherQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'value',
+        property: r'value',
         value: value,
       ));
     });
@@ -617,7 +612,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'value',
+        property: r'value',
         value: value,
       ));
     });
@@ -630,7 +625,7 @@ extension VoucherQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'value',
+        property: r'value',
         value: value,
       ));
     });
@@ -644,7 +639,7 @@ extension VoucherQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'value',
+        property: r'value',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -662,7 +657,7 @@ extension VoucherQueryLinks
       return query.link(
         query.collection.isar.features,
         q,
-        'features',
+        r'features',
       );
     });
   }
@@ -671,73 +666,73 @@ extension VoucherQueryLinks
 extension VoucherQueryWhereSortBy on QueryBuilder<Voucher, Voucher, QSortBy> {
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.asc);
+      return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.desc);
+      return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByDescriptor() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('descriptor', Sort.asc);
+      return query.addSortBy(r'descriptor', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByDescriptorDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('descriptor', Sort.desc);
+      return query.addSortBy(r'descriptor', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByInterval() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('interval', Sort.asc);
+      return query.addSortBy(r'interval', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByIntervalDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('interval', Sort.desc);
+      return query.addSortBy(r'interval', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByUsed() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('used', Sort.asc);
+      return query.addSortBy(r'used', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByUsedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('used', Sort.desc);
+      return query.addSortBy(r'used', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByUsedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('usedAt', Sort.asc);
+      return query.addSortBy(r'usedAt', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByUsedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('usedAt', Sort.desc);
+      return query.addSortBy(r'usedAt', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByValue() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.asc);
+      return query.addSortBy(r'value', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> sortByValueDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.desc);
+      return query.addSortBy(r'value', Sort.desc);
     });
   }
 }
@@ -746,85 +741,85 @@ extension VoucherQueryWhereSortThenBy
     on QueryBuilder<Voucher, Voucher, QSortThenBy> {
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.asc);
+      return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.desc);
+      return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByDescriptor() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('descriptor', Sort.asc);
+      return query.addSortBy(r'descriptor', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByDescriptorDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('descriptor', Sort.desc);
+      return query.addSortBy(r'descriptor', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByInterval() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('interval', Sort.asc);
+      return query.addSortBy(r'interval', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByIntervalDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('interval', Sort.desc);
+      return query.addSortBy(r'interval', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByUsed() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('used', Sort.asc);
+      return query.addSortBy(r'used', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByUsedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('used', Sort.desc);
+      return query.addSortBy(r'used', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByUsedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('usedAt', Sort.asc);
+      return query.addSortBy(r'usedAt', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByUsedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('usedAt', Sort.desc);
+      return query.addSortBy(r'usedAt', Sort.desc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByValue() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.asc);
+      return query.addSortBy(r'value', Sort.asc);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QAfterSortBy> thenByValueDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.desc);
+      return query.addSortBy(r'value', Sort.desc);
     });
   }
 }
@@ -833,38 +828,38 @@ extension VoucherQueryWhereDistinct
     on QueryBuilder<Voucher, Voucher, QDistinct> {
   QueryBuilder<Voucher, Voucher, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('createdAt');
+      return query.addDistinctBy(r'createdAt');
     });
   }
 
   QueryBuilder<Voucher, Voucher, QDistinct> distinctByDescriptor(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('descriptor', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'descriptor', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Voucher, Voucher, QDistinct> distinctByInterval() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('interval');
+      return query.addDistinctBy(r'interval');
     });
   }
 
   QueryBuilder<Voucher, Voucher, QDistinct> distinctByUsed() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('used');
+      return query.addDistinctBy(r'used');
     });
   }
 
   QueryBuilder<Voucher, Voucher, QDistinct> distinctByUsedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('usedAt');
+      return query.addDistinctBy(r'usedAt');
     });
   }
 
   QueryBuilder<Voucher, Voucher, QDistinct> distinctByValue() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('value');
+      return query.addDistinctBy(r'value');
     });
   }
 }
@@ -873,43 +868,43 @@ extension VoucherQueryProperty
     on QueryBuilder<Voucher, Voucher, QQueryProperty> {
   QueryBuilder<Voucher, int, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('createdAt');
+      return query.addPropertyName(r'createdAt');
     });
   }
 
   QueryBuilder<Voucher, String, QQueryOperations> descriptorProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('descriptor');
+      return query.addPropertyName(r'descriptor');
     });
   }
 
   QueryBuilder<Voucher, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Voucher, int, QQueryOperations> intervalProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('interval');
+      return query.addPropertyName(r'interval');
     });
   }
 
   QueryBuilder<Voucher, bool, QQueryOperations> usedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('used');
+      return query.addPropertyName(r'used');
     });
   }
 
   QueryBuilder<Voucher, int, QQueryOperations> usedAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('usedAt');
+      return query.addPropertyName(r'usedAt');
     });
   }
 
   QueryBuilder<Voucher, int, QQueryOperations> valueProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('value');
+      return query.addPropertyName(r'value');
     });
   }
 }

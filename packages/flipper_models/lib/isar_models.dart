@@ -16,6 +16,7 @@ export 'isar/variant.dart';
 export 'isar/unit.dart';
 export 'isar/tenant.dart';
 export 'isar/sync.dart';
+export 'isar/j_tenant.dart';
 export 'isar/subscription.dart';
 export 'isar/stock.dart';
 export 'isar/spenn.dart';
@@ -33,6 +34,7 @@ export 'exceptions.dart';
 export 'package:flipper_models/view_models/login_viewmodel.dart';
 
 export 'package:flipper_models/view_models/business_home_viewmodel.dart';
+export 'package:flipper_models/view_models/add_user_view_model.dart';
 export 'package:flipper_models/view_models/product_viewmodel.dart';
 export 'package:flipper_models/view_models/signup_viewmodel.dart';
 export 'package:flipper_models/view_models/startup_viewmodel.dart';

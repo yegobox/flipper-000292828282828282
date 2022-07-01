@@ -7,30 +7,26 @@ part of 'conversation.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetConversationCollection on Isar {
   IsarCollection<Conversation> get conversations => getCollection();
 }
 
 const ConversationSchema = CollectionSchema(
-  name: 'Conversation',
+  name: r'Conversation',
   schema:
-      '{"name":"Conversation","idName":"id","properties":[{"name":"createdAt","type":"Long"},{"name":"dbAvatars","type":"String"},{"name":"delivered","type":"Bool"},{"name":"lastMessage","type":"String"},{"name":"receiverId","type":"Long"},{"name":"senderId","type":"Long"},{"name":"senderName","type":"String"},{"name":"status","type":"String"}],"indexes":[],"links":[]}',
-  idName: 'id',
+      r'{"name":"Conversation","idName":"id","properties":[{"name":"createdAt","type":"Long"},{"name":"dbAvatars","type":"String"},{"name":"delivered","type":"Bool"},{"name":"lastMessage","type":"String"},{"name":"receiverId","type":"Long"},{"name":"senderId","type":"Long"},{"name":"senderName","type":"String"},{"name":"status","type":"String"}],"indexes":[],"links":[]}',
+  idName: r'id',
   propertyIds: {
-    'createdAt': 0,
-    'dbAvatars': 1,
-    'delivered': 2,
-    'lastMessage': 3,
-    'receiverId': 4,
-    'senderId': 5,
-    'senderName': 6,
-    'status': 7
+    r'createdAt': 0,
+    r'dbAvatars': 1,
+    r'delivered': 2,
+    r'lastMessage': 3,
+    r'receiverId': 4,
+    r'senderId': 5,
+    r'senderName': 6,
+    r'status': 7
   },
   listProperties: {},
   indexIds: {},
@@ -96,6 +92,7 @@ void _conversationSerializeNative(
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeLong(offsets[0], object.createdAt);
   writer.writeBytes(offsets[1], dbAvatars$Bytes);
   writer.writeBool(offsets[2], object.delivered);
@@ -145,69 +142,69 @@ P _conversationDeserializePropNative<P>(
     case 7:
       return (reader.readString(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
 Object _conversationSerializeWeb(
     IsarCollection<Conversation> collection, Conversation object) {
   final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'createdAt', object.createdAt);
-  IsarNative.jsObjectSet(jsObj, 'dbAvatars', object.dbAvatars);
-  IsarNative.jsObjectSet(jsObj, 'delivered', object.delivered);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'lastMessage', object.lastMessage);
-  IsarNative.jsObjectSet(jsObj, 'receiverId', object.receiverId);
-  IsarNative.jsObjectSet(jsObj, 'senderId', object.senderId);
-  IsarNative.jsObjectSet(jsObj, 'senderName', object.senderName);
-  IsarNative.jsObjectSet(jsObj, 'status', object.status);
+  IsarNative.jsObjectSet(jsObj, r'createdAt', object.createdAt);
+  IsarNative.jsObjectSet(jsObj, r'dbAvatars', object.dbAvatars);
+  IsarNative.jsObjectSet(jsObj, r'delivered', object.delivered);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
+  IsarNative.jsObjectSet(jsObj, r'lastMessage', object.lastMessage);
+  IsarNative.jsObjectSet(jsObj, r'receiverId', object.receiverId);
+  IsarNative.jsObjectSet(jsObj, r'senderId', object.senderId);
+  IsarNative.jsObjectSet(jsObj, r'senderName', object.senderName);
+  IsarNative.jsObjectSet(jsObj, r'status', object.status);
   return jsObj;
 }
 
 Conversation _conversationDeserializeWeb(
     IsarCollection<Conversation> collection, Object jsObj) {
   final object = Conversation();
-  object.createdAt = IsarNative.jsObjectGet(jsObj, 'createdAt') ??
+  object.createdAt = IsarNative.jsObjectGet(jsObj, r'createdAt') ??
       (double.negativeInfinity as int);
-  object.delivered = IsarNative.jsObjectGet(jsObj, 'delivered') ?? false;
+  object.delivered = IsarNative.jsObjectGet(jsObj, r'delivered') ?? false;
   object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
-  object.lastMessage = IsarNative.jsObjectGet(jsObj, 'lastMessage');
-  object.receiverId = IsarNative.jsObjectGet(jsObj, 'receiverId') ??
+      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int);
+  object.lastMessage = IsarNative.jsObjectGet(jsObj, r'lastMessage');
+  object.receiverId = IsarNative.jsObjectGet(jsObj, r'receiverId') ??
       (double.negativeInfinity as int);
-  object.senderId = IsarNative.jsObjectGet(jsObj, 'senderId') ??
+  object.senderId = IsarNative.jsObjectGet(jsObj, r'senderId') ??
       (double.negativeInfinity as int);
-  object.senderName = IsarNative.jsObjectGet(jsObj, 'senderName') ?? '';
-  object.status = IsarNative.jsObjectGet(jsObj, 'status') ?? '';
+  object.senderName = IsarNative.jsObjectGet(jsObj, r'senderName') ?? '';
+  object.status = IsarNative.jsObjectGet(jsObj, r'status') ?? '';
   return object;
 }
 
 P _conversationDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'createdAt':
-      return (IsarNative.jsObjectGet(jsObj, 'createdAt') ??
+    case r'createdAt':
+      return (IsarNative.jsObjectGet(jsObj, r'createdAt') ??
           (double.negativeInfinity as int)) as P;
-    case 'dbAvatars':
-      return (IsarNative.jsObjectGet(jsObj, 'dbAvatars')) as P;
-    case 'delivered':
-      return (IsarNative.jsObjectGet(jsObj, 'delivered') ?? false) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+    case r'dbAvatars':
+      return (IsarNative.jsObjectGet(jsObj, r'dbAvatars')) as P;
+    case r'delivered':
+      return (IsarNative.jsObjectGet(jsObj, r'delivered') ?? false) as P;
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id') ??
           (double.negativeInfinity as int)) as P;
-    case 'lastMessage':
-      return (IsarNative.jsObjectGet(jsObj, 'lastMessage')) as P;
-    case 'receiverId':
-      return (IsarNative.jsObjectGet(jsObj, 'receiverId') ??
+    case r'lastMessage':
+      return (IsarNative.jsObjectGet(jsObj, r'lastMessage')) as P;
+    case r'receiverId':
+      return (IsarNative.jsObjectGet(jsObj, r'receiverId') ??
           (double.negativeInfinity as int)) as P;
-    case 'senderId':
-      return (IsarNative.jsObjectGet(jsObj, 'senderId') ??
+    case r'senderId':
+      return (IsarNative.jsObjectGet(jsObj, r'senderId') ??
           (double.negativeInfinity as int)) as P;
-    case 'senderName':
-      return (IsarNative.jsObjectGet(jsObj, 'senderName') ?? '') as P;
-    case 'status':
-      return (IsarNative.jsObjectGet(jsObj, 'status') ?? '') as P;
+    case r'senderName':
+      return (IsarNative.jsObjectGet(jsObj, r'senderName') ?? '') as P;
+    case r'status':
+      return (IsarNative.jsObjectGet(jsObj, r'status') ?? '') as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
@@ -230,9 +227,7 @@ extension ConversationQueryWhere
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -302,7 +297,7 @@ extension ConversationQueryFilter
       createdAtEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
       ));
     });
@@ -316,7 +311,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
       ));
     });
@@ -330,7 +325,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'createdAt',
+        property: r'createdAt',
         value: value,
       ));
     });
@@ -345,7 +340,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'createdAt',
+        property: r'createdAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -358,7 +353,7 @@ extension ConversationQueryFilter
       dbAvatarsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'dbAvatars',
+        property: r'dbAvatars',
       ));
     });
   }
@@ -370,7 +365,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -386,7 +381,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -402,7 +397,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -419,7 +414,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -436,7 +431,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -450,7 +445,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -461,7 +456,7 @@ extension ConversationQueryFilter
       dbAvatarsContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -472,7 +467,7 @@ extension ConversationQueryFilter
       dbAvatarsMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'dbAvatars',
+        property: r'dbAvatars',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -483,7 +478,7 @@ extension ConversationQueryFilter
       deliveredEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'delivered',
+        property: r'delivered',
         value: value,
       ));
     });
@@ -493,7 +488,7 @@ extension ConversationQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -506,7 +501,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -519,7 +514,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -533,7 +528,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -546,7 +541,7 @@ extension ConversationQueryFilter
       lastMessageIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'lastMessage',
+        property: r'lastMessage',
       ));
     });
   }
@@ -558,7 +553,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'lastMessage',
+        property: r'lastMessage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -574,7 +569,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'lastMessage',
+        property: r'lastMessage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -590,7 +585,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'lastMessage',
+        property: r'lastMessage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -607,7 +602,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'lastMessage',
+        property: r'lastMessage',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -624,7 +619,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'lastMessage',
+        property: r'lastMessage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -638,7 +633,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'lastMessage',
+        property: r'lastMessage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -649,7 +644,7 @@ extension ConversationQueryFilter
       lastMessageContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'lastMessage',
+        property: r'lastMessage',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -660,7 +655,7 @@ extension ConversationQueryFilter
       lastMessageMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'lastMessage',
+        property: r'lastMessage',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -671,7 +666,7 @@ extension ConversationQueryFilter
       receiverIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'receiverId',
+        property: r'receiverId',
         value: value,
       ));
     });
@@ -685,7 +680,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'receiverId',
+        property: r'receiverId',
         value: value,
       ));
     });
@@ -699,7 +694,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'receiverId',
+        property: r'receiverId',
         value: value,
       ));
     });
@@ -714,7 +709,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'receiverId',
+        property: r'receiverId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -727,7 +722,7 @@ extension ConversationQueryFilter
       senderIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'senderId',
+        property: r'senderId',
         value: value,
       ));
     });
@@ -741,7 +736,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'senderId',
+        property: r'senderId',
         value: value,
       ));
     });
@@ -755,7 +750,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'senderId',
+        property: r'senderId',
         value: value,
       ));
     });
@@ -770,7 +765,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'senderId',
+        property: r'senderId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -786,7 +781,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'senderName',
+        property: r'senderName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -802,7 +797,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'senderName',
+        property: r'senderName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -818,7 +813,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'senderName',
+        property: r'senderName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -835,7 +830,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'senderName',
+        property: r'senderName',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -852,7 +847,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'senderName',
+        property: r'senderName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -866,7 +861,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'senderName',
+        property: r'senderName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -877,7 +872,7 @@ extension ConversationQueryFilter
       senderNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'senderName',
+        property: r'senderName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -888,7 +883,7 @@ extension ConversationQueryFilter
       senderNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'senderName',
+        property: r'senderName',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -901,7 +896,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -917,7 +912,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -933,7 +928,7 @@ extension ConversationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -949,7 +944,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'status',
+        property: r'status',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -966,7 +961,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -980,7 +975,7 @@ extension ConversationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -991,7 +986,7 @@ extension ConversationQueryFilter
       statusContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'status',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1003,7 +998,7 @@ extension ConversationQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'status',
+        property: r'status',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1018,100 +1013,100 @@ extension ConversationQueryWhereSortBy
     on QueryBuilder<Conversation, Conversation, QSortBy> {
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.asc);
+      return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.desc);
+      return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByDbAvatars() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('dbAvatars', Sort.asc);
+      return query.addSortBy(r'dbAvatars', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByDbAvatarsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('dbAvatars', Sort.desc);
+      return query.addSortBy(r'dbAvatars', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByDelivered() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('delivered', Sort.asc);
+      return query.addSortBy(r'delivered', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByDeliveredDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('delivered', Sort.desc);
+      return query.addSortBy(r'delivered', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByLastMessage() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('lastMessage', Sort.asc);
+      return query.addSortBy(r'lastMessage', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy>
       sortByLastMessageDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('lastMessage', Sort.desc);
+      return query.addSortBy(r'lastMessage', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByReceiverId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiverId', Sort.asc);
+      return query.addSortBy(r'receiverId', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy>
       sortByReceiverIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiverId', Sort.desc);
+      return query.addSortBy(r'receiverId', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortBySenderId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderId', Sort.asc);
+      return query.addSortBy(r'senderId', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortBySenderIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderId', Sort.desc);
+      return query.addSortBy(r'senderId', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortBySenderName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderName', Sort.asc);
+      return query.addSortBy(r'senderName', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy>
       sortBySenderNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderName', Sort.desc);
+      return query.addSortBy(r'senderName', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByStatus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.asc);
+      return query.addSortBy(r'status', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> sortByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.desc);
+      return query.addSortBy(r'status', Sort.desc);
     });
   }
 }
@@ -1120,112 +1115,112 @@ extension ConversationQueryWhereSortThenBy
     on QueryBuilder<Conversation, Conversation, QSortThenBy> {
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.asc);
+      return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('createdAt', Sort.desc);
+      return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByDbAvatars() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('dbAvatars', Sort.asc);
+      return query.addSortBy(r'dbAvatars', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByDbAvatarsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('dbAvatars', Sort.desc);
+      return query.addSortBy(r'dbAvatars', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByDelivered() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('delivered', Sort.asc);
+      return query.addSortBy(r'delivered', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByDeliveredDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('delivered', Sort.desc);
+      return query.addSortBy(r'delivered', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByLastMessage() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('lastMessage', Sort.asc);
+      return query.addSortBy(r'lastMessage', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy>
       thenByLastMessageDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('lastMessage', Sort.desc);
+      return query.addSortBy(r'lastMessage', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByReceiverId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiverId', Sort.asc);
+      return query.addSortBy(r'receiverId', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy>
       thenByReceiverIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('receiverId', Sort.desc);
+      return query.addSortBy(r'receiverId', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenBySenderId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderId', Sort.asc);
+      return query.addSortBy(r'senderId', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenBySenderIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderId', Sort.desc);
+      return query.addSortBy(r'senderId', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenBySenderName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderName', Sort.asc);
+      return query.addSortBy(r'senderName', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy>
       thenBySenderNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('senderName', Sort.desc);
+      return query.addSortBy(r'senderName', Sort.desc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByStatus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.asc);
+      return query.addSortBy(r'status', Sort.asc);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QAfterSortBy> thenByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('status', Sort.desc);
+      return query.addSortBy(r'status', Sort.desc);
     });
   }
 }
@@ -1234,53 +1229,53 @@ extension ConversationQueryWhereDistinct
     on QueryBuilder<Conversation, Conversation, QDistinct> {
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('createdAt');
+      return query.addDistinctBy(r'createdAt');
     });
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByDbAvatars(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('dbAvatars', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'dbAvatars', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByDelivered() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('delivered');
+      return query.addDistinctBy(r'delivered');
     });
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByLastMessage(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('lastMessage', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'lastMessage', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByReceiverId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('receiverId');
+      return query.addDistinctBy(r'receiverId');
     });
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctBySenderId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('senderId');
+      return query.addDistinctBy(r'senderId');
     });
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctBySenderName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('senderName', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'senderName', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Conversation, Conversation, QDistinct> distinctByStatus(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('status', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
     });
   }
 }
@@ -1289,55 +1284,55 @@ extension ConversationQueryProperty
     on QueryBuilder<Conversation, Conversation, QQueryProperty> {
   QueryBuilder<Conversation, int, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('createdAt');
+      return query.addPropertyName(r'createdAt');
     });
   }
 
   QueryBuilder<Conversation, String?, QQueryOperations> dbAvatarsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('dbAvatars');
+      return query.addPropertyName(r'dbAvatars');
     });
   }
 
   QueryBuilder<Conversation, bool, QQueryOperations> deliveredProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('delivered');
+      return query.addPropertyName(r'delivered');
     });
   }
 
   QueryBuilder<Conversation, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Conversation, String?, QQueryOperations> lastMessageProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('lastMessage');
+      return query.addPropertyName(r'lastMessage');
     });
   }
 
   QueryBuilder<Conversation, int, QQueryOperations> receiverIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('receiverId');
+      return query.addPropertyName(r'receiverId');
     });
   }
 
   QueryBuilder<Conversation, int, QQueryOperations> senderIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('senderId');
+      return query.addPropertyName(r'senderId');
     });
   }
 
   QueryBuilder<Conversation, String, QQueryOperations> senderNameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('senderName');
+      return query.addPropertyName(r'senderName');
     });
   }
 
   QueryBuilder<Conversation, String, QQueryOperations> statusProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('status');
+      return query.addPropertyName(r'status');
     });
   }
 }

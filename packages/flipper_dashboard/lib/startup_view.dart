@@ -3,6 +3,7 @@ library flipper_dashboard;
 import 'package:flipper_models/isar_models.dart';
 import 'package:flipper_models/view_models/gate.dart';
 import 'package:flipper_routing/routes.router.dart';
+import 'package:flipper_services/proxy.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -21,7 +22,7 @@ class StartUpView extends StatelessWidget {
           model.runStartupLogic(
             invokeLogin: invokeLogin ?? false,
             loginInfo: loginInfo,
-            navigationCallback: (nav) {
+            navigationCallback: (nav) async {
               if (nav == "login") {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -39,6 +40,15 @@ class StartUpView extends StatelessWidget {
               }
               if (nav == "login_choices") {
                 GoRouter.of(context).push("/tenants");
+              }
+              if (nav == "signup") {
+                String? countryName =
+                    await ProxyService.country.getCountryName();
+                loginInfo.country = countryName!;
+                loginInfo.needSignUp = true;
+                loginInfo.isLoggedIn = false;
+                loginInfo.redirecting = false;
+                GoRouter.of(context).push("/signup/$countryName");
               }
             },
           );

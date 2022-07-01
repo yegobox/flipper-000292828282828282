@@ -7,44 +7,40 @@ part of flipper_models;
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetProfileCollection on Isar {
   IsarCollection<Profile> get profiles => getCollection();
 }
 
 const ProfileSchema = CollectionSchema(
-  name: 'Profile',
+  name: r'Profile',
   schema:
-      '{"name":"Profile","idName":"id","properties":[{"name":"about","type":"String"},{"name":"address","type":"String"},{"name":"businessId","type":"Long"},{"name":"cell","type":"String"},{"name":"city","type":"String"},{"name":"country","type":"String"},{"name":"coverPic","type":"String"},{"name":"district","type":"String"},{"name":"email","type":"String"},{"name":"livingAt","type":"String"},{"name":"name","type":"String"},{"name":"nationalId","type":"String"},{"name":"phone","type":"String"},{"name":"pincode","type":"String"},{"name":"profilePic","type":"String"},{"name":"state","type":"String"},{"name":"vaccinationCode","type":"String"}],"indexes":[{"name":"businessId","unique":false,"replace":false,"properties":[{"name":"businessId","type":"Value","caseSensitive":false}]}],"links":[]}',
-  idName: 'id',
+      r'{"name":"Profile","idName":"id","properties":[{"name":"about","type":"String"},{"name":"address","type":"String"},{"name":"businessId","type":"Long"},{"name":"cell","type":"String"},{"name":"city","type":"String"},{"name":"country","type":"String"},{"name":"coverPic","type":"String"},{"name":"district","type":"String"},{"name":"email","type":"String"},{"name":"livingAt","type":"String"},{"name":"name","type":"String"},{"name":"nationalId","type":"String"},{"name":"phone","type":"String"},{"name":"pincode","type":"String"},{"name":"profilePic","type":"String"},{"name":"state","type":"String"},{"name":"vaccinationCode","type":"String"}],"indexes":[{"name":"businessId","unique":false,"replace":false,"properties":[{"name":"businessId","type":"Value","caseSensitive":false}]}],"links":[]}',
+  idName: r'id',
   propertyIds: {
-    'about': 0,
-    'address': 1,
-    'businessId': 2,
-    'cell': 3,
-    'city': 4,
-    'country': 5,
-    'coverPic': 6,
-    'district': 7,
-    'email': 8,
-    'livingAt': 9,
-    'name': 10,
-    'nationalId': 11,
-    'phone': 12,
-    'pincode': 13,
-    'profilePic': 14,
-    'state': 15,
-    'vaccinationCode': 16
+    r'about': 0,
+    r'address': 1,
+    r'businessId': 2,
+    r'cell': 3,
+    r'city': 4,
+    r'country': 5,
+    r'coverPic': 6,
+    r'district': 7,
+    r'email': 8,
+    r'livingAt': 9,
+    r'name': 10,
+    r'nationalId': 11,
+    r'phone': 12,
+    r'pincode': 13,
+    r'profilePic': 14,
+    r'state': 15,
+    r'vaccinationCode': 16
   },
   listProperties: {},
-  indexIds: {'businessId': 0},
+  indexIds: {r'businessId': 0},
   indexValueTypes: {
-    'businessId': [
+    r'businessId': [
       IndexValueType.long,
     ]
   },
@@ -154,6 +150,7 @@ void _profileSerializeNative(
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeBytes(offsets[0], about$Bytes);
   writer.writeBytes(offsets[1], address$Bytes);
   writer.writeLong(offsets[2], object.businessId);
@@ -238,102 +235,103 @@ P _profileDeserializePropNative<P>(
     case 16:
       return (reader.readString(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
 Object _profileSerializeWeb(
     IsarCollection<Profile> collection, Profile object) {
   final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'about', object.about);
-  IsarNative.jsObjectSet(jsObj, 'address', object.address);
-  IsarNative.jsObjectSet(jsObj, 'businessId', object.businessId);
-  IsarNative.jsObjectSet(jsObj, 'cell', object.cell);
-  IsarNative.jsObjectSet(jsObj, 'city', object.city);
-  IsarNative.jsObjectSet(jsObj, 'country', object.country);
-  IsarNative.jsObjectSet(jsObj, 'coverPic', object.coverPic);
-  IsarNative.jsObjectSet(jsObj, 'district', object.district);
-  IsarNative.jsObjectSet(jsObj, 'email', object.email);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'livingAt', object.livingAt);
-  IsarNative.jsObjectSet(jsObj, 'name', object.name);
-  IsarNative.jsObjectSet(jsObj, 'nationalId', object.nationalId);
-  IsarNative.jsObjectSet(jsObj, 'phone', object.phone);
-  IsarNative.jsObjectSet(jsObj, 'pincode', object.pincode);
-  IsarNative.jsObjectSet(jsObj, 'profilePic', object.profilePic);
-  IsarNative.jsObjectSet(jsObj, 'state', object.state);
-  IsarNative.jsObjectSet(jsObj, 'vaccinationCode', object.vaccinationCode);
+  IsarNative.jsObjectSet(jsObj, r'about', object.about);
+  IsarNative.jsObjectSet(jsObj, r'address', object.address);
+  IsarNative.jsObjectSet(jsObj, r'businessId', object.businessId);
+  IsarNative.jsObjectSet(jsObj, r'cell', object.cell);
+  IsarNative.jsObjectSet(jsObj, r'city', object.city);
+  IsarNative.jsObjectSet(jsObj, r'country', object.country);
+  IsarNative.jsObjectSet(jsObj, r'coverPic', object.coverPic);
+  IsarNative.jsObjectSet(jsObj, r'district', object.district);
+  IsarNative.jsObjectSet(jsObj, r'email', object.email);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
+  IsarNative.jsObjectSet(jsObj, r'livingAt', object.livingAt);
+  IsarNative.jsObjectSet(jsObj, r'name', object.name);
+  IsarNative.jsObjectSet(jsObj, r'nationalId', object.nationalId);
+  IsarNative.jsObjectSet(jsObj, r'phone', object.phone);
+  IsarNative.jsObjectSet(jsObj, r'pincode', object.pincode);
+  IsarNative.jsObjectSet(jsObj, r'profilePic', object.profilePic);
+  IsarNative.jsObjectSet(jsObj, r'state', object.state);
+  IsarNative.jsObjectSet(jsObj, r'vaccinationCode', object.vaccinationCode);
   return jsObj;
 }
 
 Profile _profileDeserializeWeb(
     IsarCollection<Profile> collection, Object jsObj) {
   final object = Profile(
-    about: IsarNative.jsObjectGet(jsObj, 'about'),
-    address: IsarNative.jsObjectGet(jsObj, 'address'),
-    businessId: IsarNative.jsObjectGet(jsObj, 'businessId') ??
+    about: IsarNative.jsObjectGet(jsObj, r'about'),
+    address: IsarNative.jsObjectGet(jsObj, r'address'),
+    businessId: IsarNative.jsObjectGet(jsObj, r'businessId') ??
         (double.negativeInfinity as int),
-    cell: IsarNative.jsObjectGet(jsObj, 'cell') ?? '',
-    city: IsarNative.jsObjectGet(jsObj, 'city'),
-    country: IsarNative.jsObjectGet(jsObj, 'country') ?? '',
-    coverPic: IsarNative.jsObjectGet(jsObj, 'coverPic'),
-    district: IsarNative.jsObjectGet(jsObj, 'district') ?? '',
-    email: IsarNative.jsObjectGet(jsObj, 'email') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
-    livingAt: IsarNative.jsObjectGet(jsObj, 'livingAt') ?? '',
-    name: IsarNative.jsObjectGet(jsObj, 'name') ?? '',
-    nationalId: IsarNative.jsObjectGet(jsObj, 'nationalId') ?? '',
-    phone: IsarNative.jsObjectGet(jsObj, 'phone') ?? '',
-    pincode: IsarNative.jsObjectGet(jsObj, 'pincode'),
-    profilePic: IsarNative.jsObjectGet(jsObj, 'profilePic'),
-    state: IsarNative.jsObjectGet(jsObj, 'state'),
-    vaccinationCode: IsarNative.jsObjectGet(jsObj, 'vaccinationCode') ?? '',
+    cell: IsarNative.jsObjectGet(jsObj, r'cell') ?? '',
+    city: IsarNative.jsObjectGet(jsObj, r'city'),
+    country: IsarNative.jsObjectGet(jsObj, r'country') ?? '',
+    coverPic: IsarNative.jsObjectGet(jsObj, r'coverPic'),
+    district: IsarNative.jsObjectGet(jsObj, r'district') ?? '',
+    email: IsarNative.jsObjectGet(jsObj, r'email') ?? '',
+    id: IsarNative.jsObjectGet(jsObj, r'id') ??
+        (double.negativeInfinity as int),
+    livingAt: IsarNative.jsObjectGet(jsObj, r'livingAt') ?? '',
+    name: IsarNative.jsObjectGet(jsObj, r'name') ?? '',
+    nationalId: IsarNative.jsObjectGet(jsObj, r'nationalId') ?? '',
+    phone: IsarNative.jsObjectGet(jsObj, r'phone') ?? '',
+    pincode: IsarNative.jsObjectGet(jsObj, r'pincode'),
+    profilePic: IsarNative.jsObjectGet(jsObj, r'profilePic'),
+    state: IsarNative.jsObjectGet(jsObj, r'state'),
+    vaccinationCode: IsarNative.jsObjectGet(jsObj, r'vaccinationCode') ?? '',
   );
   return object;
 }
 
 P _profileDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'about':
-      return (IsarNative.jsObjectGet(jsObj, 'about')) as P;
-    case 'address':
-      return (IsarNative.jsObjectGet(jsObj, 'address')) as P;
-    case 'businessId':
-      return (IsarNative.jsObjectGet(jsObj, 'businessId') ??
+    case r'about':
+      return (IsarNative.jsObjectGet(jsObj, r'about')) as P;
+    case r'address':
+      return (IsarNative.jsObjectGet(jsObj, r'address')) as P;
+    case r'businessId':
+      return (IsarNative.jsObjectGet(jsObj, r'businessId') ??
           (double.negativeInfinity as int)) as P;
-    case 'cell':
-      return (IsarNative.jsObjectGet(jsObj, 'cell') ?? '') as P;
-    case 'city':
-      return (IsarNative.jsObjectGet(jsObj, 'city')) as P;
-    case 'country':
-      return (IsarNative.jsObjectGet(jsObj, 'country') ?? '') as P;
-    case 'coverPic':
-      return (IsarNative.jsObjectGet(jsObj, 'coverPic')) as P;
-    case 'district':
-      return (IsarNative.jsObjectGet(jsObj, 'district') ?? '') as P;
-    case 'email':
-      return (IsarNative.jsObjectGet(jsObj, 'email') ?? '') as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+    case r'cell':
+      return (IsarNative.jsObjectGet(jsObj, r'cell') ?? '') as P;
+    case r'city':
+      return (IsarNative.jsObjectGet(jsObj, r'city')) as P;
+    case r'country':
+      return (IsarNative.jsObjectGet(jsObj, r'country') ?? '') as P;
+    case r'coverPic':
+      return (IsarNative.jsObjectGet(jsObj, r'coverPic')) as P;
+    case r'district':
+      return (IsarNative.jsObjectGet(jsObj, r'district') ?? '') as P;
+    case r'email':
+      return (IsarNative.jsObjectGet(jsObj, r'email') ?? '') as P;
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id') ??
           (double.negativeInfinity as int)) as P;
-    case 'livingAt':
-      return (IsarNative.jsObjectGet(jsObj, 'livingAt') ?? '') as P;
-    case 'name':
-      return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
-    case 'nationalId':
-      return (IsarNative.jsObjectGet(jsObj, 'nationalId') ?? '') as P;
-    case 'phone':
-      return (IsarNative.jsObjectGet(jsObj, 'phone') ?? '') as P;
-    case 'pincode':
-      return (IsarNative.jsObjectGet(jsObj, 'pincode')) as P;
-    case 'profilePic':
-      return (IsarNative.jsObjectGet(jsObj, 'profilePic')) as P;
-    case 'state':
-      return (IsarNative.jsObjectGet(jsObj, 'state')) as P;
-    case 'vaccinationCode':
-      return (IsarNative.jsObjectGet(jsObj, 'vaccinationCode') ?? '') as P;
+    case r'livingAt':
+      return (IsarNative.jsObjectGet(jsObj, r'livingAt') ?? '') as P;
+    case r'name':
+      return (IsarNative.jsObjectGet(jsObj, r'name') ?? '') as P;
+    case r'nationalId':
+      return (IsarNative.jsObjectGet(jsObj, r'nationalId') ?? '') as P;
+    case r'phone':
+      return (IsarNative.jsObjectGet(jsObj, r'phone') ?? '') as P;
+    case r'pincode':
+      return (IsarNative.jsObjectGet(jsObj, r'pincode')) as P;
+    case r'profilePic':
+      return (IsarNative.jsObjectGet(jsObj, r'profilePic')) as P;
+    case r'state':
+      return (IsarNative.jsObjectGet(jsObj, r'state')) as P;
+    case r'vaccinationCode':
+      return (IsarNative.jsObjectGet(jsObj, r'vaccinationCode') ?? '') as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
@@ -349,7 +347,7 @@ extension ProfileQueryWhereSort on QueryBuilder<Profile, Profile, QWhere> {
   QueryBuilder<Profile, Profile, QAfterWhere> anyBusinessId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: 'businessId'),
+        const IndexWhereClause.any(indexName: r'businessId'),
       );
     });
   }
@@ -360,9 +358,7 @@ extension ProfileQueryWhere on QueryBuilder<Profile, Profile, QWhereClause> {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -427,7 +423,7 @@ extension ProfileQueryWhere on QueryBuilder<Profile, Profile, QWhereClause> {
       int businessId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: 'businessId',
+        indexName: r'businessId',
         value: [businessId],
       ));
     });
@@ -439,32 +435,28 @@ extension ProfileQueryWhere on QueryBuilder<Profile, Profile, QWhereClause> {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'businessId',
+              indexName: r'businessId',
               lower: [],
-              includeLower: true,
               upper: [businessId],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'businessId',
+              indexName: r'businessId',
               lower: [businessId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'businessId',
+              indexName: r'businessId',
               lower: [businessId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'businessId',
+              indexName: r'businessId',
               lower: [],
-              includeLower: true,
               upper: [businessId],
               includeUpper: false,
             ));
@@ -478,11 +470,10 @@ extension ProfileQueryWhere on QueryBuilder<Profile, Profile, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'businessId',
+        indexName: r'businessId',
         lower: [businessId],
         includeLower: include,
         upper: [],
-        includeUpper: true,
       ));
     });
   }
@@ -493,9 +484,8 @@ extension ProfileQueryWhere on QueryBuilder<Profile, Profile, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'businessId',
+        indexName: r'businessId',
         lower: [],
-        includeLower: true,
         upper: [businessId],
         includeUpper: include,
       ));
@@ -510,7 +500,7 @@ extension ProfileQueryWhere on QueryBuilder<Profile, Profile, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'businessId',
+        indexName: r'businessId',
         lower: [lowerBusinessId],
         includeLower: includeLower,
         upper: [upperBusinessId],
@@ -525,7 +515,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> aboutIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'about',
+        property: r'about',
       ));
     });
   }
@@ -536,7 +526,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'about',
+        property: r'about',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -551,7 +541,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'about',
+        property: r'about',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -566,7 +556,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'about',
+        property: r'about',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -582,7 +572,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'about',
+        property: r'about',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -598,7 +588,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'about',
+        property: r'about',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -611,7 +601,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'about',
+        property: r'about',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -623,7 +613,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'about',
+        property: r'about',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -635,7 +625,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'about',
+        property: r'about',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -645,7 +635,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> addressIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'address',
+        property: r'address',
       ));
     });
   }
@@ -656,7 +646,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'address',
+        property: r'address',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -671,7 +661,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'address',
+        property: r'address',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -686,7 +676,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'address',
+        property: r'address',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -702,7 +692,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'address',
+        property: r'address',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -718,7 +708,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'address',
+        property: r'address',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -731,7 +721,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'address',
+        property: r'address',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -743,7 +733,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'address',
+        property: r'address',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -755,7 +745,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'address',
+        property: r'address',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -766,7 +756,7 @@ extension ProfileQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'businessId',
+        property: r'businessId',
         value: value,
       ));
     });
@@ -779,7 +769,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'businessId',
+        property: r'businessId',
         value: value,
       ));
     });
@@ -792,7 +782,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'businessId',
+        property: r'businessId',
         value: value,
       ));
     });
@@ -806,7 +796,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'businessId',
+        property: r'businessId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -821,7 +811,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'cell',
+        property: r'cell',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -836,7 +826,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'cell',
+        property: r'cell',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -851,7 +841,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'cell',
+        property: r'cell',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -867,7 +857,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'cell',
+        property: r'cell',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -883,7 +873,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'cell',
+        property: r'cell',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -896,7 +886,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'cell',
+        property: r'cell',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -908,7 +898,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'cell',
+        property: r'cell',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -920,7 +910,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'cell',
+        property: r'cell',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -930,7 +920,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> cityIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'city',
+        property: r'city',
       ));
     });
   }
@@ -941,7 +931,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'city',
+        property: r'city',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -956,7 +946,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'city',
+        property: r'city',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -971,7 +961,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'city',
+        property: r'city',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -987,7 +977,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'city',
+        property: r'city',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1003,7 +993,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'city',
+        property: r'city',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1016,7 +1006,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'city',
+        property: r'city',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1028,7 +1018,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'city',
+        property: r'city',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1040,7 +1030,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'city',
+        property: r'city',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1053,7 +1043,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'country',
+        property: r'country',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1068,7 +1058,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'country',
+        property: r'country',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1083,7 +1073,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'country',
+        property: r'country',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1099,7 +1089,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'country',
+        property: r'country',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1115,7 +1105,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'country',
+        property: r'country',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1128,7 +1118,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'country',
+        property: r'country',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1140,7 +1130,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'country',
+        property: r'country',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1152,7 +1142,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'country',
+        property: r'country',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1162,7 +1152,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> coverPicIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'coverPic',
+        property: r'coverPic',
       ));
     });
   }
@@ -1173,7 +1163,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'coverPic',
+        property: r'coverPic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1188,7 +1178,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'coverPic',
+        property: r'coverPic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1203,7 +1193,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'coverPic',
+        property: r'coverPic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1219,7 +1209,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'coverPic',
+        property: r'coverPic',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1235,7 +1225,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'coverPic',
+        property: r'coverPic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1248,7 +1238,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'coverPic',
+        property: r'coverPic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1260,7 +1250,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'coverPic',
+        property: r'coverPic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1272,7 +1262,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'coverPic',
+        property: r'coverPic',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1285,7 +1275,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'district',
+        property: r'district',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1300,7 +1290,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'district',
+        property: r'district',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1315,7 +1305,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'district',
+        property: r'district',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1331,7 +1321,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'district',
+        property: r'district',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1347,7 +1337,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'district',
+        property: r'district',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1360,7 +1350,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'district',
+        property: r'district',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1372,7 +1362,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'district',
+        property: r'district',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1384,7 +1374,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'district',
+        property: r'district',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1397,7 +1387,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1412,7 +1402,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1427,7 +1417,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1443,7 +1433,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'email',
+        property: r'email',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1459,7 +1449,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1472,7 +1462,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1484,7 +1474,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'email',
+        property: r'email',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1496,7 +1486,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'email',
+        property: r'email',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1506,7 +1496,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -1519,7 +1509,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -1532,7 +1522,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -1546,7 +1536,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1561,7 +1551,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'livingAt',
+        property: r'livingAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1576,7 +1566,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'livingAt',
+        property: r'livingAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1591,7 +1581,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'livingAt',
+        property: r'livingAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1607,7 +1597,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'livingAt',
+        property: r'livingAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1623,7 +1613,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'livingAt',
+        property: r'livingAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1636,7 +1626,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'livingAt',
+        property: r'livingAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1648,7 +1638,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'livingAt',
+        property: r'livingAt',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1660,7 +1650,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'livingAt',
+        property: r'livingAt',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1673,7 +1663,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1688,7 +1678,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1703,7 +1693,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1719,7 +1709,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'name',
+        property: r'name',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1735,7 +1725,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1748,7 +1738,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1760,7 +1750,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1772,7 +1762,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'name',
+        property: r'name',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1785,7 +1775,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'nationalId',
+        property: r'nationalId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1800,7 +1790,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'nationalId',
+        property: r'nationalId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1815,7 +1805,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'nationalId',
+        property: r'nationalId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1831,7 +1821,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'nationalId',
+        property: r'nationalId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1847,7 +1837,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'nationalId',
+        property: r'nationalId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1860,7 +1850,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'nationalId',
+        property: r'nationalId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1872,7 +1862,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'nationalId',
+        property: r'nationalId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1884,7 +1874,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'nationalId',
+        property: r'nationalId',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1897,7 +1887,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'phone',
+        property: r'phone',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1912,7 +1902,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'phone',
+        property: r'phone',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1927,7 +1917,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'phone',
+        property: r'phone',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1943,7 +1933,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'phone',
+        property: r'phone',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1959,7 +1949,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'phone',
+        property: r'phone',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1972,7 +1962,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'phone',
+        property: r'phone',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1984,7 +1974,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'phone',
+        property: r'phone',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1996,7 +1986,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'phone',
+        property: r'phone',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -2006,7 +1996,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> pincodeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'pincode',
+        property: r'pincode',
       ));
     });
   }
@@ -2017,7 +2007,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'pincode',
+        property: r'pincode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2032,7 +2022,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'pincode',
+        property: r'pincode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2047,7 +2037,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'pincode',
+        property: r'pincode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2063,7 +2053,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'pincode',
+        property: r'pincode',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2079,7 +2069,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'pincode',
+        property: r'pincode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2092,7 +2082,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'pincode',
+        property: r'pincode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2104,7 +2094,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'pincode',
+        property: r'pincode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2116,7 +2106,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'pincode',
+        property: r'pincode',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -2126,7 +2116,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> profilePicIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'profilePic',
+        property: r'profilePic',
       ));
     });
   }
@@ -2137,7 +2127,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'profilePic',
+        property: r'profilePic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2152,7 +2142,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'profilePic',
+        property: r'profilePic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2167,7 +2157,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'profilePic',
+        property: r'profilePic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2183,7 +2173,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'profilePic',
+        property: r'profilePic',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2199,7 +2189,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'profilePic',
+        property: r'profilePic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2212,7 +2202,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'profilePic',
+        property: r'profilePic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2224,7 +2214,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'profilePic',
+        property: r'profilePic',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2236,7 +2226,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'profilePic',
+        property: r'profilePic',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -2246,7 +2236,7 @@ extension ProfileQueryFilter
   QueryBuilder<Profile, Profile, QAfterFilterCondition> stateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'state',
+        property: r'state',
       ));
     });
   }
@@ -2257,7 +2247,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'state',
+        property: r'state',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2272,7 +2262,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'state',
+        property: r'state',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2287,7 +2277,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'state',
+        property: r'state',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2303,7 +2293,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'state',
+        property: r'state',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2319,7 +2309,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'state',
+        property: r'state',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2332,7 +2322,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'state',
+        property: r'state',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2344,7 +2334,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'state',
+        property: r'state',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2356,7 +2346,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'state',
+        property: r'state',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -2369,7 +2359,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2385,7 +2375,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2400,7 +2390,7 @@ extension ProfileQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2416,7 +2406,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2433,7 +2423,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2446,7 +2436,7 @@ extension ProfileQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2458,7 +2448,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -2470,7 +2460,7 @@ extension ProfileQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'vaccinationCode',
+        property: r'vaccinationCode',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -2484,205 +2474,205 @@ extension ProfileQueryLinks
 extension ProfileQueryWhereSortBy on QueryBuilder<Profile, Profile, QSortBy> {
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByAbout() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('about', Sort.asc);
+      return query.addSortBy(r'about', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByAboutDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('about', Sort.desc);
+      return query.addSortBy(r'about', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByAddress() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('address', Sort.asc);
+      return query.addSortBy(r'address', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByAddressDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('address', Sort.desc);
+      return query.addSortBy(r'address', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByBusinessId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.asc);
+      return query.addSortBy(r'businessId', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByBusinessIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.desc);
+      return query.addSortBy(r'businessId', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCell() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cell', Sort.asc);
+      return query.addSortBy(r'cell', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCellDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cell', Sort.desc);
+      return query.addSortBy(r'cell', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCity() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('city', Sort.asc);
+      return query.addSortBy(r'city', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCityDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('city', Sort.desc);
+      return query.addSortBy(r'city', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCountry() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('country', Sort.asc);
+      return query.addSortBy(r'country', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCountryDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('country', Sort.desc);
+      return query.addSortBy(r'country', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCoverPic() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('coverPic', Sort.asc);
+      return query.addSortBy(r'coverPic', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByCoverPicDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('coverPic', Sort.desc);
+      return query.addSortBy(r'coverPic', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByDistrict() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('district', Sort.asc);
+      return query.addSortBy(r'district', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByDistrictDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('district', Sort.desc);
+      return query.addSortBy(r'district', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByEmail() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.asc);
+      return query.addSortBy(r'email', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByEmailDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.desc);
+      return query.addSortBy(r'email', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByLivingAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('livingAt', Sort.asc);
+      return query.addSortBy(r'livingAt', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByLivingAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('livingAt', Sort.desc);
+      return query.addSortBy(r'livingAt', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.asc);
+      return query.addSortBy(r'name', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.desc);
+      return query.addSortBy(r'name', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByNationalId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('nationalId', Sort.asc);
+      return query.addSortBy(r'nationalId', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByNationalIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('nationalId', Sort.desc);
+      return query.addSortBy(r'nationalId', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByPhone() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phone', Sort.asc);
+      return query.addSortBy(r'phone', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByPhoneDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phone', Sort.desc);
+      return query.addSortBy(r'phone', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByPincode() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pincode', Sort.asc);
+      return query.addSortBy(r'pincode', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByPincodeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pincode', Sort.desc);
+      return query.addSortBy(r'pincode', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByProfilePic() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('profilePic', Sort.asc);
+      return query.addSortBy(r'profilePic', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByProfilePicDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('profilePic', Sort.desc);
+      return query.addSortBy(r'profilePic', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByState() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('state', Sort.asc);
+      return query.addSortBy(r'state', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByStateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('state', Sort.desc);
+      return query.addSortBy(r'state', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByVaccinationCode() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vaccinationCode', Sort.asc);
+      return query.addSortBy(r'vaccinationCode', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> sortByVaccinationCodeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vaccinationCode', Sort.desc);
+      return query.addSortBy(r'vaccinationCode', Sort.desc);
     });
   }
 }
@@ -2691,217 +2681,217 @@ extension ProfileQueryWhereSortThenBy
     on QueryBuilder<Profile, Profile, QSortThenBy> {
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByAbout() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('about', Sort.asc);
+      return query.addSortBy(r'about', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByAboutDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('about', Sort.desc);
+      return query.addSortBy(r'about', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByAddress() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('address', Sort.asc);
+      return query.addSortBy(r'address', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByAddressDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('address', Sort.desc);
+      return query.addSortBy(r'address', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByBusinessId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.asc);
+      return query.addSortBy(r'businessId', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByBusinessIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.desc);
+      return query.addSortBy(r'businessId', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCell() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cell', Sort.asc);
+      return query.addSortBy(r'cell', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCellDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('cell', Sort.desc);
+      return query.addSortBy(r'cell', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCity() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('city', Sort.asc);
+      return query.addSortBy(r'city', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCityDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('city', Sort.desc);
+      return query.addSortBy(r'city', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCountry() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('country', Sort.asc);
+      return query.addSortBy(r'country', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCountryDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('country', Sort.desc);
+      return query.addSortBy(r'country', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCoverPic() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('coverPic', Sort.asc);
+      return query.addSortBy(r'coverPic', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByCoverPicDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('coverPic', Sort.desc);
+      return query.addSortBy(r'coverPic', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByDistrict() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('district', Sort.asc);
+      return query.addSortBy(r'district', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByDistrictDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('district', Sort.desc);
+      return query.addSortBy(r'district', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByEmail() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.asc);
+      return query.addSortBy(r'email', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByEmailDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('email', Sort.desc);
+      return query.addSortBy(r'email', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByLivingAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('livingAt', Sort.asc);
+      return query.addSortBy(r'livingAt', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByLivingAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('livingAt', Sort.desc);
+      return query.addSortBy(r'livingAt', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.asc);
+      return query.addSortBy(r'name', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.desc);
+      return query.addSortBy(r'name', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByNationalId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('nationalId', Sort.asc);
+      return query.addSortBy(r'nationalId', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByNationalIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('nationalId', Sort.desc);
+      return query.addSortBy(r'nationalId', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByPhone() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phone', Sort.asc);
+      return query.addSortBy(r'phone', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByPhoneDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phone', Sort.desc);
+      return query.addSortBy(r'phone', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByPincode() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pincode', Sort.asc);
+      return query.addSortBy(r'pincode', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByPincodeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pincode', Sort.desc);
+      return query.addSortBy(r'pincode', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByProfilePic() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('profilePic', Sort.asc);
+      return query.addSortBy(r'profilePic', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByProfilePicDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('profilePic', Sort.desc);
+      return query.addSortBy(r'profilePic', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByState() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('state', Sort.asc);
+      return query.addSortBy(r'state', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByStateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('state', Sort.desc);
+      return query.addSortBy(r'state', Sort.desc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByVaccinationCode() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vaccinationCode', Sort.asc);
+      return query.addSortBy(r'vaccinationCode', Sort.asc);
     });
   }
 
   QueryBuilder<Profile, Profile, QAfterSortBy> thenByVaccinationCodeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('vaccinationCode', Sort.desc);
+      return query.addSortBy(r'vaccinationCode', Sort.desc);
     });
   }
 }
@@ -2911,118 +2901,118 @@ extension ProfileQueryWhereDistinct
   QueryBuilder<Profile, Profile, QDistinct> distinctByAbout(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('about', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'about', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByAddress(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('address', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'address', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByBusinessId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('businessId');
+      return query.addDistinctBy(r'businessId');
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByCell(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('cell', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'cell', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByCity(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('city', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'city', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByCountry(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('country', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'country', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByCoverPic(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('coverPic', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'coverPic', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByDistrict(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('district', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'district', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByEmail(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('email', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'email', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByLivingAt(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('livingAt', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'livingAt', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('name', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByNationalId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('nationalId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'nationalId', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByPhone(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('phone', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'phone', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByPincode(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('pincode', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'pincode', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByProfilePic(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('profilePic', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'profilePic', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByState(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('state', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'state', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Profile, Profile, QDistinct> distinctByVaccinationCode(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('vaccinationCode',
+      return query.addDistinctBy(r'vaccinationCode',
           caseSensitive: caseSensitive);
     });
   }
@@ -3032,109 +3022,109 @@ extension ProfileQueryProperty
     on QueryBuilder<Profile, Profile, QQueryProperty> {
   QueryBuilder<Profile, String?, QQueryOperations> aboutProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('about');
+      return query.addPropertyName(r'about');
     });
   }
 
   QueryBuilder<Profile, String?, QQueryOperations> addressProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('address');
+      return query.addPropertyName(r'address');
     });
   }
 
   QueryBuilder<Profile, int, QQueryOperations> businessIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('businessId');
+      return query.addPropertyName(r'businessId');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> cellProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('cell');
+      return query.addPropertyName(r'cell');
     });
   }
 
   QueryBuilder<Profile, String?, QQueryOperations> cityProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('city');
+      return query.addPropertyName(r'city');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> countryProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('country');
+      return query.addPropertyName(r'country');
     });
   }
 
   QueryBuilder<Profile, String?, QQueryOperations> coverPicProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('coverPic');
+      return query.addPropertyName(r'coverPic');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> districtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('district');
+      return query.addPropertyName(r'district');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> emailProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('email');
+      return query.addPropertyName(r'email');
     });
   }
 
   QueryBuilder<Profile, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> livingAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('livingAt');
+      return query.addPropertyName(r'livingAt');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('name');
+      return query.addPropertyName(r'name');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> nationalIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('nationalId');
+      return query.addPropertyName(r'nationalId');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> phoneProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('phone');
+      return query.addPropertyName(r'phone');
     });
   }
 
   QueryBuilder<Profile, String?, QQueryOperations> pincodeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('pincode');
+      return query.addPropertyName(r'pincode');
     });
   }
 
   QueryBuilder<Profile, String?, QQueryOperations> profilePicProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('profilePic');
+      return query.addPropertyName(r'profilePic');
     });
   }
 
   QueryBuilder<Profile, String?, QQueryOperations> stateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('state');
+      return query.addPropertyName(r'state');
     });
   }
 
   QueryBuilder<Profile, String, QQueryOperations> vaccinationCodeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('vaccinationCode');
+      return query.addPropertyName(r'vaccinationCode');
     });
   }
 }

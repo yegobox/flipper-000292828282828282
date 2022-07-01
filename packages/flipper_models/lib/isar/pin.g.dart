@@ -7,27 +7,23 @@ part of 'pin.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetPinCollection on Isar {
   IsarCollection<Pin> get pins => getCollection();
 }
 
 const PinSchema = CollectionSchema(
-  name: 'Pin',
+  name: r'Pin',
   schema:
-      '{"name":"Pin","idName":"id","properties":[{"name":"branchId","type":"Long"},{"name":"businessId","type":"Long"},{"name":"phoneNumber","type":"String"},{"name":"pin","type":"Long"},{"name":"userId","type":"String"}],"indexes":[],"links":[]}',
-  idName: 'id',
+      r'{"name":"Pin","idName":"id","properties":[{"name":"branchId","type":"Long"},{"name":"businessId","type":"Long"},{"name":"phoneNumber","type":"String"},{"name":"pin","type":"Long"},{"name":"userId","type":"String"}],"indexes":[],"links":[]}',
+  idName: r'id',
   propertyIds: {
-    'branchId': 0,
-    'businessId': 1,
-    'phoneNumber': 2,
-    'pin': 3,
-    'userId': 4
+    r'branchId': 0,
+    r'businessId': 1,
+    r'phoneNumber': 2,
+    r'pin': 3,
+    r'userId': 4
   },
   listProperties: {},
   indexIds: {},
@@ -75,6 +71,7 @@ void _pinSerializeNative(IsarCollection<Pin> collection, IsarCObject cObj,
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeLong(offsets[0], object.branchId);
   writer.writeLong(offsets[1], object.businessId);
   writer.writeBytes(offsets[2], phoneNumber$Bytes);
@@ -111,57 +108,57 @@ P _pinDeserializePropNative<P>(
     case 4:
       return (reader.readString(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
 Object _pinSerializeWeb(IsarCollection<Pin> collection, Pin object) {
   final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'branchId', object.branchId);
-  IsarNative.jsObjectSet(jsObj, 'businessId', object.businessId);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'phoneNumber', object.phoneNumber);
-  IsarNative.jsObjectSet(jsObj, 'pin', object.pin);
-  IsarNative.jsObjectSet(jsObj, 'userId', object.userId);
+  IsarNative.jsObjectSet(jsObj, r'branchId', object.branchId);
+  IsarNative.jsObjectSet(jsObj, r'businessId', object.businessId);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
+  IsarNative.jsObjectSet(jsObj, r'phoneNumber', object.phoneNumber);
+  IsarNative.jsObjectSet(jsObj, r'pin', object.pin);
+  IsarNative.jsObjectSet(jsObj, r'userId', object.userId);
   return jsObj;
 }
 
 Pin _pinDeserializeWeb(IsarCollection<Pin> collection, Object jsObj) {
   final object = Pin(
-    branchId: IsarNative.jsObjectGet(jsObj, 'branchId') ??
+    branchId: IsarNative.jsObjectGet(jsObj, r'branchId') ??
         (double.negativeInfinity as int),
-    businessId: IsarNative.jsObjectGet(jsObj, 'businessId') ??
+    businessId: IsarNative.jsObjectGet(jsObj, r'businessId') ??
         (double.negativeInfinity as int),
-    phoneNumber: IsarNative.jsObjectGet(jsObj, 'phoneNumber') ?? '',
-    pin: IsarNative.jsObjectGet(jsObj, 'pin') ??
+    phoneNumber: IsarNative.jsObjectGet(jsObj, r'phoneNumber') ?? '',
+    pin: IsarNative.jsObjectGet(jsObj, r'pin') ??
         (double.negativeInfinity as int),
-    userId: IsarNative.jsObjectGet(jsObj, 'userId') ?? '',
+    userId: IsarNative.jsObjectGet(jsObj, r'userId') ?? '',
   );
   object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
+      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int);
   return object;
 }
 
 P _pinDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'branchId':
-      return (IsarNative.jsObjectGet(jsObj, 'branchId') ??
+    case r'branchId':
+      return (IsarNative.jsObjectGet(jsObj, r'branchId') ??
           (double.negativeInfinity as int)) as P;
-    case 'businessId':
-      return (IsarNative.jsObjectGet(jsObj, 'businessId') ??
+    case r'businessId':
+      return (IsarNative.jsObjectGet(jsObj, r'businessId') ??
           (double.negativeInfinity as int)) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id') ??
           (double.negativeInfinity as int)) as P;
-    case 'phoneNumber':
-      return (IsarNative.jsObjectGet(jsObj, 'phoneNumber') ?? '') as P;
-    case 'pin':
-      return (IsarNative.jsObjectGet(jsObj, 'pin') ??
+    case r'phoneNumber':
+      return (IsarNative.jsObjectGet(jsObj, r'phoneNumber') ?? '') as P;
+    case r'pin':
+      return (IsarNative.jsObjectGet(jsObj, r'pin') ??
           (double.negativeInfinity as int)) as P;
-    case 'userId':
-      return (IsarNative.jsObjectGet(jsObj, 'userId') ?? '') as P;
+    case r'userId':
+      return (IsarNative.jsObjectGet(jsObj, r'userId') ?? '') as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
@@ -180,9 +177,7 @@ extension PinQueryWhere on QueryBuilder<Pin, Pin, QWhereClause> {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -248,7 +243,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   QueryBuilder<Pin, Pin, QAfterFilterCondition> branchIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -261,7 +256,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -274,7 +269,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -288,7 +283,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'branchId',
+        property: r'branchId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -300,7 +295,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   QueryBuilder<Pin, Pin, QAfterFilterCondition> businessIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'businessId',
+        property: r'businessId',
         value: value,
       ));
     });
@@ -313,7 +308,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'businessId',
+        property: r'businessId',
         value: value,
       ));
     });
@@ -326,7 +321,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'businessId',
+        property: r'businessId',
         value: value,
       ));
     });
@@ -340,7 +335,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'businessId',
+        property: r'businessId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -352,7 +347,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   QueryBuilder<Pin, Pin, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -365,7 +360,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -378,7 +373,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -392,7 +387,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -407,7 +402,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -422,7 +417,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -437,7 +432,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -453,7 +448,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -469,7 +464,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -482,7 +477,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -494,7 +489,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -506,7 +501,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'phoneNumber',
+        property: r'phoneNumber',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -516,7 +511,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   QueryBuilder<Pin, Pin, QAfterFilterCondition> pinEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'pin',
+        property: r'pin',
         value: value,
       ));
     });
@@ -529,7 +524,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'pin',
+        property: r'pin',
         value: value,
       ));
     });
@@ -542,7 +537,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'pin',
+        property: r'pin',
         value: value,
       ));
     });
@@ -556,7 +551,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'pin',
+        property: r'pin',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -571,7 +566,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'userId',
+        property: r'userId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -586,7 +581,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'userId',
+        property: r'userId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -601,7 +596,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'userId',
+        property: r'userId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -617,7 +612,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'userId',
+        property: r'userId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -633,7 +628,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'userId',
+        property: r'userId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -646,7 +641,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'userId',
+        property: r'userId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -657,7 +652,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'userId',
+        property: r'userId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -668,7 +663,7 @@ extension PinQueryFilter on QueryBuilder<Pin, Pin, QFilterCondition> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'userId',
+        property: r'userId',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -681,61 +676,61 @@ extension PinQueryLinks on QueryBuilder<Pin, Pin, QFilterCondition> {}
 extension PinQueryWhereSortBy on QueryBuilder<Pin, Pin, QSortBy> {
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.asc);
+      return query.addSortBy(r'branchId', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.desc);
+      return query.addSortBy(r'branchId', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByBusinessId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.asc);
+      return query.addSortBy(r'businessId', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByBusinessIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.desc);
+      return query.addSortBy(r'businessId', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByPhoneNumber() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phoneNumber', Sort.asc);
+      return query.addSortBy(r'phoneNumber', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByPhoneNumberDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phoneNumber', Sort.desc);
+      return query.addSortBy(r'phoneNumber', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByPin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pin', Sort.asc);
+      return query.addSortBy(r'pin', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByPinDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pin', Sort.desc);
+      return query.addSortBy(r'pin', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByUserId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.asc);
+      return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> sortByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.desc);
+      return query.addSortBy(r'userId', Sort.desc);
     });
   }
 }
@@ -743,73 +738,73 @@ extension PinQueryWhereSortBy on QueryBuilder<Pin, Pin, QSortBy> {
 extension PinQueryWhereSortThenBy on QueryBuilder<Pin, Pin, QSortThenBy> {
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.asc);
+      return query.addSortBy(r'branchId', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.desc);
+      return query.addSortBy(r'branchId', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByBusinessId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.asc);
+      return query.addSortBy(r'businessId', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByBusinessIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('businessId', Sort.desc);
+      return query.addSortBy(r'businessId', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByPhoneNumber() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phoneNumber', Sort.asc);
+      return query.addSortBy(r'phoneNumber', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByPhoneNumberDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('phoneNumber', Sort.desc);
+      return query.addSortBy(r'phoneNumber', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByPin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pin', Sort.asc);
+      return query.addSortBy(r'pin', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByPinDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('pin', Sort.desc);
+      return query.addSortBy(r'pin', Sort.desc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByUserId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.asc);
+      return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<Pin, Pin, QAfterSortBy> thenByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('userId', Sort.desc);
+      return query.addSortBy(r'userId', Sort.desc);
     });
   }
 }
@@ -817,33 +812,33 @@ extension PinQueryWhereSortThenBy on QueryBuilder<Pin, Pin, QSortThenBy> {
 extension PinQueryWhereDistinct on QueryBuilder<Pin, Pin, QDistinct> {
   QueryBuilder<Pin, Pin, QDistinct> distinctByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('branchId');
+      return query.addDistinctBy(r'branchId');
     });
   }
 
   QueryBuilder<Pin, Pin, QDistinct> distinctByBusinessId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('businessId');
+      return query.addDistinctBy(r'businessId');
     });
   }
 
   QueryBuilder<Pin, Pin, QDistinct> distinctByPhoneNumber(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('phoneNumber', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'phoneNumber', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Pin, Pin, QDistinct> distinctByPin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('pin');
+      return query.addDistinctBy(r'pin');
     });
   }
 
   QueryBuilder<Pin, Pin, QDistinct> distinctByUserId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('userId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'userId', caseSensitive: caseSensitive);
     });
   }
 }
@@ -851,37 +846,37 @@ extension PinQueryWhereDistinct on QueryBuilder<Pin, Pin, QDistinct> {
 extension PinQueryProperty on QueryBuilder<Pin, Pin, QQueryProperty> {
   QueryBuilder<Pin, int, QQueryOperations> branchIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('branchId');
+      return query.addPropertyName(r'branchId');
     });
   }
 
   QueryBuilder<Pin, int, QQueryOperations> businessIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('businessId');
+      return query.addPropertyName(r'businessId');
     });
   }
 
   QueryBuilder<Pin, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Pin, String, QQueryOperations> phoneNumberProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('phoneNumber');
+      return query.addPropertyName(r'phoneNumber');
     });
   }
 
   QueryBuilder<Pin, int, QQueryOperations> pinProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('pin');
+      return query.addPropertyName(r'pin');
     });
   }
 
   QueryBuilder<Pin, String, QQueryOperations> userIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('userId');
+      return query.addPropertyName(r'userId');
     });
   }
 }

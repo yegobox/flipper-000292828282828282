@@ -7,32 +7,28 @@ part of flipper_models;
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetCategoryCollection on Isar {
   IsarCollection<Category> get categorys => getCollection();
 }
 
 const CategorySchema = CollectionSchema(
-  name: 'Category',
+  name: r'Category',
   schema:
-      '{"name":"Category","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"branchId","type":"Long"},{"name":"focused","type":"Bool"},{"name":"name","type":"String"},{"name":"table","type":"String"}],"indexes":[{"name":"branchId","unique":false,"replace":false,"properties":[{"name":"branchId","type":"Value","caseSensitive":false}]}],"links":[]}',
-  idName: 'id',
+      r'{"name":"Category","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"branchId","type":"Long"},{"name":"focused","type":"Bool"},{"name":"name","type":"String"},{"name":"table","type":"String"}],"indexes":[{"name":"branchId","unique":false,"replace":false,"properties":[{"name":"branchId","type":"Value","caseSensitive":false}]}],"links":[]}',
+  idName: r'id',
   propertyIds: {
-    'active': 0,
-    'branchId': 1,
-    'focused': 2,
-    'name': 3,
-    'table': 4
+    r'active': 0,
+    r'branchId': 1,
+    r'focused': 2,
+    r'name': 3,
+    r'table': 4
   },
   listProperties: {},
-  indexIds: {'branchId': 0},
+  indexIds: {r'branchId': 0},
   indexValueTypes: {
-    'branchId': [
+    r'branchId': [
       IndexValueType.long,
     ]
   },
@@ -87,6 +83,7 @@ void _categorySerializeNative(
 
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeHeader();
   writer.writeBool(offsets[0], object.active);
   writer.writeLong(offsets[1], object.branchId);
   writer.writeBool(offsets[2], object.focused);
@@ -122,54 +119,54 @@ P _categoryDeserializePropNative<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Illegal propertyIndex');
   }
 }
 
 Object _categorySerializeWeb(
     IsarCollection<Category> collection, Category object) {
   final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'active', object.active);
-  IsarNative.jsObjectSet(jsObj, 'branchId', object.branchId);
-  IsarNative.jsObjectSet(jsObj, 'focused', object.focused);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'name', object.name);
-  IsarNative.jsObjectSet(jsObj, 'table', object.table);
+  IsarNative.jsObjectSet(jsObj, r'active', object.active);
+  IsarNative.jsObjectSet(jsObj, r'branchId', object.branchId);
+  IsarNative.jsObjectSet(jsObj, r'focused', object.focused);
+  IsarNative.jsObjectSet(jsObj, r'id', object.id);
+  IsarNative.jsObjectSet(jsObj, r'name', object.name);
+  IsarNative.jsObjectSet(jsObj, r'table', object.table);
   return jsObj;
 }
 
 Category _categoryDeserializeWeb(
     IsarCollection<Category> collection, Object jsObj) {
   final object = Category();
-  object.active = IsarNative.jsObjectGet(jsObj, 'active') ?? false;
-  object.branchId = IsarNative.jsObjectGet(jsObj, 'branchId') ??
+  object.active = IsarNative.jsObjectGet(jsObj, r'active') ?? false;
+  object.branchId = IsarNative.jsObjectGet(jsObj, r'branchId') ??
       (double.negativeInfinity as int);
-  object.focused = IsarNative.jsObjectGet(jsObj, 'focused') ?? false;
+  object.focused = IsarNative.jsObjectGet(jsObj, r'focused') ?? false;
   object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
-  object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
-  object.table = IsarNative.jsObjectGet(jsObj, 'table');
+      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int);
+  object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';
+  object.table = IsarNative.jsObjectGet(jsObj, r'table');
   return object;
 }
 
 P _categoryDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'active':
-      return (IsarNative.jsObjectGet(jsObj, 'active') ?? false) as P;
-    case 'branchId':
-      return (IsarNative.jsObjectGet(jsObj, 'branchId') ??
+    case r'active':
+      return (IsarNative.jsObjectGet(jsObj, r'active') ?? false) as P;
+    case r'branchId':
+      return (IsarNative.jsObjectGet(jsObj, r'branchId') ??
           (double.negativeInfinity as int)) as P;
-    case 'focused':
-      return (IsarNative.jsObjectGet(jsObj, 'focused') ?? false) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+    case r'focused':
+      return (IsarNative.jsObjectGet(jsObj, r'focused') ?? false) as P;
+    case r'id':
+      return (IsarNative.jsObjectGet(jsObj, r'id') ??
           (double.negativeInfinity as int)) as P;
-    case 'name':
-      return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
-    case 'table':
-      return (IsarNative.jsObjectGet(jsObj, 'table')) as P;
+    case r'name':
+      return (IsarNative.jsObjectGet(jsObj, r'name') ?? '') as P;
+    case r'table':
+      return (IsarNative.jsObjectGet(jsObj, r'table')) as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
@@ -186,7 +183,7 @@ extension CategoryQueryWhereSort on QueryBuilder<Category, Category, QWhere> {
   QueryBuilder<Category, Category, QAfterWhere> anyBranchId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: 'branchId'),
+        const IndexWhereClause.any(indexName: r'branchId'),
       );
     });
   }
@@ -197,9 +194,7 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
-        includeLower: true,
         upper: id,
-        includeUpper: true,
       ));
     });
   }
@@ -264,7 +259,7 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
       int branchId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: 'branchId',
+        indexName: r'branchId',
         value: [branchId],
       ));
     });
@@ -276,32 +271,28 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [],
-              includeLower: true,
               upper: [branchId],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [branchId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [branchId],
               includeLower: false,
               upper: [],
-              includeUpper: true,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: 'branchId',
+              indexName: r'branchId',
               lower: [],
-              includeLower: true,
               upper: [branchId],
               includeUpper: false,
             ));
@@ -315,11 +306,10 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'branchId',
+        indexName: r'branchId',
         lower: [branchId],
         includeLower: include,
         upper: [],
-        includeUpper: true,
       ));
     });
   }
@@ -330,9 +320,8 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'branchId',
+        indexName: r'branchId',
         lower: [],
-        includeLower: true,
         upper: [branchId],
         includeUpper: include,
       ));
@@ -347,7 +336,7 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: 'branchId',
+        indexName: r'branchId',
         lower: [lowerBranchId],
         includeLower: includeLower,
         upper: [upperBranchId],
@@ -363,7 +352,7 @@ extension CategoryQueryFilter
       bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'active',
+        property: r'active',
         value: value,
       ));
     });
@@ -373,7 +362,7 @@ extension CategoryQueryFilter
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -386,7 +375,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -399,7 +388,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'branchId',
+        property: r'branchId',
         value: value,
       ));
     });
@@ -413,7 +402,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'branchId',
+        property: r'branchId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -426,7 +415,7 @@ extension CategoryQueryFilter
       bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'focused',
+        property: r'focused',
         value: value,
       ));
     });
@@ -435,7 +424,7 @@ extension CategoryQueryFilter
   QueryBuilder<Category, Category, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -448,7 +437,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -461,7 +450,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'id',
+        property: r'id',
         value: value,
       ));
     });
@@ -475,7 +464,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -490,7 +479,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -505,7 +494,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -520,7 +509,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -536,7 +525,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'name',
+        property: r'name',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -552,7 +541,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -565,7 +554,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -577,7 +566,7 @@ extension CategoryQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'name',
+        property: r'name',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -589,7 +578,7 @@ extension CategoryQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'name',
+        property: r'name',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -599,7 +588,7 @@ extension CategoryQueryFilter
   QueryBuilder<Category, Category, QAfterFilterCondition> tableIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: 'table',
+        property: r'table',
       ));
     });
   }
@@ -610,7 +599,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'table',
+        property: r'table',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -625,7 +614,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: 'table',
+        property: r'table',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -640,7 +629,7 @@ extension CategoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: 'table',
+        property: r'table',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -656,7 +645,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: 'table',
+        property: r'table',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -672,7 +661,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'table',
+        property: r'table',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -685,7 +674,7 @@ extension CategoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'table',
+        property: r'table',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -697,7 +686,7 @@ extension CategoryQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: 'table',
+        property: r'table',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -709,7 +698,7 @@ extension CategoryQueryFilter
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: 'table',
+        property: r'table',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -724,61 +713,61 @@ extension CategoryQueryWhereSortBy
     on QueryBuilder<Category, Category, QSortBy> {
   QueryBuilder<Category, Category, QAfterSortBy> sortByActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.asc);
+      return query.addSortBy(r'active', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByActiveDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.desc);
+      return query.addSortBy(r'active', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.asc);
+      return query.addSortBy(r'branchId', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.desc);
+      return query.addSortBy(r'branchId', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByFocused() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('focused', Sort.asc);
+      return query.addSortBy(r'focused', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByFocusedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('focused', Sort.desc);
+      return query.addSortBy(r'focused', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.asc);
+      return query.addSortBy(r'name', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.desc);
+      return query.addSortBy(r'name', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByTable() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('table', Sort.asc);
+      return query.addSortBy(r'table', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> sortByTableDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('table', Sort.desc);
+      return query.addSortBy(r'table', Sort.desc);
     });
   }
 }
@@ -787,73 +776,73 @@ extension CategoryQueryWhereSortThenBy
     on QueryBuilder<Category, Category, QSortThenBy> {
   QueryBuilder<Category, Category, QAfterSortBy> thenByActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.asc);
+      return query.addSortBy(r'active', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByActiveDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('active', Sort.desc);
+      return query.addSortBy(r'active', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.asc);
+      return query.addSortBy(r'branchId', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('branchId', Sort.desc);
+      return query.addSortBy(r'branchId', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByFocused() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('focused', Sort.asc);
+      return query.addSortBy(r'focused', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByFocusedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('focused', Sort.desc);
+      return query.addSortBy(r'focused', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
+      return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
+      return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.asc);
+      return query.addSortBy(r'name', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('name', Sort.desc);
+      return query.addSortBy(r'name', Sort.desc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByTable() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('table', Sort.asc);
+      return query.addSortBy(r'table', Sort.asc);
     });
   }
 
   QueryBuilder<Category, Category, QAfterSortBy> thenByTableDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('table', Sort.desc);
+      return query.addSortBy(r'table', Sort.desc);
     });
   }
 }
@@ -862,33 +851,33 @@ extension CategoryQueryWhereDistinct
     on QueryBuilder<Category, Category, QDistinct> {
   QueryBuilder<Category, Category, QDistinct> distinctByActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('active');
+      return query.addDistinctBy(r'active');
     });
   }
 
   QueryBuilder<Category, Category, QDistinct> distinctByBranchId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('branchId');
+      return query.addDistinctBy(r'branchId');
     });
   }
 
   QueryBuilder<Category, Category, QDistinct> distinctByFocused() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('focused');
+      return query.addDistinctBy(r'focused');
     });
   }
 
   QueryBuilder<Category, Category, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('name', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<Category, Category, QDistinct> distinctByTable(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('table', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'table', caseSensitive: caseSensitive);
     });
   }
 }
@@ -897,37 +886,37 @@ extension CategoryQueryProperty
     on QueryBuilder<Category, Category, QQueryProperty> {
   QueryBuilder<Category, bool, QQueryOperations> activeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('active');
+      return query.addPropertyName(r'active');
     });
   }
 
   QueryBuilder<Category, int, QQueryOperations> branchIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('branchId');
+      return query.addPropertyName(r'branchId');
     });
   }
 
   QueryBuilder<Category, bool, QQueryOperations> focusedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('focused');
+      return query.addPropertyName(r'focused');
     });
   }
 
   QueryBuilder<Category, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
+      return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<Category, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('name');
+      return query.addPropertyName(r'name');
     });
   }
 
   QueryBuilder<Category, String?, QQueryOperations> tableProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('table');
+      return query.addPropertyName(r'table');
     });
   }
 }

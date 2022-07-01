@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'view_models/gate.dart';
 
 late Isar isar;
+late String apihub;
 
 class ExtendedClient extends http.BaseClient {
   final http.Client _inner;
@@ -29,12 +30,11 @@ class ExtendedClient extends http.BaseClient {
 class IsarAPI implements IsarApiInterface {
   final log = getLogger('IsarAPI');
   ExtendedClient client = ExtendedClient(http.Client());
-  // String apihub = "https://apihub.yegobox.com";
-  String apihub = "http://localhost:8082";
 
   IsarAPI();
-  static instance({required Isar isarRef}) {
+  static instance({required Isar isarRef, String? url}) {
     isar = isarRef;
+    apihub = url ?? "https://apihub.yegobox.com";
   }
 
   @override
@@ -938,7 +938,7 @@ class IsarAPI implements IsarApiInterface {
   }
 
   @override
-  Future<TenantSync?> isTenant({required String phoneNumber}) {
+  Future<Tenant?> isTenant({required String phoneNumber}) {
     // TODO: implement isTenant
     throw UnimplementedError();
   }
@@ -985,12 +985,14 @@ class IsarAPI implements IsarApiInterface {
       ),
     );
     if (response.statusCode == 200) {
-      log.i(syncFFromJson(response.body).tenants.first.businesses.length);
+      //this is the first time need to signup
+      if (syncFFromJson(response.body).tenants.isEmpty) {
+        throw NotFoundException(term: "Not found");
+      }
       await isar.writeTxn(() async {
         return isar.businesss
             .putAll(syncFFromJson(response.body).tenants.first.businesses);
       });
-      log.i(syncFFromJson(response.body).tenants.first.branches.length);
       await isar.writeTxn(() async {
         return isar.branchs
             .putAll(syncFFromJson(response.body).tenants.first.branches);
@@ -1476,5 +1478,40 @@ class IsarAPI implements IsarApiInterface {
       return isar.products.getSize(includeIndexes: true, includeLinks: true);
     }
     return 0;
+  }
+
+  @override
+  Future<List<ITenant>> tenants({required int businessId}) async {
+    return await isar.iTenants.filter().businessIdEqualTo(businessId).findAll();
+  }
+
+  @override
+  Future<List<ITenant>> tenantsFromOnline({required int businessId}) async {
+    final http.Response response =
+        await client.get(Uri.parse("$apihub/v2/api/tenant/$businessId"));
+    log.e(businessId);
+    if (response.statusCode == 200) {
+      for (JTenant tenant in jTenantFromJson(response.body)) {
+        JTenant jTenant = tenant;
+        ITenant iTenant = ITenant(
+            name: jTenant.name,
+            businessId: jTenant.businessId,
+            email: jTenant.email,
+            phoneNumber: jTenant.phoneNumber);
+
+        iTenant.businesses.addAll(jTenant.businesses);
+        iTenant.branches.addAll(jTenant.branches);
+        iTenant.permissions.addAll(jTenant.permissions);
+        isar.writeTxn(() async {
+          int id = await isar.iTenants.put(iTenant);
+          return isar.iTenants.get(id);
+        });
+      }
+      return await isar.iTenants
+          .filter()
+          .businessIdEqualTo(businessId)
+          .findAll();
+    }
+    throw InternalServerException(term: "we got unexpected response");
   }
 }

@@ -128,7 +128,9 @@ abstract class IsarApiInterface {
 
   Future<int> userNameAvailable({required String name});
 
-  Future<TenantSync?> isTenant({required String phoneNumber});
+  Future<Tenant?> isTenant({required String phoneNumber});
+  Future<List<ITenant>> tenants({required int businessId});
+  Future<List<ITenant>> tenantsFromOnline({required int businessId});
   Future<Business?> getBusinessFromOnlineGivenId({required int id});
 
   /// sync related methods

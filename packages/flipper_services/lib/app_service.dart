@@ -108,6 +108,8 @@ class AppService with ReactiveServiceMixin {
 
     if (businesses.length == 1) {
       await setActiveBusiness(businesses);
+      await ProxyService.isarApi
+          .tenantsFromOnline(businessId: businesses.first.id!);
       bool defaultBranch = await setActiveBranch(businesses: businesses.first);
 
       if (!defaultBranch) {
@@ -120,6 +122,8 @@ class AppService with ReactiveServiceMixin {
       for (Business business in businesses) {
         if (business.isDefault != null && business.isDefault == true) {
           await setActiveBusiness(businesses);
+          await ProxyService.isarApi
+              .tenantsFromOnline(businessId: business.id!);
           defaultBusiness = true;
         }
       }
@@ -154,7 +158,8 @@ class AppService with ReactiveServiceMixin {
   }
 
   Future<void> bootstraper() async {
-    if (await ProxyService.isarApi.size(object: Product()) == 0) {
+    if (await ProxyService.isarApi.size(object: Product()) == 0 &&
+        ProxyService.box.getBranchId() != null) {
       await ProxyService.isarApi.createProduct(
           product: Product()
             ..name = "Custom Amount"
