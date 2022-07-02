@@ -6,9 +6,6 @@ import 'package:flipper_routing/routes.locator.dart';
 
 class AddUserViewModel extends ReactiveViewModel {
   final settingService = locator<SettingsService>();
-  late List<ITenant> tenants;
   @override
   List<ReactiveServiceMixin> get reactiveServices => [settingService];
-
-  loadExistingUsers() {}
 }

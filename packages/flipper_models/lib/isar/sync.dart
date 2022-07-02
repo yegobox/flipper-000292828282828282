@@ -59,7 +59,7 @@ class Tenant {
   int id;
   String name;
   String phoneNumber;
-  String email;
+  String? email;
   List<Permission> permissions;
   List<Branch> branches;
   List<Business> businesses;

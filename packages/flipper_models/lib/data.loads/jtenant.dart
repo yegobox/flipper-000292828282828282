@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flipper_models/isar_models.dart';
 
-List<JTenant> jTenantFromJson(String str) =>
+JTenant jTenantFromJson(String str) => JTenant.fromJson(json.decode(str));
+List<JTenant> jListTenantFromJson(String str) =>
     List<JTenant>.from(json.decode(str).map((x) => JTenant.fromJson(x)));
 
 String jTenantToJson(List<JTenant> data) =>
@@ -29,11 +30,11 @@ class JTenant {
   List<Business> businesses;
   int businessId;
 
-  factory JTenant.fromJson(Map<String, dynamic> json) => JTenant(
+  factory JTenant.fromJson(Map<dynamic, dynamic> json) => JTenant(
         id: json["id"],
         name: json["name"],
         phoneNumber: json["phoneNumber"],
-        email: json["email"],
+        email: json["email"] ?? "",
         permissions: List<Permission>.from(
             json["permissions"].map((x) => Permission.fromJson(x))),
         branches:

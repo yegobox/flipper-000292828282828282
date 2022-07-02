@@ -108,8 +108,7 @@ class AppService with ReactiveServiceMixin {
 
     if (businesses.length == 1) {
       await setActiveBusiness(businesses);
-      await ProxyService.isarApi
-          .tenantsFromOnline(businessId: businesses.first.id!);
+      await loadTenants(businesses);
       bool defaultBranch = await setActiveBranch(businesses: businesses.first);
 
       if (!defaultBranch) {
@@ -122,14 +121,22 @@ class AppService with ReactiveServiceMixin {
       for (Business business in businesses) {
         if (business.isDefault != null && business.isDefault == true) {
           await setActiveBusiness(businesses);
-          await ProxyService.isarApi
-              .tenantsFromOnline(businessId: business.id!);
+          await loadTenants(businesses);
           defaultBusiness = true;
         }
       }
       if (!defaultBusiness) {
         throw LoginChoicesException(term: "choose default business");
       }
+    }
+  }
+
+  Future<void> loadTenants(List<isar.Business> businesses) async {
+    List<ITenant> tenants = await ProxyService.isarApi
+        .tenants(businessId: ProxyService.box.getBusinessId()!);
+    if (tenants.isEmpty) {
+      await ProxyService.isarApi
+          .tenantsFromOnline(businessId: businesses.first.id!);
     }
   }
 

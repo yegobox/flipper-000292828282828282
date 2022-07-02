@@ -974,6 +974,79 @@ class IsarAPI implements IsarApiInterface {
   }
 
   @override
+  Future<JTenant> saveTenant(String phoneNumber, String name,
+      {required Business business, required Branch branch}) async {
+    final http.Response response =
+        await client.post(Uri.parse("$apihub/v2/api/tenant"),
+            body: jsonEncode({
+              "phoneNumber": phoneNumber,
+              "name": name,
+              "businessId": business.id,
+              "permissions": [
+                {
+                  "name": "cashier",
+                }
+              ],
+              "businesses": [business.toJson()],
+              "branches": [branch.toJson()]
+            }),
+            headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      JTenant jTenant = jTenantFromJson(response.body);
+      ITenant iTenant = ITenant(
+          name: jTenant.name,
+          businessId: jTenant.businessId,
+          email: jTenant.email,
+          phoneNumber: jTenant.phoneNumber);
+
+      isar.writeTxn(() async {
+        await isar.businesss.putAll(jTenant.businesses);
+        await isar.branchs.putAll(jTenant.branches);
+        await isar.permissions.putAll(jTenant.permissions);
+      });
+      isar.writeTxn(() async {
+        int id = await isar.iTenants.put(iTenant);
+        return isar.iTenants.get(id);
+      });
+
+      return jTenantFromJson(response.body);
+    } else {
+      throw InternalServerError(term: "internal server error");
+    }
+  }
+
+  @override
+  Future<List<JTenant>> signup({required Map business}) async {
+    final http.Response response = await client.post(
+        Uri.parse("$apihub/v2/api/business"),
+        body: jsonEncode(business),
+        headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      for (JTenant tenant in jListTenantFromJson(response.body)) {
+        JTenant jTenant = tenant;
+        ITenant iTenant = ITenant(
+            name: jTenant.name,
+            businessId: jTenant.businessId,
+            email: jTenant.email,
+            phoneNumber: jTenant.phoneNumber);
+
+        isar.writeTxn(() async {
+          await isar.businesss.putAll(jTenant.businesses);
+          await isar.branchs.putAll(jTenant.branches);
+          await isar.permissions.putAll(jTenant.permissions);
+        });
+        isar.writeTxn(() async {
+          int id = await isar.iTenants.put(iTenant);
+          return isar.iTenants.get(id);
+        });
+      }
+      return jListTenantFromJson(response.body);
+    } else {
+      throw InternalServerError(term: "internal server error");
+    }
+  }
+
+  @override
   Future<SyncF> login({required String userPhone}) async {
     final response = await http.post(
       Uri.parse(apihub + '/v2/api/user'),
@@ -985,19 +1058,6 @@ class IsarAPI implements IsarApiInterface {
       ),
     );
     if (response.statusCode == 200) {
-      //this is the first time need to signup
-      if (syncFFromJson(response.body).tenants.isEmpty) {
-        throw NotFoundException(term: "Not found");
-      }
-      await isar.writeTxn(() async {
-        return isar.businesss
-            .putAll(syncFFromJson(response.body).tenants.first.businesses);
-      });
-      await isar.writeTxn(() async {
-        return isar.branchs
-            .putAll(syncFFromJson(response.body).tenants.first.branches);
-      });
-      //save business
       ProxyService.box.write(
         key: 'bearerToken',
         value: syncFFromJson(response.body).token,
@@ -1010,13 +1070,47 @@ class IsarAPI implements IsarApiInterface {
         key: 'userPhone',
         value: userPhone,
       );
+      if (syncFFromJson(response.body).tenants.isEmpty) {
+        throw NotFoundException(term: "Not found");
+      }
+      await isar.writeTxn(() async {
+        return isar.businesss
+            .putAll(syncFFromJson(response.body).tenants.first.businesses);
+      });
+      await isar.writeTxn(() async {
+        return isar.branchs
+            .putAll(syncFFromJson(response.body).tenants.first.branches);
+      });
+
       return syncFFromJson(response.body);
     } else if (response.statusCode == 401) {
       throw SessionException(term: "session expired");
-    } else if (response.statusCode == 404) {
-      throw NotFoundException(term: "Not found");
     } else if (response.statusCode == 500) {
       throw ErrorReadingFromYBServer(term: "Not found");
+    } else {
+      throw Exception('403 Error');
+    }
+  }
+
+  /// when adding a user call this endPoint to create a user first.
+  /// then call add this user to tenants of specific business/branch.
+  @override
+  Future<SyncF> user({required String userPhone}) async {
+    final response = await http.post(
+      Uri.parse(apihub + '/v2/api/user'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{'phoneNumber': userPhone},
+      ),
+    );
+    if (response.statusCode == 200) {
+      return syncFFromJson(response.body);
+    } else if (response.statusCode == 401) {
+      throw SessionException(term: "session expired");
+    } else if (response.statusCode == 500) {
+      throw ErrorReadingFromYBServer(term: "Error from server");
     } else {
       throw Exception('403 Error');
     }
@@ -1074,23 +1168,9 @@ class IsarAPI implements IsarApiInterface {
   }
 
   @override
-  void saveTenant({required String phoneNumber}) {
-    // TODO: implement saveTenant
-  }
-
-  @override
   Future<int> sendReport({required List<OrderItem> orderItems}) {
     // TODO: implement sendReport
     throw UnimplementedError();
-  }
-
-  @override
-  Future<int> signup({required Map business}) async {
-    final http.Response response = await client.post(
-        Uri.parse("$apihub/v2/api/business"),
-        body: jsonEncode(business),
-        headers: {'Content-Type': 'application/json'});
-    return response.statusCode;
   }
 
   @override
@@ -1489,22 +1569,24 @@ class IsarAPI implements IsarApiInterface {
   Future<List<ITenant>> tenantsFromOnline({required int businessId}) async {
     final http.Response response =
         await client.get(Uri.parse("$apihub/v2/api/tenant/$businessId"));
-    log.e(businessId);
     if (response.statusCode == 200) {
-      for (JTenant tenant in jTenantFromJson(response.body)) {
+      log.e(jListTenantFromJson(response.body).length);
+      for (JTenant tenant in jListTenantFromJson(response.body)) {
         JTenant jTenant = tenant;
         ITenant iTenant = ITenant(
+            id: jTenant.id,
             name: jTenant.name,
             businessId: jTenant.businessId,
             email: jTenant.email,
             phoneNumber: jTenant.phoneNumber);
 
-        iTenant.businesses.addAll(jTenant.businesses);
-        iTenant.branches.addAll(jTenant.branches);
-        iTenant.permissions.addAll(jTenant.permissions);
         isar.writeTxn(() async {
-          int id = await isar.iTenants.put(iTenant);
-          return isar.iTenants.get(id);
+          await isar.businesss.putAll(jTenant.businesses);
+          await isar.branchs.putAll(jTenant.branches);
+          await isar.permissions.putAll(jTenant.permissions);
+        });
+        isar.writeTxn(() async {
+          await isar.iTenants.put(iTenant);
         });
       }
       return await isar.iTenants
@@ -1513,5 +1595,15 @@ class IsarAPI implements IsarApiInterface {
           .findAll();
     }
     throw InternalServerException(term: "we got unexpected response");
+  }
+
+  @override
+  Future<Branch?> defaultBranch() async {
+    return await isar.branchs.filter().isDefaultEqualTo(true).findFirst();
+  }
+
+  @override
+  Future<Business?> defaultBusiness() async {
+    return await isar.businesss.filter().isDefaultEqualTo(true).findFirst();
   }
 }

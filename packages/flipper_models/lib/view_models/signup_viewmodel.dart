@@ -53,11 +53,6 @@ class SignupViewModel extends FormViewModel {
     notifyListeners();
   }
 
-  // String? _type;
-  // void setType({required String type}) {
-  //   _type = type;
-  // }
-
   void registerLocation() async {
     final permission = await ProxyService.location.doWeHaveLocationPermission();
     if (permission) {
@@ -89,7 +84,7 @@ class SignupViewModel extends FormViewModel {
     // final String? name = kName?.replaceAll(' ', '_');
     log.i(tin);
 
-    int okStatus = await ProxyService.isarApi.signup(business: {
+    List<JTenant> jTenants = await ProxyService.isarApi.signup(business: {
       'name': kName,
       'latitude': latitude,
       'longitude': longitude,
@@ -104,19 +99,16 @@ class SignupViewModel extends FormViewModel {
       'fullName': kFullName,
       'country': kCountry
     });
-    if (okStatus == 200) {
+    if (jTenants.isNotEmpty) {
+      /// create tenants.
       final String userId = ProxyService.box.getUserId()!;
-      //get businesses's id then look for related branch [0] create the default category
-      Business businesses =
-          await ProxyService.isarApi.getOnlineBusiness(userId: userId);
+      Business? business = await ProxyService.isarApi
+          .getBusinessById(id: jTenants.first.businesses.first.id!);
 
-      ProxyService.box.write(key: 'businessId', value: businesses.id);
-      ProxyService.appService.setBusiness(business: businesses);
       List<Branch> branches =
-          await ProxyService.isarApi.branches(businessId: businesses.id!);
+          await ProxyService.isarApi.branches(businessId: business!.id!);
 
-      ProxyService.box.write(key: 'branchId', value: branches[0].id);
-
+      appService.appInit();
       final Category category = Category()
         ..active = true
         ..focused = true

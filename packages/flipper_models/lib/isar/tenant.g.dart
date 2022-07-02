@@ -16,13 +16,13 @@ extension GetITenantCollection on Isar {
 const ITenantSchema = CollectionSchema(
   name: r'ITenant',
   schema:
-      r'{"name":"ITenant","idName":"id","properties":[{"name":"businessId","type":"Long"},{"name":"email","type":"String"},{"name":"name","type":"String"},{"name":"phoneNumber","type":"String"}],"indexes":[],"links":[{"name":"branches","target":"Branch"}]}',
+      r'{"name":"ITenant","idName":"id","properties":[{"name":"businessId","type":"Long"},{"name":"email","type":"String"},{"name":"name","type":"String"},{"name":"phoneNumber","type":"String"}],"indexes":[],"links":[]}',
   idName: r'id',
   propertyIds: {r'businessId': 0, r'email': 1, r'name': 2, r'phoneNumber': 3},
   listProperties: {},
   indexIds: {},
   indexValueTypes: {},
-  linkIds: {r'branches': 0},
+  linkIds: {},
   backlinkLinkNames: {},
   getId: _iTenantGetId,
   setId: _iTenantSetId,
@@ -50,7 +50,7 @@ void _iTenantSetId(ITenant object, int id) {
 }
 
 List<IsarLinkBase<dynamic>> _iTenantGetLinks(ITenant object) {
-  return [object.branches];
+  return [];
 }
 
 void _iTenantSerializeNative(
@@ -89,7 +89,6 @@ ITenant _iTenantDeserializeNative(IsarCollection<ITenant> collection, int id,
     name: reader.readString(offsets[2]),
     phoneNumber: reader.readString(offsets[3]),
   );
-  _iTenantAttachLinks(collection, id, object);
   return object;
 }
 
@@ -128,15 +127,10 @@ ITenant _iTenantDeserializeWeb(
     businessId: IsarNative.jsObjectGet(jsObj, r'businessId') ??
         (double.negativeInfinity as int),
     email: IsarNative.jsObjectGet(jsObj, r'email') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, r'id') ??
-        (double.negativeInfinity as int),
+    id: IsarNative.jsObjectGet(jsObj, r'id'),
     name: IsarNative.jsObjectGet(jsObj, r'name') ?? '',
     phoneNumber: IsarNative.jsObjectGet(jsObj, r'phoneNumber') ?? '',
   );
-  _iTenantAttachLinks(
-      collection,
-      IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int),
-      object);
   return object;
 }
 
@@ -148,8 +142,7 @@ P _iTenantDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case r'email':
       return (IsarNative.jsObjectGet(jsObj, r'email') ?? '') as P;
     case r'id':
-      return (IsarNative.jsObjectGet(jsObj, r'id') ??
-          (double.negativeInfinity as int)) as P;
+      return (IsarNative.jsObjectGet(jsObj, r'id')) as P;
     case r'name':
       return (IsarNative.jsObjectGet(jsObj, r'name') ?? '') as P;
     case r'phoneNumber':
@@ -159,9 +152,7 @@ P _iTenantDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _iTenantAttachLinks(IsarCollection<dynamic> col, int id, ITenant object) {
-  object.branches.attach(col, col.isar.branchs, r'branches', id);
-}
+void _iTenantAttachLinks(IsarCollection<dynamic> col, int id, ITenant object) {}
 
 extension ITenantQueryWhereSort on QueryBuilder<ITenant, ITenant, QWhere> {
   QueryBuilder<ITenant, ITenant, QAfterWhere> anyId() {
@@ -401,6 +392,14 @@ extension ITenantQueryFilter
         property: r'email',
         wildcard: pattern,
         caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ITenant, ITenant, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
       ));
     });
   }
@@ -683,18 +682,7 @@ extension ITenantQueryFilter
 }
 
 extension ITenantQueryLinks
-    on QueryBuilder<ITenant, ITenant, QFilterCondition> {
-  QueryBuilder<ITenant, ITenant, QAfterFilterCondition> branches(
-      FilterQuery<Branch> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.branchs,
-        q,
-        r'branches',
-      );
-    });
-  }
-}
+    on QueryBuilder<ITenant, ITenant, QFilterCondition> {}
 
 extension ITenantQueryWhereSortBy on QueryBuilder<ITenant, ITenant, QSortBy> {
   QueryBuilder<ITenant, ITenant, QAfterSortBy> sortByBusinessId() {
@@ -853,7 +841,7 @@ extension ITenantQueryProperty
     });
   }
 
-  QueryBuilder<ITenant, int, QQueryOperations> idProperty() {
+  QueryBuilder<ITenant, int?, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });

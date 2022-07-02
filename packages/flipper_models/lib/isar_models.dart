@@ -16,7 +16,7 @@ export 'isar/variant.dart';
 export 'isar/unit.dart';
 export 'isar/tenant.dart';
 export 'isar/sync.dart';
-export 'isar/j_tenant.dart';
+export 'data.loads/jtenant.dart';
 export 'isar/subscription.dart';
 export 'isar/stock.dart';
 export 'isar/spenn.dart';

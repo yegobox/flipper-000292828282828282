@@ -4,9 +4,10 @@ import 'package:flipper_services/constants.dart';
 
 abstract class IsarApiInterface {
   Future<List<Product>> products({required int branchId});
-  Future<int> signup({required Map business});
+  Future<List<JTenant>> signup({required Map business});
   Future<Order?> pendingOrder({required int branchId});
   Future<SyncF> login({required String userPhone});
+  Future<SyncF> user({required String userPhone});
   Future<List<Business>> businesses({required String userId});
   Future<Business> getOnlineBusiness({required String userId});
   Future<List<Branch>> branches({required int businessId});
@@ -153,7 +154,8 @@ abstract class IsarApiInterface {
 
   Future<Profile?> profile({required int businessId});
   Future<Profile?> updateProfile({required Profile profile});
-  void saveTenant({required String phoneNumber});
+  Future<JTenant> saveTenant(String phoneNumber, String name,
+      {required Business business, required Branch branch});
   Points addPoint({required int userId, required int point});
   Future<Subscription?> addUpdateSubscription({
     required int userId,
@@ -183,6 +185,8 @@ abstract class IsarApiInterface {
 
   Future<void> refund({required int itemId});
   Future<Drawers?> isDrawerOpen({required int cashierId});
+  Future<Branch?> defaultBranch();
+  Future<Business?> defaultBusiness();
   Future<Drawers?> openDrawer({required Drawers drawer});
 
   Future<int> size<T>({required T object});
