@@ -1570,7 +1570,6 @@ class IsarAPI implements IsarApiInterface {
     final http.Response response =
         await client.get(Uri.parse("$apihub/v2/api/tenant/$businessId"));
     if (response.statusCode == 200) {
-      log.e(jListTenantFromJson(response.body).length);
       for (JTenant tenant in jListTenantFromJson(response.body)) {
         JTenant jTenant = tenant;
         ITenant iTenant = ITenant(
