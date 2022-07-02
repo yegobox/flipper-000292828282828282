@@ -63,6 +63,7 @@ class Business {
     this.taxEnabled,
     this.taxServerUrl,
     this.isDefault,
+    this.id,
   });
   int? id;
   String? name;

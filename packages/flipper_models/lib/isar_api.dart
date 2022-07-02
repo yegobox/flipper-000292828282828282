@@ -676,9 +676,7 @@ class IsarAPI implements IsarApiInterface {
 
   @override
   Future<Business?> getBusinessById({required int id}) async {
-    return await isar.writeTxn(() {
-      return isar.businesss.get(id);
-    });
+    return await isar.businesss.get(id);
   }
 
   @override
@@ -952,13 +950,13 @@ class IsarAPI implements IsarApiInterface {
   @override
   Future<bool> logOut() async {
     log.i("logging out");
-
-    /// delete all business and branches from isar db for
-    /// potential next business that can log-in to not mix data.
+    // delete all business and branches from isar db for
+    // potential next business that can log-in to not mix data.
     await isar.writeTxn(() async {
       await isar.businesss.clear();
-      // delete all branches.
       await isar.branchs.clear();
+      await isar.iTenants.clear();
+      await isar.permissions.clear();
     });
     ProxyService.box.remove(key: 'userId');
     ProxyService.box.remove(key: 'bearerToken');
@@ -968,7 +966,6 @@ class IsarAPI implements IsarApiInterface {
     ProxyService.box.remove(key: 'businessId');
     loginInfo.isLoggedIn = false;
     loginInfo.needSignUp = false;
-
     FirebaseAuth.instance.signOut();
     return await Future.value(true);
   }
@@ -1025,19 +1022,23 @@ class IsarAPI implements IsarApiInterface {
       for (JTenant tenant in jListTenantFromJson(response.body)) {
         JTenant jTenant = tenant;
         ITenant iTenant = ITenant(
+            id: jTenant.id,
             name: jTenant.name,
             businessId: jTenant.businessId,
             email: jTenant.email,
             phoneNumber: jTenant.phoneNumber);
 
-        isar.writeTxn(() async {
-          await isar.businesss.putAll(jTenant.businesses);
-          await isar.branchs.putAll(jTenant.branches);
-          await isar.permissions.putAll(jTenant.permissions);
+        await isar.writeTxn(() async {
+          return isar.businesss.putAll(jTenant.businesses);
         });
-        isar.writeTxn(() async {
-          int id = await isar.iTenants.put(iTenant);
-          return isar.iTenants.get(id);
+        await isar.writeTxn(() async {
+          return await isar.branchs.putAll(jTenant.branches);
+        });
+        await isar.writeTxn(() async {
+          return isar.permissions.putAll(jTenant.permissions);
+        });
+        await isar.writeTxn(() async {
+          return isar.iTenants.put(iTenant);
         });
       }
       return jListTenantFromJson(response.body);

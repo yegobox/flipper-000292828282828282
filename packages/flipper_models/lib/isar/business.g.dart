@@ -384,6 +384,7 @@ Business _businessDeserializeNative(IsarCollection<Business> collection, int id,
     firstName: reader.readStringOrNull(offsets[15]),
     fullName: reader.readStringOrNull(offsets[16]),
     hexColor: reader.readStringOrNull(offsets[17]),
+    id: id,
     imageUrl: reader.readStringOrNull(offsets[18]),
     isDefault: reader.readBoolOrNull(offsets[19]),
     isLastSubscriptionPaymentSucceeded: reader.readBoolOrNull(offsets[20]),
@@ -408,7 +409,6 @@ Business _businessDeserializeNative(IsarCollection<Business> collection, int id,
     userId: reader.readStringOrNull(offsets[39]),
   );
   object.createdAt = reader.readStringOrNull(offsets[10]);
-  object.id = id;
   return object;
 }
 
@@ -574,6 +574,7 @@ Business _businessDeserializeWeb(
     firstName: IsarNative.jsObjectGet(jsObj, r'firstName'),
     fullName: IsarNative.jsObjectGet(jsObj, r'fullName'),
     hexColor: IsarNative.jsObjectGet(jsObj, r'hexColor'),
+    id: IsarNative.jsObjectGet(jsObj, r'id'),
     imageUrl: IsarNative.jsObjectGet(jsObj, r'imageUrl'),
     isDefault: IsarNative.jsObjectGet(jsObj, r'isDefault'),
     isLastSubscriptionPaymentSucceeded:
@@ -599,7 +600,6 @@ Business _businessDeserializeWeb(
     userId: IsarNative.jsObjectGet(jsObj, r'userId'),
   );
   object.createdAt = IsarNative.jsObjectGet(jsObj, r'createdAt');
-  object.id = IsarNative.jsObjectGet(jsObj, r'id');
   return object;
 }
 

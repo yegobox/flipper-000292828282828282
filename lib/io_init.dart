@@ -44,7 +44,8 @@ Future<void> initDb() async {
       PinSchema,
       ReceiptSchema,
       DrawersSchema,
-      ITenantSchema
+      ITenantSchema,
+      PermissionSchema
     ],
     directory: dir.path,
   );
