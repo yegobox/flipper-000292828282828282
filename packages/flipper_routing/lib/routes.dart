@@ -73,7 +73,7 @@ class AppSetup {
 // test pin:085214
 
 // when adding new repo with other submodules
-// git submodule add https://github.com/yegobox/flutter_file_picker.git open-sources/flutter_file_picker
+// git submodule add https://github.com/yegobox/flutter.widgets.git open-sources/flutter.widgets
 // https://gist.github.com/myusuf3/7f645819ded92bda6677
 
 // %AppData%
