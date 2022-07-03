@@ -76,3 +76,6 @@
 [submodule "open-sources/flutter_file_picker"]
 	path = open-sources/flutter_file_picker
 	url = https://github.com/yegobox/flutter_file_picker.git
+[submodule "open-sources/dart_pdf"]
+	path = open-sources/dart_pdf
+	url = https://github.com/yegobox/dart_pdf.git
