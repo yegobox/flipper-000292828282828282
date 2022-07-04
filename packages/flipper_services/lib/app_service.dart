@@ -109,6 +109,7 @@ class AppService with ReactiveServiceMixin {
     if (businesses.length == 1) {
       await setActiveBusiness(businesses);
       await loadTenants(businesses);
+      await loadCounters(businesses.first);
       bool defaultBranch = await setActiveBranch(businesses: businesses.first);
 
       if (!defaultBranch) {
@@ -122,6 +123,7 @@ class AppService with ReactiveServiceMixin {
         if (business.isDefault != null && business.isDefault == true) {
           await setActiveBusiness(businesses);
           await loadTenants(businesses);
+          await loadCounters(businesses.first);
           defaultBusiness = true;
         }
       }
@@ -174,6 +176,10 @@ class AppService with ReactiveServiceMixin {
             ..branchId = ProxyService.box.getBranchId()!
             ..businessId = ProxyService.box.getBusinessId()!);
     }
+  }
+
+  Future<void> loadCounters(isar.Business business) async {
+    await ProxyService.isarApi.loadCounterFromOnline(businessId: business.id!);
   }
 
   AppService() {

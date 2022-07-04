@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flipper_models/data.loads/jcounter.dart';
 import 'package:flipper_models/isar/receipt_signature.dart';
 import 'package:flipper_routing/routes.logger.dart';
+import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_services/constants.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/isar_models.dart';
@@ -1340,24 +1342,37 @@ class IsarAPI implements IsarApiInterface {
       await isar.writeTxn(() async {
         return await isar.businesss.put(business);
       });
-      try {
-        await client.patch(Uri.parse("$apihub/v2/api/business/${business.id}"),
-            body: jsonEncode(business.toJson()),
-            headers: {'Content-Type': 'application/json'});
-      } catch (e) {
-        log.e(e);
+      final response = await client.patch(
+          Uri.parse("$apihub/v2/api/business/${business.id}"),
+          body: jsonEncode(business.toJson()),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode != 200) {
+        throw InternalServerError(term: "error patching the business");
       }
     }
     if (data is Branch) {
       isar.writeTxn(() async {
         return await isar.branchs.put(data);
       });
-      try {
-        await client.patch(Uri.parse("$apihub/v2/api/branch/${data.id}"),
-            body: jsonEncode(data.toJson()),
-            headers: {'Content-Type': 'application/json'});
-      } catch (e) {
-        log.e(e);
+      final response = await client.patch(
+          Uri.parse("$apihub/v2/api/branch/${data.id}"),
+          body: jsonEncode(data.toJson()),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode != 200) {
+        throw InternalServerError(term: "error patching the branch");
+      }
+    }
+    if (data is Counter) {
+      isar.writeTxn(() async {
+        return await isar.counters.put(data);
+      });
+
+      final response = await client.patch(
+          Uri.parse("$apihub/v2/api/counter/${data.id}"),
+          body: jsonEncode(data.toJson()),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode != 200) {
+        throw InternalServerError(term: "error patching the counter");
       }
     }
     if (data is Drawers) {
@@ -1605,5 +1620,77 @@ class IsarAPI implements IsarApiInterface {
   @override
   Future<Business?> defaultBusiness() async {
     return await isar.businesss.filter().isDefaultEqualTo(true).findFirst();
+  }
+
+  @override
+  Future<Counter?> cSCounter({required int branchId}) async {
+    return await isar.counters
+        .filter()
+        .branchIdEqualTo(branchId)
+        .and()
+        .receiptTypeEqualTo(ReceiptType.cs)
+        .findFirst();
+  }
+
+  @override
+  Future<Counter?> nRSCounter({required int branchId}) async {
+    return await isar.counters
+        .filter()
+        .branchIdEqualTo(branchId)
+        .and()
+        .receiptTypeEqualTo(ReceiptType.nr)
+        .findFirst();
+  }
+
+  @override
+  Future<Counter?> nSCounter({required int branchId}) async {
+    return await isar.counters
+        .filter()
+        .branchIdEqualTo(branchId)
+        .and()
+        .receiptTypeEqualTo(ReceiptType.ns)
+        .findFirst();
+  }
+
+  @override
+  Future<Counter?> pSCounter({required int branchId}) async {
+    return await isar.counters
+        .filter()
+        .branchIdEqualTo(branchId)
+        .and()
+        .receiptTypeEqualTo(ReceiptType.ps)
+        .findFirst();
+  }
+
+  @override
+  Future<Counter?> tSCounter({required int branchId}) async {
+    return await isar.counters
+        .filter()
+        .branchIdEqualTo(branchId)
+        .and()
+        .receiptTypeEqualTo(ReceiptType.ts)
+        .findFirst();
+  }
+
+  @override
+  Future<void> loadCounterFromOnline({required int businessId}) async {
+    final http.Response response =
+        await client.get(Uri.parse("$apihub/v2/api/counter/$businessId"));
+    if (response.statusCode == 200) {
+      List<JCounter> counters = jCounterFromJson(response.body);
+      for (JCounter jCounter in counters) {
+        await isar.writeTxn(() async {
+          return isar.counters.put(Counter()
+            ..branchId = jCounter.branchId
+            ..businessId = jCounter.businessId
+            ..receiptType = jCounter.receiptType
+            ..id = jCounter.id
+            ..totRcptNo = jCounter.totRcptNo
+            ..curRcptNo = jCounter.curRcptNo);
+        });
+      }
+    } else {
+      throw InternalServerError(term: "Error loading the counters");
+    }
   }
 }

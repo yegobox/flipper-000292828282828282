@@ -16,6 +16,7 @@ export 'isar/variant.dart';
 export 'isar/unit.dart';
 export 'isar/tenant.dart';
 export 'isar/sync.dart';
+export 'isar/counter.dart';
 export 'data.loads/jtenant.dart';
 export 'isar/subscription.dart';
 export 'isar/stock.dart';

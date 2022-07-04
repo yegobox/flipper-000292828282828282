@@ -220,10 +220,14 @@ class AppSetup {
 
 //TODO: Flutter pro tip: especially the search thing at the end of the video
 // https://www.youtube.com/watch?v=mhxoXm8lWIo
-// nohup java -jar flipper-1.0.0-SNAPSHOT-runner.jar &
-// ./gradlew build -Dquarkus.package.type=uber-jar
+//I am using flipper-prod folder in building uber jar file.
+//sometime I need to shutdown the running app to gain memory to build new uber jar or shut down server!
+// nohup java -jar flipper-1.0.0-SNAPSHOT-runner.jar & echo $! > save_pid.txt
+// kill -9 "cat save_pid.txt"
+// gradle   build -Dquarkus.package.type=uber-jar
 
-//  nohup java -jar rra.war &
+// TODO:for rra server  /var/www/rra
+//  nohup java -jar rra.war &  echo $! > rra_pid.txt
 // find . -name "*.bak" -type f -delete
 
 // ngix stuff:

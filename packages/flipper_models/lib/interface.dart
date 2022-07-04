@@ -190,4 +190,10 @@ abstract class IsarApiInterface {
   Future<Drawers?> openDrawer({required Drawers drawer});
 
   Future<int> size<T>({required T object});
+  Future<Counter?> nSCounter({required int branchId});
+  Future<Counter?> cSCounter({required int branchId});
+  Future<Counter?> nRSCounter({required int branchId});
+  Future<Counter?> tSCounter({required int branchId});
+  Future<Counter?> pSCounter({required int branchId});
+  Future<void> loadCounterFromOnline({required int businessId});
 }
