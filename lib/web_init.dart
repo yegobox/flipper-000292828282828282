@@ -39,7 +39,8 @@ Future<void> initDb() async {
       ReceiptSchema,
       DrawersSchema,
       ITenantSchema,
-      PermissionSchema
+      PermissionSchema,
+      CounterSchema
     ],
     directory: 'db',
   );
