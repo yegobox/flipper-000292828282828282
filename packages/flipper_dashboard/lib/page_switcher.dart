@@ -2,6 +2,7 @@ import 'package:flipper_models/isar_models.dart';
 import 'package:flutter/material.dart';
 
 import 'checkout.dart';
+import 'notifications.dart';
 import 'settings.dart';
 import 'transactions.dart';
 
@@ -26,7 +27,7 @@ class PageSwitcher extends StatelessWidget {
       case 1:
         return Transactions(model: model);
       case 2:
-        return const Scaffold(body: Text("we got notifications page"));
+        return const Notifications();
       case 3:
         return SettingPage(business: model.businesses);
       default:
