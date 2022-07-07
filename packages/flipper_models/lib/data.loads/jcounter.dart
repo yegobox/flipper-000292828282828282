@@ -5,6 +5,8 @@ List<JCounter> jCounterFromJson(String str) =>
 
 String jCounterToJson(List<JCounter> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+JCounter jSingleCounterFromJson(String str) =>
+    JCounter.fromJson(json.decode(str));
 
 class JCounter {
   JCounter({

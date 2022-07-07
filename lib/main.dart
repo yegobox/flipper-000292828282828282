@@ -38,10 +38,12 @@ import 'package:flipper_login/pin_login.dart';
 import 'package:flipper_login/signup_form_view.dart';
 import 'package:flipper_models/view_models/gate.dart';
 import 'package:flipper_routing/finance_app.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:go_router/go_router.dart';
 import 'package:flipper_login/login.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_models/isar_models.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -53,8 +55,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:flipper_localize/flipper_localize.dart';
-import 'package:google_ui/google_ui.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 import 'init.dart'
     if (dart.library.html) 'web_init.dart'
     if (dart.library.io) 'io_init.dart';
@@ -77,6 +79,11 @@ class FlipperHttpOverrides extends HttpOverrides {
 }
 
 void main() async {
+  GoogleFonts.config.allowRuntimeFetching = false;
+  foundation.LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield foundation.LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = FlipperHttpOverrides();
   await SystemChrome.setPreferredOrientations([
@@ -504,10 +511,9 @@ void main() async {
             title: 'flipper',
             // Define the light theme for the app, based on defined colors and
             // properties above.
-            theme: GThemeGenerator.generate(),
-
-            darkTheme: GThemeGenerator.generateDark(),
-
+            //TODOimplement my own as this is killing design
+            // theme: GThemeGenerator.generate(),
+            // darkTheme: GThemeGenerator.generateDark(),
             localizationsDelegates: [
               FlutterFireUILocalizations.withDefaultOverrides(
                 const LabelOverrides(),

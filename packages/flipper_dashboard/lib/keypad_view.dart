@@ -1,6 +1,7 @@
 library pos;
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 import 'package:flipper_models/isar_models.dart';
@@ -23,6 +24,16 @@ class KeyPadView extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(111.0, 93.5, 101, 54.4),
+            child: Text(
+              "RWF0.00",
+              style: GoogleFonts.poppins(
+                  fontSize: 35,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xff000000).withOpacity(0.25)),
+            ),
+          ),
           Expanded(
             child: Row(
               children: [

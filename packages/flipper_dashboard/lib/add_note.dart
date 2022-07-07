@@ -1,11 +1,12 @@
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:flutter/material.dart';
 
-class KeyPadHead extends StatelessWidget {
-  KeyPadHead(
+class AddNote extends StatelessWidget {
+  AddNote(
       {Key? key,
       this.amount = 0.0,
       this.note,
+      this.noteDisabled = true,
       required this.onClick,
       required this.controller,
       this.payable,
@@ -17,6 +18,7 @@ class KeyPadHead extends StatelessWidget {
   final TextEditingController controller;
   final Widget? payable;
   final int tab;
+  final bool noteDisabled;
   final log = getLogger('KeyPadHead');
 
   @override
@@ -27,7 +29,7 @@ class KeyPadHead extends StatelessWidget {
           padding: const EdgeInsets.only(left: 0.0, right: 0.0),
           child: payable ?? const SizedBox.shrink(),
         ),
-        tab == 0
+        !noteDisabled
             ? InkWell(
                 onTap: () {
                   onClick();

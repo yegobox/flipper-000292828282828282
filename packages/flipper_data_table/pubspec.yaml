@@ -24,15 +24,5 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: ../../assets/fonts/Poppins/Poppins-Light.ttf
-        - asset: ../../assets/fonts/Poppins/Poppins-LightItalic.ttf
-          weight: 300
-        - asset: ../../assets/fonts/Poppins/Poppins-Regular.ttf
-        - asset: ../../assets/fonts/Poppins/Poppins-Italic.ttf
-          weight: 400
-        - asset: ../../assets/fonts/Poppins/Poppins-Medium.ttf
-        - asset: ../../assets/fonts/Poppins/Poppins-MediumItalic.ttf
-          weight: 500
+  assets:
+    - ../../google_fonts/

@@ -42,7 +42,7 @@ dependencies:
   flutterfire_ui: ^0.4.1-dev-19
   get_storage: ^2.0.3
   firebase_auth: ^3.3.19
-  google_fonts: ^2.1.0
+  google_fonts: ^3.0.1
   stacked: ^2.3.8
   firebase_messaging: ^11.2.8
   overlay_support: ^2.0.0-beta.0
@@ -119,18 +119,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/icons/
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins/Poppins-Light.ttf
-        - asset: assets/fonts/Poppins/Poppins-LightItalic.ttf
-          weight: 300
-        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
-          weight: 400
-        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
-        - asset: assets/fonts/Poppins/Poppins-MediumItalic.ttf
-          weight: 500
+    - google_fonts/
 generate: true
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen

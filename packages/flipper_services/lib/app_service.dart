@@ -179,7 +179,10 @@ class AppService with ReactiveServiceMixin {
   }
 
   Future<void> loadCounters(isar.Business business) async {
-    await ProxyService.isarApi.loadCounterFromOnline(businessId: business.id!);
+    if (await ProxyService.isarApi.size(object: Counter()) == 0) {
+      await ProxyService.isarApi
+          .loadCounterFromOnline(businessId: business.id!);
+    }
   }
 
   AppService() {

@@ -462,53 +462,52 @@ class IsarAPI implements IsarApiInterface {
       return isar.products.get(id);
     });
     // save variants in isar Db with the above productId
-    kProduct!.variants.add(
-      Variant()
-        ..name = 'Regular'
-        ..productId = kProduct.id!
-        ..unit = 'Per Item'
-        ..table = 'variants'
-        ..productName = product.name
-        ..branchId = branchId
-        ..taxName = 'N/A'
-        ..isTaxExempted = false
-        ..taxPercentage = 0
-        ..retailPrice = 0
-        // RRA fields
-        ..bhfId = business?.bhfId
-        ..prc = 0.0
-        ..sku = 'sku'
-        ..tin = business?.tinNumber
-        ..itemCd = clip
-        // TODOask about item clasification code, it seems to be static
-        ..itemClsCd = "5020230602"
-        ..itemTyCd = "1"
-        ..itemNm = "Regular"
-        ..itemStdNm = "Regular"
-        ..orgnNatCd = "RW"
-        ..pkgUnitCd = "NT"
-        ..qtyUnitCd = "U"
-        ..taxTyCd = "B"
-        ..dftPrc = 0.0
-        ..addInfo = "A"
-        ..isrcAplcbYn = "N"
-        ..useYn = "N"
-        ..regrId = clip
-        ..regrNm = "Regular"
-        ..modrId = clip
-        ..modrNm = "Regular"
-        ..pkg = "1"
-        ..itemSeq = "1"
-        ..splyAmt = 0.0
-        // RRA fields ends
-        ..supplyPrice = 0.0,
-    );
     await isar.writeTxn(() async {
-      return await kProduct.variants.save();
+      return isar.variants.put(
+        Variant()
+          ..name = 'Regular'
+          ..productId = kProduct!.id!
+          ..unit = 'Per Item'
+          ..table = 'variants'
+          ..productName = product.name
+          ..branchId = branchId
+          ..taxName = 'N/A'
+          ..isTaxExempted = false
+          ..taxPercentage = 0
+          ..retailPrice = 0
+          // RRA fields
+          ..bhfId = business?.bhfId
+          ..prc = 0.0
+          ..sku = 'sku'
+          ..tin = business?.tinNumber
+          ..itemCd = clip
+          // TODOask about item clasification code, it seems to be static
+          ..itemClsCd = "5020230602"
+          ..itemTyCd = "1"
+          ..itemNm = "Regular"
+          ..itemStdNm = "Regular"
+          ..orgnNatCd = "RW"
+          ..pkgUnitCd = "NT"
+          ..qtyUnitCd = "U"
+          ..taxTyCd = "B"
+          ..dftPrc = 0.0
+          ..addInfo = "A"
+          ..isrcAplcbYn = "N"
+          ..useYn = "N"
+          ..regrId = clip
+          ..regrNm = "Regular"
+          ..modrId = clip
+          ..modrNm = "Regular"
+          ..pkg = "1"
+          ..itemSeq = "1"
+          ..splyAmt = 0.0
+          // RRA fields ends
+          ..supplyPrice = 0.0,
+      );
     });
 
     Variant? variant =
-        await isar.variants.where().productIdEqualTo(kProduct.id!).findFirst();
+        await isar.variants.where().productIdEqualTo(kProduct!.id!).findFirst();
 
     Stock stock = Stock()
       ..canTrackingStock = false
@@ -1371,7 +1370,18 @@ class IsarAPI implements IsarApiInterface {
           Uri.parse("$apihub/v2/api/counter/${data.id}"),
           body: jsonEncode(data.toJson()),
           headers: {'Content-Type': 'application/json'});
-      if (response.statusCode != 200) {
+      if (response.statusCode == 200) {
+        JCounter jCounter = jSingleCounterFromJson(response.body);
+        await isar.writeTxn(() async {
+          return isar.counters.put(Counter()
+            ..branchId = jCounter.branchId
+            ..businessId = jCounter.businessId
+            ..receiptType = jCounter.receiptType
+            ..id = jCounter.id
+            ..totRcptNo = jCounter.totRcptNo
+            ..curRcptNo = jCounter.curRcptNo);
+        });
+      } else {
         throw InternalServerError(term: "error patching the counter");
       }
     }
@@ -1584,6 +1594,9 @@ class IsarAPI implements IsarApiInterface {
   Future<int> size<T>({required T object}) async {
     if (object is Product) {
       return isar.products.getSize(includeIndexes: true, includeLinks: true);
+    }
+    if (object is Counter) {
+      return isar.counters.getSize(includeIndexes: true, includeLinks: true);
     }
     return 0;
   }

@@ -23,49 +23,70 @@ class PayableView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Theme.of(context).primaryColor,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(19.0, 0, 19.0, 30.5),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: InkWell(
-              onTap: () {
-                ticketHandler();
-              },
-              child: Container(
-                alignment: Alignment.center,
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).primaryColor,
-                child: ticketText(
-                    tickets: tickets.toInt(), orders: orders, context: context),
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                onClick();
-              },
-              child: Container(
-                alignment: Alignment.center,
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).primaryColor,
-                child: GestureDetector(
-                  onTap: () {
-                    onClick();
-                  },
-                  child: callCharge(
-                    payable: duePay ?? 0.00,
-                    context: context,
+              child: SizedBox(
+            height: 64,
+            child: OutlinedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xffF2F2F2)),
+                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.hovered)) {
+                        return Colors.blue.withOpacity(0.04);
+                      }
+                      if (states.contains(MaterialState.focused) ||
+                          states.contains(MaterialState.pressed)) {
+                        return Colors.blue.withOpacity(0.12);
+                      }
+                      return null; // Defer to the widget's default.
+                    },
                   ),
                 ),
-              ),
-            ),
+                onPressed: () {
+                  ticketHandler();
+                },
+                child: ticketText(
+                    tickets: tickets.toInt(),
+                    orders: orders,
+                    context: context)),
+          )),
+          const SizedBox(
+            width: 10,
           ),
+          Expanded(
+              child: SizedBox(
+            height: 64,
+            child: OutlinedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xff006AFE)),
+                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.hovered)) {
+                        return Colors.blue.withOpacity(0.04);
+                      }
+                      if (states.contains(MaterialState.focused) ||
+                          states.contains(MaterialState.pressed)) {
+                        return Colors.blue.withOpacity(0.12);
+                      }
+                      return null; // Defer to the widget's default.
+                    },
+                  ),
+                ),
+                onPressed: () {
+                  onClick();
+                },
+                child: callCharge(
+                  payable: duePay ?? 0.00,
+                  context: context,
+                )),
+          ))
         ],
       ),
     );
@@ -83,7 +104,7 @@ class PayableView extends StatelessWidget {
         style: const TextStyle(
           fontSize: 19,
           fontWeight: FontWeight.w500,
-          color: Colors.white,
+          color: Colors.black,
         ),
       );
     } else if (orders > 0) {
@@ -96,7 +117,7 @@ class PayableView extends StatelessWidget {
             style: const TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
           Text(
@@ -106,7 +127,7 @@ class PayableView extends StatelessWidget {
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w400,
-              color: Colors.white,
+              color: Colors.black,
             ),
           )
         ],
@@ -123,9 +144,10 @@ class PayableView extends StatelessWidget {
     );
     if (payable == 0.0) {
       return Text(
-        FLocalization.of(context).charge + ' FRw ' + payable.toString(),
+        FLocalization.of(context).charge + ' FRW ' + payable.toString(),
         style: const TextStyle(
           fontSize: 19,
+          fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
       );
@@ -150,8 +172,8 @@ class PayableView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w500,
                   color: Colors.white,
                 ),
               ),

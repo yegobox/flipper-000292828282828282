@@ -100,9 +100,9 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         Variant? variation = await ProxyService.isarApi.getCustomVariant();
 
         double amount = double.parse(ProxyService.keypad.key);
-        log.i(variation!.toJson());
+        // log.i(variation!.toJson());
         await saveOrder(
-            amountTotal: amount, variationId: variation.id, customItem: true);
+            amountTotal: amount, variationId: variation!.id, customItem: true);
 
         ProxyService.keypad.reset();
       }
