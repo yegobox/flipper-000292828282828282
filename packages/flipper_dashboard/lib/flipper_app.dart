@@ -1,6 +1,3 @@
-import 'package:flipper_dashboard/body.dart';
-import 'package:flipper_dashboard/keypad_view.dart';
-import 'package:flipper_dashboard/product_view.dart';
 import 'package:flipper_models/view_models/business_home_viewmodel.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +5,8 @@ import 'package:stacked/stacked.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart' as perm;
+
+import 'page_switcher.dart';
 
 final isWindows = UniversalPlatform.isWindows;
 final isMacOs = UniversalPlatform.isMacOS;
@@ -123,88 +122,11 @@ class _FlipperAppState extends State<FlipperApp>
                 ),
               ),
               body: SafeArea(
-                child: Column(
-                  children: [
-                    // give the tab bar a height [can change hheight to preferred height]
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(19.0, 15.5, 19.0, 0),
-                      child: Container(
-                        height: 46,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE5E5E5),
-                          borderRadius: BorderRadius.circular(
-                            7.0,
-                          ),
-                        ),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(2.0, 2.5, 2.5, 2.5),
-                          child: TabBar(
-                            controller: _tabController,
-                            // give the indicator a decoration (color and border radius)
-                            indicator: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                7.0,
-                              ),
-                              color: const Color(0xffFFFFFF),
-                            ),
-                            labelColor: Colors.black,
-                            // labelStyle: tabLabelStyle,
-                            // unselectedLabelColor: Colors.black,
-                            // indicatorColor: Colors.black,
-                            tabs: const [
-                              // first tab [you can add an icon using the icon property]
-                              SizedBox(
-                                height: 41,
-                                child: Tab(
-                                  text: 'Keypad',
-                                ),
-                              ),
-
-                              // second tab [you can add an icon using the icon property]
-                              SizedBox(
-                                height: 41,
-                                child: Tab(
-                                  text: 'Library',
-                                ),
-                              ),
-                              SizedBox(
-                                height: 41,
-                                child: Tab(
-                                  text: 'Favourites',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    // tab bar view here
-                    Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          // first tab bar view widget
-                          Column(
-                            children: [
-                              KeyPadView(model: model),
-                              PaymentTicketManager(
-                                  context: context,
-                                  model: model,
-                                  controller: controller,
-                                  nodeDisabled: true)
-                            ],
-                          ),
-                          const ProductView(),
-                          const Center(
-                            child: Text(
-                              'Comming soon',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                child: PageSwitcher(
+                  controller: controller,
+                  model: model,
+                  tabController: _tabController,
+                  currentPage: tabselected,
                 ),
               ),
             ),
