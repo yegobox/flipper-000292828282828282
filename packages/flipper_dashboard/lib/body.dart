@@ -16,7 +16,8 @@ import 'package:universal_platform/universal_platform.dart';
 import 'settings.dart';
 
 final isDesktopOrWeb = UniversalPlatform.isDesktopOrWeb;
-Widget header(
+// ignore: non_constant_identifier_names
+Widget PaymentTicketManager(
     {required BuildContext context,
     required BusinessHomeViewModel model,
     required TextEditingController controller,
@@ -98,13 +99,13 @@ class _BodyWidgetState extends State<BodyWidget> {
       child: Column(
         children: [
           if (widget.model.tab == 2)
-            header(
+            PaymentTicketManager(
                 context: context,
                 model: widget.model,
                 controller: widget.controller,
                 nodeDisabled: widget.nodeDisabled),
           if (widget.model.tab == 0)
-            header(
+            PaymentTicketManager(
                 context: context,
                 model: widget.model,
                 controller: widget.controller,

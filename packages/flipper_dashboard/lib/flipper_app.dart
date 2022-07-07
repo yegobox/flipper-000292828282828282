@@ -1,5 +1,6 @@
 import 'package:flipper_dashboard/body.dart';
 import 'package:flipper_dashboard/keypad_view.dart';
+import 'package:flipper_dashboard/product_view.dart';
 import 'package:flipper_models/view_models/business_home_viewmodel.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
@@ -187,30 +188,17 @@ class _FlipperAppState extends State<FlipperApp>
                           Column(
                             children: [
                               KeyPadView(model: model),
-                              header(
+                              PaymentTicketManager(
                                   context: context,
                                   model: model,
                                   controller: controller,
                                   nodeDisabled: true)
                             ],
                           ),
+                          const ProductView(),
                           const Center(
                             child: Text(
-                              'Library',
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          // second tab bar view widget
-                          const Center(
-                            child: Text(
-                              'Favourites',
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              'Comming soon',
                             ),
                           ),
                         ],

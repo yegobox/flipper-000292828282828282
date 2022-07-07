@@ -13,7 +13,6 @@ import 'package:flipper_dashboard/devices.dart';
 import 'package:flipper_dashboard/drawer.dart' as drawer;
 import 'package:flipper_dashboard/no_net.dart';
 import 'package:flipper_dashboard/after_sale.dart';
-import 'package:flipper_dashboard/analytic.dart';
 import 'package:flipper_dashboard/collect_cash.dart';
 import 'package:flipper_dashboard/create/add_category.dart';
 import 'package:flipper_dashboard/create/add_variation.dart';
@@ -375,7 +374,8 @@ void main() async {
           name: 'analytics',
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
-            child: Analytics(),
+            // child: Analytics(),
+            child: const Text("analytics were here"),
           ),
         ),
         GoRoute(
