@@ -34,16 +34,20 @@ class _NotificationsState extends State<Notifications>
             const SizedBox(
               height: 17.81,
             ),
-            SizedBox(
-                height: 17.81,
-                child: Text(
-                  "Transactions",
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xff000000)),
-                )),
+            Padding(
+              padding: const EdgeInsets.all(19.0),
+              child: SizedBox(
+                  height: 17.81,
+                  child: Text(
+                    "Notifications",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        height: 0.31,
+                        fontSize: 21,
+                        color: const Color(0xff000000)),
+                  )),
+            ),
             Divider(color: const Color(0xff000000).withOpacity(0.25)),
-            // give the tab bar a height [can change hheight to preferred height]
             Padding(
               padding: const EdgeInsets.fromLTRB(19.0, 2.5, 19.0, 2.5),
               child: Container(
@@ -91,13 +95,51 @@ class _NotificationsState extends State<Notifications>
               ),
             ),
             // tab bar view here
-            Expanded(
+            Flexible(
+              fit: FlexFit.tight,
               child: TabBarView(
                 controller: _tabController,
-                children: const [
-                  // first tab bar view widget
-                  Center(child: Text("One")),
-                  Center(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(19.0, 67.5, 19.0, 0.0),
+                    child: ListView(
+                      children: [
+                        SizedBox(
+                          height: 91.0,
+                          width: 390.0,
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: 11.0,
+                                        height: 11.0,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xff006AFE),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          22.0, 0.0, 120.96, 0),
+                                      child: Text("Take your first payment"),
+                                    ),
+                                  ],
+                                ),
+                                const Text(
+                                    "Learn how to take your first payment."),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const Center(
                     child: Text(
                       'two',
                     ),
