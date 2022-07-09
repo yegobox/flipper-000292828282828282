@@ -27,7 +27,7 @@ class KeyPadView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(111.0, 93.5, 101, 54.4),
             child: Text(
-              "RWF0.00",
+              "RWF${model.keypad.key}",
               style: GoogleFonts.poppins(
                   fontSize: 35,
                   fontWeight: FontWeight.w500,

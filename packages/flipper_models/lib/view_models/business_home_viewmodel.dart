@@ -22,6 +22,11 @@ import 'package:receipt/print.dart';
 class BusinessHomeViewModel extends ReactiveViewModel {
   final settingService = locator<SettingsService>();
   final languageService = locator<LanguageService>();
+  //harmonize
+  final log = getLogger('BusinessHomeViewModel');
+  final KeyPadService keypad = locator<KeyPadService>();
+  final ProductService productService = locator<ProductService>();
+  final AppService app = locator<AppService>();
   final bool _updateStarted = false;
   Setting? _setting;
   Setting? get setting => _setting;
@@ -53,11 +58,6 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  //harmonize
-  final log = getLogger('BusinessHomeViewModel');
-  final KeyPadService keypad = locator<KeyPadService>();
-  final ProductService productService = locator<ProductService>();
-  final AppService app = locator<AppService>();
   String get key => keypad.key;
 
   late String? longitude;
@@ -93,21 +93,44 @@ class BusinessHomeViewModel extends ReactiveViewModel {
   }
 
   void addKey(String key) async {
-    if (key == 'C') {
-      ProxyService.keypad.pop();
+    if (key == 'C' && double.parse(ProxyService.keypad.key) != 0.0) {
+      //remove last orderItem added
+      List<OrderItem> items =
+          await ProxyService.isarApi.orderItems(orderId: kOrder!.id);
+      ProxyService.isarApi.delete(id: items.last.id, endPoint: 'orderItem');
+      Order? pendingOrder = await ProxyService.isarApi.manageOrder();
+      List<OrderItem> dItems =
+          await ProxyService.isarApi.orderItems(orderId: kOrder!.id);
+      pendingOrder.subTotal = dItems.fold(0, (a, b) => a + b.price);
+      ProxyService.isarApi.update(data: pendingOrder);
+      ProxyService.keypad.reset();
     } else if (key == '+') {
-      if (double.parse(ProxyService.keypad.key) != 0.0) {
+      ProxyService.keypad.reset();
+    } else {
+      ProxyService.keypad.addKey(key);
+      // if ProxyService.keypad.key.length==1 then that is the new record wait
+      // don't keep adding item to the order
+      if (double.parse(ProxyService.keypad.key) != 0.0 &&
+          ProxyService.keypad.key.length == 1) {
         Variant? variation = await ProxyService.isarApi.getCustomVariant();
 
         double amount = double.parse(ProxyService.keypad.key);
-        // log.i(variation!.toJson());
         await saveOrder(
             amountTotal: amount, variationId: variation!.id, customItem: true);
+      } else if (ProxyService.keypad.key.length > 1) {
+        List<OrderItem> items =
+            await ProxyService.isarApi.orderItems(orderId: kOrder!.id);
+        OrderItem item = items.last;
+        item.price = double.parse(ProxyService.keypad.key);
+        item.taxAmt = double.parse(
+            (double.parse(ProxyService.keypad.key) * 18 / 118)
+                .toStringAsFixed(2));
+        await ProxyService.isarApi.update(data: item);
+        Order? pendingOrder = await ProxyService.isarApi.manageOrder();
 
-        ProxyService.keypad.reset();
+        pendingOrder.subTotal = items.fold(0, (a, b) => a + b.price);
+        ProxyService.isarApi.update(data: pendingOrder);
       }
-    } else {
-      ProxyService.keypad.addKey(key);
     }
   }
 
@@ -246,7 +269,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         await ProxyService.isarApi.variant(variantId: variationId);
     Stock? stock =
         await ProxyService.isarApi.stockByVariantId(variantId: variation!.id);
-    log.i(stock);
+    // log.i(stock);
     String name = '';
 
     if (variation.productName != 'Custom Amount') {
@@ -275,7 +298,9 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       item: existOrderItem,
     );
 
-    currentOrder();
+    // commented this as we are calling this on onModelReady of flipper app
+    // I believe won't have side effect rather improves smooth updating of values
+    // currentOrder();
 
     return true;
   }
@@ -323,8 +348,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         ..dcRt = 0.0
         ..dcAmt = 0.0
         ..taxblAmt = pendingOrder.subTotal
-        ..taxAmt =
-            double.parse((variation.retailPrice * 18 / 118).toStringAsFixed(2))
+        ..taxAmt = double.parse((amountTotal * 18 / 118).toStringAsFixed(2))
         ..totAmt = variation.retailPrice
         ..itemSeq = variation.itemSeq
         ..isrccCd = variation.isrccCd

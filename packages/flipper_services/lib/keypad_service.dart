@@ -151,6 +151,10 @@ class KeyPadService with ReactiveServiceMixin {
     notifyListeners();
   }
 
+  /// before I used to remove the last written digit
+  /// but with new structure the clear or + button set the key back to 0.0
+  /// therefore there is no reason to use pop strategy but I am keeping the code
+  /// here for later reference.
   void pop() {
     if (stack.isNotEmpty && stack.length > 1) {
       stack.pop();
