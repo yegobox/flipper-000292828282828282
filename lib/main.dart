@@ -24,7 +24,6 @@ import 'package:flipper_dashboard/customers.dart';
 import 'package:flipper_dashboard/flipper_app.dart';
 import 'package:flipper_dashboard/inapp_browser.dart';
 import 'package:flipper_dashboard/order.dart';
-import 'package:flipper_dashboard/order_summary.dart';
 import 'package:flipper_dashboard/payment_options.dart';
 import 'package:flipper_dashboard/scanner_view.dart';
 import 'package:flipper_dashboard/sell.dart';
@@ -291,14 +290,7 @@ void main() async {
             ),
           ),
         ),
-        GoRoute(
-          path: '/summary',
-          name: 'summary',
-          pageBuilder: (context, state) => MaterialPage(
-            key: state.pageKey,
-            child: const OrderSummary(),
-          ),
-        ),
+
         GoRoute(
           path: '/sell',
           name: 'sell',

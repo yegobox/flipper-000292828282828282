@@ -1,7 +1,7 @@
 import 'package:flipper_dashboard/transactions.dart';
 import 'package:flipper_localize/flipper_localize.dart';
 import 'package:flipper_rw/bottom_sheets/general_bottom_sheet.dart';
-import 'package:flipper_dashboard/add_note.dart';
+import 'package:flipper_dashboard/sales_buttons_controller.dart';
 import 'package:flipper_dashboard/keypad_view.dart';
 import 'package:flipper_dashboard/payable_view.dart';
 import 'package:flipper_dashboard/product_view.dart';
@@ -22,10 +22,13 @@ Widget PaymentTicketManager(
     required BusinessHomeViewModel model,
     required TextEditingController controller,
     required bool nodeDisabled}) {
-  return AddNote(
+  return SalesButtonsController(
     tab: model.tab,
-    noteDisabled: nodeDisabled,
+    model: model,
+    saleCounts: model.keypad.itemsOnSale,
     payable: PayableView(
+      model: model,
+      saleCounts: model.keypad.itemsOnSale,
       onClick: () {
         if (model.kOrder != null) {
           GoRouter.of(context).push(Routes.pay, extra: model.kOrder);
@@ -67,12 +70,6 @@ Widget PaymentTicketManager(
         });
       },
     ),
-    onClick: () {
-      FlipperBottomSheet.showAddNoteToSaleBottomSheet(
-        model: model,
-        context: context,
-      );
-    },
     controller: controller,
     amount: double.parse(model.key),
   );

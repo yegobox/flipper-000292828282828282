@@ -298,10 +298,6 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       item: existOrderItem,
     );
 
-    // commented this as we are calling this on onModelReady of flipper app
-    // I believe won't have side effect rather improves smooth updating of values
-    // currentOrder();
-
     return true;
   }
 

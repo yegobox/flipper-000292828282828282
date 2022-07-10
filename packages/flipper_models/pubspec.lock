@@ -1488,6 +1488,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  modal_bottom_sheet:
+    dependency: transitive
+    description:
+      name: modal_bottom_sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   msix:
     dependency: "direct overridden"
     description:
