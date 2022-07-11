@@ -10,7 +10,7 @@ part of flipper_models;
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
 
 extension GetCounterCollection on Isar {
-  IsarCollection<Counter> get counters => getCollection();
+  IsarCollection<Counter> get counters => collection();
 }
 
 const CounterSchema = CollectionSchema(
@@ -68,7 +68,7 @@ void _counterSerializeNative(
     AdapterAlloc alloc) {
   final receiptType$Bytes =
       IsarBinaryWriter.utf8Encoder.convert(object.receiptType);
-  final size = (staticSize + (receiptType$Bytes.length)) as int;
+  final size = (staticSize + 3 + (receiptType$Bytes.length)) as int;
   cObj.buffer = alloc(size);
   cObj.buffer_length = size;
 
@@ -78,7 +78,7 @@ void _counterSerializeNative(
   writer.writeLong(offsets[0], object.branchId);
   writer.writeLong(offsets[1], object.businessId);
   writer.writeLong(offsets[2], object.curRcptNo);
-  writer.writeBytes(offsets[3], receiptType$Bytes);
+  writer.writeByteList(offsets[3], receiptType$Bytes);
   writer.writeLong(offsets[4], object.totRcptNo);
 }
 
@@ -807,6 +807,12 @@ extension CounterQueryWhereDistinct
 
 extension CounterQueryProperty
     on QueryBuilder<Counter, Counter, QQueryProperty> {
+  QueryBuilder<Counter, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
   QueryBuilder<Counter, int, QQueryOperations> branchIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'branchId');
@@ -822,12 +828,6 @@ extension CounterQueryProperty
   QueryBuilder<Counter, int, QQueryOperations> curRcptNoProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'curRcptNo');
-    });
-  }
-
-  QueryBuilder<Counter, int?, QQueryOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
     });
   }
 

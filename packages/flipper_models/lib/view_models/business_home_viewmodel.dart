@@ -723,9 +723,14 @@ class BusinessHomeViewModel extends ReactiveViewModel {
   }
 
   Customer? get customer => app.customer;
-
-  void deleteCustomer(int id) {
-    ProxyService.isarApi.delete(id: id, endPoint: 'customer');
+  // check if the customer is attached to the order then can't be deleted
+  // order need to be deleted or completed first.
+  void deleteCustomer(int id, Function callback) {
+    if (kOrder!.customerId == null) {
+      ProxyService.isarApi.delete(id: id, endPoint: 'customer');
+    } else {
+      callback("Can't delete the customer");
+    }
   }
 
   void setDefaultBusiness({required Business business}) {

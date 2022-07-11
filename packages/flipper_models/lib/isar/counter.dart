@@ -8,7 +8,7 @@ class Counter {
   Counter({
     this.id,
   });
-  int? id;
+  Id? id = Isar.autoIncrement;
   late int businessId;
   late int branchId;
   late String receiptType;

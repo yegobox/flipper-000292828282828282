@@ -23,8 +23,8 @@ class AppService with ReactiveServiceMixin {
       ReactiveValue<isar.Business>(isar.Business(isDefault: false));
   isar.Business get business => _business.value;
 
-  final _units = ReactiveValue<List<Unit>>([]);
-  List<Unit> get units => _units.value;
+  final _units = ReactiveValue<List<IUnit>>([]);
+  List<IUnit> get units => _units.value;
 
   final _colors = ReactiveValue<List<PColor>>([]);
   List<PColor> get colors => _colors.value;
@@ -58,7 +58,7 @@ class AppService with ReactiveServiceMixin {
 
   Future<void> loadUnits() async {
     int? branchId = ProxyService.box.read(key: 'branchId');
-    final List<Unit> result =
+    final List<IUnit> result =
         await ProxyService.isarApi.units(branchId: branchId!);
 
     _units.value = result;

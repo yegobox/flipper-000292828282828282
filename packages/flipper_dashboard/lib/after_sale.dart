@@ -56,14 +56,8 @@ class _AfterSaleState extends State<AfterSale> {
                 closeButton: CLOSEBUTTON.BUTTON,
                 disableButton: false,
                 showActionButton: true,
-                onPressedCallback: () async {
-                  await model.getOrderById();
-                  GoRouter.of(context).push(
-                      Routes.customers + '/' + widget.order.id.toString());
-                },
                 leftActionButtonName:
                     model.app.customer != null ? 'New Sale' : 'New Sale',
-                rightActionButtonName: 'Add Customer',
                 multi: 3,
                 bottomSpacer: 52,
               ),

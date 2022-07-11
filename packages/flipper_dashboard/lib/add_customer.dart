@@ -106,15 +106,10 @@ class _AddCustomerState extends State<AddCustomer> {
                           ),
                           verticalSpaceSmall,
                           BoxInputField(
-                              controller: _emailController,
-                              leading: const Icon(Icons.email),
-                              placeholder: 'Email',
-                              validatorFunc: (value) {
-                                log.i(value);
-                                if (value!.isEmpty) {
-                                  return 'Email is required';
-                                }
-                              }),
+                            controller: _emailController,
+                            leading: const Icon(Icons.email),
+                            placeholder: 'Email',
+                          ),
                         ],
                       ),
                     ),
