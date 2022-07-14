@@ -3,6 +3,7 @@ library flipper_models;
 import 'package:flipper_models/isar/receipt_signature.dart';
 import 'package:flipper_routing/routes.locator.dart';
 import 'package:flipper_routing/routes.logger.dart';
+import 'package:flipper_routing/routes.router.dart';
 // import 'package:flipper_models/isar_models.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -643,13 +644,23 @@ class BusinessHomeViewModel extends ReactiveViewModel {
   Future<void> generateRRAReceipt(
       {required List<OrderItem> items,
       required Business business,
-      String? receiptType = "NS",
+      String? receiptType = ReceiptType.ns,
       required Order order,
       required Function callback}) async {
-    ReceiptSignature? receiptSignature = await ProxyService.tax
-        .createReceipt(order: order, items: items, receiptType: receiptType!);
+    // use local counter as long as it is marked as synced.
+    Counter counter = await getCounter(receiptType);
+    if (counter.backed != null && !counter.backed!) {
+      callback("The counter is not up to date");
+      return;
+    }
+    ReceiptSignature? receiptSignature = await ProxyService.tax.createReceipt(
+        order: order,
+        items: items,
+        receiptType: receiptType!,
+        counter: counter);
     if (receiptSignature == null) {
-      return callback(false);
+      callback("EBM V2 server is down, please try again later");
+      return;
     }
     order.receiptType = order.receiptType == null
         ? receiptType
@@ -661,7 +672,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     String time = DateTime.now().toString().substring(11, 19);
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyy').format(now);
-    // qrCode with the followinf format (ddmmyyyy)#time(hhmmss)#sdc number#sdc_receipt_number#internal_data#receipt_signature
+    // qrCode with the following format (ddmmyyyy)#time(hhmmss)#sdc number#sdc_receipt_number#internal_data#receipt_signature
     String receiptNumber =
         "${receiptSignature.data.rcptNo}/${receiptSignature.data.totRcptNo}";
     String qrCode =
@@ -670,9 +681,37 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         signature: receiptSignature,
         order: order,
         qrCode: qrCode,
+        counter: counter,
         receiptType: receiptNumber);
+    // update counter, increment the counter
+    ProxyService.isarApi.update(
+        data: counter
+          ..totRcptNo = receiptSignature.data.totRcptNo + 1
+          ..backed = false
+          ..curRcptNo = receiptSignature.data.rcptNo + 1);
     receiptReady = true;
     notifyListeners();
+  }
+
+  Future<Counter> getCounter(String? receiptType) async {
+    Counter? counter;
+    int branchId = ProxyService.box.getBranchId()!;
+    if (receiptType == ReceiptType.ns) {
+      counter = await ProxyService.isarApi.nSCounter(branchId: branchId);
+    }
+    if (receiptType == ReceiptType.ts) {
+      counter = await ProxyService.isarApi.tSCounter(branchId: branchId);
+    }
+    if (receiptType == ReceiptType.nr) {
+      counter = await ProxyService.isarApi.nRSCounter(branchId: branchId);
+    }
+    if (receiptType == ReceiptType.cs) {
+      counter = await ProxyService.isarApi.cSCounter(branchId: branchId);
+    }
+    if (receiptType == ReceiptType.ps) {
+      counter = await ProxyService.isarApi.pSCounter(branchId: branchId);
+    }
+    return counter!;
   }
 
   Future<void> updateDrawer(String receiptType, Order order) async {

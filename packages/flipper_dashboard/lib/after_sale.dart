@@ -52,7 +52,6 @@ class _AfterSaleState extends State<AfterSale> {
                   model.currentOrder();
                   GoRouter.of(context).push(Routes.home);
                 },
-                title: '',
                 closeButton: CLOSEBUTTON.BUTTON,
                 disableButton: false,
                 showActionButton: true,
@@ -249,10 +248,9 @@ class _AfterSaleState extends State<AfterSale> {
                 order: widget.order,
                 receiptType: widget.receiptType,
                 callback: (value) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
-                    content:
-                        Text("EBM V2 server is down, please try again later"),
+                    content: Text(value),
                   ));
                 });
           }

@@ -180,7 +180,8 @@ abstract class IsarApiInterface {
       {required ReceiptSignature signature,
       required Order order,
       required String qrCode,
-      required String receiptType});
+      required String receiptType,
+      required Counter counter});
   Future<Receipt?> getReceipt({required int orderId});
 
   Future<void> refund({required int itemId});
@@ -195,5 +196,6 @@ abstract class IsarApiInterface {
   Future<Counter?> nRSCounter({required int branchId});
   Future<Counter?> tSCounter({required int branchId});
   Future<Counter?> pSCounter({required int branchId});
+  Future<List<Counter>> unSyncedCounters({required int branchId});
   Future<void> loadCounterFromOnline({required int businessId});
 }

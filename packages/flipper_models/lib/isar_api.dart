@@ -1374,10 +1374,9 @@ class IsarAPI implements IsarApiInterface {
       }
     }
     if (data is Counter) {
-      isar.writeTxn(() async {
-        return await isar.counters.put(data);
+      await isar.writeTxn(() async {
+        return isar.counters.put(data..backed = false);
       });
-
       final response = await client.patch(
           Uri.parse("$apihub/v2/api/counter/${data.id}"),
           body: jsonEncode(data.toJson()),
@@ -1385,11 +1384,12 @@ class IsarAPI implements IsarApiInterface {
       if (response.statusCode == 200) {
         JCounter jCounter = jSingleCounterFromJson(response.body);
         await isar.writeTxn(() async {
-          return isar.counters.put(Counter()
+          return isar.counters.put(data
             ..branchId = jCounter.branchId
             ..businessId = jCounter.businessId
             ..receiptType = jCounter.receiptType
-            ..id = jCounter.id
+            ..id = data.id
+            ..backed = true
             ..totRcptNo = jCounter.totRcptNo
             ..curRcptNo = jCounter.curRcptNo);
         });
@@ -1542,9 +1542,8 @@ class IsarAPI implements IsarApiInterface {
       {required ReceiptSignature signature,
       required Order order,
       required String qrCode,
+      required Counter counter,
       required String receiptType}) {
-    // add receipt to isar db
-
     return isar.writeTxn(() async {
       Receipt receipt = Receipt()
         ..resultCd = signature.resultCd
@@ -1722,6 +1721,7 @@ class IsarAPI implements IsarApiInterface {
             ..businessId = jCounter.businessId
             ..receiptType = jCounter.receiptType
             ..id = jCounter.id
+            ..backed = true
             ..totRcptNo = jCounter.totRcptNo
             ..curRcptNo = jCounter.curRcptNo);
         });
@@ -1729,5 +1729,12 @@ class IsarAPI implements IsarApiInterface {
     } else {
       throw InternalServerError(term: "Error loading the counters");
     }
+  }
+
+  @override
+  Future<List<Counter>> unSyncedCounters({required int branchId}) {
+    return isar.writeTxn(() async {
+      return isar.counters.filter().backedEqualTo(false).findAll();
+    });
   }
 }

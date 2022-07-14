@@ -16,14 +16,15 @@ extension GetCounterCollection on Isar {
 const CounterSchema = CollectionSchema(
   name: r'Counter',
   schema:
-      r'{"name":"Counter","idName":"id","properties":[{"name":"branchId","type":"Long"},{"name":"businessId","type":"Long"},{"name":"curRcptNo","type":"Long"},{"name":"receiptType","type":"String"},{"name":"totRcptNo","type":"Long"}],"indexes":[],"links":[]}',
+      r'{"name":"Counter","idName":"id","properties":[{"name":"backed","type":"Bool"},{"name":"branchId","type":"Long"},{"name":"businessId","type":"Long"},{"name":"curRcptNo","type":"Long"},{"name":"receiptType","type":"String"},{"name":"totRcptNo","type":"Long"}],"indexes":[],"links":[]}',
   idName: r'id',
   propertyIds: {
-    r'branchId': 0,
-    r'businessId': 1,
-    r'curRcptNo': 2,
-    r'receiptType': 3,
-    r'totRcptNo': 4
+    r'backed': 0,
+    r'branchId': 1,
+    r'businessId': 2,
+    r'curRcptNo': 3,
+    r'receiptType': 4,
+    r'totRcptNo': 5
   },
   listProperties: {},
   indexIds: {},
@@ -75,23 +76,25 @@ void _counterSerializeNative(
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeHeader();
-  writer.writeLong(offsets[0], object.branchId);
-  writer.writeLong(offsets[1], object.businessId);
-  writer.writeLong(offsets[2], object.curRcptNo);
-  writer.writeByteList(offsets[3], receiptType$Bytes);
-  writer.writeLong(offsets[4], object.totRcptNo);
+  writer.writeBool(offsets[0], object.backed);
+  writer.writeLong(offsets[1], object.branchId);
+  writer.writeLong(offsets[2], object.businessId);
+  writer.writeLong(offsets[3], object.curRcptNo);
+  writer.writeByteList(offsets[4], receiptType$Bytes);
+  writer.writeLong(offsets[5], object.totRcptNo);
 }
 
 Counter _counterDeserializeNative(IsarCollection<Counter> collection, int id,
     IsarBinaryReader reader, List<int> offsets) {
   final object = Counter(
+    backed: reader.readBoolOrNull(offsets[0]),
     id: id,
   );
-  object.branchId = reader.readLong(offsets[0]);
-  object.businessId = reader.readLong(offsets[1]);
-  object.curRcptNo = reader.readLong(offsets[2]);
-  object.receiptType = reader.readString(offsets[3]);
-  object.totRcptNo = reader.readLong(offsets[4]);
+  object.branchId = reader.readLong(offsets[1]);
+  object.businessId = reader.readLong(offsets[2]);
+  object.curRcptNo = reader.readLong(offsets[3]);
+  object.receiptType = reader.readString(offsets[4]);
+  object.totRcptNo = reader.readLong(offsets[5]);
   return object;
 }
 
@@ -101,14 +104,16 @@ P _counterDeserializePropNative<P>(
     case -1:
       return id as P;
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Illegal propertyIndex');
@@ -118,6 +123,7 @@ P _counterDeserializePropNative<P>(
 Object _counterSerializeWeb(
     IsarCollection<Counter> collection, Counter object) {
   final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, r'backed', object.backed);
   IsarNative.jsObjectSet(jsObj, r'branchId', object.branchId);
   IsarNative.jsObjectSet(jsObj, r'businessId', object.businessId);
   IsarNative.jsObjectSet(jsObj, r'curRcptNo', object.curRcptNo);
@@ -130,6 +136,7 @@ Object _counterSerializeWeb(
 Counter _counterDeserializeWeb(
     IsarCollection<Counter> collection, Object jsObj) {
   final object = Counter(
+    backed: IsarNative.jsObjectGet(jsObj, r'backed'),
     id: IsarNative.jsObjectGet(jsObj, r'id'),
   );
   object.branchId = IsarNative.jsObjectGet(jsObj, r'branchId') ??
@@ -146,6 +153,8 @@ Counter _counterDeserializeWeb(
 
 P _counterDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
+    case r'backed':
+      return (IsarNative.jsObjectGet(jsObj, r'backed')) as P;
     case r'branchId':
       return (IsarNative.jsObjectGet(jsObj, r'branchId') ??
           (double.negativeInfinity as int)) as P;
@@ -246,6 +255,24 @@ extension CounterQueryWhere on QueryBuilder<Counter, Counter, QWhereClause> {
 
 extension CounterQueryFilter
     on QueryBuilder<Counter, Counter, QFilterCondition> {
+  QueryBuilder<Counter, Counter, QAfterFilterCondition> backedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'backed',
+      ));
+    });
+  }
+
+  QueryBuilder<Counter, Counter, QAfterFilterCondition> backedEqualTo(
+      bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'backed',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<Counter, Counter, QAfterFilterCondition> branchIdEqualTo(
       int value) {
     return QueryBuilder.apply(this, (query) {
@@ -635,6 +662,18 @@ extension CounterQueryLinks
     on QueryBuilder<Counter, Counter, QFilterCondition> {}
 
 extension CounterQueryWhereSortBy on QueryBuilder<Counter, Counter, QSortBy> {
+  QueryBuilder<Counter, Counter, QAfterSortBy> sortByBacked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'backed', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Counter, Counter, QAfterSortBy> sortByBackedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'backed', Sort.desc);
+    });
+  }
+
   QueryBuilder<Counter, Counter, QAfterSortBy> sortByBranchId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'branchId', Sort.asc);
@@ -698,6 +737,18 @@ extension CounterQueryWhereSortBy on QueryBuilder<Counter, Counter, QSortBy> {
 
 extension CounterQueryWhereSortThenBy
     on QueryBuilder<Counter, Counter, QSortThenBy> {
+  QueryBuilder<Counter, Counter, QAfterSortBy> thenByBacked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'backed', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Counter, Counter, QAfterSortBy> thenByBackedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'backed', Sort.desc);
+    });
+  }
+
   QueryBuilder<Counter, Counter, QAfterSortBy> thenByBranchId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'branchId', Sort.asc);
@@ -773,6 +824,12 @@ extension CounterQueryWhereSortThenBy
 
 extension CounterQueryWhereDistinct
     on QueryBuilder<Counter, Counter, QDistinct> {
+  QueryBuilder<Counter, Counter, QDistinct> distinctByBacked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'backed');
+    });
+  }
+
   QueryBuilder<Counter, Counter, QDistinct> distinctByBranchId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'branchId');
@@ -810,6 +867,12 @@ extension CounterQueryProperty
   QueryBuilder<Counter, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Counter, bool?, QQueryOperations> backedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'backed');
     });
   }
 

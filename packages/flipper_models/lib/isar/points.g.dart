@@ -16,14 +16,14 @@ extension GetIPointCollection on Isar {
 const IPointSchema = CollectionSchema(
   name: r'IPoint',
   schema:
-      r'{"name":"IPoint","idName":"id","properties":[{"name":"userId","type":"Long"},{"name":"value","type":"Long"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Value","caseSensitive":false}]}],"links":[]}',
+      r'{"name":"IPoint","idName":"id","properties":[{"name":"userId","type":"Int"},{"name":"value","type":"Long"}],"indexes":[{"name":"userId","unique":false,"replace":false,"properties":[{"name":"userId","type":"Value","caseSensitive":false}]}],"links":[]}',
   idName: r'id',
   propertyIds: {r'userId': 0, r'value': 1},
   listProperties: {},
   indexIds: {r'userId': 0},
   indexValueTypes: {
     r'userId': [
-      IndexValueType.long,
+      IndexValueType.int,
     ]
   },
   linkIds: {},
@@ -66,7 +66,7 @@ void _iPointSerializeNative(IsarCollection<IPoint> collection, IsarCObject cObj,
   final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeHeader();
-  writer.writeLong(offsets[0], object.userId);
+  writer.writeInt(offsets[0], object.userId);
   writer.writeLong(offsets[1], object.value);
 }
 
@@ -74,7 +74,7 @@ IPoint _iPointDeserializeNative(IsarCollection<IPoint> collection, int id,
     IsarBinaryReader reader, List<int> offsets) {
   final object = IPoint(
     id: id,
-    userId: reader.readLong(offsets[0]),
+    userId: reader.readInt(offsets[0]),
     value: reader.readLong(offsets[1]),
   );
   return object;
@@ -86,7 +86,7 @@ P _iPointDeserializePropNative<P>(
     case -1:
       return id as P;
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readInt(offset)) as P;
     case 1:
       return (reader.readLong(offset)) as P;
     default:
