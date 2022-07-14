@@ -4,7 +4,6 @@ import 'package:flipper_services/proxy.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_ui/google_ui.dart';
 
 final isAndroid = UniversalPlatform.isAndroid;
 final isIos = UniversalPlatform.isIOS;
@@ -20,7 +19,6 @@ class AddProductButtons extends StatelessWidget {
         width: double.infinity,
         child: Form(
           child: Column(
-            // mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8),
@@ -28,8 +26,24 @@ class AddProductButtons extends StatelessWidget {
                   color: Colors.white70,
                   width: double.infinity,
                   height: 40,
-                  child: GElevatedButton(
-                    'Add Product',
+                  child: OutlinedButton(
+                    child: const Text('Add Product'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xff006AFE)),
+                      overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.hovered)) {
+                            return Colors.blue.withOpacity(0.04);
+                          }
+                          if (states.contains(MaterialState.focused) ||
+                              states.contains(MaterialState.pressed)) {
+                            return Colors.blue.withOpacity(0.12);
+                          }
+                          return null; // Defer to the widget's default.
+                        },
+                      ),
+                    ),
                     onPressed: () {
                       GoRouter.of(context).push(Routes.create + "/product");
                     },
@@ -45,8 +59,24 @@ class AddProductButtons extends StatelessWidget {
                     color: Colors.white70,
                     width: double.infinity,
                     height: 40,
-                    child: GElevatedButton(
-                      'Add Discount',
+                    child: OutlinedButton(
+                      child: const Text('Add Discount'),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xff006AFE)),
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.hovered)) {
+                              return Colors.blue.withOpacity(0.04);
+                            }
+                            if (states.contains(MaterialState.focused) ||
+                                states.contains(MaterialState.pressed)) {
+                              return Colors.blue.withOpacity(0.12);
+                            }
+                            return null; // Defer to the widget's default.
+                          },
+                        ),
+                      ),
                       onPressed: () {
                         GoRouter.of(context).push(Routes.discount);
                       },
@@ -59,8 +89,8 @@ class AddProductButtons extends StatelessWidget {
                   color: Colors.white70,
                   width: double.infinity,
                   height: 40,
-                  child: GOutlinedButton(
-                    'Dismiss',
+                  child: OutlinedButton(
+                    child: Text('Dismiss'),
                     onPressed: () {
                       Navigator.maybePop(context);
                     },

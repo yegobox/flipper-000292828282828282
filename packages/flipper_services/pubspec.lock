@@ -930,13 +930,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.2"
-  flutter_lints:
-    dependency: transitive
-    description:
-      name: flutter_lints
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -1206,13 +1199,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.1+2"
-  google_ui:
-    dependency: "direct overridden"
-    description:
-      path: "../../open-sources/google_ui"
-      relative: true
-    source: path
-    version: "2.7.1"
   googleapis:
     dependency: "direct main"
     description:
@@ -1402,13 +1388,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
-  lints:
-    dependency: transitive
-    description:
-      name: lints
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   loading:
     dependency: transitive
     description:
@@ -1992,13 +1971,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  simple_animations:
-    dependency: transitive
-    description:
-      name: simple_animations
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -2018,13 +1990,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
-  spring:
-    dependency: transitive
-    description:
-      name: spring
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
   sqflite:
     dependency: transitive
     description:
@@ -2102,20 +2067,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-  supercharged:
-    dependency: transitive
-    description:
-      name: supercharged
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
-  supercharged_dart:
-    dependency: transitive
-    description:
-      name: supercharged_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
   synchronized:
     dependency: transitive
     description:

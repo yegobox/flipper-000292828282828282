@@ -9,7 +9,6 @@ import 'package:stacked/stacked.dart';
 import 'package:flipper_models/isar_models.dart';
 import 'package:flipper_ui/flipper_ui.dart';
 import 'customappbar.dart';
-import 'package:google_ui/google_ui.dart';
 import 'package:go_router/go_router.dart';
 
 class AfterSale extends StatefulWidget {
@@ -110,8 +109,35 @@ class _AfterSaleState extends State<AfterSale> {
                                         child: SizedBox(
                                           height: 50,
                                           width: double.infinity,
-                                          child: GOutlinedButton(
-                                            'Email Receipt',
+                                          child: OutlinedButton(
+                                            child: Text('Email Receipt'),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                          Color>(
+                                                      const Color(0xff006AFE)),
+                                              overlayColor:
+                                                  MaterialStateProperty
+                                                      .resolveWith<Color?>(
+                                                (Set<MaterialState> states) {
+                                                  if (states.contains(
+                                                      MaterialState.hovered)) {
+                                                    return Colors.blue
+                                                        .withOpacity(0.04);
+                                                  }
+                                                  if (states.contains(
+                                                          MaterialState
+                                                              .focused) ||
+                                                      states.contains(
+                                                          MaterialState
+                                                              .pressed)) {
+                                                    return Colors.blue
+                                                        .withOpacity(0.12);
+                                                  }
+                                                  return null; // Defer to the widget's default.
+                                                },
+                                              ),
+                                            ),
                                             onPressed: () async {
                                               if (await ProxyService.isarApi
                                                   .isTaxEnabled()) {
@@ -154,8 +180,8 @@ class _AfterSaleState extends State<AfterSale> {
                                         child: SizedBox(
                                           height: 50,
                                           width: double.infinity,
-                                          child: GOutlinedButton(
-                                            'No Receipt',
+                                          child: OutlinedButton(
+                                            child: Text('No Receipt'),
                                             onPressed: () {
                                               // refresh orders
                                               model.currentOrder();
