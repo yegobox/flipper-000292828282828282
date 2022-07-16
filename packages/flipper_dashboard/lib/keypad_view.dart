@@ -87,20 +87,17 @@ class KeyPadView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Theme.of(context).canvasColor,
+                            color: Colors.black.withOpacity(0.25),
                           ),
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           '1',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 30,
-                                  color: const Color(0xff3d454c),
-                                  fontWeight: FontWeight.normal),
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 38,
+                              color: Colors.black),
                         )),
                   ),
                 ),
@@ -112,17 +109,17 @@ class KeyPadView extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).canvasColor,
+                          color: Colors.black.withOpacity(0.25),
                         ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         '2',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 30,
-                            color: const Color(0xff3d454c),
-                            fontWeight: FontWeight.normal),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 38,
+                            color: Colors.black),
                       ),
                     ),
                   ),
@@ -137,17 +134,17 @@ class KeyPadView extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).canvasColor,
+                          color: Colors.black.withOpacity(0.25),
                         ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         '3',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 30,
-                            color: const Color(0xff3d454c),
-                            fontWeight: FontWeight.normal),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 38,
+                            color: Colors.black),
                       ),
                     ),
                   ),
@@ -168,20 +165,17 @@ class KeyPadView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Theme.of(context).canvasColor,
+                            color: Colors.black.withOpacity(0.25),
                           ),
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           '4',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 30,
-                                  color: const Color(0xff3d454c),
-                                  fontWeight: FontWeight.normal),
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 38,
+                              color: Colors.black),
                         )),
                   ),
                 ),
@@ -195,20 +189,17 @@ class KeyPadView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Theme.of(context).canvasColor,
+                            color: Colors.black.withOpacity(0.25),
                           ),
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           '5',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 30,
-                                  color: const Color(0xff3d454c),
-                                  fontWeight: FontWeight.normal),
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 38,
+                              color: Colors.black),
                         )),
                   ),
                 ),
@@ -222,17 +213,17 @@ class KeyPadView extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).canvasColor,
+                          color: Colors.black.withOpacity(0.25),
                         ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         '6',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 30,
-                            color: const Color(0xff3d454c),
-                            fontWeight: FontWeight.normal),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 38,
+                            color: Colors.black),
                       ),
                     ),
                   ),
@@ -253,17 +244,17 @@ class KeyPadView extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).canvasColor,
+                          color: Colors.black.withOpacity(0.25),
                         ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         '7',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 30,
-                            color: const Color(0xff3d454c),
-                            fontWeight: FontWeight.normal),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 38,
+                            color: Colors.black),
                       ),
                     ),
                   ),
@@ -278,20 +269,17 @@ class KeyPadView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Theme.of(context).canvasColor,
+                            color: Colors.black.withOpacity(0.25),
                           ),
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           '8',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 30,
-                                  color: const Color(0xff3d454c),
-                                  fontWeight: FontWeight.normal),
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 38,
+                              color: Colors.black),
                         )),
                   ),
                 ),
@@ -305,17 +293,17 @@ class KeyPadView extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).canvasColor,
+                          color: Colors.black.withOpacity(0.25),
                         ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         '9',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 30,
-                            color: const Color(0xff3d454c),
-                            fontWeight: FontWeight.normal),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 38,
+                            color: Colors.black),
                       ),
                     ),
                   ),
@@ -336,20 +324,17 @@ class KeyPadView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Theme.of(context).canvasColor,
+                            color: Colors.black.withOpacity(0.25),
                           ),
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           'C',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 30,
-                                  color: const Color(0xff3d454c),
-                                  fontWeight: FontWeight.normal),
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 38,
+                              color: Colors.black),
                         )),
                   ),
                 ),
@@ -363,20 +348,17 @@ class KeyPadView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Theme.of(context).canvasColor,
+                            color: Colors.black.withOpacity(0.25),
                           ),
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           '0',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 30,
-                                  color: const Color(0xff3d454c),
-                                  fontWeight: FontWeight.normal),
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 38,
+                              color: Colors.black),
                         )),
                   ),
                 ),
@@ -390,17 +372,17 @@ class KeyPadView extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).canvasColor,
+                          color: Colors.black.withOpacity(0.25),
                         ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         '+',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 40,
-                            color: const Color(0xff2996cc),
-                            fontWeight: FontWeight.normal),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 38,
+                            color: Colors.black),
                       ),
                     ),
                   ),

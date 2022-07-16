@@ -77,15 +77,17 @@ class CheckOut extends StatelessWidget {
           child: TabBarView(
             controller: tabController,
             children: [
-              // first tab bar view widget
               Column(
                 children: [
                   KeyPadView(model: model),
-                  PaymentTicketManager(
-                      context: context,
-                      model: model,
-                      controller: controller,
-                      nodeDisabled: true)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0.0, 24.5, 0, 0),
+                    child: PaymentTicketManager(
+                        context: context,
+                        model: model,
+                        controller: controller,
+                        nodeDisabled: true),
+                  )
                 ],
               ),
               const ProductView(),
