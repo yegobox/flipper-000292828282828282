@@ -6,6 +6,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart' as perm;
 
+import 'badge_icon.dart';
 import 'page_switcher.dart';
 
 final isWindows = UniversalPlatform.isWindows;
@@ -103,12 +104,27 @@ class _FlipperAppState extends State<FlipperApp>
                             semanticsLabel: 'Transactions'),
                       ),
                       NavigationDestination(
-                        icon: SvgPicture.asset("assets/notifications.svg",
-                            semanticsLabel: 'Notifications'),
+                        icon: BadgeIcon(
+                          icon: SvgPicture.asset("assets/notifications.svg",
+                              semanticsLabel: 'Notifications'),
+                          badgeCount: 0,
+                          badgeColor: Color(0xff006AFE),
+                          badgeTextStyle: TextStyle(
+                            color: Color(0xff006AFE),
+                            fontSize: 8,
+                          ),
+                        ),
                         label: 'Notifications',
-                        selectedIcon: SvgPicture.asset(
-                            "assets/notifications.svg",
-                            semanticsLabel: 'Notifications'),
+                        selectedIcon: BadgeIcon(
+                          icon: SvgPicture.asset("assets/notifications.svg",
+                              semanticsLabel: 'Notifications'),
+                          badgeCount: 0,
+                          badgeColor: Color(0xff006AFE),
+                          badgeTextStyle: TextStyle(
+                            color: Color(0xff006AFE),
+                            fontSize: 8,
+                          ),
+                        ),
                       ),
                       NavigationDestination(
                         icon: SvgPicture.asset("assets/more.svg",
