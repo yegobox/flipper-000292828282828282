@@ -232,9 +232,10 @@ class AppSetup {
 
 // ngix stuff:
 // certbot --nginx -d yegobox.com -d www.yegobox.com
+// certbot --nginx -d blog.yegobox.com -d www.blog.yegobox.com
 // https://lowendbox.com/blog/how-to-replace-apache-with-nginx-on-ubuntu-18-04/
 // certbot certonly --manual -d *.$DOMAIN -d $DOMAIN --agree-tos --manual-public-ip-logging-ok --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --register-unsafely-without-email --rsa-key-size 4096
-// sudo ln -s /etc/nginx/sites-available/turbo.conf /etc/nginx/sites-enabled/turbo.conf
+// sudo ln -s /etc/nginx/sites-available/yegobox.com.conf /etc/nginx/sites-enabled/
 // https://gist.github.com/soheilhy/8b94347ff8336d971ad0
 
 // wild card cert:
