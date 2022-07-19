@@ -1773,4 +1773,9 @@ class IsarAPI implements IsarApiInterface {
       return isar.counters.filter().backedEqualTo(false).findAll();
     });
   }
+
+  @override
+  String dbPath() {
+    return isar.path!;
+  }
 }

@@ -198,4 +198,6 @@ abstract class IsarApiInterface {
   Future<Counter?> pSCounter({required int branchId});
   Future<List<Counter>> unSyncedCounters({required int branchId});
   Future<void> loadCounterFromOnline({required int businessId});
+
+  String dbPath();
 }
