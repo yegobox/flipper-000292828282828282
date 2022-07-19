@@ -270,3 +270,5 @@ class AppSetup {
 // dependency_overrides: ffi: '>=2.0.0 <3.0.0'
 //TODO:this bellow helped me to understand use of c++ in flutter using ffi
 // https://levelup.gitconnected.com/port-an-existing-c-c-app-to-flutter-with-dart-ffi-8dc401a69fd7
+// key hashes
+// keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64

@@ -180,19 +180,10 @@ abstract class ThirdPartyServicesModule {
     return systemTime;
   }
 
-  // @lazySingleton
-  // Api get apiService {
-  //   late Api apiService;
-  //   apiService = ObjectBoxApi();
-  //   return apiService;
-  // }
-
   @lazySingleton
-  IsarApiInterface get isarApi {
-    late IsarApiInterface isarApi;
-    isarApi = IsarAPI();
-    return isarApi;
-  }
+  KeyPadService get keypadService;
+  @preResolve
+  Future<IsarApiInterface> get isarApi => IsarAPI().getInstance();
 
   @lazySingleton
   TaxApi get taxApiService {
@@ -270,9 +261,6 @@ abstract class ThirdPartyServicesModule {
 
   @lazySingleton
   ProductService get productService;
-
-  @lazySingleton
-  KeyPadService get keypadService;
 
   @lazySingleton
   SettingsService get settings;

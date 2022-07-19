@@ -1,4 +1,3 @@
-import 'package:flipper_models/isar_api.dart';
 import 'package:flipper_models/isar_models.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:test/test.dart';
@@ -36,7 +35,7 @@ void main() {
         PinSchema,
         ReceiptSchema,
       ]);
-      IsarAPI.instance(isarRef: isar);
+      // IsarAPI.instance(isarRef: isar);
       registerServices();
     });
 

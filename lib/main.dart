@@ -91,7 +91,7 @@ void main() async {
 
   await GetStorage.init();
   // done init in mobile.//done separation.
-  setupLocator();
+  await setupLocator();
   await initDb();
 
   (!isWindows) ? FirebaseMessaging.onBackgroundMessage(backgroundHandler) : '';

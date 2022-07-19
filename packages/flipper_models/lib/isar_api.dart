@@ -2,19 +2,19 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_models/data.loads/jcounter.dart';
 import 'package:flipper_models/isar/receipt_signature.dart';
-import 'package:flipper_routing/routes.locator.dart';
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_services/constants.dart';
 import 'package:flipper_services/keypad_service.dart';
+import 'package:flipper_services/locator.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/isar_models.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:universal_platform/universal_platform.dart';
 import 'view_models/gate.dart';
 
-late Isar isar;
-late String apihub;
+final isAndroid = UniversalPlatform.isAndroid;
 
 class ExtendedClient extends http.BaseClient {
   final http.Client _inner;
@@ -34,18 +34,53 @@ class ExtendedClient extends http.BaseClient {
 class IsarAPI implements IsarApiInterface {
   final log = getLogger('IsarAPI');
   ExtendedClient client = ExtendedClient(http.Client());
-  final KeyPadService keypad = locator<KeyPadService>();
-
-  IsarAPI();
-  static instance({required Isar isarRef, String? url}) {
-    isar = isarRef;
-    apihub = url ?? "https://apihub.yegobox.com";
+  late String apihub;
+  late Isar isar;
+  Future<IsarApiInterface> getInstance() async {
+    if (foundation.kDebugMode && !isAndroid) {
+      apihub = "http://localhost:8082";
+    } else if (foundation.kDebugMode && isAndroid) {
+      apihub = "http://10.0.2.2:8082";
+    } else {
+      apihub = "https://apihub.yegobox.com";
+    }
+    isar = await Isar.open(
+      [
+        OrderSchema,
+        BusinessSchema,
+        BranchSchema,
+        OrderItemSchema,
+        ProductSchema,
+        VariantSchema,
+        ProfileSchema,
+        SubscriptionSchema,
+        IPointSchema,
+        StockSchema,
+        FeatureSchema,
+        VoucherSchema,
+        PColorSchema,
+        CategorySchema,
+        IUnitSchema,
+        SettingSchema,
+        DiscountSchema,
+        CustomerSchema,
+        PinSchema,
+        ReceiptSchema,
+        DrawersSchema,
+        ITenantSchema,
+        PermissionSchema,
+        CounterSchema
+      ],
+    );
+    log.i(isar.path);
+    return this;
   }
 
   @override
   Future<Customer?> addCustomer(
       {required Map customer, required int orderId}) async {
     int branchId = ProxyService.box.read(key: 'branchId');
+    final KeyPadService keypad = locator<KeyPadService>();
     Customer kCustomer = Customer()
       ..name = customer['name']
       ..updatedAt = DateTime.now().toString()
@@ -246,6 +281,7 @@ class IsarAPI implements IsarApiInterface {
   Future assingOrderToCustomer(
       {required int customerId, required int orderId}) async {
     // get order where id = orderId from db
+    final KeyPadService keypad = locator<KeyPadService>();
     Order? order = await isar.orders.get(orderId);
 
     order!.customerId = customerId;
