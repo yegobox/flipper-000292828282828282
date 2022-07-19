@@ -123,7 +123,7 @@ class GoogleDrive {
   Future upload() async {
     // download files first before uploading
     final dir = ProxyService.isarApi.dbPath();
-    File file = File(path.context.canonicalize(dir + '/files/mdbx.dat'));
+    File file = File(path.context.canonicalize(dir + '/mdbx.dat'));
     // end of download
     http.Client? client = await silentLogin();
     Future.delayed(const Duration(seconds: 20));
@@ -171,7 +171,7 @@ class GoogleDrive {
 
     final dir = ProxyService.isarApi.dbPath();
 
-    final saveFile = File(dir + '/files/$fName');
+    final saveFile = File(dir + '/$fName');
 
     List<int> dataStore = [];
 
