@@ -228,6 +228,7 @@ class AppSetup {
 
 // TODO:for rra server  /var/www/rra
 //  nohup java -jar rra.war &  echo $! > rra_pid.txt
+// kill -9 "cat rra_pid.txt"
 // find . -name "*.bak" -type f -delete
 
 // ngix stuff:
@@ -272,3 +273,4 @@ class AppSetup {
 // https://levelup.gitconnected.com/port-an-existing-c-c-app-to-flutter-with-dart-ffi-8dc401a69fd7
 // key hashes
 // keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
+// https://pub.dev/packages/flutter_carousel_slider

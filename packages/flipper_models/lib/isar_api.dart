@@ -36,7 +36,7 @@ class IsarAPI implements IsarApiInterface {
   ExtendedClient client = ExtendedClient(http.Client());
   late String apihub;
   late Isar isar;
-  Future<IsarApiInterface> getInstance() async {
+  Future<IsarApiInterface> getInstance({Isar? iisar}) async {
     if (foundation.kDebugMode && !isAndroid) {
       apihub = "http://localhost:8082";
     } else if (foundation.kDebugMode && isAndroid) {
@@ -44,34 +44,39 @@ class IsarAPI implements IsarApiInterface {
     } else {
       apihub = "https://apihub.yegobox.com";
     }
-    isar = await Isar.open(
-      [
-        OrderSchema,
-        BusinessSchema,
-        BranchSchema,
-        OrderItemSchema,
-        ProductSchema,
-        VariantSchema,
-        ProfileSchema,
-        SubscriptionSchema,
-        IPointSchema,
-        StockSchema,
-        FeatureSchema,
-        VoucherSchema,
-        PColorSchema,
-        CategorySchema,
-        IUnitSchema,
-        SettingSchema,
-        DiscountSchema,
-        CustomerSchema,
-        PinSchema,
-        ReceiptSchema,
-        DrawersSchema,
-        ITenantSchema,
-        PermissionSchema,
-        CounterSchema
-      ],
-    );
+    if (iisar == null) {
+      isar = await Isar.open(
+        [
+          OrderSchema,
+          BusinessSchema,
+          BranchSchema,
+          OrderItemSchema,
+          ProductSchema,
+          VariantSchema,
+          ProfileSchema,
+          SubscriptionSchema,
+          IPointSchema,
+          StockSchema,
+          FeatureSchema,
+          VoucherSchema,
+          PColorSchema,
+          CategorySchema,
+          IUnitSchema,
+          SettingSchema,
+          DiscountSchema,
+          CustomerSchema,
+          PinSchema,
+          ReceiptSchema,
+          DrawersSchema,
+          ITenantSchema,
+          PermissionSchema,
+          CounterSchema
+        ],
+      );
+    } else {
+      isar = iisar;
+    }
+
     log.i(isar.path);
     return this;
   }
