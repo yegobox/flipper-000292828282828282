@@ -200,4 +200,5 @@ abstract class IsarApiInterface {
   Future<void> loadCounterFromOnline({required int businessId});
 
   String dbPath();
+  Future<Customer?> nGetCustomerByOrderId({required int id});
 }

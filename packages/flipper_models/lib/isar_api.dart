@@ -829,6 +829,11 @@ class IsarAPI implements IsarApiInterface {
   }
 
   @override
+  Future<Customer?> nGetCustomerByOrderId({required int id}) async {
+    return isar.customers.filter().orderIdEqualTo(id).findFirst();
+  }
+
+  @override
   Future<List<Discount>> getDiscounts({required int branchId}) {
     return isar.discounts.filter().branchIdEqualTo(branchId).findAll();
   }

@@ -96,12 +96,13 @@ class BusinessHomeViewModel extends ReactiveViewModel {
   void addKey(String key) async {
     if (key == 'C' && double.parse(ProxyService.keypad.key) != 0.0) {
       //remove last orderItem added
-      List<OrderItem> items =
-          await ProxyService.isarApi.orderItems(orderId: kOrder!.id);
-      ProxyService.isarApi.delete(id: items.last.id, endPoint: 'orderItem');
       Order? pendingOrder = await ProxyService.isarApi.manageOrder();
+      log.i(pendingOrder.id);
+      List<OrderItem> items =
+          await ProxyService.isarApi.orderItems(orderId: pendingOrder.id);
+      ProxyService.isarApi.delete(id: items.last.id, endPoint: 'orderItem');
       List<OrderItem> dItems =
-          await ProxyService.isarApi.orderItems(orderId: kOrder!.id);
+          await ProxyService.isarApi.orderItems(orderId: pendingOrder.id);
       pendingOrder.subTotal = dItems.fold(0, (a, b) => a + b.price);
       ProxyService.isarApi.update(data: pendingOrder);
       ProxyService.keypad.reset();
@@ -119,15 +120,15 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         await saveOrder(
             amountTotal: amount, variationId: variation!.id, customItem: true);
       } else if (ProxyService.keypad.key.length > 1) {
+        Order? pendingOrder = await ProxyService.isarApi.manageOrder();
         List<OrderItem> items =
-            await ProxyService.isarApi.orderItems(orderId: kOrder!.id);
+            await ProxyService.isarApi.orderItems(orderId: pendingOrder.id);
         OrderItem item = items.last;
         item.price = double.parse(ProxyService.keypad.key);
         item.taxAmt = double.parse(
             (double.parse(ProxyService.keypad.key) * 18 / 118)
                 .toStringAsFixed(2));
         await ProxyService.isarApi.update(data: item);
-        Order? pendingOrder = await ProxyService.isarApi.manageOrder();
 
         pendingOrder.subTotal = items.fold(0, (a, b) => a + b.price);
         ProxyService.isarApi.update(data: pendingOrder);
@@ -653,9 +654,12 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       callback("The counter is not up to date");
       return;
     }
+    Customer? customer =
+        await ProxyService.isarApi.nGetCustomerByOrderId(id: order.id);
     ReceiptSignature? receiptSignature = await ProxyService.tax.createReceipt(
         order: order,
         items: items,
+        customer: customer,
         receiptType: receiptType!,
         counter: counter);
     if (receiptSignature == null) {
