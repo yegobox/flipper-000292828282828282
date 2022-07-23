@@ -84,8 +84,9 @@ class _PreviewSaleBottomSheetState extends State<PreviewSaleBottomSheet> {
                               ),
                           ]),
                       ChargeButton(
-                          duePay: items.fold(0, (a, b) => a! + b.price),
-                          onClick: () {})
+                        duePay: items.fold(0, (a, b) => a! + b.price),
+                        model: model,
+                      )
                     ],
                   ),
                 ),

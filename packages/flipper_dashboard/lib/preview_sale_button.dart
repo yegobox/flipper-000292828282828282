@@ -37,6 +37,15 @@ class PreviewSaleButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
+            if (model.kOrder == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text("No active order to preview"),
+                ),
+              );
+              return;
+            }
             showBarModalBottomSheet(
               expand: false,
               shape: const RoundedRectangleBorder(

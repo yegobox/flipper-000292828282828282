@@ -1,5 +1,8 @@
 import 'package:flipper_localize/flipper_localize.dart';
+import 'package:flipper_models/box_models.dart';
+import 'package:flipper_routing/routes.router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:number_display/number_display.dart';
 
 Widget callCharge({required double payable, required BuildContext context}) {
@@ -50,10 +53,10 @@ Widget callCharge({required double payable, required BuildContext context}) {
 }
 
 class ChargeButton extends StatelessWidget {
-  const ChargeButton({Key? key, required this.duePay, required this.onClick})
+  const ChargeButton({Key? key, required this.duePay, required this.model})
       : super(key: key);
   final double? duePay;
-  final Function onClick;
+  final BusinessHomeViewModel model;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -79,7 +82,7 @@ class ChargeButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              onClick();
+              GoRouter.of(context).push(Routes.pay, extra: model.kOrder);
             },
             child: callCharge(
               payable: duePay ?? 0.00,

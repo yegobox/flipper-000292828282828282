@@ -23,7 +23,6 @@ import 'package:receipt/print.dart';
 class BusinessHomeViewModel extends ReactiveViewModel {
   final settingService = locator<SettingsService>();
   final languageService = locator<LanguageService>();
-  //harmonize
   final log = getLogger('BusinessHomeViewModel');
   final KeyPadService keypad = locator<KeyPadService>();
   final ProductService productService = locator<ProductService>();
@@ -104,8 +103,10 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       List<OrderItem> dItems =
           await ProxyService.isarApi.orderItems(orderId: pendingOrder.id);
       pendingOrder.subTotal = dItems.fold(0, (a, b) => a + b.price);
-      ProxyService.isarApi.update(data: pendingOrder);
+      await ProxyService.isarApi.update(data: pendingOrder);
       ProxyService.keypad.reset();
+      Order? updatedOrder = await ProxyService.isarApi.manageOrder();
+      keypad.setOrder(updatedOrder);
     } else if (key == '+') {
       ProxyService.keypad.reset();
     } else {
@@ -119,6 +120,8 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         double amount = double.parse(ProxyService.keypad.key);
         await saveOrder(
             amountTotal: amount, variationId: variation!.id, customItem: true);
+        Order? updatedOrder = await ProxyService.isarApi.manageOrder();
+        keypad.setOrder(updatedOrder);
       } else if (ProxyService.keypad.key.length > 1) {
         Order? pendingOrder = await ProxyService.isarApi.manageOrder();
         List<OrderItem> items =
@@ -131,7 +134,9 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         await ProxyService.isarApi.update(data: item);
 
         pendingOrder.subTotal = items.fold(0, (a, b) => a + b.price);
-        ProxyService.isarApi.update(data: pendingOrder);
+        await ProxyService.isarApi.update(data: pendingOrder);
+        Order? updatedOrder = await ProxyService.isarApi.manageOrder();
+        keypad.setOrder(updatedOrder);
       }
     }
   }
@@ -159,7 +164,6 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         keypad.setItemsOnSale(count: 0);
         keypad.setTotalPayable(amount: 0.0);
       }
-      notifyListeners();
     });
     // in case there is nothhing to listen to and we need to refresh itemOnSale
     Order? order = await ProxyService.keypad

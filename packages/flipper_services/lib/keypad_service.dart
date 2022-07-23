@@ -15,6 +15,7 @@ class KeyPadService with ReactiveServiceMixin {
 
   setItemsOnSale({required int count}) {
     _itemsOnSale.value = count;
+    notifyListeners();
   }
 
   final _quantity = ReactiveValue<int>(1);
@@ -94,6 +95,7 @@ class KeyPadService with ReactiveServiceMixin {
     } else {
       _order.value = null;
     }
+    notifyListeners();
   }
 
   /// order can not be more than 1 lenght i.e at one instance

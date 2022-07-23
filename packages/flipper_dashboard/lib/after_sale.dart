@@ -4,6 +4,7 @@ import 'package:flipper_services/proxy.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:number_display/number_display.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flipper_models/isar_models.dart';
@@ -53,7 +54,7 @@ class _AfterSaleState extends State<AfterSale> {
                 },
                 closeButton: CLOSEBUTTON.BUTTON,
                 disableButton: false,
-                showActionButton: true,
+                showActionButton: false,
                 leftActionButtonName:
                     model.app.customer != null ? 'New Sale' : 'New Sale',
                 multi: 3,
@@ -74,17 +75,19 @@ class _AfterSaleState extends State<AfterSale> {
                                         widget.totalOrderAmount)
                                     .toString() +
                                 ' Change',
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                                color: Colors.black),
                           ),
                           const SizedBox(height: 10),
                           Text(
                             'Out of FRw ' +
                                 model.keypad.cashReceived.toStringAsFixed(0),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
+                                color: Colors.black),
                           ),
                         ],
                       ),
@@ -100,8 +103,11 @@ class _AfterSaleState extends State<AfterSale> {
                             return snapshot.data == null
                                 ? Column(
                                     children: [
-                                      const Text(
-                                          'How would you like your receipt?'),
+                                      Text('How would you like your receipt?',
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 20,
+                                              color: Colors.black)),
                                       const SizedBox(height: 10),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -110,7 +116,11 @@ class _AfterSaleState extends State<AfterSale> {
                                           height: 50,
                                           width: double.infinity,
                                           child: OutlinedButton(
-                                            child: Text('Email Receipt'),
+                                            child: Text('Email Receipt',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 20,
+                                                    color: Colors.white)),
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<
@@ -160,11 +170,20 @@ class _AfterSaleState extends State<AfterSale> {
                                                   //show scaffold message
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
-                                                    const SnackBar(
+                                                    SnackBar(
                                                       backgroundColor:
                                                           Colors.green,
                                                       content: Text(
-                                                          "We are generating receipt wait a few seconds and try again"),
+                                                        "We are generating receipt wait a few seconds and try again",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 20,
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
                                                     ),
                                                   );
                                                 }
@@ -181,7 +200,11 @@ class _AfterSaleState extends State<AfterSale> {
                                           height: 50,
                                           width: double.infinity,
                                           child: OutlinedButton(
-                                            child: Text('No Receipt'),
+                                            child: Text('No Receipt',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 20,
+                                                    color: Color(0xff006AFE))),
                                             onPressed: () {
                                               // refresh orders
                                               model.currentOrder();
@@ -243,14 +266,16 @@ class _AfterSaleState extends State<AfterSale> {
                           children: [
                             IconButton(
                               icon: const FaIcon(FontAwesomeIcons.globe),
-                              color: Theme.of(context).colorScheme.primary,
+                              highlightColor: Color(0xff006AFE),
+                              color: Color(0xff006AFE),
                               onPressed: null,
                             ),
                             Text(
                               'English',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10,
+                                  color: Color(0xff006AFE)),
                             )
                           ],
                         ))

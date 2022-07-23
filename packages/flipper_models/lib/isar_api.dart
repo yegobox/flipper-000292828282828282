@@ -5,8 +5,6 @@ import 'package:flipper_models/isar/receipt_signature.dart';
 import 'package:flipper_routing/routes.logger.dart';
 import 'package:flipper_routing/routes.router.dart';
 import 'package:flipper_services/constants.dart';
-import 'package:flipper_services/keypad_service.dart';
-import 'package:flipper_services/locator.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/isar_models.dart';
 import 'package:http/http.dart' as http;
@@ -40,7 +38,8 @@ class IsarAPI implements IsarApiInterface {
     if (foundation.kDebugMode && !isAndroid) {
       apihub = "http://localhost:8082";
     } else if (foundation.kDebugMode && isAndroid) {
-      apihub = "http://10.0.2.2:8082";
+      // apihub = "http://10.0.2.2:8082";
+      apihub = "https://apihub.yegobox.com";
     } else {
       apihub = "https://apihub.yegobox.com";
     }
@@ -85,7 +84,6 @@ class IsarAPI implements IsarApiInterface {
   Future<Customer?> addCustomer(
       {required Map customer, required int orderId}) async {
     int branchId = ProxyService.box.read(key: 'branchId');
-    final KeyPadService keypad = locator<KeyPadService>();
     Customer kCustomer = Customer()
       ..name = customer['name']
       ..updatedAt = DateTime.now().toString()
@@ -105,7 +103,6 @@ class IsarAPI implements IsarApiInterface {
     order!.customerId = kcustomer!.id;
     // update the order with the customerID
     await update(data: order);
-    keypad.setOrder(order);
     return kcustomer;
   }
 
@@ -286,7 +283,6 @@ class IsarAPI implements IsarApiInterface {
   Future assingOrderToCustomer(
       {required int customerId, required int orderId}) async {
     // get order where id = orderId from db
-    final KeyPadService keypad = locator<KeyPadService>();
     Order? order = await isar.orders.get(orderId);
 
     order!.customerId = customerId;
@@ -295,7 +291,6 @@ class IsarAPI implements IsarApiInterface {
       int id = await isar.orders.put(order);
       return isar.orders.get(id);
     });
-    keypad.setOrder(order);
     // get customer where id = customerId from db
     //// and updat this customer with timestamp so it can trigger change!.
     Customer? customer = await isar.customers.get(customerId);
