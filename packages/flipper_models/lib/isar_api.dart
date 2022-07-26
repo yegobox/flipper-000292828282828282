@@ -69,7 +69,8 @@ class IsarAPI implements IsarApiInterface {
           DrawersSchema,
           ITenantSchema,
           PermissionSchema,
-          CounterSchema
+          CounterSchema,
+          TokenSchema
         ],
       );
     } else {
@@ -1389,6 +1390,26 @@ class IsarAPI implements IsarApiInterface {
         return await isar.business.put(business!);
       });
     }
+    if (data is Token) {
+      final token = data;
+      await isar.writeTxn(() async {
+        Token? ttoken =
+            await isar.tokens.where().userIdEqualTo(token.userId).findFirst();
+        if (ttoken == null) {
+          ttoken = Token()
+            ..token = token.token
+            ..userId = token.userId
+            ..type = token.type;
+          return await isar.tokens.put(ttoken);
+        } else {
+          ttoken
+            ..token = token.token
+            ..userId = token.userId
+            ..type = token.type;
+          return await isar.tokens.put(ttoken);
+        }
+      });
+    }
     if (data is Business) {
       final business = data;
       await isar.writeTxn(() async {
@@ -1782,5 +1803,10 @@ class IsarAPI implements IsarApiInterface {
   @override
   String dbPath() {
     return isar.path!;
+  }
+
+  @override
+  Future<Token?> whatsAppToken() {
+    return isar.tokens.filter().typeEqualTo('whatsapp').findFirst();
   }
 }

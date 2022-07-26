@@ -1,5 +1,7 @@
+import 'package:flipper_models/marketing.dart';
 import 'package:flipper_models/tax_api.dart';
 import 'package:flipper_models/rw_tax.dart';
+import 'package:flipper_models/whatsapp.dart';
 import 'package:flipper_services/FirebaseCrashlyticService.dart';
 import 'package:flipper_services/abstractions/analytic.dart';
 import 'package:flipper_services/abstractions/printer.dart';
@@ -178,6 +180,13 @@ abstract class ThirdPartyServicesModule {
       systemTime = UnSupportedSystemTime();
     }
     return systemTime;
+  }
+
+  @lazySingleton
+  WhatsApp get whatsApp {
+    late WhatsApp whatsApp;
+    whatsApp = Marketing();
+    return whatsApp;
   }
 
   @lazySingleton

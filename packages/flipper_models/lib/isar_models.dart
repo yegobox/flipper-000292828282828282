@@ -22,6 +22,7 @@ export 'isar/subscription.dart';
 export 'isar/stock.dart';
 export 'isar/spenn.dart';
 export 'isar/ebm.dart';
+export 'isar/token.dart';
 export 'isar/permission.dart';
 export 'isar/setting.dart';
 export 'isar/profile.dart';

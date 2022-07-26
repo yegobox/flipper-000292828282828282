@@ -107,6 +107,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
       ProxyService.keypad.reset();
       Order? updatedOrder = await ProxyService.isarApi.manageOrder();
       keypad.setOrder(updatedOrder);
+      currentOrder();
     } else if (key == '+') {
       ProxyService.keypad.reset();
     } else {
@@ -122,6 +123,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
             amountTotal: amount, variationId: variation!.id, customItem: true);
         Order? updatedOrder = await ProxyService.isarApi.manageOrder();
         keypad.setOrder(updatedOrder);
+        currentOrder();
       } else if (ProxyService.keypad.key.length > 1) {
         Order? pendingOrder = await ProxyService.isarApi.manageOrder();
         List<OrderItem> items =
@@ -137,6 +139,7 @@ class BusinessHomeViewModel extends ReactiveViewModel {
         await ProxyService.isarApi.update(data: pendingOrder);
         Order? updatedOrder = await ProxyService.isarApi.manageOrder();
         keypad.setOrder(updatedOrder);
+        currentOrder();
       }
     }
   }
@@ -149,35 +152,27 @@ class BusinessHomeViewModel extends ReactiveViewModel {
     keypad.setItemsOnSale(count: 0);
     keypad.setTotalPayable(amount: 0.0);
 
-    ProxyService.isarApi.pendingOrderStream().listen((order) async {
-      if (order != null && order.status == pendingStatus) {
-        keypad.setOrder(order);
-        List<OrderItem> items =
-            await ProxyService.isarApi.orderItems(orderId: order.id);
-
-        if (items.isNotEmpty) {
-          keypad.setItemsOnSale(count: items.length);
-        }
-        keypad.setTotalPayable(amount: order.subTotal);
-      } else {
-        keypad.setOrder(null);
-        keypad.setItemsOnSale(count: 0);
-        keypad.setTotalPayable(amount: 0.0);
-      }
-    });
-    // in case there is nothhing to listen to and we need to refresh itemOnSale
-    Order? order = await ProxyService.keypad
-        .getOrder(branchId: ProxyService.box.getBranchId() ?? 0);
-
-    keypad.setOrder(order);
-    if (order != null) {
+    Order order = await await ProxyService.isarApi.manageOrder();
+    if (order.status == pendingStatus) {
+      keypad.setOrder(order);
       List<OrderItem> items =
           await ProxyService.isarApi.orderItems(orderId: order.id);
 
-      keypad.setItemsOnSale(count: items.length);
+      if (items.isNotEmpty) {
+        keypad.setItemsOnSale(count: items.length);
+      }
+      keypad.setTotalPayable(amount: order.subTotal);
     } else {
+      keypad.setOrder(null);
       keypad.setItemsOnSale(count: 0);
+      keypad.setTotalPayable(amount: 0.0);
     }
+
+    keypad.setOrder(order);
+    List<OrderItem> items =
+        await ProxyService.isarApi.orderItems(orderId: order.id);
+
+    keypad.setItemsOnSale(count: items.length);
   }
 
   /// the function is useful on completing a sale since we need to look for this past order
