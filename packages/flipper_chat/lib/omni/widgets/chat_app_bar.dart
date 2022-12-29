@@ -57,7 +57,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 GoRouter.of(context).go(Routes.contacts);
               },
               icon: const Icon(
-                Icons.edit,
+              Icons.edit,
                 color: primary,
               ),
             )

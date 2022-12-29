@@ -25,7 +25,8 @@ dependencies:
   firebase_auth: ^4.0.2
   esc_pos_utils_plus: ^2.0.1+3
   # bluetooth_thermal_printer: ^0.0.6
-  nfc_manager: ^3.2.0
+  # FIXME: fix this nfc_manager later as it is causing issues
+  # nfc_manager: ^3.2.0
   geolocator: ^9.0.2
   geocode: ^1.0.1
   cron: ^0.4.0

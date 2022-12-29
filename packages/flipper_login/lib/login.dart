@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_dashboard/startup_view.dart';
 import 'package:flipper_models/view_models/gate.dart';
 import 'package:go_router/go_router.dart';
+// TODO: config.dart file is also missing it will need to be created and configured with firebase app shared
 import 'config.dart';
 import 'package:flipper_services/app_service.dart';
 import 'package:flutter/material.dart';

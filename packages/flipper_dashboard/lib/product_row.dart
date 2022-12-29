@@ -119,7 +119,7 @@ class ProductRow extends StatelessWidget {
             },
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
-            icon: Icons.delete,
+            icon: Icon(Icons.delete),
             label: 'Delete',
           ),
           SlidableAction(
@@ -128,7 +128,7 @@ class ProductRow extends StatelessWidget {
             },
             backgroundColor: Colors.blue,
             foregroundColor: Colors.white,
-            icon: Icons.edit,
+            icon: Icon(Icons.edit),
             label: 'Edit',
           )
         ],
@@ -147,7 +147,7 @@ class ProductRow extends StatelessWidget {
             },
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
-            icon: Icons.delete,
+            icon: Icon(Icons.delete),
             label: 'Delete',
           ),
           SlidableAction(
@@ -156,7 +156,7 @@ class ProductRow extends StatelessWidget {
             },
             backgroundColor: Colors.blue,
             foregroundColor: Colors.white,
-            icon: Icons.edit,
+            icon: Icon(Icons.edit),
             label: 'Edit',
           )
         ],

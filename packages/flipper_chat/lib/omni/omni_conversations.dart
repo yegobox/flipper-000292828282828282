@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flipper_models/isar_models.dart';
-import 'package:flipper_services/proxy.dart';
 import 'package:flutter_text_drawable/flutter_text_drawable.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -114,7 +113,7 @@ class _OmnConversationsState extends State<OmnConversations> {
                               context, room.id, widget.model, 'delete'),
                           backgroundColor: const Color(0xFFFE4A49),
                           foregroundColor: Colors.white,
-                          icon: Icons.delete,
+                          // icon: Icon(Icons.delete),
                           label: 'Delete',
                         ),
                       ],

@@ -49,7 +49,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           },
                           backgroundColor: Colors.blue,
                           foregroundColor: Colors.white,
-                          icon: Icons.refresh_rounded,
+                          icon: Icon(Icons.refresh_rounded),
                           label: 'Refund',
                         )
                       ],
@@ -65,7 +65,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           },
                           backgroundColor: Colors.blue,
                           foregroundColor: Colors.white,
-                          icon: Icons.refresh_rounded,
+                          icon: Icon(Icons.refresh_rounded),
                           label: 'Refund',
                         )
                       ],
