@@ -364,6 +364,16 @@ class ProductViewModel extends AddTenantViewModel {
     return response == 200;
   }
 
+  /// Add a product into the favorites
+  Future<bool> addFavorite({required int favIndex, required Product fav_product}) async {
+    int response = await ProxyService.isarApi.addFavorite(data: {
+      "favIndex": favIndex,
+      "fav_product": fav_product,
+    });
+    ProxyService.appService.pushDataToServer();
+    return response == 200;
+  }
+
   void deleteProduct({required int productId}) async {
     //get variants->delete
     int branchId = ProxyService.box.getBranchId()!;

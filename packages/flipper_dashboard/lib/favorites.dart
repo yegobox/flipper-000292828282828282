@@ -5,6 +5,9 @@ import 'package:flipper_models/isar_models.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
+import 'package:flipper_routing/app.locator.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:flipper_routing/app.router.dart';
 
 class Favorites extends StatefulWidget {
   const Favorites({Key? key}) : super(key: key);
@@ -42,6 +45,7 @@ class _FavoritesState extends State<Favorites> {
                           width: MediaQuery.of(context).size.width / 2,
                           child: Column(
                             children: [
+                              SizedBox(height: 10),
                               Center(
                                 child: SvgPicture.asset(
                                   'assets/checkout.svg',
@@ -50,15 +54,24 @@ class _FavoritesState extends State<Favorites> {
                                   package: 'flipper_dashboard',
                                 ),
                               ),
-                              SizedBox(width: 8),
-                              Text(
-                                "Arrange your favorites",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                "Press and hold anywhere in the grid to begin adding items",
-                                style: TextStyle(fontSize: 16),
-                              ),
+                              SizedBox(height: 10),
+                              Text("Arrange your favorites",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              SizedBox(height: 10),
+                              Wrap(children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Text(
+                                    "Press and hold anywhere in the grid to begin adding items",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ]),
+                              SizedBox(height: 8),
                             ],
                           ),
                         ),
@@ -67,8 +80,8 @@ class _FavoritesState extends State<Favorites> {
                       // Display two items on all other even rows
                       return Row(
                         children: [
-                          Expanded(child: _buildItem(context)),
-                          Expanded(child: _buildItem(context)),
+                          Expanded(child: _buildItem(context, index)),
+                          Expanded(child: _buildItem(context, index + 1)),
                         ],
                       );
                     }
@@ -138,7 +151,7 @@ class _FavoritesState extends State<Favorites> {
   }
 
   // Builds an item widget with the given label and favorite status
-  Widget _buildItem(BuildContext context) {
+  Widget _buildItem(BuildContext context, int favIndex) {
     return GestureDetector(
       onLongPress: () {
         HapticFeedback.lightImpact();
@@ -146,6 +159,15 @@ class _FavoritesState extends State<Favorites> {
         setState(() {
           hasBeenPressed = true;
         });
+      },
+      onTap: () {
+        if (hasBeenPressed) {
+          // Launch the page where the item will be added to favorites.
+          // It contains a modified ProductView widget.
+          final _routerService = locator<RouterService>();
+          _routerService
+              .clearStackAndShow(AddToFavoritesRoute(favoriteIndex: favIndex));
+        }
       },
       child: Container(
         height: 100,

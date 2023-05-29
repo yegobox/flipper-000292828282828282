@@ -29,6 +29,7 @@ export 'isar/setting.dart';
 export 'isar/profile.dart';
 export 'isar/receipt.dart';
 export 'isar/product.dart';
+export 'isar/favorite.dart';
 export 'isar/social.dart';
 export 'isar/social_token.dart';
 export 'isar/conversation.dart';

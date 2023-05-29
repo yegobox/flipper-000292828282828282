@@ -63,7 +63,7 @@ class _MobileLoginState extends State<MobileLogin> {
                   height: 10,
                 ),
                 Text(
-                  'Interact and grow your bussiness',
+                  'Interact and grow your business',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),

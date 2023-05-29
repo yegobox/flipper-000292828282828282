@@ -76,6 +76,7 @@ class IsarAPI<M> implements IsarApiInterface {
           SocialSchema,
           ConversationSchema,
           DeviceSchema,
+          FavoriteSchema
         ],
         directory: dir.path,
       );
@@ -168,6 +169,18 @@ class IsarAPI<M> implements IsarApiInterface {
   @override
   IPoint addPoint({required int userId, required int point}) {
     return isar.iPoints.filter().userIdEqualTo(userId).findFirstSync()!;
+  }
+
+  @override
+  Future<int> addFavorite<T>({required T data}) async {
+    await isar.writeTxn(() async {
+      Favorite fav = data as Favorite;
+      //final favorite = Favorite()..index = fav.index;
+      //favorite.product.set(fav.product);
+      // save unit to db
+      await isar.favorites.put(fav);
+    });
+    return Future.value(200);
   }
 
   @override
@@ -1524,6 +1537,12 @@ class IsarAPI<M> implements IsarApiInterface {
         return Future.value(null);
       });
     }
+    if (data is Favorite) {
+      await isar.writeTxn(() async {
+        await isar.favorites.put(data);
+        return Future.value(null);
+      });
+    }
     if (data is Stock) {
       await isar.writeTxn(() async {
         await isar.stocks.put(data);
@@ -1562,6 +1581,12 @@ class IsarAPI<M> implements IsarApiInterface {
 
       await isar.writeTxn(() async {
         return await isar.products.put(product);
+      });
+    }
+    if (data is Favorite) {
+      Favorite fav = data;
+      await isar.writeTxn(() async {
+        return await isar.favorites.put(fav);
       });
     }
     if (data is Variant) {

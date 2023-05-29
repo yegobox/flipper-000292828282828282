@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of flipper_models;
+part of 'tenant.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator

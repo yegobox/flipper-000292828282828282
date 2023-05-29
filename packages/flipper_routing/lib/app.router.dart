@@ -129,6 +129,18 @@ class StackedRouterWeb extends _i3.RootStackRouter {
         barrierDismissible: false,
       );
     },
+    AddToFavoritesRoute.name: (routeData) {
+      final args = routeData.argsAs<AddToFavoritesArgs>();
+      return _i3.CustomPage<dynamic>(
+        routeData: routeData,
+        child: _i2.AddToFavorites(
+          key: args.key,
+          favoriteIndex: args.favoriteIndex,
+        ),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     AddDiscountRoute.name: (routeData) {
       final args = routeData.argsAs<AddDiscountArgs>(
           orElse: () => const AddDiscountArgs());
@@ -510,6 +522,10 @@ class StackedRouterWeb extends _i3.RootStackRouter {
         _i3.RouteConfig(
           AddProductViewRoute.name,
           path: '/add-product-view',
+        ),
+        _i3.RouteConfig(
+          AddToFavoritesRoute.name,
+          path: '/add-to-favorites',
         ),
         _i3.RouteConfig(
           AddDiscountRoute.name,
@@ -909,6 +925,40 @@ class AddProductViewArgs {
   @override
   String toString() {
     return 'AddProductViewArgs{key: $key, productId: $productId}';
+  }
+}
+
+/// generated route for
+/// [_i2.AddToFavorites]
+class AddToFavoritesRoute extends _i3.PageRouteInfo<AddToFavoritesArgs> {
+  AddToFavoritesRoute({
+    _i4.Key? key,
+    required int favoriteIndex,
+  }) : super(
+          AddToFavoritesRoute.name,
+          path: '/add-to-favorites',
+          args: AddToFavoritesArgs(
+            key: key,
+            favoriteIndex: favoriteIndex,
+          ),
+        );
+
+  static const String name = 'AddToFavorites';
+}
+
+class AddToFavoritesArgs {
+  const AddToFavoritesArgs({
+    this.key,
+    required this.favoriteIndex,
+  });
+
+  final _i4.Key? key;
+
+  final int favoriteIndex;
+
+  @override
+  String toString() {
+    return 'AddToFavoritesArgs{key: $key, favoriteIndex: $favoriteIndex}';
   }
 }
 
