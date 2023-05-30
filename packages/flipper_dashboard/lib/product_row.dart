@@ -97,7 +97,11 @@ class ProductRow extends StatelessWidget {
                           },
                         ),
                       ),
-                      onPressed: () => {},
+                      onPressed: () => {
+                        model.addFavorite(
+                            favIndex: favIndex!, fav_product_id: product.id!),
+                        Navigator.of(context).pop(true)
+                      },
                     ),
                     OutlinedButton(
                       child: Text('No',
@@ -167,7 +171,11 @@ class ProductRow extends StatelessWidget {
                           },
                         ),
                       ),
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () {
+                        model.addFavorite(
+                            favIndex: favIndex!, fav_product_id: product.id!);
+                        Navigator.of(context).pop(true);
+                      },
                     ),
                     OutlinedButton(
                       child: Text('No',

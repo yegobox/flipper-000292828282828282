@@ -493,6 +493,13 @@ class FakeApi extends IsarAPI implements IsarApiInterface {
     return null;
   }
 
+  //Delete a favorite
+  @override
+  Future<int> deleteFavorite({required int favId}) async {
+    //await isar.favorites.delete(favID);
+    return Future.value(200);
+  }
+
   @override
   Future<List<BusinessType>> businessTypes() async {
     final responseJson = [
@@ -629,4 +636,5 @@ class FakeApi extends IsarAPI implements IsarApiInterface {
       }
     }
   }
+ 
 }
