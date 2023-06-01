@@ -370,9 +370,8 @@ class ProductViewModel extends AddTenantViewModel {
     final Product? product =
         await ProxyService.isarApi.getProduct(id: fav_product_id);
     final favorite = Favorite()
-    ..favIndex = favIndex
-    ..product.value = product;
-
+      ..favIndex = favIndex
+      ..product.value = product;
     int res = await ProxyService.isarApi.addFavorite(data: favorite);
     notifyListeners();
     ProxyService.appService.pushDataToServer();

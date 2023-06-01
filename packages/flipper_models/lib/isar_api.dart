@@ -173,16 +173,35 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Future<int> addFavorite({required Favorite data}) async {
-    await isar.writeTxn(() async {
-      await isar.favorites.put(data);
-    });
-    return Future.value(200);
+    if (data != Null) {
+      await isar.writeTxn(() async {
+        await isar.favorites.put(data);
+      });
+      return Future.value(200);
+    }
+    return Future.value(404);
   }
 
   @override
   Future<List<Favorite>> getFavorites() async {
     List<Favorite> favorites = await isar.favorites.where().findAll();
     return favorites;
+  }
+
+  @override
+  Future<Favorite?> getFavoriteById({required int favId}) async {
+    //Get a favorite
+    Favorite? favorite =
+        await isar.favorites.filter().idEqualTo(favId).findFirst();
+    return favorite;
+  }
+
+  @override
+  Future<Favorite?> getFavoriteByIndex({required int favIndex}) async {
+    //Get a favorite
+    Favorite? favorite =
+        await isar.favorites.filter().favIndexEqualTo(favIndex).findFirst();
+    return favorite;
   }
 
   //Delete a favorite
