@@ -11,7 +11,7 @@ part 'device.g.dart';
 @JsonSerializable()
 @Collection()
 class Device extends IJsonSerializable {
-  Id? id = null;
+  Id? id;
   String linkingCode;
   String deviceName;
   String deviceVersion;
@@ -55,9 +55,5 @@ class Device extends IJsonSerializable {
       data['localId'] = id;
     }
     return data;
-  }
-
-  void assignIdFromSync() {
-    id = syncIdInt();
   }
 }

@@ -8,6 +8,8 @@ import 'package:flipper_services/proxy.dart';
 import 'package:flipper_models/hlc.dart';
 import 'package:pocketbase/pocketbase.dart';
 
+import 'isar_models.dart';
+
 abstract class IJsonSerializable {
   Map<String, dynamic> toJson();
 }
@@ -25,18 +27,20 @@ class SynchronizationService<M extends IJsonSerializable>
       Map<String, dynamic> json = model.toJson();
 
       if (endpoint == "orders") {
-        String namesString = (await ProxyService.isar.orderItems(
-          orderId: json["localId"],
-        ))
-            .map((item) => item.name)
-            .join(',');
+        List<OrderItem> itemOnOrder = await ProxyService.isar
+            .orderItems(orderId: json["id"], doneWithOrder: true);
+        log(itemOnOrder.length.toString(), name: "ItemOnOrder");
+        String namesString = itemOnOrder.map((item) => item.name).join(',');
         json["itemName"] = namesString;
       }
+
       if (endpoint == "stocks" && json["retailPrice"] == null) {
+        log(json.toString(), name: "stocks");
         throw Exception("stocks has null retail price");
       }
 
       if (endpoint == "variants" && json["retailPrice"] == null) {
+        log(json.toString(), name: "variants");
         throw Exception("variant has null retail price");
       }
 
@@ -47,7 +51,7 @@ class SynchronizationService<M extends IJsonSerializable>
       json["id"] = syncId();
 
       RecordModel? result;
-      log(json.toString());
+      // log(json.toString());
       // Assume that `json` is a variable holding a JSON object
       //because there is a case where I might update yet there is no equivalent
       //object remote, in this case we will fallback in create

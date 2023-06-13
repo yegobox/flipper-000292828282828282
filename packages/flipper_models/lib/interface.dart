@@ -23,6 +23,7 @@ abstract class IsarApiInterface {
   Future<List<Category>> categories({required int branchId});
   Stream<List<Category>> categoriesStream({required int branchId});
   Stream<Order?> pendingOrderStream();
+  Stream<List<Order>> pendingOrderStreams();
   Future<List<IUnit>> units({required int branchId});
   Future<T?> create<T>({required T data});
   Future<T?> update<T>({required T data});
@@ -179,8 +180,9 @@ abstract class IsarApiInterface {
   Future<List<Product>> productsFuture({required int branchId});
 
   /// get a list of orderItems given orderId
-  Future<List<OrderItem>> orderItems({required int orderId});
-  Stream<List<OrderItem>> orderItemsStream({required int orderId});
+  Future<List<OrderItem>> orderItems(
+      {required int orderId, required bool doneWithOrder});
+  Stream<List<OrderItem>> orderItemsStream();
   Future<Variant?> getVariantById({required int id});
   Future<bool> isTaxEnabled();
   Future<Receipt?> createReceipt(
@@ -239,7 +241,7 @@ abstract class IsarApiInterface {
   Future<void> patchSocialSetting({required Setting setting});
   Future<Setting?> getSocialSetting();
 
-  Future<Device?> getDevice({required String linkingCode});
+  Future<Device?> getDevice({required String phone});
   Future<Device?> getDeviceById({required int id});
   Stream<List<Device>> getDevices({required int businessId});
   Future<List<Device>> unpublishedDevices({required int businessId});

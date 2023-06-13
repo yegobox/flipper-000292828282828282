@@ -1,5 +1,7 @@
 library pos;
 
+import 'package:flipper_services/constants.dart';
+import 'package:flipper_services/proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -30,6 +32,7 @@ class KeyPadView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min, // set main axis size to min
         children: [
+         
           Padding(
             padding: EdgeInsets.symmetric(vertical: paddingHeight),
             child: Text(

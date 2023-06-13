@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:path/path.dart' as path;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flipper_models/data.loads/jcounter.dart';
 import 'package:flipper_models/isar/random.dart';
@@ -28,7 +29,7 @@ class IsarAPI<M> implements IsarApiInterface {
   late String commApi;
   late Isar isar;
   Future<IsarApiInterface> getInstance({Isar? iisar}) async {
-    final dir = await getApplicationDocumentsDirectory();
+    final appDocDir = await getApplicationDocumentsDirectory();
     if (foundation.kDebugMode && !isAndroid) {
       apihub = "https://uat-apihub.yegobox.com";
       commApi = "https://ers84w6ehl.execute-api.us-east-1.amazonaws.com/api";
@@ -75,7 +76,7 @@ class IsarAPI<M> implements IsarApiInterface {
           DeviceSchema,
           FavoriteSchema
         ],
-        directory: dir.path,
+        directory: appDocDir.path,
       );
     } else {
       isar = iisar;
@@ -109,10 +110,50 @@ class IsarAPI<M> implements IsarApiInterface {
     return kcustomer;
   }
 
+  /// this method is one way i.e we get to know local unsynched changes
+  /// then we send them but we are not working on the changes after this push.
+  /// those change will stay on local, so I need to work on them as well.
+
+  @override
+  Stream<Order?> completedOrdersStream(
+      {required String status, required int branchId}) {
+    return isar.orders
+        .filter()
+        .statusEqualTo(postPonedStatus)
+        .reportedEqualTo(false)
+        .or()
+        .statusEqualTo(status)
+        .branchIdEqualTo(branchId)
+        .and()
+        .lastTouchedIsNull()
+        .build()
+        .watch(fireImmediately: true)
+        .asyncMap((event) => event.first);
+  }
+
+  @override
+  Stream<List<Order>> pendingOrderStreams() {
+    // int? currentOrderId = ProxyService.box.currentOrderId();
+    // return isar.orders.watchObject(currentOrderId ?? 0, fireImmediately: true);
+    int branchId = ProxyService.box.getBranchId()!;
+    return isar.orders
+        .where()
+        .statusBranchIdEqualTo(pendingStatus, branchId)
+        .build()
+        .watch(fireImmediately: true);
+  }
+
   @override
   Stream<Order?> pendingOrderStream() {
-    int? currentOrderId = ProxyService.box.currentOrderId();
-    return isar.orders.watchObject(currentOrderId ?? 0, fireImmediately: true);
+    int branchId = ProxyService.box.getBranchId()!;
+    return isar.orders
+        .filter()
+        .statusEqualTo(pendingStatus)
+        .and()
+        .branchIdEqualTo(branchId)
+        .build()
+        .watch(fireImmediately: true)
+        .asyncMap((event) => event.last);
   }
 
   @override
@@ -358,7 +399,7 @@ class IsarAPI<M> implements IsarApiInterface {
   Future assingOrderToCustomer(
       {required int customerId, required int orderId}) async {
     // get order where id = orderId from db
-    Order? order = await isar.orders.get(orderId);
+    Order? order = await isar.orders.filter().idEqualTo(orderId).findFirst();
 
     order!.customerId = customerId;
     // update order to db
@@ -387,10 +428,7 @@ class IsarAPI<M> implements IsarApiInterface {
   @override
   Future<bool> checkIn({required String? checkInCode}) async {
     //  String? checkIn = ProxyService.box.read(key: 'checkIn');
-    String? checkIn;
-    if (checkIn != null) {
-      return true;
-    }
+
     final businessName = checkInCode!.split('-')[0];
     final businessId = int.parse(checkInCode.split('-')[1]);
     final submitTo = checkInCode.split('-')[2];
@@ -434,13 +472,13 @@ class IsarAPI<M> implements IsarApiInterface {
       {required double cashReceived, required Order order}) async {
     order.status = completeStatus;
 
-    List<OrderItem> items = await orderItems(orderId: order.id!);
+    List<OrderItem> items =
+        await orderItems(orderId: order.id!, doneWithOrder: false);
 
-    double? totalPayable = items.fold(0, (a, b) => a! + (b.price * b.qty));
-
-    order.customerChangeDue = (cashReceived - totalPayable!);
+    order.customerChangeDue = (cashReceived - order.subTotal);
 
     order.cashReceived = cashReceived;
+    order.updatedAt = DateTime.now().toIso8601String();
 
     await update(data: order);
 
@@ -448,7 +486,10 @@ class IsarAPI<M> implements IsarApiInterface {
       Stock? stock = await stockByVariantId(variantId: item.variantId);
       stock?.currentStock = stock.currentStock - item.qty;
       stock?.action = actions["update"];
-      update(data: stock);
+      item.doneWithOrder = true;
+      item.updatedAt = DateTime.now().toIso8601String();
+      await update(data: stock);
+      await update(data: item);
     }
     // remove currentOrderId from local storage to leave a room
     // for listening to new order that will be created
@@ -1302,12 +1343,18 @@ class IsarAPI<M> implements IsarApiInterface {
   @override
   Future<IUser> login(
       {required String userPhone, required bool skipDefaultAppSetup}) async {
+    String phoneNumber = userPhone;
+    if (!phoneNumber.startsWith('+')) {
+      phoneNumber = '+' + phoneNumber;
+    }
+
     final response = await flipperHttpClient.post(
       Uri.parse(apihub + '/v2/api/user'),
       body: jsonEncode(
-        <String, String>{'phoneNumber': userPhone},
+        <String, String>{'phoneNumber': phoneNumber},
       ),
     );
+
     if (response.statusCode == 200 && response.body.isNotEmpty) {
       IUser syncF = IUser.fromRawJson(response.body);
       await ProxyService.box.write(
@@ -1385,7 +1432,7 @@ class IsarAPI<M> implements IsarApiInterface {
     } else if (response.statusCode == 500) {
       throw ErrorReadingFromYBServer(term: "Not found");
     } else {
-      throw Exception('403 Error');
+      throw Exception(response);
     }
   }
 
@@ -1535,8 +1582,7 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Stream<List<Order>> ticketsStreams() {
-    log(ProxyService.box.getBranchId()!.toString(),
-        name: "BranchId when stream ticket");
+    log(ProxyService.box.getBranchId()!.toString(), name: "ticketsStreams()");
     return isar.orders
         .where()
         .statusBranchIdEqualTo(parkedStatus, ProxyService.box.getBranchId()!)
@@ -1913,9 +1959,7 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Future<Variant?> getVariantById({required int id}) async {
-    return isar.writeTxn(() async {
-      return await isar.variants.get(id);
-    });
+    return await isar.variants.get(id);
   }
 
   @override
@@ -2176,27 +2220,6 @@ class IsarAPI<M> implements IsarApiInterface {
     });
   }
 
-  /// this method is one way i.e we get to know local unsynched changes
-  /// then we send them but we are not working on the changes after this push.
-  /// those change will stay on local, so I need to work on them as well.
-
-  @override
-  Stream<Order?> completedOrdersStream(
-      {required String status, required int branchId}) {
-    return isar.orders
-        .filter()
-        .statusEqualTo(postPonedStatus)
-        .reportedEqualTo(false)
-        .or()
-        .statusEqualTo(status)
-        .branchIdEqualTo(branchId)
-        .and()
-        .lastTouchedIsNull()
-        .build()
-        .watch(fireImmediately: true)
-        .asyncMap((event) => event.first);
-  }
-
 // https://pub.dev/packages/excel
   @override
   Future<List<Order>> completedOrders(
@@ -2220,9 +2243,7 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Future<Stock?> getStockById({required int id}) async {
-    return isar.writeTxn(() async {
-      return await isar.stocks.get(id);
-    });
+    return await isar.stocks.get(id);
   }
 
   /// internal function that I am still brain storming about
@@ -2656,13 +2677,9 @@ class IsarAPI<M> implements IsarApiInterface {
   }
 
   @override
-  Future<Device?> getDevice({required String linkingCode}) {
+  Future<Device?> getDevice({required String phone}) {
     // get device from isar with linking code and return it
-    return isar.devices
-        .filter()
-        .linkingCodeEqualTo(linkingCode)
-        .build()
-        .findFirst();
+    return isar.devices.filter().phoneEqualTo(phone).build().findFirst();
   }
 
   @override
@@ -2796,17 +2813,27 @@ class IsarAPI<M> implements IsarApiInterface {
   }
 
   @override
-  Future<List<OrderItem>> orderItems({required int orderId}) async {
-    return await isar.orderItems.where().orderIdEqualTo(orderId).findAll();
+  Future<List<OrderItem>> orderItems(
+      {required int orderId, required bool doneWithOrder}) async {
+    return await isar.orderItems
+        .filter()
+        .orderIdEqualTo(orderId)
+        .and()
+        .doneWithOrderEqualTo(doneWithOrder)
+        .findAll();
   }
 
   @override
-  Stream<List<OrderItem>> orderItemsStream({required int orderId}) {
-    return isar.orderItems
-        .where()
-        .orderIdEqualTo(orderId)
-        .watch()
-        .map((event) => event.toList());
+  Stream<List<OrderItem>> orderItemsStream() {
+    return pendingOrderStream().asyncMap((order) async {
+      if (order != null) {
+        final items =
+            await isar.orderItems.where().orderIdEqualTo(order.id!).findAll();
+        return items;
+      } else {
+        return <OrderItem>[];
+      }
+    });
   }
 
   @override
