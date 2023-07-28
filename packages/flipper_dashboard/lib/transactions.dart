@@ -292,15 +292,15 @@ class _TransactionsState extends State<Transactions> {
         builder: (context, model, child) {
           return Scaffold(
             appBar: CustomAppBar(
-                closeButton: CLOSEBUTTON.WIDGET,
-                customLeadingWidget: Container(
-                    child: Text(
-                  '  Transactions',
-                  style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w600),
-                ))),
+              closeButton: CLOSEBUTTON.WIDGET,
+              title: ' Transactions',
+              customLeadingWidget: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back),
+              ),
+            ),
             body: defaultTransactions
                 ? Column(
                     children: [

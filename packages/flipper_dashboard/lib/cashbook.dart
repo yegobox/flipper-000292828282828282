@@ -56,14 +56,13 @@ class _CashbookState extends State<Cashbook> {
         return Scaffold(
           appBar: CustomAppBar(
             closeButton: CLOSEBUTTON.WIDGET,
-            customLeadingWidget: Container(
-                child: Text(
-              '  Cash Book',
-              style: GoogleFonts.poppins(
-                  fontSize: 17,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w600),
-            )),
+            title: ' Cash Book',
+            customLeadingWidget: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back),
+            ),
           ),
           body: Padding(
             padding: const EdgeInsets.only(top: 8.0),

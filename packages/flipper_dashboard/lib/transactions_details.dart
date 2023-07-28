@@ -189,18 +189,19 @@ class _TransactionDetailState extends State<TransactionDetail> {
           }
           return Scaffold(
             appBar: CustomAppBar(
-                closeButton: CLOSEBUTTON.WIDGET,
-                customLeadingWidget: Text(
-                  ' ' +
-                      transactionType +
-                      ' : ' +
-                      widget.transaction.subTotal.toInt().toString() +
-                      " RWF",
-                  style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w600),
-                )),
+              closeButton: CLOSEBUTTON.WIDGET,
+              title: ' ' +
+                  transactionType +
+                  ' : ' +
+                  widget.transaction.subTotal.toInt().toString() +
+                  " RWF",
+              customLeadingWidget: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back),
+              ),
+            ),
             body: Column(
               children: [
                 Padding(
