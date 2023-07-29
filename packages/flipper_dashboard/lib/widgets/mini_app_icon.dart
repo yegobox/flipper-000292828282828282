@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MiniAppIcon extends StatelessWidget {
   const MiniAppIcon(
       {super.key,
       required this.icon,
       required this.gradientColorOne,
-      required this.gradientColorTwo,
       required this.page,
       this.showPageName = true,
       this.sideSize = 72.0});
 
   final dynamic icon;
   final Color gradientColorOne;
-  final Color gradientColorTwo;
   final double sideSize;
   final String page;
   final bool showPageName;
@@ -27,15 +24,16 @@ class MiniAppIcon extends StatelessWidget {
           height: sideSize,
           width: sideSize,
           decoration: ShapeDecoration(
-            shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(80.0)),
-            color: gradientColorOne,
-          ),
+              shape: ContinuousRectangleBorder(
+                  side: BorderSide(width: 1, color: Colors.white),
+                  borderRadius: BorderRadius.circular(80.0)),
+              color: gradientColorOne,
+              shadows: []),
           child: Center(
-            child: (icon is IconData) ? Icon(
+            child: Icon(
               icon,
               color: Colors.white,
-            ):SvgPicture.asset(icon,package: 'flipper_dashboard',),
+            ),
           ),
         ),
         Padding(

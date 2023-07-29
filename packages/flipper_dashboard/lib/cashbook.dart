@@ -1,5 +1,8 @@
 import 'dart:developer';
 
+import 'package:flipper_routing/app.locator.dart';
+import 'package:flipper_routing/app.router.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:flipper_dashboard/create/category_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,7 +43,7 @@ class Cashbook extends StatefulWidget {
 
 class _CashbookState extends State<Cashbook> {
   List<int> transactionIds = [];
-
+  final _routerService = locator<RouterService>();
   @override
   void initState() {
     super.initState();
@@ -55,14 +58,12 @@ class _CashbookState extends State<Cashbook> {
       builder: (context, model, child) {
         return Scaffold(
           appBar: CustomAppBar(
-            closeButton: CLOSEBUTTON.WIDGET,
-            title: ' Cash Book',
-            customLeadingWidget: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.arrow_back),
-            ),
+            isDividerVisible: false,
+            title: 'Cash Book',
+            icon: Icons.close,
+            onPop: () async {
+              _routerService.back();
+            },
           ),
           body: Padding(
             padding: const EdgeInsets.only(top: 8.0),
@@ -115,7 +116,7 @@ class _CashbookState extends State<Cashbook> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 15.0),
                                     child: SizedBox(
-                                      height: 45,
+                                      height: 60,
                                       width: 140,
                                       child: OutlinedButton(
                                         onPressed: () {
@@ -129,7 +130,7 @@ class _CashbookState extends State<Cashbook> {
                                           side: MaterialStateProperty.all<
                                               BorderSide>(
                                             const BorderSide(
-                                                color: Color(0xFF00FE38)),
+                                                color: Colors.green),
                                           ),
                                           shape: MaterialStateProperty
                                               .resolveWith<OutlinedBorder>(
@@ -140,27 +141,39 @@ class _CashbookState extends State<Cashbook> {
                                           ),
                                           backgroundColor:
                                               MaterialStateProperty.all<Color>(
-                                                  Color(0xFF00FE38)),
+                                                  Colors.green),
                                           overlayColor: MaterialStateProperty
                                               .resolveWith<Color?>(
                                             (Set<MaterialState> states) {
-                                              return Color(
-                                                  0xFF00FE38); // Defer to the widget's default.
+                                              return Colors
+                                                  .green; // Defer to the widget's default.
                                             },
                                           ),
                                         ),
-                                        child: const Text('+ Cash In',
-                                            style: TextStyle(
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Icon(
+                                                Icons.add,
                                                 color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600)),
+                                              ),
+                                              Text(
+                                                'Cash In',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ]),
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 15.0),
                                     child: SizedBox(
-                                      height: 45,
+                                      height: 60,
                                       width: 140,
                                       child: OutlinedButton(
                                         onPressed: () {
@@ -194,11 +207,23 @@ class _CashbookState extends State<Cashbook> {
                                             },
                                           ),
                                         ),
-                                        child: const Text('- Cash Out',
-                                            style: TextStyle(
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Icon(
+                                                Icons.remove,
                                                 color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600)),
+                                              ),
+                                              Text(
+                                                'Cash Out',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ]),
                                       ),
                                     ),
                                   ),
@@ -256,124 +281,128 @@ class _CashbookState extends State<Cashbook> {
 
   Widget buildGaugeOrList(
       BuildContext context, HomeViewModel model, String widgetType) {
-    return StreamBuilder<List<Transaction>>(
-      initialData: null,
-      stream: ProxyService.isar.getCompletedTransactions(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          log("waiting");
-          if (widgetType == 'gauge') {
-            return SemiCircleGauge(
-              dataOnGreenSide: 0,
-              dataOnRedSide: 0,
-              startPadding: 0,
-              profitType: widget.profitType,
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        } else if (snapshot.hasError) {
-          log(snapshot.error.toString());
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData) {
-          log('No transactions');
-          return Text(
-              'No records for ' + widget.transactionPeriod.toLowerCase());
-        } else {
-          final transactions = snapshot.data!;
-          DateTime oldDate;
-          DateTime temporaryDate;
-
-          if (widget.transactionPeriod == 'Today') {
-            DateTime tempToday = DateTime.now();
-            oldDate = DateTime(tempToday.year, tempToday.month, tempToday.day);
-          } else if (widget.transactionPeriod == 'This Week') {
-            oldDate = DateTime.now().subtract(Duration(days: 7));
-            oldDate = DateTime(oldDate.year, oldDate.month, oldDate.day);
-          } else if (widget.transactionPeriod == 'This Month') {
-            oldDate = DateTime.now().subtract(Duration(days: 30));
-            oldDate = DateTime(oldDate.year, oldDate.month, oldDate.day);
-          } else {
-            oldDate = DateTime.now().subtract(Duration(days: 365));
-            oldDate = DateTime(oldDate.year, oldDate.month, oldDate.day);
-          }
-
-          List<Transaction> filteredTransactions = [];
-          for (final transaction in transactions) {
-            temporaryDate = DateTime.parse(transaction.createdAt);
-            if (temporaryDate.isAfter(oldDate)) {
-              filteredTransactions.add(transaction);
-            }
-          }
-
-          switch (widgetType) {
-            case 'gauge':
-              double sum_cash_in = 0;
-              double sum_cash_out = 0;
-              for (final transaction in filteredTransactions) {
-                if (transaction.transactionType == 'Cash Out') {
-                  sum_cash_out = transaction.subTotal + sum_cash_out;
-                } else {
-                  sum_cash_in = transaction.subTotal + sum_cash_in;
-                }
-              }
+    return KeyedSubtree(
+      key: UniqueKey(),
+      child: StreamBuilder<List<Transaction>>(
+        initialData: null,
+        stream: ProxyService.isar.getCompletedTransactions(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            log("waiting");
+            if (widgetType == 'gauge') {
               return SemiCircleGauge(
-                dataOnGreenSide: sum_cash_in,
-                dataOnRedSide: sum_cash_out,
+                dataOnGreenSide: 0,
+                dataOnRedSide: 0,
                 startPadding: 0,
                 profitType: widget.profitType,
               );
+            } else {
+              return CircularProgressIndicator();
+            }
+          } else if (snapshot.hasError) {
+            log(snapshot.error.toString());
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData) {
+            log('No transactions');
+            return Text(
+                'No records for ' + widget.transactionPeriod.toLowerCase());
+          } else {
+            final transactions = snapshot.data!;
+            DateTime oldDate;
+            DateTime temporaryDate;
 
-            case 'list':
-              if (filteredTransactions.length == 0) {
+            if (widget.transactionPeriod == 'Today') {
+              DateTime tempToday = DateTime.now();
+              oldDate =
+                  DateTime(tempToday.year, tempToday.month, tempToday.day);
+            } else if (widget.transactionPeriod == 'This Week') {
+              oldDate = DateTime.now().subtract(Duration(days: 7));
+              oldDate = DateTime(oldDate.year, oldDate.month, oldDate.day);
+            } else if (widget.transactionPeriod == 'This Month') {
+              oldDate = DateTime.now().subtract(Duration(days: 30));
+              oldDate = DateTime(oldDate.year, oldDate.month, oldDate.day);
+            } else {
+              oldDate = DateTime.now().subtract(Duration(days: 365));
+              oldDate = DateTime(oldDate.year, oldDate.month, oldDate.day);
+            }
+
+            List<Transaction> filteredTransactions = [];
+            for (final transaction in transactions) {
+              temporaryDate = DateTime.parse(transaction.createdAt);
+              if (temporaryDate.isAfter(oldDate)) {
+                filteredTransactions.add(transaction);
+              }
+            }
+
+            switch (widgetType) {
+              case 'gauge':
+                double sum_cash_in = 0;
+                double sum_cash_out = 0;
+                for (final transaction in filteredTransactions) {
+                  if (transaction.transactionType == 'Cash Out') {
+                    sum_cash_out = transaction.subTotal + sum_cash_out;
+                  } else {
+                    sum_cash_in = transaction.subTotal + sum_cash_in;
+                  }
+                }
+                return SemiCircleGauge(
+                  dataOnGreenSide: sum_cash_in,
+                  dataOnRedSide: sum_cash_out,
+                  startPadding: 0,
+                  profitType: widget.profitType,
+                );
+
+              case 'list':
+                if (filteredTransactions.length == 0) {
+                  return Center(
+                    child: Text(
+                        'No records for ' +
+                            widget.transactionPeriod.toLowerCase(),
+                        style: GoogleFonts.poppins(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  );
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: filteredTransactions.length,
+                  itemBuilder: (context, index) {
+                    final transaction = filteredTransactions[index];
+                    return ListTile(
+                      leading: transaction.transactionType == 'Cash Out'
+                          ? CircleAvatar(
+                              backgroundImage: AssetImage('assets/cash_out.png',
+                                  package: 'flipper_dashboard'),
+                            )
+                          : CircleAvatar(
+                              backgroundImage: AssetImage('assets/cash_in.png',
+                                  package:
+                                      'flipper_dashboard')), // Icon before the title
+                      title: Text(transaction.subTotal.toString() + ' RWF'),
+                      subtitle: Text(DateFormat('dd/MM/yyyy')
+                          .format(DateTime.parse(transaction.createdAt))),
+                      trailing: Text(DateFormat('HH:mm')
+                          .format(DateTime.parse(transaction.createdAt))),
+
+                      onTap: () {
+                        null;
+                      },
+                    );
+                  },
+                );
+              default:
                 return Center(
-                  child: Text(
-                      'No records for ' +
-                          widget.transactionPeriod.toLowerCase(),
+                  child: Text('Incorrect widget type',
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                       )),
                 );
-              }
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: filteredTransactions.length,
-                itemBuilder: (context, index) {
-                  final transaction = filteredTransactions[index];
-                  return ListTile(
-                    leading: transaction.transactionType == 'Cash Out'
-                        ? CircleAvatar(
-                            backgroundImage: AssetImage('assets/cash_out.png',
-                                package: 'flipper_dashboard'),
-                          )
-                        : CircleAvatar(
-                            backgroundImage: AssetImage('assets/cash_in.png',
-                                package:
-                                    'flipper_dashboard')), // Icon before the title
-                    title: Text(transaction.subTotal.toString() + ' RWF'),
-                    subtitle: Text(DateFormat('dd/MM/yyyy')
-                        .format(DateTime.parse(transaction.createdAt))),
-                    trailing: Text(DateFormat('HH:mm')
-                        .format(DateTime.parse(transaction.createdAt))),
-
-                    onTap: () {
-                      null;
-                    },
-                  );
-                },
-              );
-            default:
-              return Center(
-                child: Text('Incorrect widget type',
-                    style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    )),
-              );
+            }
           }
-        }
-      },
+        },
+      ),
     );
   }
 }

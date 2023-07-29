@@ -3,6 +3,7 @@ import 'package:flipper_dashboard/profile.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flipper_models/isar_models.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flipper_services/proxy.dart';
 import 'widgets/dropdown.dart';
@@ -47,9 +48,8 @@ class Apps extends StatefulWidget {
 class _AppsState extends State<Apps> {
   final _routerService = locator<RouterService>();
   Widget _buildCustomPaintWithIcon(
-      {dynamic iconData,
-      required Color gradientColorOne,
-      required Color gradientColorTwo,
+      {required IconData iconData,
+      required Color color,
       required String page}) {
     return GestureDetector(
       onTap: () async {
@@ -93,15 +93,11 @@ class _AppsState extends State<Apps> {
             ));
         }
       },
-      child: Column(
-        children: [
-          MiniAppIcon(
-              icon: iconData,
-              gradientColorOne: gradientColorOne,
-              page: page,
-              showPageName: true,
-              gradientColorTwo: gradientColorTwo),
-        ],
+      child: MiniAppIcon(
+        icon: iconData,
+        gradientColorOne: color,
+        page: page,
+        showPageName: true,
       ),
     );
   }
@@ -110,6 +106,7 @@ class _AppsState extends State<Apps> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isDividerVisible: false,
         bottomSpacer: 48.99,
         closeButton: CLOSEBUTTON.WIDGET,
         customTrailingWidget: Container(
@@ -176,51 +173,61 @@ class _AppsState extends State<Apps> {
               padding: const EdgeInsets.only(top: 70.0),
               child: _buildGauge(context, widget.model),
             ),
-            SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.only(left: 36.0, right: 36.0),
-              child: SizedBox(
-                height: 340,
-                width: 340,
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 1,
-                  padding: EdgeInsets.zero,
-                  children: [
-                    _buildCustomPaintWithIcon(
-                        iconData: "path",
-                        gradientColorOne: Color(0xFF006AFE),
-                        gradientColorTwo: Colors.blue,
-                        page: "POS"),
-                    _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.wallet_20_regular,
-                        gradientColorOne: Color(0xFF66AAFF),
-                        gradientColorTwo: Colors.lightBlue,
-                        page: "Cashbook"),
-                    _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.arrow_swap_24_filled,
-                        gradientColorOne: Color(0xFFFF0331),
-                        gradientColorTwo: Colors.purpleAccent,
-                        page: "Transactions"),
-                    _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.communication_20_regular,
-                        gradientColorOne: Colors.cyan,
-                        gradientColorTwo: Colors.lightBlue,
-                        page: "Connecta"),
-                    _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.settings_20_regular,
-                        gradientColorOne: Color(0xFFCC0F03),
-                        gradientColorTwo: Colors.deepOrange,
-                        page: "Settings"),
-                    _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.call_20_regular,
-                        gradientColorOne: Color(0xFF01B8E4),
-                        gradientColorTwo: Colors.blue,
-                        page: "Support"),
-                  ],
+            // SizedBox(height: 40),
+            Stack(
+              children: [
+                SizedBox(
+                  height: 340,
+                  width: 340,
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 1,
+                    padding: EdgeInsets.zero,
+                    children: [
+                      _buildCustomPaintWithIcon(
+                          iconData: FluentIcons.dialpad_24_regular,
+                          color: const Color(0xff006AFE),
+                          page: "POS"),
+                      _buildCustomPaintWithIcon(
+                          iconData: FluentIcons.book_add_24_regular,
+                          color: Colors.purpleAccent,
+                          page: "Cashbook"),
+                      _buildCustomPaintWithIcon(
+                          iconData: FluentIcons.arrow_trending_lines_24_regular,
+                          color: Colors.pink,
+                          page: "Transactions"),
+                      _buildCustomPaintWithIcon(
+                          iconData: FluentIcons.communication_20_regular,
+                          color: Colors.cyan,
+                          page: "Connecta"),
+                      _buildCustomPaintWithIcon(
+                          iconData: FluentIcons.settings_16_regular,
+                          color: Colors.orange,
+                          page: "Settings"),
+                      _buildCustomPaintWithIcon(
+                          iconData: Icons.call,
+                          color: Colors.lightBlue,
+                          page: "Support"),
+                    ],
+                  ),
                 ),
-              ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      'From yegobox',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: Colors.black.withOpacity(0.3100000023841858),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                )
+              ],
             )
           ],
         ),
