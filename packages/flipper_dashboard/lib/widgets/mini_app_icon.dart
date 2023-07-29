@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MiniAppIcon extends StatelessWidget {
   const MiniAppIcon(
@@ -11,7 +12,7 @@ class MiniAppIcon extends StatelessWidget {
       this.showPageName = true,
       this.sideSize = 72.0});
 
-  final IconData icon;
+  final dynamic icon;
   final Color gradientColorOne;
   final Color gradientColorTwo;
   final double sideSize;
@@ -31,10 +32,10 @@ class MiniAppIcon extends StatelessWidget {
             color: gradientColorOne,
           ),
           child: Center(
-            child: Icon(
+            child: (icon is IconData) ? Icon(
               icon,
               color: Colors.white,
-            ),
+            ):SvgPicture.asset(icon,package: 'flipper_dashboard',),
           ),
         ),
         Padding(

@@ -12,6 +12,7 @@ import 'package:flipper_routing/app.locator.dart';
 import 'package:flipper_routing/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'widgets/analytics_gauge/flipper_analytic.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Apps extends StatefulWidget {
   final TextEditingController controller;
@@ -46,7 +47,7 @@ class Apps extends StatefulWidget {
 class _AppsState extends State<Apps> {
   final _routerService = locator<RouterService>();
   Widget _buildCustomPaintWithIcon(
-      {required IconData iconData,
+      {dynamic iconData,
       required Color gradientColorOne,
       required Color gradientColorTwo,
       required String page}) {
@@ -188,18 +189,18 @@ class _AppsState extends State<Apps> {
                   padding: EdgeInsets.zero,
                   children: [
                     _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.dialpad_24_regular,
-                        gradientColorOne: Colors.greenAccent,
+                        iconData: "path",
+                        gradientColorOne: Color(0xFF006AFE),
                         gradientColorTwo: Colors.blue,
                         page: "POS"),
                     _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.book_coins_24_regular,
-                        gradientColorOne: Colors.purpleAccent,
+                        iconData: FluentIcons.wallet_20_regular,
+                        gradientColorOne: Color(0xFF66AAFF),
                         gradientColorTwo: Colors.lightBlue,
                         page: "Cashbook"),
                     _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.arrow_trending_lines_24_regular,
-                        gradientColorOne: Colors.pink,
+                        iconData: FluentIcons.arrow_swap_24_filled,
+                        gradientColorOne: Color(0xFFFF0331),
                         gradientColorTwo: Colors.purpleAccent,
                         page: "Transactions"),
                     _buildCustomPaintWithIcon(
@@ -208,13 +209,13 @@ class _AppsState extends State<Apps> {
                         gradientColorTwo: Colors.lightBlue,
                         page: "Connecta"),
                     _buildCustomPaintWithIcon(
-                        iconData: FluentIcons.settings_16_regular,
-                        gradientColorOne: Colors.orange,
+                        iconData: FluentIcons.settings_20_regular,
+                        gradientColorOne: Color(0xFFCC0F03),
                         gradientColorTwo: Colors.deepOrange,
                         page: "Settings"),
                     _buildCustomPaintWithIcon(
-                        iconData: Icons.call,
-                        gradientColorOne: Colors.lightBlue,
+                        iconData: FluentIcons.call_20_regular,
+                        gradientColorOne: Color(0xFF01B8E4),
                         gradientColorTwo: Colors.blue,
                         page: "Support"),
                   ],
