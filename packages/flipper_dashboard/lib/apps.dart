@@ -106,29 +106,29 @@ class _AppsState extends State<Apps> {
         isDividerVisible: false,
         bottomSpacer: 48.99,
         closeButton: CLOSEBUTTON.WIDGET,
-        // customTrailingWidget: Container(
-        //   child: FutureBuilder<ITenant?>(
-        //       future: ProxyService.isar
-        //           .getTenantBYUserId(userId: ProxyService.box.getUserId()!),
-        //       builder: (a, snapshoot) {
-        //         if (snapshoot.connectionState == ConnectionState.waiting ||
-        //             !snapshoot.hasData) {
-        //           return const SizedBox.shrink();
-        //         }
-        //         final data = snapshoot.data;
-        //         return Padding(
-        //           padding: const EdgeInsets.only(right: 12.0),
-        //           child: SizedBox(
-        //               height: 40,
-        //               width: 40,
-        //               child: ProfileWidget(
-        //                 tenant: data!,
-        //                 size: 25,
-        //                 showIcon: false,
-        //               )),
-        //         );
-        //       }),
-        // ),
+        customTrailingWidget: Container(
+          child: FutureBuilder<ITenant?>(
+              future: ProxyService.isar
+                  .getTenantBYUserId(userId: ProxyService.box.getUserId()!),
+              builder: (a, snapshoot) {
+                if (snapshoot.connectionState == ConnectionState.waiting ||
+                    !snapshoot.hasData) {
+                  return const SizedBox.shrink();
+                }
+                final data = snapshoot.data;
+                return Padding(
+                  padding: const EdgeInsets.only(right: 12.0),
+                  child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: ProfileWidget(
+                        tenant: data!,
+                        size: 25,
+                        showIcon: false,
+                      )),
+                );
+              }),
+        ),
         customLeadingWidget: Container(
           child: Padding(
             padding: const EdgeInsets.only(left: 12.0),
