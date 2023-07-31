@@ -30,7 +30,9 @@ class SemiCircleGauge extends StatefulWidget {
 class _SemiCircleGaugeState extends State<SemiCircleGauge> {
   @override
   Widget build(BuildContext context) {
-    double radius = MediaQuery.of(context).size.width / 3;
+    double radius = widget.areValueColumnsVisible
+        ? MediaQuery.of(context).size.width / 3
+        : MediaQuery.of(context).size.width / 3.5;
     double totalData = widget.dataOnGreenSide + widget.dataOnRedSide;
     double greenAngle = 0;
     double redAngle = 0;
@@ -48,7 +50,9 @@ class _SemiCircleGaugeState extends State<SemiCircleGauge> {
     double profitOrLoss = 0;
     if (widget.dataOnGreenSide > widget.dataOnRedSide) {
       resultText = Text(widget.profitType,
-          style: GoogleFonts.poppins(fontSize: 18, color: Colors.grey));
+          style: GoogleFonts.poppins(
+              fontSize: widget.areValueColumnsVisible ? 18 : 15,
+              color: Colors.grey));
       if (widget.profitType == "Gross Profit") {
         profitOrLoss = widget.dataOnGreenSide;
       } else {
@@ -85,7 +89,7 @@ class _SemiCircleGaugeState extends State<SemiCircleGauge> {
                               .format(double.parse(profitOrLoss.toString())) +
                           ' RWF',
                       style: GoogleFonts.poppins(
-                          fontSize: 28,
+                          fontSize: widget.areValueColumnsVisible ? 28 : 24,
                           color: Colors.black,
                           fontWeight: FontWeight.w600)),
                   SizedBox(height: 10),

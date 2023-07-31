@@ -300,6 +300,7 @@ class _CashbookState extends State<Cashbook> {
                 dataOnRedSide: 0,
                 startPadding: 0,
                 profitType: widget.profitType,
+                areValueColumnsVisible: !widget.newTransactionPressed,
               );
             } else {
               return CircularProgressIndicator();
