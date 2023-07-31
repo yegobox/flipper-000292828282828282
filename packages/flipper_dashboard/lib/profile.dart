@@ -213,7 +213,6 @@ class PMobile extends StatelessWidget {
       builder: (context, snapshot) {
         final data = snapshot.data;
         final hasImage = data?.imageUrl != null;
-
         Widget buildContent() {
           final borderRadius = BorderRadius.only(
             topLeft: Radius.circular(4),
@@ -246,7 +245,7 @@ class PMobile extends StatelessWidget {
                         borderRadius:
                             borderRadius, // Same border radius value as above
                         child: CachedNetworkImage(
-                          imageUrl: data == null ? '' : data.imageUrl!,
+                          imageUrl: data?.imageUrl ?? '',
                           placeholder: (context, url) => GmailLikeLetter(
                             tenant: widget.tenant,
                             size: widget.size,

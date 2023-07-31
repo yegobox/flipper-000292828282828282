@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 import 'customappbar.dart';
 import 'widgets/transaction_status_widget.dart';
+import 'package:intl/intl.dart';
 
 class TransactionDetail extends StatefulWidget {
   const TransactionDetail({Key? key, required this.transaction})
@@ -52,16 +53,18 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
                       title: Text(
-                          items[index].qty.toString() +
+                          items[index].qty.toInt().toString() +
                               " x " +
                               items[index].name,
                           style: GoogleFonts.poppins(
-                              fontSize: 14, color: Colors.grey)),
+                              fontSize: 14, color: Colors.grey.shade600)),
                       trailing: Text(
-                        (items[index].qty * items[index].price).toString() +
+                        NumberFormat('#,###').format(double.parse(
+                                (items[index].qty * items[index].price)
+                                    .toString())) +
                             " RWF",
                         style: GoogleFonts.poppins(
-                            fontSize: 14, color: Colors.grey),
+                            fontSize: 14, color: Colors.grey.shade600),
                       ),
                     );
                   },
@@ -72,7 +75,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   title: Text("Total",
                       style: GoogleFonts.poppins(
                           fontSize: 14, color: Colors.black)),
-                  trailing: Text(total.toString() + "RWF",
+                  trailing: Text(
+                      NumberFormat('#,###')
+                              .format(double.parse(total.toString())) +
+                          " RWF",
                       style: GoogleFonts.poppins(
                           fontSize: 14, color: Colors.black)),
                 )
@@ -120,7 +126,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(widget.transaction.subTotal.toString() + " RWF",
+            Text(
+                NumberFormat('#,###').format(
+                        double.parse(widget.transaction.subTotal.toString())) +
+                    " RWF",
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold, fontSize: 20)),
           ],
@@ -176,7 +185,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
           List<TransactionItem> items = await ProxyService.isar
               .transactionItems(
                   transactionId: widget.transaction.id!,
-                  doneWithTransaction: false);
+                  doneWithTransaction: true);
 
           model.completedTransactionItemsList = items;
         },
@@ -193,7 +202,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
               title: ' ' +
                   transactionType +
                   ' : ' +
-                  widget.transaction.subTotal.toInt().toString() +
+                  NumberFormat('#,###').format(
+                      double.parse(widget.transaction.subTotal.toString())) +
                   " RWF",
               customLeadingWidget: GestureDetector(
                 onTap: () {

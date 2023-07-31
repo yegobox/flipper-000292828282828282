@@ -13,7 +13,6 @@ import 'package:flipper_routing/app.locator.dart';
 import 'package:flipper_routing/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'widgets/analytics_gauge/flipper_analytic.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Apps extends StatefulWidget {
   final TextEditingController controller;
@@ -48,9 +47,7 @@ class Apps extends StatefulWidget {
 class _AppsState extends State<Apps> {
   final _routerService = locator<RouterService>();
   Widget _buildCustomPaintWithIcon(
-      {required IconData iconData,
-      required Color color,
-      required String page}) {
+      {dynamic iconData, required Color color, required String page}) {
     return GestureDetector(
       onTap: () async {
         HapticFeedback.lightImpact();
@@ -95,7 +92,7 @@ class _AppsState extends State<Apps> {
       },
       child: MiniAppIcon(
         icon: iconData,
-        gradientColorOne: color,
+        color: color,
         page: page,
         showPageName: true,
       ),
@@ -109,29 +106,29 @@ class _AppsState extends State<Apps> {
         isDividerVisible: false,
         bottomSpacer: 48.99,
         closeButton: CLOSEBUTTON.WIDGET,
-        customTrailingWidget: Container(
-          child: FutureBuilder<ITenant?>(
-              future: ProxyService.isar
-                  .getTenantBYUserId(userId: ProxyService.box.getUserId()!),
-              builder: (a, snapshoot) {
-                if (snapshoot.connectionState == ConnectionState.waiting ||
-                    !snapshoot.hasData) {
-                  return const SizedBox.shrink();
-                }
-                final data = snapshoot.data;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 12.0),
-                  child: SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: ProfileWidget(
-                        tenant: data!,
-                        size: 25,
-                        showIcon: false,
-                      )),
-                );
-              }),
-        ),
+        // customTrailingWidget: Container(
+        //   child: FutureBuilder<ITenant?>(
+        //       future: ProxyService.isar
+        //           .getTenantBYUserId(userId: ProxyService.box.getUserId()!),
+        //       builder: (a, snapshoot) {
+        //         if (snapshoot.connectionState == ConnectionState.waiting ||
+        //             !snapshoot.hasData) {
+        //           return const SizedBox.shrink();
+        //         }
+        //         final data = snapshoot.data;
+        //         return Padding(
+        //           padding: const EdgeInsets.only(right: 12.0),
+        //           child: SizedBox(
+        //               height: 40,
+        //               width: 40,
+        //               child: ProfileWidget(
+        //                 tenant: data!,
+        //                 size: 25,
+        //                 showIcon: false,
+        //               )),
+        //         );
+        //       }),
+        // ),
         customLeadingWidget: Container(
           child: Padding(
             padding: const EdgeInsets.only(left: 12.0),
@@ -186,28 +183,28 @@ class _AppsState extends State<Apps> {
                     padding: EdgeInsets.zero,
                     children: [
                       _buildCustomPaintWithIcon(
-                          iconData: FluentIcons.dialpad_24_regular,
+                          iconData: "assets/flipper_keypad.svg",
                           color: const Color(0xff006AFE),
                           page: "POS"),
                       _buildCustomPaintWithIcon(
-                          iconData: FluentIcons.book_add_24_regular,
-                          color: Colors.purpleAccent,
+                          iconData: "assets/flipper_wallet.svg",
+                          color: Color(0xFF66AAFF),
                           page: "Cashbook"),
                       _buildCustomPaintWithIcon(
-                          iconData: FluentIcons.arrow_trending_lines_24_regular,
-                          color: Colors.pink,
+                          iconData: FluentIcons.arrow_swap_20_regular,
+                          color: Color(0xFFFF0331),
                           page: "Transactions"),
                       _buildCustomPaintWithIcon(
                           iconData: FluentIcons.communication_20_regular,
                           color: Colors.cyan,
                           page: "Connecta"),
                       _buildCustomPaintWithIcon(
-                          iconData: FluentIcons.settings_16_regular,
-                          color: Colors.orange,
+                          iconData: FluentIcons.settings_20_regular,
+                          color: Color(0xFFCC0F03),
                           page: "Settings"),
                       _buildCustomPaintWithIcon(
-                          iconData: Icons.call,
-                          color: Colors.lightBlue,
+                          iconData: FluentIcons.call_20_regular,
+                          color: Color(0xFF01B8E4),
                           page: "Support"),
                     ],
                   ),
