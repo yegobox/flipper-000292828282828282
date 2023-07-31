@@ -166,7 +166,11 @@ class PDesktop extends StatelessWidget {
                       ),
                       child: ClipOval(
                         child: CachedNetworkImage(
-                          imageUrl: data!.imageUrl!,
+                          imageUrl: data == null
+                              ? 'https://yegobox-flipper.s3.eu-west-2.amazonaws.com/lRsBL.png'
+                              : data.imageUrl == null
+                                  ? 'https://yegobox-flipper.s3.eu-west-2.amazonaws.com/lRsBL.png'
+                                  : data.imageUrl!,
                           placeholder: (context, url) => GmailLikeLetter(
                             tenant: widget.tenant,
                             size: widget.size,
@@ -247,7 +251,9 @@ class PMobile extends StatelessWidget {
                         child: CachedNetworkImage(
                           imageUrl: data == null
                               ? 'https://yegobox-flipper.s3.eu-west-2.amazonaws.com/lRsBL.png'
-                              : data.imageUrl!,
+                              : data.imageUrl == null
+                                  ? 'https://yegobox-flipper.s3.eu-west-2.amazonaws.com/lRsBL.png'
+                                  : data.imageUrl!,
                           placeholder: (context, url) => GmailLikeLetter(
                             tenant: widget.tenant,
                             size: widget.size,
