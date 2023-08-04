@@ -44,7 +44,6 @@ class Product extends IJsonSerializable {
   int? localId;
   @Index()
   DateTime? deletedAt;
-  final variants = IsarLinks<Variant>();
 
   Product({
     required this.name,
