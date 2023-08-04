@@ -369,12 +369,7 @@ int _transactionItemEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.action;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.action.length * 3;
   {
     final value = object.addInfo;
     if (value != null) {
@@ -610,6 +605,7 @@ TransactionItem _transactionItemDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TransactionItem(
+    action: reader.readString(offsets[0]),
     addInfo: reader.readStringOrNull(offsets[1]),
     bcd: reader.readStringOrNull(offsets[2]),
     bhfId: reader.readStringOrNull(offsets[3]),
@@ -661,7 +657,6 @@ TransactionItem _transactionItemDeserialize(
     useYn: reader.readStringOrNull(offsets[50]),
     variantId: reader.readLong(offsets[51]),
   );
-  object.action = reader.readStringOrNull(offsets[0]);
   object.localId = reader.readLongOrNull(offsets[25]);
   object.remoteID = reader.readStringOrNull(offsets[39]);
   return object;
@@ -675,7 +670,7 @@ P _transactionItemDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
@@ -1437,26 +1432,8 @@ extension TransactionItemQueryWhere
 extension TransactionItemQueryFilter
     on QueryBuilder<TransactionItem, TransactionItem, QFilterCondition> {
   QueryBuilder<TransactionItem, TransactionItem, QAfterFilterCondition>
-      actionIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'action',
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionItem, TransactionItem, QAfterFilterCondition>
-      actionIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'action',
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionItem, TransactionItem, QAfterFilterCondition>
       actionEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1470,7 +1447,7 @@ extension TransactionItemQueryFilter
 
   QueryBuilder<TransactionItem, TransactionItem, QAfterFilterCondition>
       actionGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1486,7 +1463,7 @@ extension TransactionItemQueryFilter
 
   QueryBuilder<TransactionItem, TransactionItem, QAfterFilterCondition>
       actionLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1502,8 +1479,8 @@ extension TransactionItemQueryFilter
 
   QueryBuilder<TransactionItem, TransactionItem, QAfterFilterCondition>
       actionBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -9387,7 +9364,7 @@ extension TransactionItemQueryProperty
     });
   }
 
-  QueryBuilder<TransactionItem, String?, QQueryOperations> actionProperty() {
+  QueryBuilder<TransactionItem, String, QQueryOperations> actionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'action');
     });
@@ -9712,6 +9689,7 @@ extension TransactionItemQueryProperty
 
 TransactionItem _$TransactionItemFromJson(Map<String, dynamic> json) =>
     TransactionItem(
+      action: json['action'] as String,
       id: json['id'] as int?,
       name: json['name'] as String,
       transactionId: json['transactionId'] as int,
@@ -9766,7 +9744,6 @@ TransactionItem _$TransactionItemFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['deletedAt'] as String),
     )
       ..remoteID = json['remoteID'] as String?
-      ..action = json['action'] as String?
       ..localId = json['localId'] as int?;
 
 Map<String, dynamic> _$TransactionItemToJson(TransactionItem instance) =>

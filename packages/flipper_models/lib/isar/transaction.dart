@@ -36,7 +36,7 @@ class Transaction extends IJsonSerializable {
   String? lastTouched;
   @Index()
   String? remoteID;
-  String? action;
+  String action;
   int? localId;
   String? ticketName;
   @Index()
@@ -61,7 +61,7 @@ class Transaction extends IJsonSerializable {
     this.note,
     this.id,
     this.lastTouched,
-    this.action,
+    required this.action,
     this.remoteID,
     this.ticketName,
     this.deletedAt,
@@ -72,7 +72,11 @@ class Transaction extends IJsonSerializable {
   factory Transaction.fromJson(Map<String, dynamic> json) {
     /// assign remoteID to the value of id because this method is used to encode
     /// data from remote server and id from remote server is considered remoteID on local
-    json['remoteID'] = json['id'];
+    json['deletedAt'] = json['deletedAt'] == null ||
+            (json['deletedAt'] is String && json['deletedAt'].isEmpty)
+        ? null
+        : json['deletedAt'];
+    json['remoteID'] = json['id'] is int ? json['id'].toString() : json['id'];
     json.remove('id');
     return _$TransactionFromJson(json);
   }

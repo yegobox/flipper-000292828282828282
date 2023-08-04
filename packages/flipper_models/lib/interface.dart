@@ -73,7 +73,7 @@ abstract class IsarApiInterface {
 
   Future<List<Transaction>> completedTransactions(
       {required int branchId, String? status = completeStatus});
-  Future<TransactionItem?> getTransactionItem({required int id});
+  Future<TransactionItem?> getTransactionItemById({required int id});
   Stream<List<Transaction>> localCompletedTransactions();
 
   Future<Variant?> getCustomVariant();

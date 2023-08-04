@@ -262,6 +262,7 @@ class HomeViewModel extends ReactiveViewModel {
     return TransactionItem(
       id: syncIdInt(),
       qty: 1,
+      action: AppActions.create,
       price: amount / 1,
       variantId: variation.id!,
       name: name,
@@ -464,6 +465,7 @@ class HomeViewModel extends ReactiveViewModel {
     // Create a new transaction item
     TransactionItem newItem = TransactionItem(
       id: syncIdInt(),
+      action: AppActions.create,
       qty: isCustom ? 1.0 : quantity,
       price: amountTotal / quantity,
       variantId: variationId,

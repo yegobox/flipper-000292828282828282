@@ -89,6 +89,7 @@ class IsarAPI<M> implements IsarApiInterface {
     int branchId = ProxyService.box.getBranchId()!;
     Customer kCustomer = Customer(
         name: customer['name'],
+        action: AppActions.create,
         tinNumber: customer['tinNumber'],
         email: customer['email'],
         phone: customer['phone'],
@@ -168,6 +169,7 @@ class IsarAPI<M> implements IsarApiInterface {
       final transaction = Transaction(
         id: syncIdInt(),
         reference: syncId(),
+        action: AppActions.create,
         transactionNumber: syncId(),
         draft: true,
         status: pendingStatus,
@@ -207,6 +209,7 @@ class IsarAPI<M> implements IsarApiInterface {
       final transaction = Transaction(
         id: syncIdInt(),
         reference: syncId(),
+        action: AppActions.create,
         transactionNumber: syncId(),
         draft: true,
         status: pendingStatus,
@@ -1435,7 +1438,7 @@ class IsarAPI<M> implements IsarApiInterface {
   }
 
   @override
-  Future<TransactionItem?> getTransactionItem({required int id}) async {
+  Future<TransactionItem?> getTransactionItemById({required int id}) async {
     return await isar.transactionItems.get(id);
   }
 
@@ -1950,7 +1953,10 @@ class IsarAPI<M> implements IsarApiInterface {
       isar.writeTxn(() async {
         for (String colorName in data.colors!) {
           await isar.pColors.put(PColor(
-              name: colorName, active: color.active, branchId: color.branchId));
+              action: AppActions.create,
+              name: colorName,
+              active: color.active,
+              branchId: color.branchId));
         }
       });
     }
@@ -3184,6 +3190,8 @@ class IsarAPI<M> implements IsarApiInterface {
         .actionEqualTo(AppActions.create)
         .or()
         .actionEqualTo(AppActions.deleted)
+        .and()
+        .actionIsNotEmpty()
         .and()
         .branchIdEqualTo(ProxyService.box.getBranchId()!)
         .findAll();

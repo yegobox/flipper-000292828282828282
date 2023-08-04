@@ -237,12 +237,7 @@ int _transactionEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.action;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.action.length * 3;
   bytesCount += 3 + object.createdAt.length * 3;
   {
     final value = object.lastTouched;
@@ -326,7 +321,7 @@ Transaction _transactionDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Transaction(
-    action: reader.readStringOrNull(offsets[0]),
+    action: reader.readString(offsets[0]),
     active: reader.readBool(offsets[1]),
     branchId: reader.readLong(offsets[2]),
     cashReceived: reader.readDouble(offsets[3]),
@@ -362,7 +357,7 @@ P _transactionDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
       return (reader.readBool(offset)) as P;
     case 2:
@@ -1050,25 +1045,8 @@ extension TransactionQueryWhere
 
 extension TransactionQueryFilter
     on QueryBuilder<Transaction, Transaction, QFilterCondition> {
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> actionIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'action',
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
-      actionIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'action',
-      ));
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition> actionEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1082,7 +1060,7 @@ extension TransactionQueryFilter
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       actionGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1097,7 +1075,7 @@ extension TransactionQueryFilter
   }
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition> actionLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1112,8 +1090,8 @@ extension TransactionQueryFilter
   }
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition> actionBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -4256,7 +4234,7 @@ extension TransactionQueryProperty
     });
   }
 
-  QueryBuilder<Transaction, String?, QQueryOperations> actionProperty() {
+  QueryBuilder<Transaction, String, QQueryOperations> actionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'action');
     });
@@ -4422,7 +4400,7 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       note: json['note'] as String?,
       id: json['id'] as int?,
       lastTouched: json['lastTouched'] as String?,
-      action: json['action'] as String?,
+      action: json['action'] as String,
       remoteID: json['remoteID'] as String?,
       ticketName: json['ticketName'] as String?,
       deletedAt: json['deletedAt'] == null
