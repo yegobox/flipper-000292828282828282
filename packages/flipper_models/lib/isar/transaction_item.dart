@@ -18,7 +18,7 @@ class TransactionItem extends IJsonSerializable {
   late double price;
   double? discount;
   String? type;
-  bool? reported;
+  
   late double remainingStock;
   late String createdAt;
   late String updatedAt;
@@ -102,9 +102,9 @@ class TransactionItem extends IJsonSerializable {
     required this.variantId,
     required this.qty,
     required this.price,
+    required this.branchId,
     this.discount,
     this.type,
-    this.reported,
     required this.remainingStock,
     required this.createdAt,
     required this.updatedAt,
@@ -151,6 +151,7 @@ class TransactionItem extends IJsonSerializable {
   String? remoteID;
   String action;
   int? localId;
+  int branchId;
 
   factory TransactionItem.fromRecord(RecordModel record) =>
       TransactionItem.fromJson(record.toJson());

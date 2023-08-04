@@ -221,14 +221,7 @@ const ProductSchema = CollectionSchema(
       ],
     )
   },
-  links: {
-    r'variants': LinkSchema(
-      id: -6238971154009720285,
-      name: r'variants',
-      target: r'Variant',
-      single: false,
-    )
-  },
+  links: {},
   embeddedSchemas: {},
   getId: _productGetId,
   getLinks: _productGetLinks,
@@ -435,12 +428,11 @@ Id _productGetId(Product object) {
 }
 
 List<IsarLinkBase<dynamic>> _productGetLinks(Product object) {
-  return [object.variants];
+  return [];
 }
 
 void _productAttach(IsarCollection<dynamic> col, Id id, Product object) {
   object.id = id;
-  object.variants.attach(col, col.isar.collection<Variant>(), r'variants', id);
 }
 
 extension ProductQueryWhereSort on QueryBuilder<Product, Product, QWhere> {
@@ -3534,64 +3526,7 @@ extension ProductQueryObject
     on QueryBuilder<Product, Product, QFilterCondition> {}
 
 extension ProductQueryLinks
-    on QueryBuilder<Product, Product, QFilterCondition> {
-  QueryBuilder<Product, Product, QAfterFilterCondition> variants(
-      FilterQuery<Variant> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'variants');
-    });
-  }
-
-  QueryBuilder<Product, Product, QAfterFilterCondition> variantsLengthEqualTo(
-      int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'variants', length, true, length, true);
-    });
-  }
-
-  QueryBuilder<Product, Product, QAfterFilterCondition> variantsIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'variants', 0, true, 0, true);
-    });
-  }
-
-  QueryBuilder<Product, Product, QAfterFilterCondition> variantsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'variants', 0, false, 999999, true);
-    });
-  }
-
-  QueryBuilder<Product, Product, QAfterFilterCondition> variantsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'variants', 0, true, length, include);
-    });
-  }
-
-  QueryBuilder<Product, Product, QAfterFilterCondition>
-      variantsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'variants', length, include, 999999, true);
-    });
-  }
-
-  QueryBuilder<Product, Product, QAfterFilterCondition> variantsLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(
-          r'variants', lower, includeLower, upper, includeUpper);
-    });
-  }
-}
+    on QueryBuilder<Product, Product, QFilterCondition> {}
 
 extension ProductQuerySortBy on QueryBuilder<Product, Product, QSortBy> {
   QueryBuilder<Product, Product, QAfterSortBy> sortByAction() {

@@ -119,8 +119,6 @@ class IsarAPI<M> implements IsarApiInterface {
     return isar.transactions
         .filter()
         .statusEqualTo(postPonedStatus)
-        .reportedEqualTo(false)
-        .or()
         .statusEqualTo(status)
         .branchIdEqualTo(branchId)
         .and()
@@ -171,11 +169,8 @@ class IsarAPI<M> implements IsarApiInterface {
         reference: syncId(),
         action: AppActions.create,
         transactionNumber: syncId(),
-        draft: true,
         status: pendingStatus,
         transactionType: transactionType,
-        active: true,
-        reported: false,
         subTotal: 0,
         cashReceived: 0,
         updatedAt: DateTime.now().toIso8601String(),
@@ -211,11 +206,8 @@ class IsarAPI<M> implements IsarApiInterface {
         reference: syncId(),
         action: AppActions.create,
         transactionNumber: syncId(),
-        draft: true,
         status: pendingStatus,
         transactionType: transactionType,
-        active: true,
-        reported: false,
         subTotal: 0,
         cashReceived: 0,
         updatedAt: DateTime.now().toIso8601String(),
@@ -1783,7 +1775,15 @@ class IsarAPI<M> implements IsarApiInterface {
         .statusBranchIdEqualTo(pendingStatus, branchId)
         .findFirst();
   }
-
+   @override
+  Stream<List<Variant>> geVariantStreamByProductId({required int productId}) {
+    return isar.variants
+        .filter()
+        .productIdEqualTo(productId)
+        .deletedAtIsNull()
+        .sortByLastTouchedDesc()
+        .watch(fireImmediately: true);
+  }
   @override
   Stream<List<Product>> productStreams({required int branchId}) {
     return isar.products

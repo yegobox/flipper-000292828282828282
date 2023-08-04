@@ -277,6 +277,7 @@ abstract class IsarApiInterface {
 
   Future<Stock?> addStockToVariant({required Variant variant});
   Stream<Product> getProductStream({required int prodIndex});
+  Stream<List<Variant>> geVariantStreamByProductId({required int productId});
 
   Future<
       ({

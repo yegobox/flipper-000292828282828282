@@ -94,11 +94,10 @@ Transaction? TransactionFMock = Transaction(
   action: AppActions.create,
   reference: Uuid().v1(),
   transactionNumber: Uuid().v1(),
-  draft: true,
+ 
   status: "pending",
   transactionType: 'local',
-  active: true,
-  reported: false,
+  
   subTotal: 0,
   cashReceived: 0,
   updatedAt: DateTime.now().toIso8601String(),
