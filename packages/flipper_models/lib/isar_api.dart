@@ -387,7 +387,7 @@ class IsarAPI<M> implements IsarApiInterface {
         .or()
         .transactionTypeEqualTo('custom')
         .findAll();
-    int count = 0;
+
     for (final transaction in cashIn) {
       temporaryDate = DateTime.parse(transaction.createdAt);
       if (temporaryDate.isAfter(oldDate)) {
@@ -485,7 +485,6 @@ class IsarAPI<M> implements IsarApiInterface {
       });
       return Future.value(200);
     }
-    //return Future.value(404);
   }
 
   @override
@@ -1775,7 +1774,8 @@ class IsarAPI<M> implements IsarApiInterface {
         .statusBranchIdEqualTo(pendingStatus, branchId)
         .findFirst();
   }
-   @override
+
+  @override
   Stream<List<Variant>> geVariantStreamByProductId({required int productId}) {
     return isar.variants
         .filter()
@@ -1784,6 +1784,7 @@ class IsarAPI<M> implements IsarApiInterface {
         .sortByLastTouchedDesc()
         .watch(fireImmediately: true);
   }
+
   @override
   Stream<List<Product>> productStreams({required int branchId}) {
     return isar.products
