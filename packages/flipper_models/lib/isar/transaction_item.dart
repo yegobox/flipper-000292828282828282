@@ -18,7 +18,6 @@ class TransactionItem extends IJsonSerializable {
   late double price;
   double? discount;
   String? type;
-
   late double remainingStock;
   late String createdAt;
   late String updatedAt;
