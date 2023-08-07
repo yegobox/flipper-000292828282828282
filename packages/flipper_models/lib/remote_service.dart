@@ -8,6 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'dart:io';
 
+import 'package:sentry_flutter/sentry_flutter.dart';
+
 abstract class RemoteInterface {
   Future<List<RecordModel>> getCollection({required String collectionName});
   Future<RecordModel?> create(
@@ -187,6 +189,7 @@ class RemoteService implements RemoteInterface {
           } while (page <= totalPages);
         } catch (e) {
           log(e.toString(), name: 'on Pull ${collectionName}');
+          Sentry.captureException(e);
         }
       }
     } on ClientException {
