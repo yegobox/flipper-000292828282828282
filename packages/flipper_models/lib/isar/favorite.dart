@@ -18,10 +18,10 @@ class Favorite extends IJsonSerializable {
   int? productId;
   int? branchId;
 
+  @JsonKey(includeIfNull: true)
+  DateTime? lastTouched;
   @Index()
-  String? lastTouched;
-  @Index()
-  String? remoteID;
+  String? remoteId;
   String action;
   // only for accor when fetching from remove
   int? localId;

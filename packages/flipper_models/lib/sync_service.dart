@@ -11,9 +11,9 @@ import 'isar_models.dart';
 
 abstract class IJsonSerializable {
   Map<String, dynamic> toJson();
-  String? lastTouched;
+  DateTime? lastTouched = DateTime.now();
   DateTime? deletedAt;
-  String? remoteID;
+  String? remoteId;
   String action = AppActions.create;
   int? localId;
 }
@@ -38,39 +38,26 @@ class SynchronizationService<M extends IJsonSerializable>
         List<TransactionItem> itemOnTransaction = await ProxyService.isar
             .transactionItems(
                 transactionId: json["id"], doneWithTransaction: true);
-        log(itemOnTransaction.length.toString(), name: "ItemOnTransaction");
         String namesString =
             itemOnTransaction.map((item) => item.name).join(',');
         json["itemName"] = namesString;
       }
 
       if (endpoint == "stocks" && json["retailPrice"] == null) {
-        log(json.toString(), name: "stocks");
         throw Exception("stocks has null retail price");
       }
 
       if (endpoint == "variants" && json["retailPrice"] == null) {
-        log(json.toString(), name: "variants");
         throw Exception("variant has null retail price");
       }
 
       /// remove trailing dashes to sent lastTouched
       json["lastTouched"] = DateTime.now().toIso8601String();
-      json["id"] = syncId();
-
-      RecordModel? result;
-      // log(json.toString());
-      // Assume that `json` is a variable holding a JSON object
-      //because there is a case where I might update yet there is no equivalent
-      //object remote, in this case we will fallback in create
+      json['localId'] = json['id'];
+      RecordModel? result = null;
       if (json['action'] == 'update' || json['action'] == 'delete') {
-        var remoteID = json["remoteID"];
-        if (remoteID != null) {
-          json["id"] = remoteID;
-          result = await ProxyService.remote
-              .update(data: json, collectionName: endpoint, recordId: remoteID);
-        }
-        // ignore: unnecessary_null_comparison
+        result = await ProxyService.remote.update(
+            data: json, collectionName: endpoint, recordId: json['remoteId']);
       } else if (json['action'] == 'create' || result == null) {
         result = await ProxyService.remote
             .create(collection: json, collectionName: endpoint);
@@ -97,9 +84,9 @@ class SynchronizationService<M extends IJsonSerializable>
     transaction.createdAt = DateTime.now().toIso8601String();
 
     Map<String, dynamic>? variantRecord = await _push(transaction as M);
-    if (variantRecord != null) {
+    if (variantRecord != null && variantRecord.isNotEmpty) {
       Transaction o = Transaction.fromJson(variantRecord);
-      o.remoteID = variantRecord['id'];
+      o.remoteId = variantRecord['id'];
 
       // /// keep the local ID unchanged to avoid complication
       o.id = transaction.id;
@@ -119,9 +106,9 @@ class SynchronizationService<M extends IJsonSerializable>
       int transactionItemId = item.id!;
 
       Map<String, dynamic>? stockRecord = await _push(item as M);
-      if (stockRecord != null) {
+      if (stockRecord != null && stockRecord.isNotEmpty) {
         TransactionItem iItem = TransactionItem.fromJson(stockRecord);
-        iItem.remoteID = stockRecord['id'];
+        iItem.remoteId = stockRecord['id'];
 
         /// keep the local ID unchanged to avoid complication
         iItem.id = transactionItemId;
@@ -134,9 +121,9 @@ class SynchronizationService<M extends IJsonSerializable>
       int stockId = stock.id!;
 
       Map<String, dynamic>? stockRecord = await _push(stock as M);
-      if (stockRecord != null) {
+      if (stockRecord != null && stockRecord.isNotEmpty) {
         Stock s = Stock.fromJson(stockRecord);
-        s.remoteID = stockRecord['id'];
+        s.remoteId = stockRecord['id'];
 
         /// keep the local ID unchanged to avoid complication
         s.id = stockId;
@@ -149,9 +136,9 @@ class SynchronizationService<M extends IJsonSerializable>
       int variantId = variant.id!;
 
       Map<String, dynamic>? variantRecord = await _push(variant as M);
-      if (variantRecord != null) {
+      if (variantRecord != null && variantRecord.isNotEmpty) {
         Variant va = Variant.fromJson(variantRecord);
-        va.remoteID = variantRecord['id'];
+        va.remoteId = variantRecord['id'];
 
         // /// keep the local ID unchanged to avoid complication
         va.id = variantId;
@@ -163,9 +150,9 @@ class SynchronizationService<M extends IJsonSerializable>
     for (Product product in data.products) {
       Map<String, dynamic>? record = await _push(product as M);
       int oldId = product.id!;
-      if (record != null) {
+      if (record != null && record.isNotEmpty) {
         Product product = Product.fromJson(record);
-        product.remoteID = record['id'];
+        product.remoteId = record['id'];
 
         /// keep the local ID unchanged to avoid complication
         product.id = oldId;
@@ -177,9 +164,9 @@ class SynchronizationService<M extends IJsonSerializable>
     for (Favorite favorite in data.favorites) {
       Map<String, dynamic>? record = await _push(favorite as M);
       int oldId = favorite.id!;
-      if (record != null) {
+      if (record != null && record.isNotEmpty) {
         Favorite fav = Favorite.fromJson(record);
-        fav.remoteID = record['id'];
+        fav.remoteId = record['id'];
 
         /// keep the local ID unchanged to avoid complication
         fav.id = oldId;
@@ -192,9 +179,9 @@ class SynchronizationService<M extends IJsonSerializable>
     for (Device device in data.devices) {
       Map<String, dynamic>? record = await _push(device as M);
       int oldId = device.id!;
-      if (record != null) {
+      if (record != null && record.isNotEmpty) {
         Device dev = Device.fromJson(record);
-        dev.remoteID = record['id'];
+        dev.remoteId = record['id'];
 
         /// keep the local ID unchanged to avoid complication
         dev.id = oldId;

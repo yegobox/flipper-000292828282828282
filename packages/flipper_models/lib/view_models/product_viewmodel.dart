@@ -67,6 +67,7 @@ class ProductViewModel extends TenantViewModel {
               id: syncIdInt(),
               name: "temp",
               action: 'create',
+              lastTouched: DateTime.now(),
               businessId: businessId,
               color: "#e74c3c",
               branchId: branchId)
