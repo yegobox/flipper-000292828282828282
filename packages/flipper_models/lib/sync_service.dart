@@ -53,7 +53,7 @@ class SynchronizationService<M extends IJsonSerializable>
       /// remove trailing dashes to sent lastTouched
       json["lastTouched"] = DateTime.now().toIso8601String();
 
-      RecordModel? result=null;
+      RecordModel? result = null;
 
       if (json['action'] == 'update' || json['action'] == 'delete') {
         result = await ProxyService.remote.update(
@@ -72,7 +72,6 @@ class SynchronizationService<M extends IJsonSerializable>
         result = await ProxyService.remote
             .create(collection: json, collectionName: endpoint);
       }
-
       if (result != null) {
         Map<String, dynamic> updatedJson = Map.from(result.toJson());
         updatedJson['action'] = AppActions.updated;
