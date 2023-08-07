@@ -395,7 +395,7 @@ class RemoteService implements RemoteInterface {
 
       if (localEbm == null &&
           ebm.businessId == ProxyService.box.getBusinessId()) {
-        ebm.id = syncIdInt();
+        ebm.id = randomNumber();
         ebm.lastTouched = DateTime.now();
         await ProxyService.isar.create(data: ebm);
         // update business

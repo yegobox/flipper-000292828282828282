@@ -166,10 +166,10 @@ class IsarAPI<M> implements IsarApiInterface {
     if (existTransaction == null) {
       final transaction = Transaction(
         lastTouched: DateTime.now(),
-        id: syncIdInt(),
-        reference: syncId(),
+        id: randomNumber(),
+        reference: randomString(),
         action: AppActions.create,
-        transactionNumber: syncId(),
+        transactionNumber: randomString(),
         status: pendingStatus,
         transactionType: transactionType,
         subTotal: 0,
@@ -204,10 +204,10 @@ class IsarAPI<M> implements IsarApiInterface {
     if (existTransaction == null) {
       final transaction = Transaction(
         lastTouched: DateTime.now(),
-        id: syncIdInt(),
-        reference: syncId(),
+        id: randomNumber(),
+        reference: randomString(),
         action: AppActions.create,
-        transactionNumber: syncId(),
+        transactionNumber: randomString(),
         status: pendingStatus,
         transactionType: transactionType,
         subTotal: 0,
@@ -875,7 +875,7 @@ class IsarAPI<M> implements IsarApiInterface {
 
     product.description = 'description';
     product.color = '#5A2328';
-    product.id = syncIdInt();
+    product.id = randomNumber();
     product.businessId = ProxyService.box.getBusinessId()!;
     product.branchId = ProxyService.box.getBranchId()!;
 
@@ -906,7 +906,7 @@ class IsarAPI<M> implements IsarApiInterface {
             branchId: ProxyService.box.getBranchId()!,
             supplyPrice: 0.0,
             retailPrice: 0.0,
-            id: syncIdInt(),
+            id: randomNumber(),
             isTaxExempted: false)
           ..name = 'Regular'
           ..productId = kProduct.id!
@@ -953,7 +953,7 @@ class IsarAPI<M> implements IsarApiInterface {
 
     Stock stock = Stock(
         lastTouched: DateTime.now(),
-        id: syncIdInt(),
+        id: randomNumber(),
         action: 'create',
         branchId: branchId,
         variantId: variant!.id!,
@@ -1285,7 +1285,7 @@ class IsarAPI<M> implements IsarApiInterface {
               branchId: ProxyService.box.getBranchId()!,
               supplyPrice: 0.0,
               retailPrice: 0.0,
-              id: syncIdInt(),
+              id: randomNumber(),
               isTaxExempted: false)
             ..name = 'Regular'
             ..productId = product.id!
@@ -1330,7 +1330,7 @@ class IsarAPI<M> implements IsarApiInterface {
       // add its stock
       Stock stock = Stock(
           lastTouched: DateTime.now(),
-          id: syncIdInt(),
+          id: randomNumber(),
           action: 'create',
           branchId: branchId,
           variantId: variation!.id!,
@@ -1578,7 +1578,7 @@ class IsarAPI<M> implements IsarApiInterface {
         'defaultApp': ProxyService.box.getDefaultApp(),
         'deviceName': Platform.operatingSystem,
         'deviceVersion': Platform.operatingSystemVersion,
-        'linkingCode': syncIdInt().toString()
+        'linkingCode': randomNumber().toString()
       });
     }
 
@@ -3130,7 +3130,7 @@ class IsarAPI<M> implements IsarApiInterface {
     int branchId = ProxyService.box.getBranchId()!;
     Stock stock = Stock(
         lastTouched: DateTime.now(),
-        id: syncIdInt(),
+        id: randomNumber(),
         action: 'create',
         branchId: branchId,
         variantId: variant.id!,

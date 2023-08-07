@@ -10,7 +10,7 @@ part 'favorite.g.dart';
 @JsonSerializable()
 @Collection()
 class Favorite extends IJsonSerializable {
-  Id? id = syncIdInt();
+  Id? id = randomNumber();
 
   @Index(unique: true)
   int? favIndex;
