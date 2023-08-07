@@ -15,6 +15,8 @@ abstract class RemoteInterface {
   Future<RecordModel?> create(
       {required Map<String, dynamic> collection,
       required String collectionName});
+  Future<void> hardDelete(
+      {required String remoteId, required String collectionId});
   Future<RecordModel?> update(
       {required Map<String, dynamic> data,
       required String collectionName,
@@ -446,5 +448,11 @@ class RemoteService implements RemoteInterface {
         await ProxyService.isar.update(data: remoteTransactionItem);
       }
     }
+  }
+
+  @override
+  Future<void> hardDelete(
+      {required String remoteId, required String collectionId}) async {
+    await pb.collection(collectionId).delete(remoteId);
   }
 }
