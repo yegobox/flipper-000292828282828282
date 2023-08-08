@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'package:flipper_models/isar/random.dart';
 import 'package:flipper_models/server_definitions.dart';
 import 'package:flipper_models/sync.dart';
 import 'package:flipper_services/constants.dart';

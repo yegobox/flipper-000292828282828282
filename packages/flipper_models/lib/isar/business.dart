@@ -1,7 +1,5 @@
 library flipper_models;
 
-import 'dart:convert';
-
 import 'package:flipper_services/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flipper_models/sync_service.dart';
