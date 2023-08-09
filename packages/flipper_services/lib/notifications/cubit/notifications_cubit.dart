@@ -218,8 +218,8 @@ class NotificationsCubit {
   Future<void> snoozeTask(Conversation task) async {
     // log.v('Snoozing notification for task: ${task.id}');
     await cancelNotification(task.id.codeUnitAt(0));
-    const snoozeDuration = Duration(minutes: 10);
-    final snoozeTime = DateTime.now().add(snoozeDuration);
+    // const snoozeDuration = Duration(minutes: 10);
+    // final snoozeTime = DateTime.now().add(snoozeDuration);
     // final updatedTask = task.copyWith(dueDate: snoozeTime);
     // await scheduleNotification(updatedTask);
   }
@@ -451,7 +451,7 @@ class NotificationsCubit {
       },
     );
 
-    _timers[conversation.id!.toString()] = timer;
+    _timers[conversation.id.toString()] = timer;
     // log.v('Scheduled notification for task: ${task.id}');
   }
 
