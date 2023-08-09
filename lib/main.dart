@@ -119,7 +119,7 @@ void main() async {
     setupBottomSheetUi();
 
     ///Will switch to localNotification when it support windows
-    if (isAndroid || isIos) {
+    if (isAndroid || isIos && !isWeb) {
       await NotificationsCubit.initialize(
         flutterLocalNotificationsPlugin: FlutterLocalNotificationsPlugin(),
       );

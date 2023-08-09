@@ -320,7 +320,7 @@ class NotificationsCubit {
       },
     );
 
-    _timers[task.id!.toString()] = timer;
+    _timers[task.id.toString()] = timer;
     // log.v('Scheduled notification for task: ${task.id}');
   }
 
@@ -423,7 +423,7 @@ class NotificationsCubit {
     }
 
     final localNotification = LocalNotification(
-      identifier: conversation.id!.toString(),
+      identifier: conversation.id.toString(),
       title: conversation.body,
       body: conversation.body,
     );
