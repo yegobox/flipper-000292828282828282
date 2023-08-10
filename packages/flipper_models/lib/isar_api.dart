@@ -3,7 +3,6 @@ import 'package:html_unescape/html_unescape.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flipper_models/data.loads/jcounter.dart';
 import 'package:flipper_models/isar/random.dart';
 import 'package:flipper_models/isar/receipt_signature.dart';
 import 'package:flipper_models/socials_http_client.dart';
@@ -90,7 +89,7 @@ class IsarAPI<M> implements IsarApiInterface {
     int branchId = ProxyService.box.getBranchId()!;
     Customer kCustomer = Customer(
         name: customer['name'],
-        id: randomString(),
+        id: randomNumber(),
         action: AppActions.create,
         tinNumber: customer['tinNumber'],
         email: customer['email'],
@@ -266,7 +265,7 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Stream<List<Transaction>> getTransactionsByCustomerId(
-      {required String customerId}) async* {
+      {required int customerId}) async* {
     yield* iisar.transactions.where().customerIdEqualTo(customerId).watch();
   }
 
@@ -658,7 +657,7 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Future assingTransactionToCustomer(
-      {required String customerId, required String transactionId}) async {
+      {required int customerId, required String transactionId}) async {
     // get transaction where id = transactionId from db
     Transaction? transaction =
         iisar.transactions.where().idEqualTo(transactionId).findFirst();
@@ -1370,9 +1369,14 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Stream<Customer?> getCustomerByTransactionId({required String id}) {
+    Transaction? tr = iisar.transactions.get(id);
     return iisar.customers
-        .watchObject(id, fireImmediately: true)
-        .asyncMap((event) => event);
+        .where()
+        .idEqualTo(tr!.customerId!)
+        .deletedAtIsNull()
+        .sortByLastTouchedDesc()
+        .watch(fireImmediately: true)
+        .asyncMap((event) => event.first);
   }
 
   @override
@@ -1584,7 +1588,7 @@ class IsarAPI<M> implements IsarApiInterface {
   }
 
   @override
-  Future<JTenant> saveTenant(String phoneNumber, String name,
+  Future<Tenant> saveTenant(String phoneNumber, String name,
       {required Business business, required Branch branch}) async {
     final http.Response response = await flipperHttpClient.post(
       Uri.parse("$apihub/v2/api/tenant"),
@@ -1600,7 +1604,7 @@ class IsarAPI<M> implements IsarApiInterface {
       }),
     );
     if (response.statusCode == 200) {
-      JTenant jTenant = jTenantFromJson(response.body);
+      Tenant jTenant = Tenant.fromRawJson(response.body);
       ITenant iTenant = ITenant(
           id: randomNumber(),
           name: jTenant.name,
@@ -1619,21 +1623,21 @@ class IsarAPI<M> implements IsarApiInterface {
         isar.iTenants.put(iTenant);
       });
 
-      return jTenantFromJson(response.body);
+      return Tenant.fromRawJson(response.body);
     } else {
       throw InternalServerError(term: "internal server error");
     }
   }
 
   @override
-  Future<List<JTenant>> signup({required Map business}) async {
+  Future<List<Tenant>> signup({required Map business}) async {
     final http.Response response = await flipperHttpClient.post(
       Uri.parse("$apihub/v2/api/business"),
       body: jsonEncode(business),
     );
     if (response.statusCode == 200) {
-      for (JTenant tenant in jListTenantFromJson(response.body)) {
-        JTenant jTenant = tenant;
+      for (Tenant tenant in Tenant.fromJsonList(response.body)) {
+        Tenant jTenant = tenant;
         ITenant iTenant = ITenant(
             id: jTenant.id,
             name: jTenant.name,
@@ -1656,7 +1660,7 @@ class IsarAPI<M> implements IsarApiInterface {
           isar.iTenants.put(iTenant);
         });
       }
-      return jListTenantFromJson(response.body);
+      return Tenant.fromJsonList(response.body);
     } else {
       throw InternalServerError(term: "internal server error");
     }
@@ -1738,7 +1742,7 @@ class IsarAPI<M> implements IsarApiInterface {
             name: tenant.name,
             businessId: tenant.businessId,
             nfcEnabled: tenant.nfcEnabled,
-            email: tenant.email ?? '',
+            email: tenant.email,
             userId: syncF.id,
             phoneNumber: tenant.phoneNumber);
 
@@ -2180,23 +2184,23 @@ class IsarAPI<M> implements IsarApiInterface {
     }
     if (data is Counter) {
       iisar.write((isar) async {
-        return isar.counters.put(data..backed = false);
+        return isar.counters.put(data);
       });
       final response = await flipperHttpClient.patch(
         Uri.parse("$apihub/v2/api/counter/${data.id}"),
         body: jsonEncode(data.toJson()),
       );
       if (response.statusCode == 200) {
-        JCounter jCounter = jSingleCounterFromJson(response.body);
+        log(response.body, name: 'response.body');
+        Counter counter = Counter.fromRawJson(response.body);
         iisar.write((isar) async {
           return isar.counters.put(data
-            ..branchId = jCounter.branchId
-            ..businessId = jCounter.businessId
-            ..receiptType = jCounter.receiptType
+            ..branchId = counter.branchId
+            ..businessId = counter.businessId
+            ..receiptType = counter.receiptType
             ..id = data.id
-            ..backed = true
-            ..totRcptNo = jCounter.totRcptNo
-            ..curRcptNo = jCounter.curRcptNo);
+            ..totRcptNo = counter.totRcptNo
+            ..curRcptNo = counter.curRcptNo);
         });
       } else {
         throw InternalServerError(term: "error patching the counter");
@@ -2453,8 +2457,8 @@ class IsarAPI<M> implements IsarApiInterface {
     final http.Response response =
         await flipperHttpClient.get(Uri.parse("$apihub/v2/api/tenant/$id"));
     if (response.statusCode == 200) {
-      for (JTenant tenant in jListTenantFromJson(response.body)) {
-        JTenant jTenant = tenant;
+      for (Tenant tenant in Tenant.fromJsonList(response.body)) {
+        Tenant jTenant = tenant;
         ITenant iTenant = ITenant(
             id: jTenant.id,
             name: jTenant.name,
@@ -2542,30 +2546,26 @@ class IsarAPI<M> implements IsarApiInterface {
   Future<void> loadCounterFromOnline({required int businessId}) async {
     final http.Response response = await flipperHttpClient
         .get(Uri.parse("$apihub/v2/api/counter/$businessId"));
+
     if (response.statusCode == 200) {
-      List<JCounter> counters = jCounterFromJson(response.body);
-      for (JCounter jCounter in counters) {
+      final List<dynamic> jsonResponse = json.decode(response.body);
+      List<Counter> counters = Counter.fromJsonList(jsonResponse);
+
+      for (Counter counter in counters) {
         iisar.write((isar) async {
-          return isar.counters.put(Counter(id: randomString())
-            ..branchId = jCounter.branchId
-            ..businessId = jCounter.businessId
-            ..receiptType = jCounter.receiptType
-            ..id = jCounter.id
-            ..backed = true
-            ..totRcptNo = jCounter.totRcptNo
-            ..curRcptNo = jCounter.curRcptNo);
+          return isar.counters.put(Counter(
+            id: counter.id,
+            branchId: counter.branchId,
+            businessId: counter.businessId,
+            totRcptNo: counter.totRcptNo,
+            curRcptNo: counter.curRcptNo,
+            receiptType: counter.receiptType,
+          ));
         });
       }
     } else {
       throw InternalServerError(term: "Error loading the counters");
     }
-  }
-
-  @override
-  Future<List<Counter>> unSyncedCounters({required int branchId}) {
-    return iisar.write((isar) async {
-      return isar.counters.where().backedEqualTo(false).findAll();
-    });
   }
 
   @override
