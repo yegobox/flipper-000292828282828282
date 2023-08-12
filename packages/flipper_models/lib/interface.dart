@@ -142,11 +142,6 @@ abstract class IsarApiInterface {
   //analytics
   int lifeTimeCustomersForbranch({required String branchId});
 
-  Future<List<Transaction>> weeklyTransactionsReport({
-    required DateTime weekStartDate,
-    required DateTime weekEndDate,
-    required int branchId,
-  });
   //save discount
   Future<void> saveDiscount(
       {required int branchId, required name, double? amount});
