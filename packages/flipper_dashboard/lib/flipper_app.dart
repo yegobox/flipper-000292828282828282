@@ -145,7 +145,9 @@ class _FlipperAppState extends State<FlipperApp> with WidgetsBindingObserver {
                               child: ProfileWidget(
                                 tenant: tenant,
                                 size: 25,
-                                sessionActive: tenant.sessionActive!,
+                                sessionActive: tenant.sessionActive == null
+                                    ? false
+                                    : tenant.sessionActive!,
                                 showIcon: false,
                               ),
                             );
@@ -183,7 +185,9 @@ class _FlipperAppState extends State<FlipperApp> with WidgetsBindingObserver {
           model.defaultTenant();
           ProxyService.isar.refreshSession(
               branchId: ProxyService.box.getBranchId()!,
-              refreshRate: kDebugMode ? 10 : 10);
+              refreshRate: kDebugMode
+                  ? 10
+                  : ProxyService.remoteConfig.sessionTimeOutMinutes());
 
           /// if there is current order ongoing show them when the app starts
           ProxyService.dynamicLink.handleDynamicLink(context);
@@ -241,13 +245,16 @@ class _FlipperAppState extends State<FlipperApp> with WidgetsBindingObserver {
               ),
               body: StreamBuilder<ITenant?>(
                   stream: ProxyService.isar.authState(
-                    branchId: ProxyService.box.getBranchId()!,
+                    branchId: ProxyService.box.getBranchId() ?? 0,
                   ),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData && !snapshot.data!.sessionActive!) {
+                    if (snapshot.hasData &&
+                        !(snapshot.data!.sessionActive == null
+                            ? false
+                            : snapshot.data!.sessionActive!)) {
                       SchedulerBinding.instance.addPostFrameCallback((_) {
                         _removeOverlay();
-                        _insertOverlay(context: context, model: model);
+                        // _insertOverlay(context: context, model: model);
                       });
                     } else if (snapshot.hasData &&
                         snapshot.data!.sessionActive!) {

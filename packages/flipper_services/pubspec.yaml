@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
 
   stacked: ^3.4.0
-  firebase_remote_config: ^4.2.2
+  firebase_remote_config: ^4.2.5
   share_plus: ^7.0.2
   # in_app_review: ^2.0.6
   firebase_messaging: ^14.6.2
@@ -50,14 +50,25 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   connectivity_plus: ^4.0.1
   flutter_statusbarcolor_ns: ^0.5.0
-  pocketbase: ^0.10.0
+  #TODO: real-time support on web https://github.com/pocketbase/dart-sdk/issues/11
+  # TODO: find out how to take advantage this
+  #   final prefs = await SharedPreferences.getInstance();
+
+  # final store = AsyncAuthStore(
+  #  save:    (String data) async => prefs.setString('pb_auth', data),
+  #  initial: prefs.getString('pb_auth'),
+  # );
+
+  # final pb = PocketBase('http://example.com', authStore: store);
+  # TODO: take advantage of pb.backups.upload(file) for backup of database
+  pocketbase: ^0.15.0
   get_it: ^7.6.0
   injectable: ^2.3.0
   flipper_routing: ^0.0.1-dev.3
   flipper_models: ^0.0.1-dev.7
   get_storage: ^2.1.1
   google_fonts: ^5.1.0
-  shared_preferences: ^2.1.1
+  shared_preferences: ^2.2.1
   newrelic_mobile: ^1.0.1
   flutter_local_notifications: ^14.1.1
   local_notifier: ^0.1.5
