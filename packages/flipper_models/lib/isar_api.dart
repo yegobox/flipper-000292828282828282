@@ -79,7 +79,7 @@ class IsarAPI<M> implements IsarApiInterface {
         engine: foundation.kIsWeb || Platform.isLinux
             ? IsarEngine.sqlite
             : IsarEngine.isar,
-        name: 'flipper-db',
+        // name: 'flipper-db',
       );
     } else {
       db = isa;
@@ -232,12 +232,12 @@ class IsarAPI<M> implements IsarApiInterface {
     DateTime oldDate;
     DateTime temporaryDate;
 
-    if (period == 'Today') {
+    if (period == TransactionPeriod.today) {
       DateTime tempToday = DateTime.now();
       oldDate = DateTime(tempToday.year, tempToday.month, tempToday.day);
-    } else if (period == 'This Week') {
+    } else if (period == TransactionPeriod.thisWeek) {
       oldDate = DateTime.now().subtract(Duration(days: 7));
-    } else if (period == 'This Month') {
+    } else if (period == TransactionPeriod.thisMonth) {
       oldDate = DateTime.now().subtract(Duration(days: 30));
     } else {
       oldDate = DateTime.now().subtract(Duration(days: 365));
@@ -249,11 +249,11 @@ class IsarAPI<M> implements IsarApiInterface {
     List<Transaction> cashIn = db.read((isar) => isar.transactions
         .where()
         .statusEqualTo(COMPLETE)
-        .transactionTypeEqualTo('Cash In')
+        .transactionTypeEqualTo(TransactionType.cashIn)
         .or()
-        .transactionTypeEqualTo('Sale')
+        .transactionTypeEqualTo(TransactionType.sale)
         .or()
-        .transactionTypeEqualTo('custom')
+        .transactionTypeEqualTo(TransactionType.custom)
         .findAll());
 
     for (final transaction in cashIn) {
@@ -267,7 +267,7 @@ class IsarAPI<M> implements IsarApiInterface {
     List<Transaction> cashOut = db.transactions
         .where()
         .statusEqualTo(COMPLETE)
-        .transactionTypeEqualTo('Cash Out')
+        .transactionTypeEqualTo(TransactionType.cashOut)
         .findAll();
     for (final transaction in cashOut) {
       temporaryDate = DateTime.parse(transaction.createdAt);
@@ -304,11 +304,11 @@ class IsarAPI<M> implements IsarApiInterface {
     List<Transaction> cashIn = db.read((isar) => isar.transactions
         .where()
         .statusEqualTo(COMPLETE)
-        .transactionTypeEqualTo('Cash In')
+        .transactionTypeEqualTo(TransactionType.cashIn)
         .or()
-        .transactionTypeEqualTo('Sale')
+        .transactionTypeEqualTo(TransactionType.sale)
         .or()
-        .transactionTypeEqualTo('custom')
+        .transactionTypeEqualTo(TransactionType.custom)
         .branchIdEqualTo(branchId)
         .findAll());
     for (final transaction in cashIn) {
@@ -322,7 +322,7 @@ class IsarAPI<M> implements IsarApiInterface {
     List<Transaction> cashOut = db.transactions
         .where()
         .statusEqualTo(COMPLETE)
-        .transactionTypeEqualTo('Cash Out')
+        .transactionTypeEqualTo(TransactionType.cashOut)
         .findAll();
     for (final transaction in cashOut) {
       temporaryDate = DateTime.parse(transaction.createdAt);
@@ -2888,15 +2888,15 @@ class IsarAPI<M> implements IsarApiInterface {
     final isarQuery = db.transactions.where().statusEqualTo(status ?? COMPLETE);
 
     if (isCashOut) {
-      isarQuery.and().transactionTypeEqualTo('Cash Out');
+      isarQuery.and().transactionTypeEqualTo(TransactionType.cashOut);
     } else {
       isarQuery
           .and()
-          .transactionTypeEqualTo('Cash In')
+          .transactionTypeEqualTo(TransactionType.cashIn)
           .or()
-          .transactionTypeEqualTo('Sale')
+          .transactionTypeEqualTo(TransactionType.sale)
           .or()
-          .transactionTypeEqualTo('custom');
+          .transactionTypeEqualTo(TransactionType.custom);
     }
 
     if (branchId != null) {

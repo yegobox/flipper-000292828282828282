@@ -12,6 +12,19 @@ class AppActions {
   static const String created = "created";
 }
 
+class TransactionType {
+  static String cashIn = 'Cash In';
+  static String cashOut = 'Cash Out';
+  static String sale = 'Sale';
+  static String custom = 'custom';
+}
+
+class TransactionPeriod {
+  static String today = 'Today';
+  static String thisWeek = 'This Week';
+  static String thisMonth = 'This Month';
+}
+
 const String defaultApp = 'defaultApp';
 const String PARKED = 'parked';
 const String PENDING = 'pending';
