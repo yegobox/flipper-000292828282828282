@@ -41,6 +41,10 @@ class HomeViewModel extends ReactiveViewModel {
   Locale? klocale;
 
   Locale? get locale => klocale;
+
+  String? _categoryName;
+  get categoryName => _categoryName;
+
   get categories => app.categories;
 
   String? getSetting() {
@@ -296,6 +300,30 @@ class HomeViewModel extends ReactiveViewModel {
       log("id is: $id");
       await ProxyService.keypad.getTransactionById(id: id);
     }
+  }
+
+  void setName({String? name}) {
+    _categoryName = name;
+    notifyListeners();
+  }
+
+  void loadCategories() {
+    app.loadCategories();
+  }
+
+  ///create a new category and refresh list of categories
+  Future<void> createCategory() async {
+    final int? branchId = ProxyService.box.getBranchId();
+    if (categoryName == null) return;
+    final Category category = Category(
+        name: categoryName!,
+        active: true,
+        focused: false,
+        branchId: branchId!,
+        id: randomString());
+
+    await ProxyService.isar.create(data: category);
+    app.loadCategories();
   }
 
   ///list products availabe for sell
