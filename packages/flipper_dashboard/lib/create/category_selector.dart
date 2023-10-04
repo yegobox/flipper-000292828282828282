@@ -19,6 +19,7 @@ class CategorySelector extends StatelessWidget {
   final List<Category> categories;
   final _routerService = locator<RouterService>();
   final String modeOfOperation;
+  
   Widget categorySelector(
       {required List<Category> categories, required BuildContext context}) {
     late Text text;
@@ -38,6 +39,7 @@ class CategorySelector extends StatelessWidget {
               .bodyLarge!
               .copyWith(color: Colors.black),
         );
+        
         return text;
       } else {
         text = Text('Select Category',
@@ -57,7 +59,7 @@ class CategorySelector extends StatelessWidget {
     Widget dynamicChild = GestureDetector(
         onTap: () {
           _routerService
-              .navigateTo(ListCategoriesRoute(categories: categories));
+              .navigateTo(ListCategoriesRoute(categories: categories, modeOfOperation: modeOfOperation));
         },
         child: Wrap(
           children: <Widget>[
@@ -82,7 +84,7 @@ class CategorySelector extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 _routerService
-                    .navigateTo(ListCategoriesRoute(categories: categories));
+                    .navigateTo(ListCategoriesRoute(categories: categories, modeOfOperation: modeOfOperation));
               },
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 0.3),

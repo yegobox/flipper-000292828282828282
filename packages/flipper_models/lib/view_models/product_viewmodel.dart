@@ -33,6 +33,9 @@ class ProductViewModel extends TenantViewModel {
 
   get categories => app.categories;
 
+  String? _selectedCategoryName = "";
+  get selectedCategoryName => _selectedCategoryName;
+
   List<Product> _products = [];
 
   List<Product> get products => _products
@@ -116,6 +119,7 @@ class ProductViewModel extends TenantViewModel {
             lastTouched: DateTime.now(),
             businessId: ProxyService.box.getBusinessId()!,
             color: COLOR,
+            categoryId: _selectedCategoryName,
             branchId: ProxyService.box.getBranchId()!));
 
     setCurrentProduct(currentProduct: product);
@@ -126,6 +130,11 @@ class ProductViewModel extends TenantViewModel {
 
   void setName({String? name}) {
     _productName = name;
+    notifyListeners();
+  }
+
+  void setCategoryName({String? categoryName}) {
+    _selectedCategoryName = categoryName;
     notifyListeners();
   }
 

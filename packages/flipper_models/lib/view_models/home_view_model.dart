@@ -45,6 +45,9 @@ class HomeViewModel extends ReactiveViewModel {
   String? _categoryName;
   get categoryName => _categoryName;
 
+  String? _selectedCategoryName = "";
+  get selectedCategoryName => _selectedCategoryName;
+
   get categories => app.categories;
 
   String? getSetting() {
@@ -100,6 +103,35 @@ class HomeViewModel extends ReactiveViewModel {
 
   setTab({required int tab}) {
     _tab = tab;
+  }
+
+  void setCategoryName({String? categoryName}) {
+    _selectedCategoryName = categoryName;
+    notifyListeners();
+  }
+
+  void updateCategory({required Category category}) async {
+    int branchId = ProxyService.box.getBranchId()!;
+    for (Category category in categories) {
+      if (category.focused) {
+        Category cat = category;
+        cat.focused = !cat.focused;
+        cat.branchId = branchId;
+        cat.active = !cat.active;
+        await ProxyService.isar.update(
+          data: cat,
+        );
+      }
+    }
+
+    Category cat = category;
+    cat.focused = !cat.focused;
+    cat.active = !cat.active;
+    cat.branchId = branchId;
+    await ProxyService.isar.update(
+      data: cat,
+    );
+    app.loadCategories();
   }
 
   void keyboardKeyPressed({required String key}) async {
@@ -419,6 +451,7 @@ class HomeViewModel extends ReactiveViewModel {
     cbTransaction.transactionType = cbTransactionType;
     cbTransaction.paymentType = "Cash";
     cbTransaction.status = 'completed';
+    cbTransaction.categoryId = _selectedCategoryName;
 
     List<TransactionItem> cbTransactionItems = await ProxyService.isar
         .transactionItems(
