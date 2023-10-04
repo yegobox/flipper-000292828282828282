@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CategorySelector extends StatelessWidget {
   CategorySelector(
-      {Key? key, required this.categories, this.modeOfOperation = 'normal'})
+      {Key? key, required this.categories, this.modeOfOperation = 'product'})
       : super(key: key);
   CategorySelector.transactionMode(
       {Key? key,
@@ -75,7 +75,7 @@ class CategorySelector extends StatelessWidget {
           ],
         ));
 
-    if (modeOfOperation == 'normal') {
+    if (modeOfOperation == 'product') {
       dynamicChild = Padding(
         padding: const EdgeInsets.only(left: 18, right: 18),
         child: SingleChildScrollView(

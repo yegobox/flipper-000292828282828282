@@ -33,6 +33,7 @@ class ListCategories extends StatelessWidget {
             onTap: () {
               model.updateCategory(category: categories[i]);
               model.setCategoryName(categoryName: categories[i].name);
+              log("Category name: " + categories[i].name);
             },
             child: SingleChildScrollView(
               child: ListTile(
@@ -48,6 +49,7 @@ class ListCategories extends StatelessWidget {
                   onChanged: (value) {
                     model.updateCategory(category: categories[i]);
                     model.setCategoryName(categoryName: categories[i].name);
+                    log("Category name: " + categories[i].name);
                   },
                 ),
               ),
@@ -80,6 +82,7 @@ class ListCategories extends StatelessWidget {
             onTap: () {
               model.updateCategory(category: categories[i]);
               model.setCategoryName(categoryName: categories[i].name);
+              log("Category name: " + categories[i].name);
             },
             child: SingleChildScrollView(
               child: ListTile(
@@ -94,6 +97,8 @@ class ListCategories extends StatelessWidget {
                       categories[i].focused == true ? categories[i].id : '0',
                   onChanged: (value) {
                     model.updateCategory(category: categories[i]);
+                    model.setCategoryName(categoryName: categories[i].name);
+                    log("Category name: " + categories[i].name);
                   },
                 ),
               ),
@@ -115,7 +120,7 @@ class ListCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (modeOfOperation == 'products') {
+    if (modeOfOperation == 'product') {
       return ViewModelBuilder<ProductViewModel>.reactive(
         viewModelBuilder: () => ProductViewModel(),
         builder: (context, model, child) {
