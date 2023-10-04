@@ -34,6 +34,8 @@ class Transaction extends IJsonSerializable {
 
   String action;
 
+  // int categoryId;
+
   String? ticketName;
   @Index()
   DateTime? deletedAt;

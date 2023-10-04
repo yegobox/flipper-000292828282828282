@@ -217,7 +217,7 @@ class HomeViewModel extends ReactiveViewModel {
     if (items.isEmpty) {
       TransactionItem newItem = newTransactionItem(
           amount, variation, name, pendingTransaction, stock!);
-      newItem.action = AppActions.created;
+      newItem.action = AppActions.create;
       await ProxyService.isar
           .addTransactionItem(transaction: pendingTransaction, item: newItem);
       items = await ProxyService.isar.transactionItems(
@@ -277,7 +277,7 @@ class HomeViewModel extends ReactiveViewModel {
             items.fold(0, (a, b) => a + (b.price * b.qty) + amount);
         pendingTransaction.updatedAt = DateTime.now().toIso8601String();
         await ProxyService.isar.update(data: pendingTransaction);
-        newItem.action = AppActions.created;
+        newItem.action = AppActions.create;
         await ProxyService.isar
             .addTransactionItem(transaction: pendingTransaction, item: newItem);
 
@@ -306,7 +306,6 @@ class HomeViewModel extends ReactiveViewModel {
     return TransactionItem(
       id: randomString(),
       qty: 1,
-      lastTouched: DateTime.now(),
       action: AppActions.create,
       price: amount / 1,
       variantId: variation.id,
@@ -598,7 +597,7 @@ class HomeViewModel extends ReactiveViewModel {
         items.fold(0, (a, b) => a + (b.price * b.qty));
     pendingTransaction.updatedAt = DateTime.now().toIso8601String();
     await ProxyService.isar.update(data: pendingTransaction);
-    newItem.action = AppActions.created;
+    newItem.action = AppActions.create;
     await ProxyService.isar
         .addTransactionItem(transaction: pendingTransaction, item: newItem);
   }
