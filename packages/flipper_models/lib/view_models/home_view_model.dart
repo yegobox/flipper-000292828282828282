@@ -45,9 +45,6 @@ class HomeViewModel extends ReactiveViewModel {
   String? _categoryName;
   get categoryName => _categoryName;
 
-  String? _selectedCategoryName = "";
-  get selectedCategoryName => _selectedCategoryName;
-
   get categories => app.categories;
 
   String? getSetting() {
@@ -105,19 +102,14 @@ class HomeViewModel extends ReactiveViewModel {
     _tab = tab;
   }
 
-  void setCategoryName({String? categoryName}) {
-    _selectedCategoryName = categoryName;
-    notifyListeners();
-  }
-
   void updateCategory({required Category category}) async {
     int branchId = ProxyService.box.getBranchId()!;
     for (Category category in categories) {
       if (category.focused) {
         Category cat = category;
-        cat.focused = !cat.focused;
+        cat.focused = false;
         cat.branchId = branchId;
-        cat.active = !cat.active;
+        cat.active = false;
         await ProxyService.isar.update(
           data: cat,
         );
@@ -125,8 +117,8 @@ class HomeViewModel extends ReactiveViewModel {
     }
 
     Category cat = category;
-    cat.focused = !cat.focused;
-    cat.active = !cat.active;
+    cat.focused = true;
+    cat.active = true;
     cat.branchId = branchId;
     await ProxyService.isar.update(
       data: cat,
@@ -450,7 +442,13 @@ class HomeViewModel extends ReactiveViewModel {
     cbTransaction.transactionType = cbTransactionType;
     cbTransaction.paymentType = "Cash";
     cbTransaction.status = 'completed';
-    cbTransaction.categoryId = _selectedCategoryName;
+
+    Category? activeCat = await ProxyService.isar
+        .activeCategory(branchId: ProxyService.box.getBranchId()!);
+
+    String activeCatName = activeCat!.name;
+
+    cbTransaction.categoryId = activeCatName;
 
     List<TransactionItem> cbTransactionItems = await ProxyService.isar
         .transactionItems(

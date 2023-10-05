@@ -32,7 +32,6 @@ class ListCategories extends StatelessWidget {
           GestureDetector(
             onTap: () {
               model.updateCategory(category: categories[i]);
-              model.setCategoryName(categoryName: categories[i].name);
               log("Category name: " + categories[i].name);
             },
             child: SingleChildScrollView(
@@ -48,7 +47,6 @@ class ListCategories extends StatelessWidget {
                       categories[i].focused == true ? categories[i].id : '0',
                   onChanged: (value) {
                     model.updateCategory(category: categories[i]);
-                    model.setCategoryName(categoryName: categories[i].name);
                     log("Category name: " + categories[i].name);
                   },
                 ),
@@ -81,7 +79,6 @@ class ListCategories extends StatelessWidget {
           GestureDetector(
             onTap: () {
               model.updateCategory(category: categories[i]);
-              model.setCategoryName(categoryName: categories[i].name);
               log("Category name: " + categories[i].name);
             },
             child: SingleChildScrollView(
@@ -97,7 +94,6 @@ class ListCategories extends StatelessWidget {
                       categories[i].focused == true ? categories[i].id : '0',
                   onChanged: (value) {
                     model.updateCategory(category: categories[i]);
-                    model.setCategoryName(categoryName: categories[i].name);
                     log("Category name: " + categories[i].name);
                   },
                 ),

@@ -33,9 +33,6 @@ class ProductViewModel extends TenantViewModel {
 
   get categories => app.categories;
 
-  String? _selectedCategoryName = "";
-  get selectedCategoryName => _selectedCategoryName;
-
   List<Product> _products = [];
 
   List<Product> get products => _products
@@ -119,7 +116,6 @@ class ProductViewModel extends TenantViewModel {
             lastTouched: DateTime.now(),
             businessId: ProxyService.box.getBusinessId()!,
             color: COLOR,
-            categoryId: _selectedCategoryName,
             branchId: ProxyService.box.getBranchId()!));
 
     setCurrentProduct(currentProduct: product);
@@ -130,11 +126,6 @@ class ProductViewModel extends TenantViewModel {
 
   void setName({String? name}) {
     _productName = name;
-    notifyListeners();
-  }
-
-  void setCategoryName({String? categoryName}) {
-    _selectedCategoryName = categoryName;
     notifyListeners();
   }
 
@@ -169,9 +160,9 @@ class ProductViewModel extends TenantViewModel {
     for (Category category in categories) {
       if (category.focused) {
         Category cat = category;
-        cat.focused = !cat.focused;
+        cat.focused = false;
         cat.branchId = branchId;
-        cat.active = !cat.active;
+        cat.active = false;
         await ProxyService.isar.update(
           data: cat,
         );
@@ -179,8 +170,8 @@ class ProductViewModel extends TenantViewModel {
     }
 
     Category cat = category;
-    cat.focused = !cat.focused;
-    cat.active = !cat.active;
+    cat.focused = true;
+    cat.active = true;
     cat.branchId = branchId;
     await ProxyService.isar.update(
       data: cat,
@@ -367,6 +358,13 @@ class ProductViewModel extends TenantViewModel {
     mproduct.name = productName;
     mproduct.barCode = productService.barCode.toString();
     mproduct.color = currentColor;
+
+    Category? activeCat = await ProxyService.isar
+        .activeCategory(branchId: ProxyService.box.getBranchId()!);
+
+    String activeCatName = activeCat!.name;
+
+    mproduct.categoryId = activeCatName;
 
     mproduct.action = inUpdateProcess ? AppActions.update : AppActions.create;
 

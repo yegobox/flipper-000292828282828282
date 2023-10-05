@@ -96,29 +96,8 @@ class KeyPadView extends StatelessWidget {
                       TextButton(
                         child: Text('Confirm'),
                         onPressed: () {
-                          // Perform confirm action here
-                          if (model.selectedCategoryName == "") {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Alert'),
-                                  content: Text('Please assign a category.'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: Text('Close'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          } else {
-                            HandleTransactionFromCashBook();
-                            Navigator.of(context).pop();
-                          }
+                          HandleTransactionFromCashBook();
+                          Navigator.of(context).pop();
                         },
                       ),
                     ],
