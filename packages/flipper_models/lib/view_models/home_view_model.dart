@@ -450,6 +450,10 @@ class HomeViewModel extends ReactiveViewModel {
 
     cbTransaction.categoryId = activeCatName;
 
+    activeCat.active = false;
+    activeCat.focused = false;
+    await ProxyService.isar.update(data: activeCat);
+
     List<TransactionItem> cbTransactionItems = await ProxyService.isar
         .transactionItems(
             transactionId: cbTransaction.id, doneWithTransaction: false);

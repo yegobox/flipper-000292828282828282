@@ -366,6 +366,10 @@ class ProductViewModel extends TenantViewModel {
 
     mproduct.categoryId = activeCatName;
 
+    activeCat.active = false;
+    activeCat.focused = false;
+    await ProxyService.isar.update(data: activeCat);
+
     mproduct.action = inUpdateProcess ? AppActions.update : AppActions.create;
 
     final response = await ProxyService.isar.update(data: mproduct);
