@@ -23,6 +23,20 @@ class ProductNotifier extends StateNotifier<Product?> {
   }
 }
 
+final customerSearchStringProvider =
+    StateNotifierProvider.autoDispose<CustomerSearchStringNotifier, String>(
+        (ref) {
+  return CustomerSearchStringNotifier();
+});
+
+class CustomerSearchStringNotifier extends StateNotifier<String> {
+  CustomerSearchStringNotifier() : super("");
+
+  void emitString({required String value}) {
+    state = value;
+  }
+}
+
 final searchStringProvider =
     StateNotifierProvider.autoDispose<SearchStringNotifier, String>((ref) {
   return SearchStringNotifier();
@@ -32,9 +46,7 @@ class SearchStringNotifier extends StateNotifier<String> {
   SearchStringNotifier() : super("");
 
   void emitString({required String value}) {
-    if (value.isNotEmpty) {
-      state = value;
-    }
+    state = value;
   }
 }
 
@@ -62,31 +74,25 @@ class SellingModeNotifier extends StateNotifier<SellingMode> {
   }
 }
 
-final pendingTransactionProvider = StateNotifierProvider.autoDispose<
-    PendingTransactionNotifier, AsyncValue<ITransaction>>((ref) {
-  final pendingTransactionNotifier = PendingTransactionNotifier();
+final variantsProvider = FutureProvider.autoDispose
+    .family<List<Variant>, String?>((ref, productId) async {
+  // Fetch the list of variants from a remote service.
+  final variants = await ProxyService.isar.variants(
+      branchId: ProxyService.box.getBranchId()!, productId: productId ?? "");
 
-  pendingTransactionNotifier.pendingTransaction();
-
-  return pendingTransactionNotifier;
+  return variants;
 });
 
-class PendingTransactionNotifier
-    extends StateNotifier<AsyncValue<ITransaction>> {
-  PendingTransactionNotifier() : super(AsyncLoading());
-
-  Future<void> pendingTransaction() async {
-    try {
-      state = AsyncLoading();
-      ITransaction pendingTransaction =
-          await ProxyService.isar.manageTransaction();
-      state = AsyncData(pendingTransaction);
-    } catch (error) {
-      state = AsyncError(error, StackTrace.current);
-    }
+final pendingTransactionProvider = FutureProvider.autoDispose
+    .family<AsyncValue<ITransaction>, int?>((ref, retailId) async {
+  try {
+    ITransaction pendingTransaction =
+        await ProxyService.isar.manageTransaction(retailId: retailId);
+    return AsyncData(pendingTransaction);
+  } catch (error) {
+    return AsyncError(error, StackTrace.current);
   }
-}
-
+});
 // final productsProvider = FutureProvider((ref) async {
 //      return ProxyService.isar.transactionItemsFuture();
 // });
@@ -154,12 +160,11 @@ final outerVariantsProvider = StateNotifierProvider.autoDispose
   final productsNotifier = OuterVariantsNotifier(branchId);
   final scannMode = ref.watch(scanningModeProvider);
   final searchString = ref.watch(searchStringProvider);
-  final pendingTransaction = ref.watch(pendingTransactionProvider);
   if (scannMode) {
     productsNotifier.loadVariants(
-        scannMode: scannMode,
-        searchString: searchString,
-        pendingTransaction: pendingTransaction);
+      scannMode: scannMode,
+      searchString: searchString,
+    );
   }
 
   return productsNotifier;
@@ -171,9 +176,7 @@ class OuterVariantsNotifier extends StateNotifier<AsyncValue<List<Variant>>>
   OuterVariantsNotifier(this.branchId) : super(AsyncLoading());
 
   Future<void> loadVariants(
-      {required bool scannMode,
-      required String searchString,
-      required AsyncValue<ITransaction> pendingTransaction}) async {
+      {required bool scannMode, required String searchString}) async {
     try {
       final allVariants = await ProxyService.isar.variants(
         branchId: ProxyService.box.getBranchId()!,
@@ -316,38 +319,6 @@ class ProductsNotifier extends StateNotifier<AsyncValue<List<Product>>>
   }
 }
 
-final variantsProvider = StateNotifierProvider.autoDispose
-    .family<VariantsNotifier, AsyncValue<List<Variant>>, String?>(
-        (ref, productId) {
-  final variantsNotifier = VariantsNotifier(productId);
-
-  // Fetch and update the list of variants.
-  variantsNotifier.variants();
-
-  return variantsNotifier;
-});
-
-class VariantsNotifier extends StateNotifier<AsyncValue<List<Variant>>> {
-  final String? productId;
-
-  VariantsNotifier(this.productId) : super(AsyncLoading());
-
-  Future<void> variants() async {
-    // Fetch the list of variants from a remote service.
-    final variants = await ProxyService.isar.variants(
-        branchId: ProxyService.box.getBranchId()!, productId: productId ?? "");
-
-    // Update the state with the list of variants.
-    state = AsyncValue.data(variants);
-  }
-
-  @override
-  void dispose() {
-    // Dispose of any resources that were used to fetch and update the list of variants.
-    super.dispose();
-  }
-}
-
 // scanning
 final scanningModeProvider =
     StateNotifierProvider.autoDispose<ScanningModeNotifier, bool>((ref) {
@@ -357,8 +328,8 @@ final scanningModeProvider =
 class ScanningModeNotifier extends StateNotifier<bool> {
   ScanningModeNotifier() : super(false);
 
-  void toggleScanningMode({required bool given}) {
-    state = given;
+  void toggleScanningMode() {
+    state = !state;
   }
 }
 // end scanning
@@ -419,19 +390,16 @@ class CustomersNotifier extends StateNotifier<AsyncValue<List<Customer>>> {
     );
   }
 
-  List<Customer?>? filterCustomers(
-      List<Customer>? customers, String searchString) {
-    if (customers == null) {
-      return null;
-    }
-
+  List<Customer> filterCustomers(
+    List<Customer> customers,
+    String searchString,
+  ) {
     if (searchString.isNotEmpty) {
       return customers
           .where((customer) =>
               customer.name.toLowerCase().contains(searchString.toLowerCase()))
           .toList();
     }
-
     return customers;
   }
 }

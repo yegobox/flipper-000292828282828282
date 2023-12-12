@@ -39,24 +39,30 @@ class SynchronizationService<M extends IJsonSerializable> implements Sync<M> {
         String namesString =
             itemOnTransaction.map((item) => item.name).join(',');
         json["itemName"] = namesString;
+        json["businessPhoneNumber"] = ProxyService.box.getUserPhone();
+        json["businessId"] = ProxyService.box.getBusinessId();
         if (itemOnTransaction.isEmpty)
           return null; // do not proceed if name is empty
       }
 
-      if (endpoint == "stocks" && json["retailPrice"] == null || json["retailPrice"]==0.0) {
+      if (endpoint == "stocks" && json["retailPrice"] == null ||
+          json["retailPrice"] == 0.0) {
         // ProxyService.isar.delete(id: json["id"], endPoint: 'stocks');
-         return null;
+        return null;
       }
 
-      if (endpoint == "variants" && json["retailPrice"] == null || json["retailPrice"]==0.0) {
+      if (endpoint == "variants" && json["retailPrice"] == null ||
+          json["retailPrice"] == 0.0) {
         ProxyService.isar.delete(id: json["id"], endPoint: 'variants');
         ProxyService.isar.delete(id: json["productId"], endPoint: 'products');
-         return null;
+        return null;
       }
-      if (endpoint == "transactionItem" && json["price"] == null || json["price"]==0.0) {
-         ProxyService.isar.delete(id: json["id"], endPoint: 'transactionItem');
-         return null;
+      if (endpoint == "transactionItem" && json["price"] == null ||
+          json["price"] == 0.0) {
+        ProxyService.isar.delete(id: json["id"], endPoint: 'transactionItem');
+        return null;
       }
+
       /// remove trailing dashes to sent lastTouched
 
       RecordModel? result = null;
@@ -123,7 +129,7 @@ class SynchronizationService<M extends IJsonSerializable> implements Sync<M> {
 
   @override
   Future<void> localChanges() async {
-    log('pushing local changes to server', name: 'sync');
+    log('Start sending data to server', name: 'sync');
     final data = await ProxyService.isar.getUnSyncedData();
     for (Product product in data.products) {
       if (product.action != AppActions.remote && product.name != TEMP_PRODUCT) {
@@ -134,6 +140,7 @@ class SynchronizationService<M extends IJsonSerializable> implements Sync<M> {
 
           product.action = AppActions.remote;
           await ProxyService.isar.update(data: product);
+          // await Future.delayed(Duration(seconds: 20));
         }
 
         /// now sync other to avoid lace condition when synching

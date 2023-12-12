@@ -1,3 +1,5 @@
+// ignore_for_file: unused_result
+
 import 'package:flipper_models/view_models/mixins/riverpod_states.dart';
 import 'package:flipper_routing/app.locator.dart';
 import 'package:flipper_routing/app.router.dart';
@@ -38,7 +40,8 @@ class PaymentConfirmationState extends ConsumerState<PaymentConfirmation> {
 
   @override
   Widget build(BuildContext context) {
-    final currentTransaction = ref.watch(pendingTransactionProvider);
+    final currentTransaction =
+        ref.watch(pendingTransactionProvider(ProxyService.box.getBranchId()));
     return ViewModelBuilder<CoreViewModel>.reactive(
         builder: (context, model, child) {
           return SafeArea(
@@ -110,8 +113,7 @@ class PaymentConfirmationState extends ConsumerState<PaymentConfirmation> {
                                       width: 140,
                                       child: OutlinedButton(
                                         onPressed: () async {
-                                          model.keyboardKeyPressed(
-                                              key: 'C');
+                                          model.keyboardKeyPressed(key: 'C');
                                           if (await ProxyService.isar
                                               .isTaxEnabled()) {
                                             if (model.receiptReady) {
@@ -278,10 +280,11 @@ class PaymentConfirmationState extends ConsumerState<PaymentConfirmation> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(4)))),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       // refresh transactions
-                                      model.keyboardKeyPressed(
-                                          key: 'C');
+                                      model.keyboardKeyPressed(key: 'C');
+
+                                      ref.refresh(transactionItemsProvider);
                                       _routerService
                                           .navigateTo(FlipperAppRoute());
                                     },
@@ -332,6 +335,6 @@ class PaymentConfirmationState extends ConsumerState<PaymentConfirmation> {
           }
         },
         viewModelBuilder: () =>
-            CoreViewModel(transaction: currentTransaction.value));
+            CoreViewModel(transaction: currentTransaction.value?.value));
   }
 }

@@ -125,21 +125,20 @@ class IsarAPI<M> implements IsarApiInterface {
   /// those change will stay on local, so I need to work on them as well.
 
   @override
-  Future<ITransaction> manageTransaction({
-    String transactionType = 'custom',
-  }) async {
+  Future<ITransaction> manageTransaction(
+      {String transactionType = 'custom', int? retailId}) async {
     int branchId = ProxyService.box.getBranchId()!;
-    int businessId = ProxyService.box.getBusinessId()!;
-
+    // ITransaction? existTransaction = retailId != null
+    //     ? await pendingTransaction(retailId: retailId)
+    //     : await pendingTransaction(branchId: branchId);
     ITransaction? existTransaction =
         await pendingTransaction(branchId: branchId);
-
     if (existTransaction == null) {
       final String id = randomString();
       final transaction = ITransaction(
         lastTouched: DateTime.now(),
         id: id,
-        businessOwnerId: businessId,
+        retailerId: retailId ?? branchId,
         reference: randomString(),
         action: AppActions.created,
         transactionNumber: randomString(),
@@ -180,7 +179,7 @@ class IsarAPI<M> implements IsarApiInterface {
       final transaction = ITransaction(
         lastTouched: DateTime.now(),
         id: id,
-        businessOwnerId: businessId,
+        retailerId: businessId,
         reference: randomString(),
         action: AppActions.created,
         transactionNumber: randomString(),
@@ -538,7 +537,7 @@ class IsarAPI<M> implements IsarApiInterface {
     customer!.updatedAt = DateTime.now();
     // save customer to db
     db.write((isar) {
-      isar.customers.put(customer);
+      isar.customers.onPut(customer);
     });
   }
 
@@ -600,10 +599,11 @@ class IsarAPI<M> implements IsarApiInterface {
 
     List<TransactionItem> items = await transactionItems(
         transactionId: transaction.id, doneWithTransaction: false);
-
-    transaction.customerChangeDue = (cashReceived - transaction.subTotal);
+    double subTotal = items.fold(0, (a, b) => a + (b.price * b.qty));
+    transaction.customerChangeDue = (cashReceived - subTotal);
     transaction.paymentType = paymentType;
     transaction.cashReceived = cashReceived;
+    transaction.subTotal = subTotal;
     transaction.updatedAt = DateTime.now().toIso8601String();
 
     await update(data: transaction);
@@ -1624,13 +1624,24 @@ class IsarAPI<M> implements IsarApiInterface {
   }
 
   @override
-  Future<ITransaction?> pendingTransaction({required int branchId}) async {
-    return db.read((isar) => isar.iTransactions
-        .where()
-        .statusEqualTo(PENDING)
-        .and()
-        .branchIdEqualTo(branchId)
-        .findFirst());
+  Future<ITransaction?> pendingTransaction(
+      {int? branchId, int? retailId}) async {
+    if (branchId != null) {
+      return db.read((isar) => isar.iTransactions
+          .where()
+          .statusEqualTo(PENDING)
+          .and()
+          .branchIdEqualTo(branchId)
+          .findFirst());
+    } else if (retailId != null) {
+      return db.read((isar) => isar.iTransactions
+          .where()
+          .statusEqualTo(PENDING)
+          .and()
+          .retailerIdEqualTo(retailId)
+          .findFirst());
+    }
+    return null;
   }
 
   @override
