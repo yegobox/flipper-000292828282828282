@@ -298,4 +298,13 @@ class RWTax implements TaxApi {
       return null;
     }
   }
+
+  @override
+  Future<DateTime?> latestReportDateTime() async {
+    Business? business = await ProxyService.isar.getBusiness();
+    int id = business!.id;
+    log("$id");
+
+    return null;
+  }
 }

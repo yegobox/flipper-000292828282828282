@@ -34,4 +34,5 @@ abstract class TaxApi {
       required List<TransactionItem> items,
       required String receiptType,
       required Counter counter});
+  Future<DateTime?> latestReportDateTime();
 }
