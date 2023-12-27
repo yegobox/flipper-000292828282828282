@@ -100,7 +100,7 @@ class VariationList extends StatelessWidget {
           },
           backgroundColor: const Color(0xFFFE4A49),
           foregroundColor: Colors.white,
-          icon: FluentIcons.delete_20_regular,
+          icon: Icon(FluentIcons.delete_20_regular),
           label: 'Delete',
         ),
       ],

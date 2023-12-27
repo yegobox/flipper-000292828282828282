@@ -76,7 +76,7 @@ class DiscountRow extends StatelessWidget {
               onPressed: doSomething(context, discount.id),
               backgroundColor: const Color(0xFFFE4A49),
               foregroundColor: Colors.white,
-              icon: Icons.delete,
+              icon: Icon(Icons.delete),
               label: 'Delete',
             ),
           ],

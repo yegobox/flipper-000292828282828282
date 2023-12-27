@@ -191,8 +191,8 @@ class RowItem extends StatelessWidget {
           backgroundColor: const Color(0xFFFE4A49),
           foregroundColor: Colors.white,
           icon: addToMenu == null
-              ? FluentIcons.delete_20_regular
-              : FluentIcons.cart_24_regular,
+              ? Icon(FluentIcons.delete_20_regular)
+              : Icon(FluentIcons.cart_24_regular),
           label: '',
         ),
         if (variant == null)
@@ -202,7 +202,7 @@ class RowItem extends StatelessWidget {
             },
             backgroundColor: Colors.blue,
             foregroundColor: Colors.white,
-            icon: FluentIcons.edit_24_regular,
+            icon: Icon(FluentIcons.edit_24_regular),
             label: '',
           ),
         if (variant == null)
@@ -213,7 +213,7 @@ class RowItem extends StatelessWidget {
             backgroundColor:
                 product?.nfcEnabled == true ? Colors.blue : Colors.red,
             foregroundColor: Colors.white,
-            icon: Icons.nfc,
+            icon: Icon(Icons.nfc),
             label: '',
           ),
       ],
@@ -232,7 +232,7 @@ class RowItem extends StatelessWidget {
           },
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
-          icon: FluentIcons.edit_24_regular,
+          icon: Icon(FluentIcons.edit_24_regular),
           label: '',
         ),
       ],

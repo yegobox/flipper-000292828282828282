@@ -1156,13 +1156,16 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Future<Business> getOnlineBusiness({required int userId}) async {
-    final response = await flipperHttpClient
-        .get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
+    String getBusinessUrl = "$apihub/v2/api/businessUserId/$userId";
+    log(getBusinessUrl);
+    final response = await flipperHttpClient.get(Uri.parse(getBusinessUrl));
 
     if (response.statusCode == 401) {
+      log("Session expired");
       throw SessionException(term: "session expired");
     }
     if (response.statusCode == 404) {
+      log("Business not found");
       throw BusinessNotFoundException(term: "Business not found");
     }
 
