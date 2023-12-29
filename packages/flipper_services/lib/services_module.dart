@@ -6,6 +6,7 @@ import 'package:flipper_models/RealmSync.dart';
 import 'package:flipper_models/flipper_http_client.dart';
 import 'package:flipper_models/http_client_interface.dart';
 import 'package:flipper_models/marketing.dart';
+import 'package:flipper_models/mocks/isarApiMock.dart';
 import 'package:flipper_models/remote_service.dart';
 import 'package:flipper_models/tax_api.dart';
 import 'package:flipper_models/rw_tax.dart';
@@ -25,6 +26,7 @@ import 'package:flipper_services/in_app_review.dart';
 import 'package:flipper_services/language_service.dart';
 import 'package:flipper_services/event_service.dart';
 import 'package:flipper_services/mobile_upload.dart';
+import 'package:flipper_services/mocks/SharedPreferenceStorageMock.dart';
 import 'package:flipper_services/product_service.dart';
 import 'package:flipper_services/proxy.dart';
 import 'package:flipper_services/remote_config_service.dart';
@@ -34,7 +36,6 @@ import 'package:flipper_services/setting_service.dart';
 import 'package:flipper_services/sharing_service.dart';
 import 'package:flipper_services/status.dart';
 import 'package:flipper_services/system_time_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flipper_models/isar_models.dart';
 import 'WindowLocationService.dart';
@@ -72,7 +73,7 @@ abstract class ServicesModule {
 
   @preResolve
   Future<HttpClientInterface> get httpClient async {
-    if ((const bool.fromEnvironment('Test', defaultValue: false) == false)) {
+    if ((const bool.fromEnvironment('Test') == true)) {
       return MockHttpClient();
     } else {
       return FlipperHttpClient(http.Client());
@@ -216,16 +217,6 @@ abstract class ServicesModule {
   @LazySingleton()
   KeyPadService get keypadService;
 
-  @preResolve
-  Future<LocalStorage> get box async {
-    // return await SharedPreferenceStorage().initializePreferences();
-    if (isWeb) {
-      return BoxStorage();
-    } else {
-      return await SharedPreferenceStorage().initializePreferences();
-    }
-  }
-
   @LazySingleton()
   Status get status {
     late Status status;
@@ -250,45 +241,24 @@ abstract class ServicesModule {
 
   @preResolve
   @LazySingleton()
+  Future<LocalStorage> get box async {
+    if ((const bool.fromEnvironment('Test') == true)) {
+      return await SharedPreferenceStorageMock().initializePreferences();
+    } else {
+      return await SharedPreferenceStorage().initializePreferences();
+    }
+  }
+
+  @preResolve
+  @LazySingleton()
   Future<IsarApiInterface> isarApi() async {
     //first check if we are in testing mode.
-    if ((const bool.fromEnvironment('Test', defaultValue: false) == false) &&
-        !kDebugMode) {
-      log('in prod mode');
-      return await IsarAPI().getInstance();
-    } else {
+    if ((const bool.fromEnvironment('Test') == true)) {
       log("in test mode");
-      // late Isar isar;
-      // isar = await openTempIsar([
-      //   OrderSchema,
-      //   BusinessSchema,
-      //   BranchSchema,
-      //   OrderItemSchema,
-      //   ProductSchema,
-      //   VariantSchema,
-      //   ProfileSchema,
-      //   SubscriptionSchema,
-      //   IPointSchema,
-      //   StockSchema,
-      //   FeatureSchema,
-      //   VoucherSchema,
-      //   PColorSchema,
-      //   CategorySchema,
-      //   IUnitSchema,
-      //   SettingSchema,
-      //   DiscountSchema,
-      //   CustomerSchema,
-      //   PinSchema,
-      //   ReceiptSchema,
-      //   DrawersSchema,
-      //   ITenantSchema,
-      //   PermissionSchema,
-      //   CounterSchema,
-      //   TokenSchema
-      // ]);
+      return await IsarAPIMock().getInstance();
+    } else {
+      log('in prod mode');
 
-      /// removed iisar: isar bellow will add it back when we have a test relying on isar database
-      // return await FakeApi().getInstance();
       return await IsarAPI().getInstance();
     }
   }
