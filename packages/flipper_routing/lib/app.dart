@@ -42,6 +42,7 @@ import 'all_routes.dart';
     CustomRoute(page: PinLogin),
     CustomRoute(page: Devices),
     CustomRoute(page: TaxConfiguration),
+    CustomRoute(page: TaxReports),
     CustomRoute(page: Printing),
     CustomRoute(page: BackUp),
     CustomRoute(page: LoginChoices),
