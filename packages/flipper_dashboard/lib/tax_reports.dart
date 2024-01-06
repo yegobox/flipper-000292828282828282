@@ -90,21 +90,6 @@ class _TaxReportsState extends State<TaxReports> {
               Visibility(
                 visible: isTaxEnabled,
                 child: SettingsTile(
-                  title: "Generate EBM X Report",
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      FluentIcons.calculator_24_regular,
-                    ),
-                  ),
-                  onPressed: (BuildContext context) {
-                    log("X Report Generated");
-                  },
-                ),
-              ),
-              Visibility(
-                visible: isTaxEnabled,
-                child: SettingsTile(
                   title: "Generate EBM Z Report",
                   leading: CircleAvatar(
                     backgroundColor: Colors.white,
@@ -114,6 +99,21 @@ class _TaxReportsState extends State<TaxReports> {
                   ),
                   onPressed: (BuildContext context) {
                     log("Z Report Generated");
+                  },
+                ),
+              ),
+              Visibility(
+                visible: isTaxEnabled,
+                child: SettingsTile(
+                  title: "Generate EBM X Report",
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      FluentIcons.calculator_24_regular,
+                    ),
+                  ),
+                  onPressed: (BuildContext context) {
+                    log("X Report Generated");
                   },
                 ),
               )

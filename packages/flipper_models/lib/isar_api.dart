@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flipper_models/flipper_http_client.dart';
+import 'package:flipper_models/isar/report.dart';
 import 'package:flipper_models/mocks.dart';
 import 'package:flipper_models/secrets.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -703,6 +704,18 @@ class IsarAPI<M> implements IsarApiInterface {
     });
 
     return db.read((isar) => isar.products.get(product.id))!;
+  }
+
+  Future<DateTime> getLatestXReportDate({required int businessId}) async {
+    Report latestXReport = db.read((isar) => isar.reports
+        .where()
+        .businessIdEqualTo(businessId)
+        .and()
+        .typeEqualTo("X")
+        .sortByDateGeneratedDesc()
+        .findFirst())!;
+    DateTime latestXReportDate = latestXReport.dateGenerated!;
+    return latestXReportDate;
   }
 
   Variant _createRegularVariant(
@@ -3452,5 +3465,12 @@ class IsarAPI<M> implements IsarApiInterface {
           .watch(fireImmediately: true)
           .map((transactions) => findAndFilter(transactions, branchId)),
     );
+  }
+
+  Future<Report> recordNewReport({required newReport}) async {
+    db.write((isar) {
+      isar.reports.put(newReport);
+    });
+    return newReport;
   }
 }

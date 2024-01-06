@@ -13,6 +13,7 @@ class RWTax implements TaxApi {
 
   RWTax();
 
+// 1. Initialization of EBM service within the device
   @override
   Future<bool> initApi({
     required String tinNumber,
@@ -33,6 +34,79 @@ class RWTax implements TaxApi {
 
     if (response.statusCode == 200) {
       // print(await response.stream.bytesToString());
+      return Future.value(true);
+    } else {
+      // print(response.reasonPhrase);
+      return Future.value(false);
+    }
+  }
+
+  // -------------------------------
+
+  // 2. Basic Data Management
+  // ========================
+
+  // 2.1. Get list of item classifications registered in the system with the "/itemClass/selectItemsClass" URL
+  @override
+  Future<bool> getItemClassifications({
+    required String tinNumber,
+    required String bhfId,
+    String lastReqDt = "20210523000000",
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
+    EBM? ebm = await ProxyService.isar
+        .getEbmByBranchId(branchId: ProxyService.box.getBranchId()!);
+    if (ebm == null) {
+      return false;
+    }
+    var request = http.Request(
+        'POST', Uri.parse(ebm.taxServerUrl! + '/itemClass/selectItemsClass'));
+    request.body =
+        json.encode({"tin": tinNumber, "bhfId": bhfId, "lastReqDt": lastReqDt});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      sendEmailNotification(
+          requestData: {
+            "tin": tinNumber,
+            "bhfId": bhfId,
+            "lastReqDt": lastReqDt
+          }.toString(),
+          responseData: response.stream.bytesToString().toString());
+      return Future.value(true);
+    } else {
+      // print(response.reasonPhrase);
+      return Future.value(false);
+    }
+  }
+
+  // 2.2. Get a customer's info with TIN by using the "/customers/selectCustomer" URL
+  @override
+  Future<bool> getCustomer(
+      {required String tinNumber,
+      required String bhfId,
+      required String custmTin}) async {
+    var headers = {'Content-Type': 'application/json'};
+    EBM? ebm = await ProxyService.isar
+        .getEbmByBranchId(branchId: ProxyService.box.getBranchId()!);
+    if (ebm == null) {
+      return false;
+    }
+    var request = http.Request(
+        'POST', Uri.parse(ebm.taxServerUrl! + '/customers/selectCustomer'));
+    request.body =
+        json.encode({"tin": tinNumber, "bhfId": bhfId, "custmTin": custmTin});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      sendEmailNotification(
+          requestData: {"tin": tinNumber, "bhfId": bhfId, "custmTin": custmTin}
+              .toString(),
+          responseData: response.stream.bytesToString().toString());
       return Future.value(true);
     } else {
       // print(response.reasonPhrase);
@@ -81,7 +155,8 @@ class RWTax implements TaxApi {
   /// when creating an invoice or receipt
   ///  you can save the product information in server. This API function performs storing item information managed by the taxpayer client in
   /// the server. For more information, refer to ‘3.2.4.1 ItemSaveReq/Res’
-  /// After saving item then we can use items/selectItems endPoint to get the item information. of item saved before
+  /// After saving item then we can use items/
+  ///  endPoint to get the item information. of item saved before
   @override
   Future<bool> saveItem({required Variant variation}) async {
     var headers = {'Content-Type': 'application/json'};
@@ -297,14 +372,5 @@ class RWTax implements TaxApi {
     } else {
       return null;
     }
-  }
-
-  @override
-  Future<DateTime?> latestReportDateTime() async {
-    Business? business = await ProxyService.isar.getBusiness();
-    int id = business!.id;
-    log("$id");
-
-    return null;
   }
 }

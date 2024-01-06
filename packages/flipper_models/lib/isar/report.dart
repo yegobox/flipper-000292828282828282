@@ -10,26 +10,24 @@ part 'report.g.dart';
 @JsonSerializable()
 @Collection()
 class Report extends IJsonSerializable {
-  Report({
-    required this.id,
-    required this.businessId,
-    required this.type,
-    required this.dateGenerated
-  });
+  Report(
+      {required this.id,
+      required this.businessId,
+      required this.type,
+      required this.dateGenerated});
 
-  late String id;
+  @Id()
+  int id;
   String? type;
   @Index()
   @JsonKey(includeIfNull: true)
   DateTime? dateGenerated;
-  @Index()
   int businessId;
 
   factory Report.fromRecord(RecordModel record) =>
       Report.fromJson(record.toJson());
 
-  factory Report.fromJson(Map<String, dynamic> json) =>
-      _$ReportFromJson(json);
+  factory Report.fromJson(Map<String, dynamic> json) => _$ReportFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$ReportToJson(this);
 }

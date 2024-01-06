@@ -33,6 +33,7 @@ export 'isar/profile.dart';
 export 'isar/receipt.dart';
 export 'isar/product.dart';
 export 'isar/social.dart';
+export 'isar/report.dart';
 export 'isar/user.dart';
 export 'isar/social_token.dart';
 export 'isar/conversation.dart';
