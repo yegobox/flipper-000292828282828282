@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flipper_models/flipper_http_client.dart';
+import 'package:flipper_models/isar/report.dart';
 import 'package:flipper_models/mocks.dart';
 import 'package:flipper_models/secrets.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -704,6 +705,18 @@ class IsarAPI<M> implements IsarApiInterface {
     return db.read((isar) => isar.products.get(product.id))!;
   }
 
+  Future<DateTime> getLatestXReportDate({required int businessId}) async {
+    Report latestXReport = db.read((isar) => isar.reports
+        .where()
+        .businessIdEqualTo(businessId)
+        .and()
+        .typeEqualTo("X")
+        .sortByDateGeneratedDesc()
+        .findFirst())!;
+    DateTime latestXReportDate = latestXReport.dateGenerated!;
+    return latestXReportDate;
+  }
+
   Variant _createRegularVariant(
       Product product, int branchId, Business? business) {
     final String variantId = randomString();
@@ -1157,13 +1170,15 @@ class IsarAPI<M> implements IsarApiInterface {
 
   @override
   Future<Business> getOnlineBusiness({required int userId}) async {
-    final response = await flipperHttpClient
+    final response = await ProxyService.httpClient
         .get(Uri.parse("$apihub/v2/api/businessUserId/$userId"));
 
     if (response.statusCode == 401) {
+      log("Session expired");
       throw SessionException(term: "session expired");
     }
     if (response.statusCode == 404) {
+      log("Business not found");
       throw BusinessNotFoundException(term: "Business not found");
     }
 
@@ -2020,7 +2035,7 @@ class IsarAPI<M> implements IsarApiInterface {
       return response.statusCode;
     }
     if (data is ITenant) {
-      final response = await flipperHttpClient.patch(
+      final response = await ProxyService.httpClient.patch(
         Uri.parse("$apihub/v2/api/tenant/${data.id}"),
         body: jsonEncode(data.toJson()),
       );
@@ -3449,5 +3464,12 @@ class IsarAPI<M> implements IsarApiInterface {
           .watch(fireImmediately: true)
           .map((transactions) => findAndFilter(transactions, branchId)),
     );
+  }
+
+  Future<Report> recordNewReport({required newReport}) async {
+    db.write((isar) {
+      isar.reports.put(newReport);
+    });
+    return newReport;
   }
 }

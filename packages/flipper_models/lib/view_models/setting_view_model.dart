@@ -196,6 +196,22 @@ class SettingViewModel extends CoreViewModel {
     }
   }
 
+  Future<DateTime> getLatestXReportDate(int businessId) async {
+    return await ProxyService.isar.getLatestXReportDate(businessId: businessId);
+  }
+
+  Future<Report> recordReport(int businessId, String type) async {
+    //integer of current unix time
+    DateTime dateGenerated = DateTime.now();
+    int currentUnixTime = dateGenerated.millisecondsSinceEpoch;
+    Report newReport = new Report(
+        id: currentUnixTime,
+        businessId: businessId,
+        type: type,
+        dateGenerated: dateGenerated);
+    return newReport;
+  }
+
   bool _isEbmActive = false;
 
   /// create setter and getter for the _isProceeding

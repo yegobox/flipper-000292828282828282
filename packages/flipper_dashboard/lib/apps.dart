@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flipper_services/proxy.dart';
 import 'widgets/dropdown.dart';
 import 'customappbar.dart';
+import 'tax_reports.dart';
 import 'widgets/mini_app_icon.dart';
 import 'package:flipper_routing/app.locator.dart';
 import 'package:flipper_routing/app.router.dart';
@@ -37,6 +38,7 @@ class Apps extends StatefulHookConsumerWidget {
 
 class _AppsState extends ConsumerState<Apps> {
   final _routerService = locator<RouterService>();
+  bool isTaxEnabled = false;
   String transactionPeriod = "Today";
   List<String> transactionPeriodOptions = [
     "Today",
@@ -47,6 +49,13 @@ class _AppsState extends ConsumerState<Apps> {
 
   String profitType = "Net Profit";
   List<String> profitTypeOptions = ["Net Profit", "Gross Profit"];
+
+  @override
+  void initState() {
+    super.initState();
+    getTaxStatus();
+  }
+
   Widget _buildCustomPaintWithIcon(
       {dynamic iconData, required Color color, required String page}) {
     return GestureDetector(
@@ -86,6 +95,14 @@ class _AppsState extends ConsumerState<Apps> {
             break;
           case "Orders":
             _routerService.navigateTo(OrdersRoute());
+            break;
+          case "EBM Reports":
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TaxReports(),
+              ),
+            );
             break;
           default:
             _routerService.navigateTo(CheckOutRoute(
@@ -219,6 +236,13 @@ class _AppsState extends ConsumerState<Apps> {
                           iconData: FluentIcons.cart_24_regular,
                           color: Colors.amber,
                           page: "Orders"),
+                      Visibility(
+                        visible: isTaxEnabled,
+                        child: _buildCustomPaintWithIcon(
+                            iconData: FluentIcons.document_one_page_24_regular,
+                            color: Colors.indigo,
+                            page: "EBM Reports"),
+                      ),
                     ],
                   ),
                 ),
@@ -416,5 +440,12 @@ class _AppsState extends ConsumerState<Apps> {
         });
       },
     );
+  }
+
+  Future<void> getTaxStatus() async {
+    bool status = await ProxyService.isar.isTaxEnabled();
+    setState(() {
+      isTaxEnabled = status;
+    });
   }
 }

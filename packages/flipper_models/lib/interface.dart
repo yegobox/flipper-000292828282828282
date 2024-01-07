@@ -20,6 +20,7 @@ abstract class IsarApiInterface {
     bool isCashOut = false,
     bool includePending = false,
   });
+  Future<Report> recordNewReport({required Report newReport});
   Stream<List<Product>> productStreams({String? prodIndex});
   Stream<List<ITransaction>> orders({required int branchId});
   Future<List<Product>> getProductList({String? prodIndex});
@@ -198,7 +199,9 @@ abstract class IsarApiInterface {
       required bool active});
 
   Future<Variant?> getVariantById({required String id});
+
   Future<bool> isTaxEnabled();
+  Future<DateTime> getLatestXReportDate({required int businessId});
   Future<Receipt?> createReceipt(
       {required ReceiptSignature signature,
       required ITransaction transaction,

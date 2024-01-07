@@ -81,7 +81,7 @@ class PreviewSaleBottomSheetState
                     delete(item), // Added the context argument
                 backgroundColor: const Color(0xFFFE4A49),
                 foregroundColor: Colors.white,
-                icon: Icons.delete,
+                icon: Icon(Icons.delete),
                 label: 'Delete',
               ),
             ],
@@ -94,7 +94,7 @@ class PreviewSaleBottomSheetState
                     delete(item), // Added the context argument
                 backgroundColor: const Color(0xFFFE4A49),
                 foregroundColor: Colors.white,
-                icon: Icons.delete,
+                icon: Icon(Icons.delete),
                 label: 'Delete',
               ),
             ],

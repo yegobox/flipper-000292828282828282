@@ -4,6 +4,7 @@ export 'package:flipper_dashboard/login_choices.dart';
 export 'package:flipper_dashboard/printing.dart';
 export 'package:flipper_dashboard/backup.dart';
 export 'package:flipper_dashboard/tax_configuration.dart';
+export 'package:flipper_dashboard/tax_reports.dart';
 export 'package:flipper_dashboard/add_discount.dart';
 export 'package:flipper_dashboard/add_product_view.dart';
 export 'package:flipper_dashboard/devices.dart';
