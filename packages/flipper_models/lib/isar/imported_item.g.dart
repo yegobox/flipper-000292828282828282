@@ -49,11 +49,23 @@ const ImportedItemSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
+        name: 'taskCd',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
         name: 'hsCd',
         type: IsarType.string,
       ),
       IsarPropertySchema(
         name: 'itemNm',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'itemClCd',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'itemCd',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -165,7 +177,7 @@ int serializeImportedItem(IsarWriter writer, ImportedItem object) {
     }
   }
   {
-    final value = object.hsCd;
+    final value = object.taskCd;
     if (value == null) {
       IsarCore.writeNull(writer, 8);
     } else {
@@ -173,7 +185,7 @@ int serializeImportedItem(IsarWriter writer, ImportedItem object) {
     }
   }
   {
-    final value = object.itemNm;
+    final value = object.hsCd;
     if (value == null) {
       IsarCore.writeNull(writer, 9);
     } else {
@@ -181,7 +193,7 @@ int serializeImportedItem(IsarWriter writer, ImportedItem object) {
     }
   }
   {
-    final value = object.imptItemsttsCd;
+    final value = object.itemNm;
     if (value == null) {
       IsarCore.writeNull(writer, 10);
     } else {
@@ -189,7 +201,7 @@ int serializeImportedItem(IsarWriter writer, ImportedItem object) {
     }
   }
   {
-    final value = object.orgnNatCd;
+    final value = object.itemClCd;
     if (value == null) {
       IsarCore.writeNull(writer, 11);
     } else {
@@ -197,77 +209,101 @@ int serializeImportedItem(IsarWriter writer, ImportedItem object) {
     }
   }
   {
-    final value = object.exptNatCd;
+    final value = object.itemCd;
     if (value == null) {
       IsarCore.writeNull(writer, 12);
     } else {
       IsarCore.writeString(writer, 12, value);
     }
   }
-  IsarCore.writeLong(writer, 13, object.pkg ?? -9223372036854775808);
   {
-    final value = object.pkgUnitCd;
+    final value = object.imptItemsttsCd;
+    if (value == null) {
+      IsarCore.writeNull(writer, 13);
+    } else {
+      IsarCore.writeString(writer, 13, value);
+    }
+  }
+  {
+    final value = object.orgnNatCd;
     if (value == null) {
       IsarCore.writeNull(writer, 14);
     } else {
       IsarCore.writeString(writer, 14, value);
     }
   }
-  IsarCore.writeLong(writer, 15, object.qty ?? -9223372036854775808);
   {
-    final value = object.qtyUnitCd;
+    final value = object.exptNatCd;
     if (value == null) {
-      IsarCore.writeNull(writer, 16);
+      IsarCore.writeNull(writer, 15);
     } else {
-      IsarCore.writeString(writer, 16, value);
+      IsarCore.writeString(writer, 15, value);
     }
   }
-  IsarCore.writeDouble(writer, 17, object.totWt ?? double.nan);
-  IsarCore.writeDouble(writer, 18, object.netWt ?? double.nan);
+  IsarCore.writeLong(writer, 16, object.pkg ?? -9223372036854775808);
   {
-    final value = object.spplrNm;
+    final value = object.pkgUnitCd;
+    if (value == null) {
+      IsarCore.writeNull(writer, 17);
+    } else {
+      IsarCore.writeString(writer, 17, value);
+    }
+  }
+  IsarCore.writeLong(writer, 18, object.qty ?? -9223372036854775808);
+  {
+    final value = object.qtyUnitCd;
     if (value == null) {
       IsarCore.writeNull(writer, 19);
     } else {
       IsarCore.writeString(writer, 19, value);
     }
   }
+  IsarCore.writeDouble(writer, 20, object.totWt ?? double.nan);
+  IsarCore.writeDouble(writer, 21, object.netWt ?? double.nan);
   {
-    final value = object.agntNm;
-    if (value == null) {
-      IsarCore.writeNull(writer, 20);
-    } else {
-      IsarCore.writeString(writer, 20, value);
-    }
-  }
-  IsarCore.writeDouble(writer, 21, object.invcFcurAmt ?? double.nan);
-  {
-    final value = object.invcFcurCd;
+    final value = object.spplrNm;
     if (value == null) {
       IsarCore.writeNull(writer, 22);
     } else {
       IsarCore.writeString(writer, 22, value);
     }
   }
-  IsarCore.writeDouble(writer, 23, object.invcFcurExcrt ?? double.nan);
-  IsarCore.writeLong(writer, 24, object.tin ?? -9223372036854775808);
   {
-    final value = object.bhfId;
+    final value = object.agntNm;
+    if (value == null) {
+      IsarCore.writeNull(writer, 23);
+    } else {
+      IsarCore.writeString(writer, 23, value);
+    }
+  }
+  IsarCore.writeDouble(writer, 24, object.invcFcurAmt ?? double.nan);
+  {
+    final value = object.invcFcurCd;
     if (value == null) {
       IsarCore.writeNull(writer, 25);
     } else {
       IsarCore.writeString(writer, 25, value);
     }
   }
-  IsarCore.writeDouble(writer, 26, object.rsdQty ?? double.nan);
+  IsarCore.writeDouble(writer, 26, object.invcFcurExcrt ?? double.nan);
+  IsarCore.writeLong(writer, 27, object.tin ?? -9223372036854775808);
+  {
+    final value = object.bhfId;
+    if (value == null) {
+      IsarCore.writeNull(writer, 28);
+    } else {
+      IsarCore.writeString(writer, 28, value);
+    }
+  }
+  IsarCore.writeDouble(writer, 29, object.rsdQty ?? double.nan);
   IsarCore.writeLong(
       writer,
-      27,
+      30,
       object.lastTouched?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
-  IsarCore.writeLong(writer, 28,
+  IsarCore.writeLong(writer, 31,
       object.deletedAt?.toUtc().microsecondsSinceEpoch ?? -9223372036854775808);
-  IsarCore.writeString(writer, 29, object.action);
+  IsarCore.writeString(writer, 32, object.action);
   return Isar.fastHash(object.id);
 }
 
@@ -297,18 +333,18 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
   final String? _dclNo;
   _dclNo = IsarCore.readString(reader, 7);
   final String? _hsCd;
-  _hsCd = IsarCore.readString(reader, 8);
+  _hsCd = IsarCore.readString(reader, 9);
   final String? _itemNm;
-  _itemNm = IsarCore.readString(reader, 9);
+  _itemNm = IsarCore.readString(reader, 10);
   final String? _imptItemsttsCd;
-  _imptItemsttsCd = IsarCore.readString(reader, 10);
+  _imptItemsttsCd = IsarCore.readString(reader, 13);
   final String? _orgnNatCd;
-  _orgnNatCd = IsarCore.readString(reader, 11);
+  _orgnNatCd = IsarCore.readString(reader, 14);
   final String? _exptNatCd;
-  _exptNatCd = IsarCore.readString(reader, 12);
+  _exptNatCd = IsarCore.readString(reader, 15);
   final int? _pkg;
   {
-    final value = IsarCore.readLong(reader, 13);
+    final value = IsarCore.readLong(reader, 16);
     if (value == -9223372036854775808) {
       _pkg = null;
     } else {
@@ -316,10 +352,10 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
     }
   }
   final String? _pkgUnitCd;
-  _pkgUnitCd = IsarCore.readString(reader, 14);
+  _pkgUnitCd = IsarCore.readString(reader, 17);
   final int? _qty;
   {
-    final value = IsarCore.readLong(reader, 15);
+    final value = IsarCore.readLong(reader, 18);
     if (value == -9223372036854775808) {
       _qty = null;
     } else {
@@ -327,10 +363,10 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
     }
   }
   final String? _qtyUnitCd;
-  _qtyUnitCd = IsarCore.readString(reader, 16);
+  _qtyUnitCd = IsarCore.readString(reader, 19);
   final double? _totWt;
   {
-    final value = IsarCore.readDouble(reader, 17);
+    final value = IsarCore.readDouble(reader, 20);
     if (value.isNaN) {
       _totWt = null;
     } else {
@@ -339,7 +375,7 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
   }
   final double? _netWt;
   {
-    final value = IsarCore.readDouble(reader, 18);
+    final value = IsarCore.readDouble(reader, 21);
     if (value.isNaN) {
       _netWt = null;
     } else {
@@ -347,12 +383,12 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
     }
   }
   final String? _spplrNm;
-  _spplrNm = IsarCore.readString(reader, 19);
+  _spplrNm = IsarCore.readString(reader, 22);
   final String? _agntNm;
-  _agntNm = IsarCore.readString(reader, 20);
+  _agntNm = IsarCore.readString(reader, 23);
   final double? _invcFcurAmt;
   {
-    final value = IsarCore.readDouble(reader, 21);
+    final value = IsarCore.readDouble(reader, 24);
     if (value.isNaN) {
       _invcFcurAmt = null;
     } else {
@@ -360,10 +396,10 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
     }
   }
   final String? _invcFcurCd;
-  _invcFcurCd = IsarCore.readString(reader, 22);
+  _invcFcurCd = IsarCore.readString(reader, 25);
   final double? _invcFcurExcrt;
   {
-    final value = IsarCore.readDouble(reader, 23);
+    final value = IsarCore.readDouble(reader, 26);
     if (value.isNaN) {
       _invcFcurExcrt = null;
     } else {
@@ -372,7 +408,7 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
   }
   final int? _tin;
   {
-    final value = IsarCore.readLong(reader, 24);
+    final value = IsarCore.readLong(reader, 27);
     if (value == -9223372036854775808) {
       _tin = null;
     } else {
@@ -380,10 +416,10 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
     }
   }
   final String? _bhfId;
-  _bhfId = IsarCore.readString(reader, 25);
+  _bhfId = IsarCore.readString(reader, 28);
   final DateTime? _lastTouched;
   {
-    final value = IsarCore.readLong(reader, 27);
+    final value = IsarCore.readLong(reader, 30);
     if (value == -9223372036854775808) {
       _lastTouched = null;
     } else {
@@ -419,8 +455,11 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
   object.id = IsarCore.readString(reader, 2) ?? '';
   object.unit = IsarCore.readString(reader, 3) ?? '';
   object.isTaxExempted = IsarCore.readBool(reader, 5);
+  object.taskCd = IsarCore.readString(reader, 8);
+  object.itemClCd = IsarCore.readString(reader, 11);
+  object.itemCd = IsarCore.readString(reader, 12);
   {
-    final value = IsarCore.readDouble(reader, 26);
+    final value = IsarCore.readDouble(reader, 29);
     if (value.isNaN) {
       object.rsdQty = null;
     } else {
@@ -428,7 +467,7 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
     }
   }
   {
-    final value = IsarCore.readLong(reader, 28);
+    final value = IsarCore.readLong(reader, 31);
     if (value == -9223372036854775808) {
       object.deletedAt = null;
     } else {
@@ -436,7 +475,7 @@ ImportedItem deserializeImportedItem(IsarReader reader) {
           DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
     }
   }
-  object.action = IsarCore.readString(reader, 29) ?? '';
+  object.action = IsarCore.readString(reader, 32) ?? '';
   return object;
 }
 
@@ -483,40 +522,26 @@ dynamic deserializeImportedItemProp(IsarReader reader, int property) {
     case 12:
       return IsarCore.readString(reader, 12);
     case 13:
-      {
-        final value = IsarCore.readLong(reader, 13);
-        if (value == -9223372036854775808) {
-          return null;
-        } else {
-          return value;
-        }
-      }
+      return IsarCore.readString(reader, 13);
     case 14:
       return IsarCore.readString(reader, 14);
     case 15:
+      return IsarCore.readString(reader, 15);
+    case 16:
       {
-        final value = IsarCore.readLong(reader, 15);
+        final value = IsarCore.readLong(reader, 16);
         if (value == -9223372036854775808) {
           return null;
         } else {
           return value;
         }
       }
-    case 16:
-      return IsarCore.readString(reader, 16);
     case 17:
-      {
-        final value = IsarCore.readDouble(reader, 17);
-        if (value.isNaN) {
-          return null;
-        } else {
-          return value;
-        }
-      }
+      return IsarCore.readString(reader, 17);
     case 18:
       {
-        final value = IsarCore.readDouble(reader, 18);
-        if (value.isNaN) {
+        final value = IsarCore.readLong(reader, 18);
+        if (value == -9223372036854775808) {
           return null;
         } else {
           return value;
@@ -525,7 +550,14 @@ dynamic deserializeImportedItemProp(IsarReader reader, int property) {
     case 19:
       return IsarCore.readString(reader, 19);
     case 20:
-      return IsarCore.readString(reader, 20);
+      {
+        final value = IsarCore.readDouble(reader, 20);
+        if (value.isNaN) {
+          return null;
+        } else {
+          return value;
+        }
+      }
     case 21:
       {
         final value = IsarCore.readDouble(reader, 21);
@@ -538,18 +570,11 @@ dynamic deserializeImportedItemProp(IsarReader reader, int property) {
     case 22:
       return IsarCore.readString(reader, 22);
     case 23:
-      {
-        final value = IsarCore.readDouble(reader, 23);
-        if (value.isNaN) {
-          return null;
-        } else {
-          return value;
-        }
-      }
+      return IsarCore.readString(reader, 23);
     case 24:
       {
-        final value = IsarCore.readLong(reader, 24);
-        if (value == -9223372036854775808) {
+        final value = IsarCore.readDouble(reader, 24);
+        if (value.isNaN) {
           return null;
         } else {
           return value;
@@ -572,13 +597,23 @@ dynamic deserializeImportedItemProp(IsarReader reader, int property) {
         if (value == -9223372036854775808) {
           return null;
         } else {
-          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
-              .toLocal();
+          return value;
         }
       }
     case 28:
+      return IsarCore.readString(reader, 28);
+    case 29:
       {
-        final value = IsarCore.readLong(reader, 28);
+        final value = IsarCore.readDouble(reader, 29);
+        if (value.isNaN) {
+          return null;
+        } else {
+          return value;
+        }
+      }
+    case 30:
+      {
+        final value = IsarCore.readLong(reader, 30);
         if (value == -9223372036854775808) {
           return null;
         } else {
@@ -586,8 +621,18 @@ dynamic deserializeImportedItemProp(IsarReader reader, int property) {
               .toLocal();
         }
       }
-    case 29:
-      return IsarCore.readString(reader, 29) ?? '';
+    case 31:
+      {
+        final value = IsarCore.readLong(reader, 31);
+        if (value == -9223372036854775808) {
+          return null;
+        } else {
+          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
+              .toLocal();
+        }
+      }
+    case 32:
+      return IsarCore.readString(reader, 32) ?? '';
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -602,8 +647,11 @@ sealed class _ImportedItemUpdate {
     bool? isTaxExempted,
     int? itemSeq,
     String? dclNo,
+    String? taskCd,
     String? hsCd,
     String? itemNm,
+    String? itemClCd,
+    String? itemCd,
     String? imptItemsttsCd,
     String? orgnNatCd,
     String? exptNatCd,
@@ -641,8 +689,11 @@ class _ImportedItemUpdateImpl implements _ImportedItemUpdate {
     Object? isTaxExempted = ignore,
     Object? itemSeq = ignore,
     Object? dclNo = ignore,
+    Object? taskCd = ignore,
     Object? hsCd = ignore,
     Object? itemNm = ignore,
+    Object? itemClCd = ignore,
+    Object? itemCd = ignore,
     Object? imptItemsttsCd = ignore,
     Object? orgnNatCd = ignore,
     Object? exptNatCd = ignore,
@@ -673,28 +724,31 @@ class _ImportedItemUpdateImpl implements _ImportedItemUpdate {
           if (isTaxExempted != ignore) 5: isTaxExempted as bool?,
           if (itemSeq != ignore) 6: itemSeq as int?,
           if (dclNo != ignore) 7: dclNo as String?,
-          if (hsCd != ignore) 8: hsCd as String?,
-          if (itemNm != ignore) 9: itemNm as String?,
-          if (imptItemsttsCd != ignore) 10: imptItemsttsCd as String?,
-          if (orgnNatCd != ignore) 11: orgnNatCd as String?,
-          if (exptNatCd != ignore) 12: exptNatCd as String?,
-          if (pkg != ignore) 13: pkg as int?,
-          if (pkgUnitCd != ignore) 14: pkgUnitCd as String?,
-          if (qty != ignore) 15: qty as int?,
-          if (qtyUnitCd != ignore) 16: qtyUnitCd as String?,
-          if (totWt != ignore) 17: totWt as double?,
-          if (netWt != ignore) 18: netWt as double?,
-          if (spplrNm != ignore) 19: spplrNm as String?,
-          if (agntNm != ignore) 20: agntNm as String?,
-          if (invcFcurAmt != ignore) 21: invcFcurAmt as double?,
-          if (invcFcurCd != ignore) 22: invcFcurCd as String?,
-          if (invcFcurExcrt != ignore) 23: invcFcurExcrt as double?,
-          if (tin != ignore) 24: tin as int?,
-          if (bhfId != ignore) 25: bhfId as String?,
-          if (rsdQty != ignore) 26: rsdQty as double?,
-          if (lastTouched != ignore) 27: lastTouched as DateTime?,
-          if (deletedAt != ignore) 28: deletedAt as DateTime?,
-          if (action != ignore) 29: action as String?,
+          if (taskCd != ignore) 8: taskCd as String?,
+          if (hsCd != ignore) 9: hsCd as String?,
+          if (itemNm != ignore) 10: itemNm as String?,
+          if (itemClCd != ignore) 11: itemClCd as String?,
+          if (itemCd != ignore) 12: itemCd as String?,
+          if (imptItemsttsCd != ignore) 13: imptItemsttsCd as String?,
+          if (orgnNatCd != ignore) 14: orgnNatCd as String?,
+          if (exptNatCd != ignore) 15: exptNatCd as String?,
+          if (pkg != ignore) 16: pkg as int?,
+          if (pkgUnitCd != ignore) 17: pkgUnitCd as String?,
+          if (qty != ignore) 18: qty as int?,
+          if (qtyUnitCd != ignore) 19: qtyUnitCd as String?,
+          if (totWt != ignore) 20: totWt as double?,
+          if (netWt != ignore) 21: netWt as double?,
+          if (spplrNm != ignore) 22: spplrNm as String?,
+          if (agntNm != ignore) 23: agntNm as String?,
+          if (invcFcurAmt != ignore) 24: invcFcurAmt as double?,
+          if (invcFcurCd != ignore) 25: invcFcurCd as String?,
+          if (invcFcurExcrt != ignore) 26: invcFcurExcrt as double?,
+          if (tin != ignore) 27: tin as int?,
+          if (bhfId != ignore) 28: bhfId as String?,
+          if (rsdQty != ignore) 29: rsdQty as double?,
+          if (lastTouched != ignore) 30: lastTouched as DateTime?,
+          if (deletedAt != ignore) 31: deletedAt as DateTime?,
+          if (action != ignore) 32: action as String?,
         }) >
         0;
   }
@@ -709,8 +763,11 @@ sealed class _ImportedItemUpdateAll {
     bool? isTaxExempted,
     int? itemSeq,
     String? dclNo,
+    String? taskCd,
     String? hsCd,
     String? itemNm,
+    String? itemClCd,
+    String? itemCd,
     String? imptItemsttsCd,
     String? orgnNatCd,
     String? exptNatCd,
@@ -748,8 +805,11 @@ class _ImportedItemUpdateAllImpl implements _ImportedItemUpdateAll {
     Object? isTaxExempted = ignore,
     Object? itemSeq = ignore,
     Object? dclNo = ignore,
+    Object? taskCd = ignore,
     Object? hsCd = ignore,
     Object? itemNm = ignore,
+    Object? itemClCd = ignore,
+    Object? itemCd = ignore,
     Object? imptItemsttsCd = ignore,
     Object? orgnNatCd = ignore,
     Object? exptNatCd = ignore,
@@ -778,28 +838,31 @@ class _ImportedItemUpdateAllImpl implements _ImportedItemUpdateAll {
       if (isTaxExempted != ignore) 5: isTaxExempted as bool?,
       if (itemSeq != ignore) 6: itemSeq as int?,
       if (dclNo != ignore) 7: dclNo as String?,
-      if (hsCd != ignore) 8: hsCd as String?,
-      if (itemNm != ignore) 9: itemNm as String?,
-      if (imptItemsttsCd != ignore) 10: imptItemsttsCd as String?,
-      if (orgnNatCd != ignore) 11: orgnNatCd as String?,
-      if (exptNatCd != ignore) 12: exptNatCd as String?,
-      if (pkg != ignore) 13: pkg as int?,
-      if (pkgUnitCd != ignore) 14: pkgUnitCd as String?,
-      if (qty != ignore) 15: qty as int?,
-      if (qtyUnitCd != ignore) 16: qtyUnitCd as String?,
-      if (totWt != ignore) 17: totWt as double?,
-      if (netWt != ignore) 18: netWt as double?,
-      if (spplrNm != ignore) 19: spplrNm as String?,
-      if (agntNm != ignore) 20: agntNm as String?,
-      if (invcFcurAmt != ignore) 21: invcFcurAmt as double?,
-      if (invcFcurCd != ignore) 22: invcFcurCd as String?,
-      if (invcFcurExcrt != ignore) 23: invcFcurExcrt as double?,
-      if (tin != ignore) 24: tin as int?,
-      if (bhfId != ignore) 25: bhfId as String?,
-      if (rsdQty != ignore) 26: rsdQty as double?,
-      if (lastTouched != ignore) 27: lastTouched as DateTime?,
-      if (deletedAt != ignore) 28: deletedAt as DateTime?,
-      if (action != ignore) 29: action as String?,
+      if (taskCd != ignore) 8: taskCd as String?,
+      if (hsCd != ignore) 9: hsCd as String?,
+      if (itemNm != ignore) 10: itemNm as String?,
+      if (itemClCd != ignore) 11: itemClCd as String?,
+      if (itemCd != ignore) 12: itemCd as String?,
+      if (imptItemsttsCd != ignore) 13: imptItemsttsCd as String?,
+      if (orgnNatCd != ignore) 14: orgnNatCd as String?,
+      if (exptNatCd != ignore) 15: exptNatCd as String?,
+      if (pkg != ignore) 16: pkg as int?,
+      if (pkgUnitCd != ignore) 17: pkgUnitCd as String?,
+      if (qty != ignore) 18: qty as int?,
+      if (qtyUnitCd != ignore) 19: qtyUnitCd as String?,
+      if (totWt != ignore) 20: totWt as double?,
+      if (netWt != ignore) 21: netWt as double?,
+      if (spplrNm != ignore) 22: spplrNm as String?,
+      if (agntNm != ignore) 23: agntNm as String?,
+      if (invcFcurAmt != ignore) 24: invcFcurAmt as double?,
+      if (invcFcurCd != ignore) 25: invcFcurCd as String?,
+      if (invcFcurExcrt != ignore) 26: invcFcurExcrt as double?,
+      if (tin != ignore) 27: tin as int?,
+      if (bhfId != ignore) 28: bhfId as String?,
+      if (rsdQty != ignore) 29: rsdQty as double?,
+      if (lastTouched != ignore) 30: lastTouched as DateTime?,
+      if (deletedAt != ignore) 31: deletedAt as DateTime?,
+      if (action != ignore) 32: action as String?,
     });
   }
 }
@@ -818,8 +881,11 @@ sealed class _ImportedItemQueryUpdate {
     bool? isTaxExempted,
     int? itemSeq,
     String? dclNo,
+    String? taskCd,
     String? hsCd,
     String? itemNm,
+    String? itemClCd,
+    String? itemCd,
     String? imptItemsttsCd,
     String? orgnNatCd,
     String? exptNatCd,
@@ -857,8 +923,11 @@ class _ImportedItemQueryUpdateImpl implements _ImportedItemQueryUpdate {
     Object? isTaxExempted = ignore,
     Object? itemSeq = ignore,
     Object? dclNo = ignore,
+    Object? taskCd = ignore,
     Object? hsCd = ignore,
     Object? itemNm = ignore,
+    Object? itemClCd = ignore,
+    Object? itemCd = ignore,
     Object? imptItemsttsCd = ignore,
     Object? orgnNatCd = ignore,
     Object? exptNatCd = ignore,
@@ -887,28 +956,31 @@ class _ImportedItemQueryUpdateImpl implements _ImportedItemQueryUpdate {
       if (isTaxExempted != ignore) 5: isTaxExempted as bool?,
       if (itemSeq != ignore) 6: itemSeq as int?,
       if (dclNo != ignore) 7: dclNo as String?,
-      if (hsCd != ignore) 8: hsCd as String?,
-      if (itemNm != ignore) 9: itemNm as String?,
-      if (imptItemsttsCd != ignore) 10: imptItemsttsCd as String?,
-      if (orgnNatCd != ignore) 11: orgnNatCd as String?,
-      if (exptNatCd != ignore) 12: exptNatCd as String?,
-      if (pkg != ignore) 13: pkg as int?,
-      if (pkgUnitCd != ignore) 14: pkgUnitCd as String?,
-      if (qty != ignore) 15: qty as int?,
-      if (qtyUnitCd != ignore) 16: qtyUnitCd as String?,
-      if (totWt != ignore) 17: totWt as double?,
-      if (netWt != ignore) 18: netWt as double?,
-      if (spplrNm != ignore) 19: spplrNm as String?,
-      if (agntNm != ignore) 20: agntNm as String?,
-      if (invcFcurAmt != ignore) 21: invcFcurAmt as double?,
-      if (invcFcurCd != ignore) 22: invcFcurCd as String?,
-      if (invcFcurExcrt != ignore) 23: invcFcurExcrt as double?,
-      if (tin != ignore) 24: tin as int?,
-      if (bhfId != ignore) 25: bhfId as String?,
-      if (rsdQty != ignore) 26: rsdQty as double?,
-      if (lastTouched != ignore) 27: lastTouched as DateTime?,
-      if (deletedAt != ignore) 28: deletedAt as DateTime?,
-      if (action != ignore) 29: action as String?,
+      if (taskCd != ignore) 8: taskCd as String?,
+      if (hsCd != ignore) 9: hsCd as String?,
+      if (itemNm != ignore) 10: itemNm as String?,
+      if (itemClCd != ignore) 11: itemClCd as String?,
+      if (itemCd != ignore) 12: itemCd as String?,
+      if (imptItemsttsCd != ignore) 13: imptItemsttsCd as String?,
+      if (orgnNatCd != ignore) 14: orgnNatCd as String?,
+      if (exptNatCd != ignore) 15: exptNatCd as String?,
+      if (pkg != ignore) 16: pkg as int?,
+      if (pkgUnitCd != ignore) 17: pkgUnitCd as String?,
+      if (qty != ignore) 18: qty as int?,
+      if (qtyUnitCd != ignore) 19: qtyUnitCd as String?,
+      if (totWt != ignore) 20: totWt as double?,
+      if (netWt != ignore) 21: netWt as double?,
+      if (spplrNm != ignore) 22: spplrNm as String?,
+      if (agntNm != ignore) 23: agntNm as String?,
+      if (invcFcurAmt != ignore) 24: invcFcurAmt as double?,
+      if (invcFcurCd != ignore) 25: invcFcurCd as String?,
+      if (invcFcurExcrt != ignore) 26: invcFcurExcrt as double?,
+      if (tin != ignore) 27: tin as int?,
+      if (bhfId != ignore) 28: bhfId as String?,
+      if (rsdQty != ignore) 29: rsdQty as double?,
+      if (lastTouched != ignore) 30: lastTouched as DateTime?,
+      if (deletedAt != ignore) 31: deletedAt as DateTime?,
+      if (action != ignore) 32: action as String?,
     });
   }
 }
@@ -934,8 +1006,11 @@ class _ImportedItemQueryBuilderUpdateImpl implements _ImportedItemQueryUpdate {
     Object? isTaxExempted = ignore,
     Object? itemSeq = ignore,
     Object? dclNo = ignore,
+    Object? taskCd = ignore,
     Object? hsCd = ignore,
     Object? itemNm = ignore,
+    Object? itemClCd = ignore,
+    Object? itemCd = ignore,
     Object? imptItemsttsCd = ignore,
     Object? orgnNatCd = ignore,
     Object? exptNatCd = ignore,
@@ -966,28 +1041,31 @@ class _ImportedItemQueryBuilderUpdateImpl implements _ImportedItemQueryUpdate {
         if (isTaxExempted != ignore) 5: isTaxExempted as bool?,
         if (itemSeq != ignore) 6: itemSeq as int?,
         if (dclNo != ignore) 7: dclNo as String?,
-        if (hsCd != ignore) 8: hsCd as String?,
-        if (itemNm != ignore) 9: itemNm as String?,
-        if (imptItemsttsCd != ignore) 10: imptItemsttsCd as String?,
-        if (orgnNatCd != ignore) 11: orgnNatCd as String?,
-        if (exptNatCd != ignore) 12: exptNatCd as String?,
-        if (pkg != ignore) 13: pkg as int?,
-        if (pkgUnitCd != ignore) 14: pkgUnitCd as String?,
-        if (qty != ignore) 15: qty as int?,
-        if (qtyUnitCd != ignore) 16: qtyUnitCd as String?,
-        if (totWt != ignore) 17: totWt as double?,
-        if (netWt != ignore) 18: netWt as double?,
-        if (spplrNm != ignore) 19: spplrNm as String?,
-        if (agntNm != ignore) 20: agntNm as String?,
-        if (invcFcurAmt != ignore) 21: invcFcurAmt as double?,
-        if (invcFcurCd != ignore) 22: invcFcurCd as String?,
-        if (invcFcurExcrt != ignore) 23: invcFcurExcrt as double?,
-        if (tin != ignore) 24: tin as int?,
-        if (bhfId != ignore) 25: bhfId as String?,
-        if (rsdQty != ignore) 26: rsdQty as double?,
-        if (lastTouched != ignore) 27: lastTouched as DateTime?,
-        if (deletedAt != ignore) 28: deletedAt as DateTime?,
-        if (action != ignore) 29: action as String?,
+        if (taskCd != ignore) 8: taskCd as String?,
+        if (hsCd != ignore) 9: hsCd as String?,
+        if (itemNm != ignore) 10: itemNm as String?,
+        if (itemClCd != ignore) 11: itemClCd as String?,
+        if (itemCd != ignore) 12: itemCd as String?,
+        if (imptItemsttsCd != ignore) 13: imptItemsttsCd as String?,
+        if (orgnNatCd != ignore) 14: orgnNatCd as String?,
+        if (exptNatCd != ignore) 15: exptNatCd as String?,
+        if (pkg != ignore) 16: pkg as int?,
+        if (pkgUnitCd != ignore) 17: pkgUnitCd as String?,
+        if (qty != ignore) 18: qty as int?,
+        if (qtyUnitCd != ignore) 19: qtyUnitCd as String?,
+        if (totWt != ignore) 20: totWt as double?,
+        if (netWt != ignore) 21: netWt as double?,
+        if (spplrNm != ignore) 22: spplrNm as String?,
+        if (agntNm != ignore) 23: agntNm as String?,
+        if (invcFcurAmt != ignore) 24: invcFcurAmt as double?,
+        if (invcFcurCd != ignore) 25: invcFcurCd as String?,
+        if (invcFcurExcrt != ignore) 26: invcFcurExcrt as double?,
+        if (tin != ignore) 27: tin as int?,
+        if (bhfId != ignore) 28: bhfId as String?,
+        if (rsdQty != ignore) 29: rsdQty as double?,
+        if (lastTouched != ignore) 30: lastTouched as DateTime?,
+        if (deletedAt != ignore) 31: deletedAt as DateTime?,
+        if (action != ignore) 32: action as String?,
       });
     } finally {
       q.close();
@@ -1851,20 +1929,21 @@ extension ImportedItemQueryFilter
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> hsCdIsNull() {
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      taskCdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 8));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
-      hsCdIsNotNull() {
+      taskCdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 8));
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> hsCdEqualTo(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> taskCdEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1880,7 +1959,7 @@ extension ImportedItemQueryFilter
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
-      hsCdGreaterThan(
+      taskCdGreaterThan(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1896,7 +1975,7 @@ extension ImportedItemQueryFilter
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
-      hsCdGreaterThanOrEqualTo(
+      taskCdGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1911,7 +1990,8 @@ extension ImportedItemQueryFilter
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> hsCdLessThan(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      taskCdLessThan(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1927,7 +2007,7 @@ extension ImportedItemQueryFilter
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
-      hsCdLessThanOrEqualTo(
+      taskCdLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1935,6 +2015,197 @@ extension ImportedItemQueryFilter
       return query.addFilterCondition(
         LessOrEqualCondition(
           property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> taskCdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 8,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      taskCdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      taskCdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      taskCdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> taskCdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 8,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      taskCdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 8,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      taskCdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 8,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> hsCdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 9));
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      hsCdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 9));
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> hsCdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      hsCdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      hsCdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> hsCdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      hsCdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1950,7 +2221,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 8,
+          property: 9,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1967,7 +2238,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1982,7 +2253,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1996,7 +2267,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2010,7 +2281,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 8,
+          property: 9,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -2023,7 +2294,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 8,
+          property: 9,
           value: '',
         ),
       );
@@ -2035,7 +2306,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 8,
+          property: 9,
           value: '',
         ),
       );
@@ -2045,14 +2316,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       itemNmIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 9));
+      return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       itemNmIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 9));
+      return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
@@ -2063,7 +2334,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2079,7 +2350,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2095,7 +2366,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2111,7 +2382,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2127,7 +2398,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2143,7 +2414,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 9,
+          property: 10,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -2160,7 +2431,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2176,7 +2447,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2189,7 +2460,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2203,7 +2474,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 9,
+          property: 10,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -2216,7 +2487,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 9,
+          property: 10,
           value: '',
         ),
       );
@@ -2228,7 +2499,394 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 9,
+          property: 10,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 11));
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 11));
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 11,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 11,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 11,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemClCdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 11,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 12));
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 12));
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> itemCdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> itemCdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 12,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 12,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> itemCdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 12,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 12,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
+      itemCdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 12,
           value: '',
         ),
       );
@@ -2238,14 +2896,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       imptItemsttsCdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 10));
+      return query.addFilterCondition(const IsNullCondition(property: 13));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       imptItemsttsCdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 10));
+      return query.addFilterCondition(const IsNullCondition(property: 13));
     });
   }
 
@@ -2257,7 +2915,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2273,7 +2931,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2289,7 +2947,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2305,7 +2963,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2321,7 +2979,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2338,7 +2996,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 10,
+          property: 13,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -2355,7 +3013,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2371,7 +3029,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2384,7 +3042,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 10,
+          property: 13,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2397,7 +3055,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 10,
+          property: 13,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -2410,7 +3068,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 10,
+          property: 13,
           value: '',
         ),
       );
@@ -2422,7 +3080,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 10,
+          property: 13,
           value: '',
         ),
       );
@@ -2432,14 +3090,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       orgnNatCdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 11));
+      return query.addFilterCondition(const IsNullCondition(property: 14));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       orgnNatCdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 11));
+      return query.addFilterCondition(const IsNullCondition(property: 14));
     });
   }
 
@@ -2451,7 +3109,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2467,7 +3125,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2483,7 +3141,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2499,7 +3157,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2515,7 +3173,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2532,7 +3190,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 11,
+          property: 14,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -2549,7 +3207,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2565,7 +3223,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2578,7 +3236,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 11,
+          property: 14,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2591,7 +3249,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 11,
+          property: 14,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -2604,7 +3262,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 11,
+          property: 14,
           value: '',
         ),
       );
@@ -2616,7 +3274,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 11,
+          property: 14,
           value: '',
         ),
       );
@@ -2626,14 +3284,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       exptNatCdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 12));
+      return query.addFilterCondition(const IsNullCondition(property: 15));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       exptNatCdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 12));
+      return query.addFilterCondition(const IsNullCondition(property: 15));
     });
   }
 
@@ -2645,7 +3303,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2661,7 +3319,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2677,7 +3335,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2693,7 +3351,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2709,7 +3367,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2726,7 +3384,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 12,
+          property: 15,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -2743,7 +3401,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2759,7 +3417,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2772,7 +3430,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 12,
+          property: 15,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2785,7 +3443,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 12,
+          property: 15,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -2798,7 +3456,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 12,
+          property: 15,
           value: '',
         ),
       );
@@ -2810,7 +3468,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 12,
+          property: 15,
           value: '',
         ),
       );
@@ -2819,14 +3477,14 @@ extension ImportedItemQueryFilter
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> pkgIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 13));
+      return query.addFilterCondition(const IsNullCondition(property: 16));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       pkgIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 13));
+      return query.addFilterCondition(const IsNullCondition(property: 16));
     });
   }
 
@@ -2836,7 +3494,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 13,
+          property: 16,
           value: value,
         ),
       );
@@ -2850,7 +3508,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 13,
+          property: 16,
           value: value,
         ),
       );
@@ -2864,7 +3522,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 13,
+          property: 16,
           value: value,
         ),
       );
@@ -2877,7 +3535,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 13,
+          property: 16,
           value: value,
         ),
       );
@@ -2891,7 +3549,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 13,
+          property: 16,
           value: value,
         ),
       );
@@ -2905,7 +3563,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 13,
+          property: 16,
           lower: lower,
           upper: upper,
         ),
@@ -2916,14 +3574,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       pkgUnitCdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 14));
+      return query.addFilterCondition(const IsNullCondition(property: 17));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       pkgUnitCdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 14));
+      return query.addFilterCondition(const IsNullCondition(property: 17));
     });
   }
 
@@ -2935,7 +3593,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2951,7 +3609,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2967,7 +3625,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2983,7 +3641,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2999,7 +3657,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3016,7 +3674,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 14,
+          property: 17,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -3033,7 +3691,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3049,7 +3707,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3062,7 +3720,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 14,
+          property: 17,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3075,7 +3733,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 14,
+          property: 17,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -3088,7 +3746,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 14,
+          property: 17,
           value: '',
         ),
       );
@@ -3100,7 +3758,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 14,
+          property: 17,
           value: '',
         ),
       );
@@ -3109,14 +3767,14 @@ extension ImportedItemQueryFilter
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> qtyIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 15));
+      return query.addFilterCondition(const IsNullCondition(property: 18));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       qtyIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 15));
+      return query.addFilterCondition(const IsNullCondition(property: 18));
     });
   }
 
@@ -3126,7 +3784,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 15,
+          property: 18,
           value: value,
         ),
       );
@@ -3140,7 +3798,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 15,
+          property: 18,
           value: value,
         ),
       );
@@ -3154,7 +3812,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 15,
+          property: 18,
           value: value,
         ),
       );
@@ -3167,7 +3825,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 15,
+          property: 18,
           value: value,
         ),
       );
@@ -3181,7 +3839,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 15,
+          property: 18,
           value: value,
         ),
       );
@@ -3195,7 +3853,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 15,
+          property: 18,
           lower: lower,
           upper: upper,
         ),
@@ -3206,14 +3864,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       qtyUnitCdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 16));
+      return query.addFilterCondition(const IsNullCondition(property: 19));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       qtyUnitCdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 16));
+      return query.addFilterCondition(const IsNullCondition(property: 19));
     });
   }
 
@@ -3225,7 +3883,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3241,7 +3899,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3257,7 +3915,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3273,7 +3931,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3289,7 +3947,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3306,7 +3964,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 16,
+          property: 19,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -3323,7 +3981,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3339,7 +3997,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3352,7 +4010,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 16,
+          property: 19,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3365,7 +4023,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 16,
+          property: 19,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -3378,7 +4036,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 16,
+          property: 19,
           value: '',
         ),
       );
@@ -3390,7 +4048,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 16,
+          property: 19,
           value: '',
         ),
       );
@@ -3400,14 +4058,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       totWtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 17));
+      return query.addFilterCondition(const IsNullCondition(property: 20));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       totWtIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 17));
+      return query.addFilterCondition(const IsNullCondition(property: 20));
     });
   }
 
@@ -3418,7 +4076,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 17,
+          property: 20,
           value: value,
           epsilon: epsilon,
         ),
@@ -3434,7 +4092,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 17,
+          property: 20,
           value: value,
           epsilon: epsilon,
         ),
@@ -3450,7 +4108,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 17,
+          property: 20,
           value: value,
           epsilon: epsilon,
         ),
@@ -3465,7 +4123,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 17,
+          property: 20,
           value: value,
           epsilon: epsilon,
         ),
@@ -3481,7 +4139,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 17,
+          property: 20,
           value: value,
           epsilon: epsilon,
         ),
@@ -3497,7 +4155,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 17,
+          property: 20,
           lower: lower,
           upper: upper,
           epsilon: epsilon,
@@ -3509,14 +4167,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       netWtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 18));
+      return query.addFilterCondition(const IsNullCondition(property: 21));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       netWtIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 18));
+      return query.addFilterCondition(const IsNullCondition(property: 21));
     });
   }
 
@@ -3527,7 +4185,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 18,
+          property: 21,
           value: value,
           epsilon: epsilon,
         ),
@@ -3543,7 +4201,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 18,
+          property: 21,
           value: value,
           epsilon: epsilon,
         ),
@@ -3559,7 +4217,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 18,
+          property: 21,
           value: value,
           epsilon: epsilon,
         ),
@@ -3574,7 +4232,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 18,
+          property: 21,
           value: value,
           epsilon: epsilon,
         ),
@@ -3590,7 +4248,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 18,
+          property: 21,
           value: value,
           epsilon: epsilon,
         ),
@@ -3606,7 +4264,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 18,
+          property: 21,
           lower: lower,
           upper: upper,
           epsilon: epsilon,
@@ -3618,14 +4276,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       spplrNmIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 19));
+      return query.addFilterCondition(const IsNullCondition(property: 22));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       spplrNmIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 19));
+      return query.addFilterCondition(const IsNullCondition(property: 22));
     });
   }
 
@@ -3637,7 +4295,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3653,7 +4311,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3669,7 +4327,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3685,7 +4343,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3701,7 +4359,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3718,7 +4376,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 19,
+          property: 22,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -3735,7 +4393,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3751,7 +4409,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3764,7 +4422,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 19,
+          property: 22,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3777,7 +4435,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 19,
+          property: 22,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -3790,7 +4448,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 19,
+          property: 22,
           value: '',
         ),
       );
@@ -3802,7 +4460,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 19,
+          property: 22,
           value: '',
         ),
       );
@@ -3812,14 +4470,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       agntNmIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 20));
+      return query.addFilterCondition(const IsNullCondition(property: 23));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       agntNmIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 20));
+      return query.addFilterCondition(const IsNullCondition(property: 23));
     });
   }
 
@@ -3830,7 +4488,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3846,7 +4504,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3862,7 +4520,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3878,7 +4536,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3894,7 +4552,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3910,7 +4568,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 20,
+          property: 23,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -3927,7 +4585,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3943,7 +4601,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3956,7 +4614,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 20,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3970,7 +4628,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 20,
+          property: 23,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -3983,7 +4641,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 20,
+          property: 23,
           value: '',
         ),
       );
@@ -3995,7 +4653,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 20,
+          property: 23,
           value: '',
         ),
       );
@@ -4005,14 +4663,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       invcFcurAmtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 21));
+      return query.addFilterCondition(const IsNullCondition(property: 24));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       invcFcurAmtIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 21));
+      return query.addFilterCondition(const IsNullCondition(property: 24));
     });
   }
 
@@ -4024,7 +4682,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 21,
+          property: 24,
           value: value,
           epsilon: epsilon,
         ),
@@ -4040,7 +4698,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 21,
+          property: 24,
           value: value,
           epsilon: epsilon,
         ),
@@ -4056,7 +4714,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 21,
+          property: 24,
           value: value,
           epsilon: epsilon,
         ),
@@ -4072,7 +4730,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 21,
+          property: 24,
           value: value,
           epsilon: epsilon,
         ),
@@ -4088,7 +4746,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 21,
+          property: 24,
           value: value,
           epsilon: epsilon,
         ),
@@ -4105,7 +4763,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 21,
+          property: 24,
           lower: lower,
           upper: upper,
           epsilon: epsilon,
@@ -4117,14 +4775,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       invcFcurCdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 22));
+      return query.addFilterCondition(const IsNullCondition(property: 25));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       invcFcurCdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 22));
+      return query.addFilterCondition(const IsNullCondition(property: 25));
     });
   }
 
@@ -4136,7 +4794,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4152,7 +4810,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4168,7 +4826,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4184,7 +4842,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4200,7 +4858,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4217,7 +4875,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 22,
+          property: 25,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -4234,7 +4892,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4250,7 +4908,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4263,7 +4921,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 22,
+          property: 25,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4276,7 +4934,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 22,
+          property: 25,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -4289,7 +4947,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 22,
+          property: 25,
           value: '',
         ),
       );
@@ -4301,7 +4959,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 22,
+          property: 25,
           value: '',
         ),
       );
@@ -4311,14 +4969,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       invcFcurExcrtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 23));
+      return query.addFilterCondition(const IsNullCondition(property: 26));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       invcFcurExcrtIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 23));
+      return query.addFilterCondition(const IsNullCondition(property: 26));
     });
   }
 
@@ -4330,7 +4988,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 23,
+          property: 26,
           value: value,
           epsilon: epsilon,
         ),
@@ -4346,7 +5004,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 23,
+          property: 26,
           value: value,
           epsilon: epsilon,
         ),
@@ -4362,7 +5020,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 23,
+          property: 26,
           value: value,
           epsilon: epsilon,
         ),
@@ -4378,7 +5036,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 23,
+          property: 26,
           value: value,
           epsilon: epsilon,
         ),
@@ -4394,7 +5052,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 23,
+          property: 26,
           value: value,
           epsilon: epsilon,
         ),
@@ -4411,7 +5069,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 23,
+          property: 26,
           lower: lower,
           upper: upper,
           epsilon: epsilon,
@@ -4422,14 +5080,14 @@ extension ImportedItemQueryFilter
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition> tinIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 24));
+      return query.addFilterCondition(const IsNullCondition(property: 27));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       tinIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 24));
+      return query.addFilterCondition(const IsNullCondition(property: 27));
     });
   }
 
@@ -4439,7 +5097,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 24,
+          property: 27,
           value: value,
         ),
       );
@@ -4453,7 +5111,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 24,
+          property: 27,
           value: value,
         ),
       );
@@ -4467,7 +5125,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 24,
+          property: 27,
           value: value,
         ),
       );
@@ -4480,7 +5138,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 24,
+          property: 27,
           value: value,
         ),
       );
@@ -4494,7 +5152,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 24,
+          property: 27,
           value: value,
         ),
       );
@@ -4508,7 +5166,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 24,
+          property: 27,
           lower: lower,
           upper: upper,
         ),
@@ -4519,14 +5177,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       bhfIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 25));
+      return query.addFilterCondition(const IsNullCondition(property: 28));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       bhfIdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 25));
+      return query.addFilterCondition(const IsNullCondition(property: 28));
     });
   }
 
@@ -4537,7 +5195,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4553,7 +5211,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4569,7 +5227,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4584,7 +5242,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4600,7 +5258,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4616,7 +5274,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 25,
+          property: 28,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -4633,7 +5291,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4648,7 +5306,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4662,7 +5320,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 25,
+          property: 28,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -4676,7 +5334,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 25,
+          property: 28,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -4689,7 +5347,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 25,
+          property: 28,
           value: '',
         ),
       );
@@ -4701,7 +5359,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 25,
+          property: 28,
           value: '',
         ),
       );
@@ -4711,14 +5369,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       rsdQtyIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 26));
+      return query.addFilterCondition(const IsNullCondition(property: 29));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       rsdQtyIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 26));
+      return query.addFilterCondition(const IsNullCondition(property: 29));
     });
   }
 
@@ -4729,7 +5387,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 26,
+          property: 29,
           value: value,
           epsilon: epsilon,
         ),
@@ -4745,7 +5403,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 26,
+          property: 29,
           value: value,
           epsilon: epsilon,
         ),
@@ -4761,7 +5419,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 26,
+          property: 29,
           value: value,
           epsilon: epsilon,
         ),
@@ -4777,7 +5435,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 26,
+          property: 29,
           value: value,
           epsilon: epsilon,
         ),
@@ -4793,7 +5451,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 26,
+          property: 29,
           value: value,
           epsilon: epsilon,
         ),
@@ -4809,7 +5467,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 26,
+          property: 29,
           lower: lower,
           upper: upper,
           epsilon: epsilon,
@@ -4821,14 +5479,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       lastTouchedIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 27));
+      return query.addFilterCondition(const IsNullCondition(property: 30));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       lastTouchedIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 27));
+      return query.addFilterCondition(const IsNullCondition(property: 30));
     });
   }
 
@@ -4839,7 +5497,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 27,
+          property: 30,
           value: value,
         ),
       );
@@ -4853,7 +5511,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 27,
+          property: 30,
           value: value,
         ),
       );
@@ -4867,7 +5525,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 27,
+          property: 30,
           value: value,
         ),
       );
@@ -4881,7 +5539,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 27,
+          property: 30,
           value: value,
         ),
       );
@@ -4895,7 +5553,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 27,
+          property: 30,
           value: value,
         ),
       );
@@ -4910,7 +5568,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 27,
+          property: 30,
           lower: lower,
           upper: upper,
         ),
@@ -4921,14 +5579,14 @@ extension ImportedItemQueryFilter
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       deletedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 28));
+      return query.addFilterCondition(const IsNullCondition(property: 31));
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterFilterCondition>
       deletedAtIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 28));
+      return query.addFilterCondition(const IsNullCondition(property: 31));
     });
   }
 
@@ -4939,7 +5597,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 28,
+          property: 31,
           value: value,
         ),
       );
@@ -4953,7 +5611,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 28,
+          property: 31,
           value: value,
         ),
       );
@@ -4967,7 +5625,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 28,
+          property: 31,
           value: value,
         ),
       );
@@ -4981,7 +5639,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 28,
+          property: 31,
           value: value,
         ),
       );
@@ -4995,7 +5653,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 28,
+          property: 31,
           value: value,
         ),
       );
@@ -5010,7 +5668,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 28,
+          property: 31,
           lower: lower,
           upper: upper,
         ),
@@ -5025,7 +5683,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5041,7 +5699,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5057,7 +5715,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5073,7 +5731,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5089,7 +5747,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5105,7 +5763,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 29,
+          property: 32,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -5122,7 +5780,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5138,7 +5796,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5151,7 +5809,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 29,
+          property: 32,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -5165,7 +5823,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 29,
+          property: 32,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -5178,7 +5836,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 29,
+          property: 32,
           value: '',
         ),
       );
@@ -5190,7 +5848,7 @@ extension ImportedItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 29,
+          property: 32,
           value: '',
         ),
       );
@@ -5315,7 +5973,7 @@ extension ImportedItemQuerySortBy
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByHsCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByTaskCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -5325,11 +5983,32 @@ extension ImportedItemQuerySortBy
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByHsCdDesc(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByTaskCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
         8,
+        sort: Sort.desc,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByHsCd(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        9,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByHsCdDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        9,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5340,7 +6019,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        9,
+        10,
         caseSensitive: caseSensitive,
       );
     });
@@ -5350,7 +6029,49 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        9,
+        10,
+        sort: Sort.desc,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByItemClCd(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        11,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByItemClCdDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        11,
+        sort: Sort.desc,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByItemCd(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        12,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByItemCdDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        12,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5361,7 +6082,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        10,
+        13,
         caseSensitive: caseSensitive,
       );
     });
@@ -5371,7 +6092,7 @@ extension ImportedItemQuerySortBy
       sortByImptItemsttsCdDesc({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        10,
+        13,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5382,7 +6103,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        11,
+        14,
         caseSensitive: caseSensitive,
       );
     });
@@ -5392,7 +6113,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        11,
+        14,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5403,7 +6124,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        12,
+        15,
         caseSensitive: caseSensitive,
       );
     });
@@ -5413,7 +6134,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        12,
+        15,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5422,13 +6143,13 @@ extension ImportedItemQuerySortBy
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByPkg() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(13);
+      return query.addSortBy(16);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByPkgDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(13, sort: Sort.desc);
+      return query.addSortBy(16, sort: Sort.desc);
     });
   }
 
@@ -5436,7 +6157,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        14,
+        17,
         caseSensitive: caseSensitive,
       );
     });
@@ -5446,7 +6167,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        14,
+        17,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5455,13 +6176,13 @@ extension ImportedItemQuerySortBy
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByQty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(15);
+      return query.addSortBy(18);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByQtyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(15, sort: Sort.desc);
+      return query.addSortBy(18, sort: Sort.desc);
     });
   }
 
@@ -5469,7 +6190,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        16,
+        19,
         caseSensitive: caseSensitive,
       );
     });
@@ -5479,7 +6200,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        16,
+        19,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5488,25 +6209,25 @@ extension ImportedItemQuerySortBy
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByTotWt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(17);
+      return query.addSortBy(20);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByTotWtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(17, sort: Sort.desc);
+      return query.addSortBy(20, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByNetWt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(18);
+      return query.addSortBy(21);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByNetWtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(18, sort: Sort.desc);
+      return query.addSortBy(21, sort: Sort.desc);
     });
   }
 
@@ -5514,7 +6235,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        19,
+        22,
         caseSensitive: caseSensitive,
       );
     });
@@ -5524,7 +6245,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        19,
+        22,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5535,7 +6256,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        20,
+        23,
         caseSensitive: caseSensitive,
       );
     });
@@ -5545,7 +6266,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        20,
+        23,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5554,14 +6275,14 @@ extension ImportedItemQuerySortBy
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByInvcFcurAmt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(21);
+      return query.addSortBy(24);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
       sortByInvcFcurAmtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(21, sort: Sort.desc);
+      return query.addSortBy(24, sort: Sort.desc);
     });
   }
 
@@ -5569,7 +6290,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        22,
+        25,
         caseSensitive: caseSensitive,
       );
     });
@@ -5579,7 +6300,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        22,
+        25,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5588,26 +6309,26 @@ extension ImportedItemQuerySortBy
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByInvcFcurExcrt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(23);
+      return query.addSortBy(26);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
       sortByInvcFcurExcrtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(23, sort: Sort.desc);
+      return query.addSortBy(26, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByTin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(24);
+      return query.addSortBy(27);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByTinDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(24, sort: Sort.desc);
+      return query.addSortBy(27, sort: Sort.desc);
     });
   }
 
@@ -5615,7 +6336,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        25,
+        28,
         caseSensitive: caseSensitive,
       );
     });
@@ -5625,7 +6346,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        25,
+        28,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5634,38 +6355,38 @@ extension ImportedItemQuerySortBy
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByRsdQty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(26);
+      return query.addSortBy(29);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByRsdQtyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(26, sort: Sort.desc);
+      return query.addSortBy(29, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByLastTouched() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(27);
+      return query.addSortBy(30);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
       sortByLastTouchedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(27, sort: Sort.desc);
+      return query.addSortBy(30, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByDeletedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(28);
+      return query.addSortBy(31);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> sortByDeletedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(28, sort: Sort.desc);
+      return query.addSortBy(31, sort: Sort.desc);
     });
   }
 
@@ -5673,7 +6394,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        29,
+        32,
         caseSensitive: caseSensitive,
       );
     });
@@ -5683,7 +6404,7 @@ extension ImportedItemQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        29,
+        32,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -5784,294 +6505,336 @@ extension ImportedItemQuerySortThenBy
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByHsCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByTaskCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(8, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByHsCdDesc(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByTaskCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(8, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemNm(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByHsCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemNmDesc(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByHsCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByImptItemsttsCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemNm(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(10, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
-      thenByImptItemsttsCdDesc({bool caseSensitive = true}) {
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemNmDesc(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(10, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByOrgnNatCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemClCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(11, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByOrgnNatCdDesc(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemClCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(11, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByExptNatCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(12, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByExptNatCdDesc(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByItemCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(12, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkg() {
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByImptItemsttsCd(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(13);
+      return query.addSortBy(13, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkgDesc() {
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
+      thenByImptItemsttsCdDesc({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(13, sort: Sort.desc);
+      return query.addSortBy(13, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkgUnitCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByOrgnNatCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(14, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkgUnitCdDesc(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByOrgnNatCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(14, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByExptNatCd(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(15, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByExptNatCdDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(15, sort: Sort.desc, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkg() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(16);
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkgDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(16, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkgUnitCd(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(17, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByPkgUnitCdDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(17, sort: Sort.desc, caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByQty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(15);
+      return query.addSortBy(18);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByQtyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(15, sort: Sort.desc);
+      return query.addSortBy(18, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByQtyUnitCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(16, caseSensitive: caseSensitive);
+      return query.addSortBy(19, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByQtyUnitCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(16, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(19, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByTotWt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(17);
+      return query.addSortBy(20);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByTotWtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(17, sort: Sort.desc);
+      return query.addSortBy(20, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByNetWt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(18);
+      return query.addSortBy(21);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByNetWtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(18, sort: Sort.desc);
+      return query.addSortBy(21, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenBySpplrNm(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(19, caseSensitive: caseSensitive);
+      return query.addSortBy(22, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenBySpplrNmDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(19, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(22, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByAgntNm(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(20, caseSensitive: caseSensitive);
+      return query.addSortBy(23, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByAgntNmDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(20, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(23, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByInvcFcurAmt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(21);
+      return query.addSortBy(24);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
       thenByInvcFcurAmtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(21, sort: Sort.desc);
+      return query.addSortBy(24, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByInvcFcurCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(22, caseSensitive: caseSensitive);
+      return query.addSortBy(25, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByInvcFcurCdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(22, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(25, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByInvcFcurExcrt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(23);
+      return query.addSortBy(26);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
       thenByInvcFcurExcrtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(23, sort: Sort.desc);
+      return query.addSortBy(26, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByTin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(24);
+      return query.addSortBy(27);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByTinDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(24, sort: Sort.desc);
+      return query.addSortBy(27, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByBhfId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(25, caseSensitive: caseSensitive);
+      return query.addSortBy(28, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByBhfIdDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(25, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(28, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByRsdQty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(26);
+      return query.addSortBy(29);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByRsdQtyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(26, sort: Sort.desc);
+      return query.addSortBy(29, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByLastTouched() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(27);
+      return query.addSortBy(30);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy>
       thenByLastTouchedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(27, sort: Sort.desc);
+      return query.addSortBy(30, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByDeletedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(28);
+      return query.addSortBy(31);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByDeletedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(28, sort: Sort.desc);
+      return query.addSortBy(31, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByAction(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(29, caseSensitive: caseSensitive);
+      return query.addSortBy(32, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterSortBy> thenByActionDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(29, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(32, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 }
@@ -6118,151 +6881,172 @@ extension ImportedItemQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByHsCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByTaskCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(8, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByItemNm(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByHsCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(9, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct>
-      distinctByImptItemsttsCd({bool caseSensitive = true}) {
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByItemNm(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(10, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByOrgnNatCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByItemClCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(11, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByExptNatCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByItemCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(12, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByPkg() {
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct>
+      distinctByImptItemsttsCd({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(13);
+      return query.addDistinctBy(13, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByPkgUnitCd(
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByOrgnNatCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(14, caseSensitive: caseSensitive);
     });
   }
 
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByExptNatCd(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(15, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByPkg() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(16);
+    });
+  }
+
+  QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByPkgUnitCd(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(17, caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByQty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(15);
+      return query.addDistinctBy(18);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByQtyUnitCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(16, caseSensitive: caseSensitive);
+      return query.addDistinctBy(19, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByTotWt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(17);
+      return query.addDistinctBy(20);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByNetWt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(18);
+      return query.addDistinctBy(21);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctBySpplrNm(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(19, caseSensitive: caseSensitive);
+      return query.addDistinctBy(22, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByAgntNm(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(20, caseSensitive: caseSensitive);
+      return query.addDistinctBy(23, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct>
       distinctByInvcFcurAmt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(21);
+      return query.addDistinctBy(24);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByInvcFcurCd(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(22, caseSensitive: caseSensitive);
+      return query.addDistinctBy(25, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct>
       distinctByInvcFcurExcrt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(23);
+      return query.addDistinctBy(26);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByTin() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(24);
+      return query.addDistinctBy(27);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByBhfId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(25, caseSensitive: caseSensitive);
+      return query.addDistinctBy(28, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByRsdQty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(26);
+      return query.addDistinctBy(29);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct>
       distinctByLastTouched() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(27);
+      return query.addDistinctBy(30);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct>
       distinctByDeletedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(28);
+      return query.addDistinctBy(31);
     });
   }
 
   QueryBuilder<ImportedItem, ImportedItem, QAfterDistinct> distinctByAction(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(29, caseSensitive: caseSensitive);
+      return query.addDistinctBy(32, caseSensitive: caseSensitive);
     });
   }
 }
@@ -6311,135 +7095,153 @@ extension ImportedItemQueryProperty1
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> hsCdProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> taskCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> itemNmProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> hsCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> imptItemsttsCdProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> itemNmProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> orgnNatCdProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> itemClCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(11);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> exptNatCdProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> itemCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(12);
     });
   }
 
-  QueryBuilder<ImportedItem, int?, QAfterProperty> pkgProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> imptItemsttsCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(13);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> pkgUnitCdProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> orgnNatCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(14);
     });
   }
 
-  QueryBuilder<ImportedItem, int?, QAfterProperty> qtyProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> exptNatCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(15);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> qtyUnitCdProperty() {
+  QueryBuilder<ImportedItem, int?, QAfterProperty> pkgProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(16);
     });
   }
 
-  QueryBuilder<ImportedItem, double?, QAfterProperty> totWtProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> pkgUnitCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(17);
     });
   }
 
-  QueryBuilder<ImportedItem, double?, QAfterProperty> netWtProperty() {
+  QueryBuilder<ImportedItem, int?, QAfterProperty> qtyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(18);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> spplrNmProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> qtyUnitCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(19);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> agntNmProperty() {
+  QueryBuilder<ImportedItem, double?, QAfterProperty> totWtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(20);
     });
   }
 
-  QueryBuilder<ImportedItem, double?, QAfterProperty> invcFcurAmtProperty() {
+  QueryBuilder<ImportedItem, double?, QAfterProperty> netWtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(21);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> invcFcurCdProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> spplrNmProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(22);
     });
   }
 
-  QueryBuilder<ImportedItem, double?, QAfterProperty> invcFcurExcrtProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> agntNmProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(23);
     });
   }
 
-  QueryBuilder<ImportedItem, int?, QAfterProperty> tinProperty() {
+  QueryBuilder<ImportedItem, double?, QAfterProperty> invcFcurAmtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(24);
     });
   }
 
-  QueryBuilder<ImportedItem, String?, QAfterProperty> bhfIdProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> invcFcurCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(25);
     });
   }
 
-  QueryBuilder<ImportedItem, double?, QAfterProperty> rsdQtyProperty() {
+  QueryBuilder<ImportedItem, double?, QAfterProperty> invcFcurExcrtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(26);
     });
   }
 
-  QueryBuilder<ImportedItem, DateTime?, QAfterProperty> lastTouchedProperty() {
+  QueryBuilder<ImportedItem, int?, QAfterProperty> tinProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(27);
     });
   }
 
-  QueryBuilder<ImportedItem, DateTime?, QAfterProperty> deletedAtProperty() {
+  QueryBuilder<ImportedItem, String?, QAfterProperty> bhfIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(28);
     });
   }
 
-  QueryBuilder<ImportedItem, String, QAfterProperty> actionProperty() {
+  QueryBuilder<ImportedItem, double?, QAfterProperty> rsdQtyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(29);
+    });
+  }
+
+  QueryBuilder<ImportedItem, DateTime?, QAfterProperty> lastTouchedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(30);
+    });
+  }
+
+  QueryBuilder<ImportedItem, DateTime?, QAfterProperty> deletedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(31);
+    });
+  }
+
+  QueryBuilder<ImportedItem, String, QAfterProperty> actionProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(32);
     });
   }
 }
@@ -6489,141 +7291,159 @@ extension ImportedItemQueryProperty2<R>
     });
   }
 
-  QueryBuilder<ImportedItem, (R, String?), QAfterProperty> hsCdProperty() {
+  QueryBuilder<ImportedItem, (R, String?), QAfterProperty> taskCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
   }
 
-  QueryBuilder<ImportedItem, (R, String?), QAfterProperty> itemNmProperty() {
+  QueryBuilder<ImportedItem, (R, String?), QAfterProperty> hsCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
+    });
+  }
+
+  QueryBuilder<ImportedItem, (R, String?), QAfterProperty> itemNmProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(10);
+    });
+  }
+
+  QueryBuilder<ImportedItem, (R, String?), QAfterProperty> itemClCdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(11);
+    });
+  }
+
+  QueryBuilder<ImportedItem, (R, String?), QAfterProperty> itemCdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(12);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty>
       imptItemsttsCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(10);
+      return query.addProperty(13);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty> orgnNatCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(11);
+      return query.addProperty(14);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty> exptNatCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(12);
+      return query.addProperty(15);
     });
   }
 
   QueryBuilder<ImportedItem, (R, int?), QAfterProperty> pkgProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(13);
+      return query.addProperty(16);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty> pkgUnitCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(14);
+      return query.addProperty(17);
     });
   }
 
   QueryBuilder<ImportedItem, (R, int?), QAfterProperty> qtyProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(15);
+      return query.addProperty(18);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty> qtyUnitCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(16);
+      return query.addProperty(19);
     });
   }
 
   QueryBuilder<ImportedItem, (R, double?), QAfterProperty> totWtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(17);
+      return query.addProperty(20);
     });
   }
 
   QueryBuilder<ImportedItem, (R, double?), QAfterProperty> netWtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(18);
+      return query.addProperty(21);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty> spplrNmProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(19);
+      return query.addProperty(22);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty> agntNmProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(20);
+      return query.addProperty(23);
     });
   }
 
   QueryBuilder<ImportedItem, (R, double?), QAfterProperty>
       invcFcurAmtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(21);
+      return query.addProperty(24);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty>
       invcFcurCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(22);
+      return query.addProperty(25);
     });
   }
 
   QueryBuilder<ImportedItem, (R, double?), QAfterProperty>
       invcFcurExcrtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(23);
+      return query.addProperty(26);
     });
   }
 
   QueryBuilder<ImportedItem, (R, int?), QAfterProperty> tinProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(24);
+      return query.addProperty(27);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String?), QAfterProperty> bhfIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(25);
+      return query.addProperty(28);
     });
   }
 
   QueryBuilder<ImportedItem, (R, double?), QAfterProperty> rsdQtyProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(26);
+      return query.addProperty(29);
     });
   }
 
   QueryBuilder<ImportedItem, (R, DateTime?), QAfterProperty>
       lastTouchedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(27);
+      return query.addProperty(30);
     });
   }
 
   QueryBuilder<ImportedItem, (R, DateTime?), QAfterProperty>
       deletedAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(28);
+      return query.addProperty(31);
     });
   }
 
   QueryBuilder<ImportedItem, (R, String), QAfterProperty> actionProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(29);
+      return query.addProperty(32);
     });
   }
 }
@@ -6674,145 +7494,164 @@ extension ImportedItemQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> hsCdProperty() {
+  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> taskCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
   }
 
-  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> itemNmProperty() {
+  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> hsCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
   }
 
-  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
-      imptItemsttsCdProperty() {
+  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> itemNmProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
-      orgnNatCdProperty() {
+      itemClCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(11);
     });
   }
 
-  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
-      exptNatCdProperty() {
+  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> itemCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(12);
     });
   }
 
-  QueryBuilder<ImportedItem, (R1, R2, int?), QOperations> pkgProperty() {
+  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
+      imptItemsttsCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(13);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
-      pkgUnitCdProperty() {
+      orgnNatCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(14);
     });
   }
 
-  QueryBuilder<ImportedItem, (R1, R2, int?), QOperations> qtyProperty() {
+  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
+      exptNatCdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(15);
+    });
+  }
+
+  QueryBuilder<ImportedItem, (R1, R2, int?), QOperations> pkgProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(16);
+    });
+  }
+
+  QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
+      pkgUnitCdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(17);
+    });
+  }
+
+  QueryBuilder<ImportedItem, (R1, R2, int?), QOperations> qtyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(18);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
       qtyUnitCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(16);
+      return query.addProperty(19);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, double?), QOperations> totWtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(17);
+      return query.addProperty(20);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, double?), QOperations> netWtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(18);
+      return query.addProperty(21);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> spplrNmProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(19);
+      return query.addProperty(22);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> agntNmProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(20);
+      return query.addProperty(23);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, double?), QOperations>
       invcFcurAmtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(21);
+      return query.addProperty(24);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String?), QOperations>
       invcFcurCdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(22);
+      return query.addProperty(25);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, double?), QOperations>
       invcFcurExcrtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(23);
+      return query.addProperty(26);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, int?), QOperations> tinProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(24);
+      return query.addProperty(27);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String?), QOperations> bhfIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(25);
+      return query.addProperty(28);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, double?), QOperations> rsdQtyProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(26);
+      return query.addProperty(29);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, DateTime?), QOperations>
       lastTouchedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(27);
+      return query.addProperty(30);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, DateTime?), QOperations>
       deletedAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(28);
+      return query.addProperty(31);
     });
   }
 
   QueryBuilder<ImportedItem, (R1, R2, String), QOperations> actionProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(29);
+      return query.addProperty(32);
     });
   }
 }
@@ -6855,6 +7694,9 @@ ImportedItem _$ImportedItemFromJson(Map<String, dynamic> json) => ImportedItem(
       ..id = json['id'] as String
       ..unit = json['unit'] as String
       ..isTaxExempted = json['isTaxExempted'] as bool
+      ..taskCd = json['taskCd'] as String?
+      ..itemClCd = json['itemClCd'] as String?
+      ..itemCd = json['itemCd'] as String?
       ..rsdQty = (json['rsdQty'] as num?)?.toDouble();
 
 Map<String, dynamic> _$ImportedItemToJson(ImportedItem instance) =>
@@ -6868,8 +7710,11 @@ Map<String, dynamic> _$ImportedItemToJson(ImportedItem instance) =>
       'isTaxExempted': instance.isTaxExempted,
       'itemSeq': instance.itemSeq,
       'dclNo': instance.dclNo,
+      'taskCd': instance.taskCd,
       'hsCd': instance.hsCd,
       'itemNm': instance.itemNm,
+      'itemClCd': instance.itemClCd,
+      'itemCd': instance.itemCd,
       'imptItemsttsCd': instance.imptItemsttsCd,
       'orgnNatCd': instance.orgnNatCd,
       'exptNatCd': instance.exptNatCd,

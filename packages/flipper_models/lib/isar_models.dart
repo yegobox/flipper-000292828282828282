@@ -38,6 +38,7 @@ export 'isar/user.dart';
 export 'isar/social_token.dart';
 export 'isar/conversation.dart';
 export 'isar/business_type.dart';
+export 'isar/imported_item.dart';
 export 'package:uuid/uuid.dart';
 export 'isar/drawers.dart';
 export 'isar/userActivity.dart';

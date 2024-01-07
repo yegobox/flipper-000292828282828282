@@ -69,7 +69,7 @@ abstract class TaxApi {
       {required String tinNumber, required String bhfId, String lastReqDt});
 
 // 5.2. Change import item status with the "/imports/updateImportItems" URL
-  Future<bool> updateImportItem({required ImportedItem importedItem});
+  Future<bool> updateImportItem({required ImportedItem importedItem, required String newImportStatus});
 
 // --------------------------------------
 
@@ -90,9 +90,9 @@ abstract class TaxApi {
 // =================================
 
 // 7.1. Record a new purchase transaction with the "/trnsPurchase/savePurchases" URL
-  Future<bool> recordPurchase(
-      {required ITransaction transaction,
-      required List<TransactionItem> items});
+  // Future<bool> recordPurchase(
+  //     {required ITransaction transaction,
+  //     required List<TransactionItem> items});
 
 // 7.2. Get a list of purchase transactions with the "/trnsPurchase/selectTrnsPurchaseSales" URL
   Future<bool> getPurchases(

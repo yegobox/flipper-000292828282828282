@@ -28,52 +28,61 @@ class ImportedItem extends IJsonSerializable {
   // 2. Declaration number
   String? dclNo;
 
-  // 3. HS Code
+  // 3. Task Code
+  String? taskCd;
+
+  // 4. HS Code
   String? hsCd;
 
-  // 4. Item Name
+  // 5. Item Name
   String? itemNm;
 
-  // 5. Import Item Status Code
+  // 6. Item Classification Code
+  String? itemClCd;
+
+  // 7. Item Code
+  String? itemCd;
+
+  // 8. Import Item Status Code
   String? imptItemsttsCd;
 
-  // 6. Nation of origin code
+  // 9. Nation of origin code
   String? orgnNatCd;
 
-  // 7. Destination nation code
+  // 10. Destination nation code
   String? exptNatCd;
 
-  // 8. Package
+  // 11. Package
   int? pkg;
 
-  // 9. Packaging Unit
+  // 12. Packaging Unit
   String? pkgUnitCd;
 
-  // 10. Quantity
+  // 13. Quantity
   int? qty;
 
-  // 11. Quantity Unit Code
+  // 14. Quantity Unit Code
   String? qtyUnitCd;
 
-  // 12. Gross Weight
+  // 15. Gross Weight
   double? totWt;
 
-  // 13. Net weight
+  // 16. Net weight
   double? netWt;
 
-  // 14. Supplier's name
+  // 17. Supplier's name
   String? spplrNm;
 
-  // 15. Agent's Name
+  // 18. Agent's Name
   String? agntNm;
 
-  // 16. Invoice Foreign Currency Amount
+  // 19. Invoice Foreign Currency Amount
   double? invcFcurAmt;
 
-  // 17. Foreign Currency Code
+  // 20. Foreign Currency Code
   String? invcFcurCd;
 
-  // 18. Foreign Currency Exchange Rate
+  // 21. Foreign Currency Exchange Rate
   double? invcFcurExcrt;
 
   int? tin;
