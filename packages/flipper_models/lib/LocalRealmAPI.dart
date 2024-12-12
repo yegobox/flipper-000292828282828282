@@ -5527,7 +5527,9 @@ class LocalRealmApi
         print('Found variant: ${variant?.bcd}, ${variant?.name}');
         if (variant != null) {
           realm!.write(() {
-            variant.bcd = item.bcdU;
+            variant.bcd = item.bcdU.endsWith('.0')
+                ? item.bcdU.substring(0, item.bcdU.length - 2)
+                : item.bcdU;
             variant.name = item.name;
           });
           print('Updated variant bcd: ${variant.bcd}, name: ${variant.name}');
