@@ -5526,21 +5526,23 @@ class LocalRealmApi
         //1. search variant where variant.modrId == item.barCode
         // 2. update the variant set variant.bcd= item.bcdU
         //3. update the variant set variant.name= item.name
+        print('Searching for variant with modrId: ${item.barCode}');
         Variant? variant =
             realm!.query<Variant>(r'modrId == $0', [item.barCode]).firstOrNull;
+        print('Found variant: ${variant?.bcd}, ${variant?.name}');
         if (variant != null) {
           realm!.write(() {
             variant.bcd = item.bcdU;
             variant.name = item.name;
-            print('variant updated successfully');
           });
+          print('Updated variant bcd: ${variant.bcd}, name: ${variant.name}');
         } else {
           print('no variant found with modrId:${item.barCode}');
         }
       } else {
         final branchId = await ProxyService.box.getBranchId()!;
         final businessId = await ProxyService.box.getBusinessId()!;
-        // TODO: fix this when sql is fixed.
+        // TO DO: fix this when sql is fixed.
         // final bhfId = await ProxyService.box.bhfId();
         final bhfId = "00";
         final int variantId = randomNumber();
