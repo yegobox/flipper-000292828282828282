@@ -5521,11 +5521,6 @@ class LocalRealmApi
     try {
       ///
       if (item.bcdU.isNotEmpty) {
-        // if a user has given us the barcode updated i.e bcdU
-        // then this means a user want to update exisiting data with new data given
-        //1. search variant where variant.modrId == item.barCode
-        // 2. update the variant set variant.bcd= item.bcdU
-        //3. update the variant set variant.name= item.name
         print('Searching for variant with modrId: ${item.barCode}');
         Variant? variant =
             realm!.query<Variant>(r'modrId == $0', [item.barCode]).firstOrNull;
